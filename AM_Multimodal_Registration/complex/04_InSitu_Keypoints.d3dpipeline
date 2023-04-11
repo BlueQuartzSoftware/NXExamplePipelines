@@ -1,0 +1,122 @@
+{
+  "isDisabled": false,
+  "name": "04_InSitu_Keypoints.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "Import_File_Data": {
+          "data_paths": [
+            "HF_VertexDataContainer",
+            "HF_VertexDataContainer/SharedVertexList",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/NumNeighbors",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/data_layer_times",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/file_layer_times",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/hf_time_res",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/layer_height",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/layer_thickness",
+            "HF_VertexDataContainer/HF_SliceAttributeMatrix/lf_time_res",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/Audio",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF Temperature",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF Time",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF_SliceIds",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Drive",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Power",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/Off-Axis PD",
+            "HF_VertexDataContainer/HF_VertexAttributeMatrix/Photodiode"
+          ],
+          "file_path": "Data/AM_Multimodal_Registration/GC1.dream3d"
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ImportDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Drive",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "mask": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off",
+        "reduced_vertex": "TDMS Beam On",
+        "vertex_geom": "HF_VertexDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::RemoveFlaggedVertices",
+        "uuid": "46099b4c-ef90-4fb3-b5e9-6c8c543c5be1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path":[ "HF_VertexDataContainer"]
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "grid_resolution": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ],
+        "hull_vertex_geometry": "TDMS Keypoints",
+        "min_empty_neighbors": 4,
+        "vertex_geometry": "TDMS Beam On"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ApproximatePointCloudHull",
+        "uuid": "c19203b7-2217-4e52-bff4-7f611695421a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}

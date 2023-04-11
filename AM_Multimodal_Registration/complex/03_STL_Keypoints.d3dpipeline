@@ -1,0 +1,64 @@
+{
+  "isDisabled": false,
+  "name": "03_STL_Keypoints.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "geometry_data_path": "GC1_STL",
+        "scale_factor": 25.399999618530273,
+        "scale_output": true,
+        "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::StlFileReaderFilter",
+        "uuid": "2f64bd45-9d28-4254-9e07-6aa7c6d3d015"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "triangle_areas_array_path": "FaceAreas",
+        "triangle_geometry_data_path": "GC1_STL"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::CalculateTriangleAreasFilter",
+        "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "mask_array_path": "",
+        "number_of_samples": 100000,
+        "selected_data_array_paths": [],
+        "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
+        "triangle_geometry_path": "GC1_STL",
+        "use_mask": false,
+        "vertex_data_group_path": "VertexData",
+        "vertex_geometry_path": "GC1 STL Keypoints"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::PointSampleTriangleGeometryFilter",
+        "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}
