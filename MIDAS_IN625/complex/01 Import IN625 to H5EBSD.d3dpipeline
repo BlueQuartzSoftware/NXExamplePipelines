@@ -1,0 +1,33 @@
+{
+  "isDisabled": false,
+  "name": "01 Import IN625 to H5EBSD.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "input_file_list_info": {
+          "end_index": 800,
+          "file_extension": ".ctf",
+          "file_prefix": "result_fit_",
+          "file_suffix": "",
+          "increment_index": 1,
+          "input_path": "Data/MIDAS_IN625/CTF",
+          "ordering": 0,
+          "padding_digits": 3,
+          "start_index": 700
+        },
+        "output_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+        "reference_frame": 1,
+        "stacking_order": 0,
+        "z_spacing": 1.0
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::EbsdToH5EbsdFilter",
+        "uuid": "2d05ca72-0a1b-4aec-b9b0-bc470845c448"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}

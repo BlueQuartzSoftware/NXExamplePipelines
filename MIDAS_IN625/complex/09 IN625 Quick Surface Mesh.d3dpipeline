@@ -1,0 +1,104 @@
+{
+  "isDisabled": false,
+  "name": "09 IN625 Quick Surface Mesh.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "Import_File_Data": {
+          "data_paths": [
+            "DataContainer/CellEnsembleData",
+            "DataContainer/CellEnsembleData/CrystalStructures",
+            "DataContainer/CellEnsembleData/LatticeConstants",
+            "DataContainer",
+            "DataContainer/CellData",
+            "DataContainer/CellData/BC",
+            "DataContainer/CellData/BS",
+            "DataContainer/CellData/Bands",
+            "DataContainer/CellData/Error",
+            "DataContainer/CellData/EulerAngles",
+            "DataContainer/CellData/MAD",
+            "DataContainer/CellData/Phases",
+            "DataContainer/CellData/IPFColors",
+            "DataContainer/CellData/Quaternions",
+            "DataContainer/CellFeatureData",
+            "DataContainer/CellFeatureData/Active",
+            "DataContainer/CellData/FeatureIds",
+            "DataContainer/CellFeatureData/EquivalentDiameters",
+            "DataContainer/CellFeatureData/NumElements",
+            "DataContainer/CellFeatureData/Centroids",
+            "DataContainer/CellFeatureData/Omega3s",
+            "DataContainer/CellFeatureData/AxisLengths",
+            "DataContainer/CellFeatureData/AxisEulerAngles",
+            "DataContainer/CellFeatureData/AspectRatios",
+            "DataContainer/CellFeatureData/Shape Volumes",
+            "DataContainer/CellData/GBManhattanDistances",
+            "DataContainer/CellData/TJManhattanDistances",
+            "DataContainer/CellData/QPManhattanDistances",
+            "DataContainer/CellFeatureData/AvgQuats",
+            "DataContainer/CellFeatureData/AvgEulerAngles",
+            "DataContainer/CellData/KernelAverageMisorientations",
+            "DataContainer/CellData/EquivalentDiameters",
+            "DataContainer/CellData/Omega3s",
+            "DataContainer/CellData/AvgEulerAngles",
+            "DataContainer/CellData/AvgIPFColor"
+          ],
+          "file_path": "Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d"
+        },
+        "Imported Pipeline": {
+          "isDisabled": false,
+          "name": "Untitled Pipeline",
+          "pipeline": []
+        }
+      },
+      "filter": {
+        "name": "complex::ImportDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "face_data_group_name": "FaceData",
+        "face_labels_array_name": "TriangleDataContainer/FaceData/FaceLabels",
+        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "fix_problem_voxels": true,
+        "generate_triple_lines": false,
+        "grid_geometry_data_path": "DataContainer",
+        "node_types_array_name": "TriangleDataContainer/VertexData/NodeType",
+        "selected_data_array_paths": [
+          "DataContainer/CellData/IPFColors"
+        ],
+        "triangle_geometry_name": "TriangleDataContainer",
+        "vertex_data_group_name": "VertexData"
+      },
+      "filter": {
+        "name": "complex::QuickSurfaceMeshFilter",
+        "uuid": "13dd00bd-ad49-4e04-95eb-3267952fd6e5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": ["DataContainer"]
+      },
+      "filter": {
+        "name": "complex::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
+        "write_xdmf_file": true
+      },
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}

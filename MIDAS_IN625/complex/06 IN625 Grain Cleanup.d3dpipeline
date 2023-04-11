@@ -1,0 +1,417 @@
+{
+  "isDisabled": false,
+  "name": "06 IN625 Grain Cleanup.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "Import_File_Data": {
+          "data_paths": [
+            "DataContainer",
+            "DataContainer/CellData",
+            "DataContainer/CellData/Bands",
+            "DataContainer/CellData/Error",
+            "DataContainer/CellData/MAD",
+            "DataContainer/CellData/BC",
+            "DataContainer/CellData/BS",
+            "DataContainer/CellData/EulerAngles",
+            "DataContainer/CellData/Phases",
+            "DataContainer/CellData/IPFColors",
+            "DataContainer/CellData/Quaternions",
+            "DataContainer/CellEnsembleData",
+            "DataContainer/CellEnsembleData/CrystalStructures",
+            "DataContainer/CellEnsembleData/LatticeConstants",
+            "DataContainer/CellFeatureData",
+            "DataContainer/CellFeatureData/Active",
+            "DataContainer/CellData/FeatureIds"
+          ],
+          "file_path": "Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d"
+        },
+        "Imported Pipeline": {
+          "isDisabled": false,
+          "name": "05 IN625 Segment Grains",
+          "pipeline": [
+            {
+              "args": {
+                "Import_File_Data": {
+                  "data_paths": null,
+                  "file_path": "Data/Output/MIDAS_IN625/04_IN625_Cropped.dream3d"
+                },
+                "Imported Pipeline": {
+                  "isDisabled": false,
+                  "name": "04 IN625 Cropped",
+                  "pipeline": [
+                    {
+                      "args": {
+                        "Import_File_Data": {
+                          "data_paths": [
+                            "DataContainer",
+                            "DataContainer/CellData",
+                            "DataContainer/CellData/Bands",
+                            "DataContainer/CellData/Error",
+                            "DataContainer/CellData/MAD",
+                            "DataContainer/CellData/BC",
+                            "DataContainer/CellData/BS",
+                            "DataContainer/CellData/EulerAngles",
+                            "DataContainer/CellData/Phases",
+                            "DataContainer/CellEnsembleData",
+                            "DataContainer/CellEnsembleData/CrystalStructures",
+                            "DataContainer/CellEnsembleData/LatticeConstants",
+                            "DataContainer/CellData/IPFColors",
+                            "DataContainer/CellData/Quaternions"
+                          ],
+                          "file_path": "Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d"
+                        },
+                        "Imported Pipeline": {
+                          "isDisabled": false,
+                          "name": "03 IN625 Alignment",
+                          "pipeline": [
+                            {
+                              "args": {
+                                "Import_File_Data": {
+                                  "data_paths": [
+                                    "DataContainer",
+                                    "DataContainer/CellData",
+                                    "DataContainer/CellData/Bands",
+                                    "DataContainer/CellData/Error",
+                                    "DataContainer/CellData/MAD",
+                                    "DataContainer/CellData/BC",
+                                    "DataContainer/CellData/BS",
+                                    "DataContainer/CellData/EulerAngles",
+                                    "DataContainer/CellData/Phases",
+                                    "DataContainer/CellEnsembleData",
+                                    "DataContainer/CellEnsembleData/CrystalStructures",
+                                    "DataContainer/CellEnsembleData/LatticeConstants",
+                                    "DataContainer/CellData/IPFColors"
+                                  ],
+                                  "file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d"
+                                },
+                                "Imported Pipeline": {
+                                  "isDisabled": false,
+                                  "name": "02 Import H5EBSD to DREAM3D",
+                                  "pipeline": [
+                                    {
+                                      "args": {
+                                        "cell_attribute_matrix_name": "CellData",
+                                        "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
+                                        "data_container_name": "DataContainer",
+                                        "read_h5_ebsd_filter": {
+                                          "end_slice": 800,
+                                          "euler_representation": 1,
+                                          "hdf5_data_paths": [
+                                            "BC",
+                                            "BS",
+                                            "Bands",
+                                            "Error",
+                                            "EulerAngles",
+                                            "MAD",
+                                            "Phases"
+                                          ],
+                                          "input_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+                                          "start_slice": 700,
+                                          "use_recommended_transform": true
+                                        }
+                                      },
+                                      "comments": "",
+                                      "filter": {
+                                        "name": "complex::ReadH5EbsdFilter",
+                                        "uuid": "db291b6c-9aaf-432d-9547-430c865a539c"
+                                      },
+                                      "isDisabled": false
+                                    },
+                                    {
+                                      "args": {
+                                        "cell_euler_angles_array_path": "DataContainer/CellData/EulerAngles",
+                                        "cell_ip_fcolors_array_name": "IPFColors",
+                                        "cell_phases_array_path": "DataContainer/CellData/Phases",
+                                        "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                                        "good_voxels_array_path": "",
+                                        "reference_dir": [
+                                          0.0,
+                                          0.0,
+                                          1.0
+                                        ],
+                                        "use_good_voxels": false
+                                      },
+                                      "comments": "",
+                                      "filter": {
+                                        "name": "complex::GenerateIPFColorsFilter",
+                                        "uuid": "64cb4f27-6e5e-4dd2-8a03-0c448cb8f5e6"
+                                      },
+                                      "isDisabled": false
+                                    },
+                                    {
+                                      "args": {
+                                        "export_file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+                                        "write_xdmf_file": true
+                                      },
+                                      "comments": "",
+                                      "filter": {
+                                        "name": "complex::ExportDREAM3DFilter",
+                                        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+                                      },
+                                      "isDisabled": false
+                                    }
+                                  ]
+                                }
+                              },
+                              "comments": "",
+                              "filter": {
+                                "name": "complex::ImportDREAM3DFilter",
+                                "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+                              },
+                              "isDisabled": false
+                            },
+                            {
+                              "args": {
+                                "input_orientation_array_path": "DataContainer/CellData/EulerAngles",
+                                "input_type": 0,
+                                "output_orientation_array_name": "Quaternions",
+                                "output_type": 2
+                              },
+                              "comments": "",
+                              "filter": {
+                                "name": "complex::ConvertOrientations",
+                                "uuid": "501e54e6-a66f-4eeb-ae37-00e649c00d4b"
+                              },
+                              "isDisabled": false
+                            },
+                            {
+                              "args": {
+                                "alignment_shift_file_name": "Data/Output/Alignment_By_Misorientation_Shifts.txt",
+                                "cell_phases_array_path": "DataContainer/CellData/Phases",
+                                "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                                "good_voxels_array_path": "Mask",
+                                "misorientation_tolerance": 5.0,
+                                "quats_array_path": "DataContainer/CellData/Quaternions",
+                                "selected_image_geometry_path": "DataContainer",
+                                "use_good_voxels": false,
+                                "write_alignment_shifts": false
+                              },
+                              "comments": "",
+                              "filter": {
+                                "name": "complex::AlignSectionsMisorientationFilter",
+                                "uuid": "8df2135c-7079-49f4-9756-4f3c028a5ced"
+                              },
+                              "isDisabled": false
+                            },
+                            {
+                              "args": {
+                                "export_file_path": "Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d",
+                                "write_xdmf_file": true
+                              },
+                              "comments": "",
+                              "filter": {
+                                "name": "complex::ExportDREAM3DFilter",
+                                "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+                              },
+                              "isDisabled": false
+                            }
+                          ]
+                        }
+                      },
+                      "comments": "",
+                      "filter": {
+                        "name": "complex::ImportDREAM3DFilter",
+                        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+                      },
+                      "isDisabled": false
+                    },
+                    {
+                      "args": {
+                        "cell_feature_attribute_matrix": "CellFeatureData",
+                        "created_image_geometry": "ImageDataContainer",
+                        "feature_ids": "",
+                        "max_voxel": [
+                          500,
+                          500,
+                          100
+                        ],
+                        "min_voxel": [
+                          100,
+                          100,
+                          0
+                        ],
+                        "remove_original_geometry": true,
+                        "renumber_features": false,
+                        "selected_image_geometry": "DataContainer",
+                        "update_origin": true
+                      },
+                      "comments": "",
+                      "filter": {
+                        "name": "complex::CropImageGeometry",
+                        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+                      },
+                      "isDisabled": false
+                    },
+                    {
+                      "args": {
+                        "export_file_path": "Data/Output/MIDAS_IN625/04_IN625_Cropped.dream3d",
+                        "write_xdmf_file": true
+                      },
+                      "comments": "",
+                      "filter": {
+                        "name": "complex::ExportDREAM3DFilter",
+                        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+                      },
+                      "isDisabled": false
+                    }
+                  ]
+                }
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ImportDREAM3DFilter",
+                "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "active_array_name": "Active",
+                "cell_feature_attribute_matrix_name": "CellFeatureData",
+                "cell_phases_array_path": "DataContainer/CellData/Phases",
+                "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                "feature_ids_array_name": "FeatureIds",
+                "good_voxels_array_path": "",
+                "grid_geometry_path": "DataContainer",
+                "misorientation_tolerance": 2.5,
+                "quats_array_path": "DataContainer/CellData/Quaternions",
+                "randomize_features": true,
+                "use_good_voxels": false
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::EBSDSegmentFeaturesFilter",
+                "uuid": "1810c2c7-63e3-41db-b204-a5821e6271c0"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "export_file_path": "Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d",
+                "write_xdmf_file": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ExportDREAM3DFilter",
+                "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+              },
+              "isDisabled": false
+            }
+          ]
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ImportDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "equivalent_diameters_path": "EquivalentDiameters",
+        "feature_attribute_matrix": "DataContainer/CellFeatureData",
+        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "geometry_path": "DataContainer",
+        "num_elements_path": "NumElements",
+        "save_element_sizes": false,
+        "volumes_path": "Volumes"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::CalculateFeatureSizesFilter",
+        "uuid": "c666ee17-ca58-4969-80d0-819986c72485"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "apply_single_phase": false,
+        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "feature_phases_path": "",
+        "image_geom_path": "DataContainer",
+        "min_allowed_features_size": 8,
+        "num_cells_path": "DataContainer/CellFeatureData/NumElements",
+        "phase_number": 0
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::RemoveMinimumSizeFeaturesFilter",
+        "uuid": "074472d3-ba8d-4a1a-99f2-2d56a0d082a0"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "boundary_cells": "BoundaryCells",
+        "cell_feature_arrays": "DataContainer/CellFeatureData",
+        "feature_ids": "DataContainer/CellData/FeatureIds",
+        "image_geometry": "DataContainer",
+        "neighbor_list": "NeighborList2",
+        "number_of_neighbors": "NumNeighbors2",
+        "shared_surface_area_list": "SharedSurfaceAreaList2",
+        "store_boundary_cells": false,
+        "store_surface_features": false,
+        "surface_features": "SurfaceFeatures"
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::FindNeighbors",
+        "uuid": "7177e88c-c3ab-4169-abe9-1fdaff20e598"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "apply_to_single_phase": false,
+        "cell_attribute_matrix": "DataContainer/CellData",
+        "feature_ids": "DataContainer/CellData/FeatureIds",
+        "feature_phases": "Data Container/Feature Data/Phases",
+        "ignored_voxel_arrays": [],
+        "image_geom": "DataContainer",
+        "min_num_neighbors": 1,
+        "num_neighbors": "DataContainer/CellFeatureData/NumNeighbors2",
+        "phase_number": 0
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::MinNeighbors",
+        "uuid": "4ab5153f-6014-4e6d-bbd6-194068620389"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "DataContainer/CellFeatureData/EquivalentDiameters",
+          "DataContainer/CellFeatureData/NeighborList2",
+          "DataContainer/CellFeatureData/NumElements",
+          "DataContainer/CellFeatureData/NumNeighbors2",
+          "DataContainer/CellFeatureData/SharedSurfaceAreaList2",
+          "DataContainer/CellFeatureData/Volumes"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/MIDAS_IN625/06_IN625_GrainCleanup.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}

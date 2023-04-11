@@ -1,0 +1,70 @@
+{
+  "isDisabled": false,
+  "name": "02 Import H5EBSD to DREAM3D.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "cell_attribute_matrix_name": "CellData",
+        "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
+        "data_container_name": "DataContainer",
+        "read_h5_ebsd_filter": {
+          "end_slice": 800,
+          "euler_representation": 1,
+          "hdf5_data_paths": [
+            "BC",
+            "BS",
+            "Bands",
+            "Error",
+            "EulerAngles",
+            "MAD",
+            "Phases"
+          ],
+          "input_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+          "start_slice": 700,
+          "use_recommended_transform": true
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ReadH5EbsdFilter",
+        "uuid": "db291b6c-9aaf-432d-9547-430c865a539c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "cell_euler_angles_array_path": "DataContainer/CellData/EulerAngles",
+        "cell_ip_fcolors_array_name": "IPFColors",
+        "cell_phases_array_path": "DataContainer/CellData/Phases",
+        "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+        "good_voxels_array_path": "",
+        "reference_dir": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "use_good_voxels": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::GenerateIPFColorsFilter",
+        "uuid": "64cb4f27-6e5e-4dd2-8a03-0c448cb8f5e6"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "workflowParams": []
+}
