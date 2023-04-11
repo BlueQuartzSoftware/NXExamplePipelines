@@ -1,0 +1,259 @@
+{
+    "0": {
+        "FilterVersion": "2.0.447",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Name": "DataContainerReader",
+        "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
+        "InputFile": "Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d",
+        "InputFileDataContainerArrayProxy": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/InternalTrianglesDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        6574914
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        6
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "IPFColor",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/InternalTrianglesDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        6574914
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "NodeType",
+                                    "Object Type": "DataArray<int8_t>",
+                                    "Path": "/DataContainers/InternalTrianglesDataContainer/VertexData",
+                                    "Tuple Dimensions": [
+                                        3174221
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "InternalTrianglesDataContainer",
+                    "Type": 4
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        7677634
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        6
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "IPFColor",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        7677634
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "NodeType",
+                                    "Object Type": "DataArray<int8_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/VertexData",
+                                    "Tuple Dimensions": [
+                                        3658155
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "TriangleDataContainer",
+                    "Type": 4
+                }
+            ]
+        },
+        "OverwriteExistingDataContainers": 0
+    },
+    "1": {
+        "FaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FeatureAttributeMatrixName": {
+            "Attribute Matrix Name": "FaceFeatureData",
+            "Data Array Name": "",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Find Feature Volumes from Triangle Geometry",
+        "Filter_Name": "FindTriangleGeomSizes",
+        "Filter_Uuid": "{9157ef1c-7cbc-5840-b6e7-26089c0b0f88}",
+        "VolumesArrayName": "Volumes"
+    },
+    "2": {
+        "CentroidsArrayName": "Centroids",
+        "FaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FeatureAttributeMatrixName": {
+            "Attribute Matrix Name": "FaceFeatureData",
+            "Data Array Name": "",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Find Feature Centroids from Triangle Geometry",
+        "Filter_Name": "FindTriangleGeomCentroids",
+        "Filter_Uuid": "{a5cff82b-9fe4-5a8c-90c9-6db74b6dcd50}"
+    },
+    "3": {
+        "AspectRatiosArrayName": "AspectRatios",
+        "AxisEulerAnglesArrayName": "AxisEulerAngles",
+        "AxisLengthsArrayName": "AxisLengths",
+        "CentroidsArrayPath": {
+            "Attribute Matrix Name": "FaceFeatureData",
+            "Data Array Name": "Centroids",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FeatureAttributeMatrixName": {
+            "Attribute Matrix Name": "FaceFeatureData",
+            "Data Array Name": "",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Find Feature Shapes from Triangle Geometry",
+        "Filter_Name": "FindTriangleGeomShapes",
+        "Filter_Uuid": "{26765457-89fb-5686-87f6-878ca549f0df}",
+        "Omega3sArrayName": "Omega3s",
+        "VolumesArrayPath": {
+            "Attribute Matrix Name": "FaceFeatureData",
+            "Data Array Name": "Volumes",
+            "Data Container Name": "TriangleDataContainer"
+        }
+    },
+    "4": {
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Generate Triangle Normals",
+        "Filter_Name": "TriangleNormalFilter",
+        "Filter_Uuid": "{928154f6-e4bc-5a10-a9dd-1abb6a6c0f6b}",
+        "SurfaceMeshTriangleNormalsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceNormals",
+            "Data Container Name": "TriangleDataContainer"
+        }
+    },
+    "5": {
+        "FaceFeatureAttributeMatrixName": "GrainBoundaryData",
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Generate Triangle Face Ids",
+        "Filter_Name": "SharedFeatureFaceFilter",
+        "Filter_Uuid": "{15c743db-5936-53a2-92cf-edf00526486d}",
+        "SurfaceMeshFaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "SurfaceMeshFeatureFaceIdsArrayName": "FeatureFaceId",
+        "SurfaceMeshFeatureFaceLabelsArrayName": "FaceLabels",
+        "SurfaceMeshFeatureFaceNumTrianglesArrayName": "NumTriangles"
+    },
+    "6": {
+        "FilterVersion": "2.0.447",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/MIDAS_IN625/11_IN625_MeshStatistics.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "11 IN625 Mesh Statistics",
+        "Number_Filters": 7,
+        "Version": 6
+    }
+}

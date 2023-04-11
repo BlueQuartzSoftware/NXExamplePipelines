@@ -1,0 +1,36 @@
+{
+    "0": {
+        "EulerTransformation": {
+            "angle": 0,
+            "h": 0,
+            "k": 0,
+            "l": 1
+        },
+        "FileExtension": "ctf",
+        "FilePrefix": "result_fit_",
+        "FileSuffix": "",
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Import Orientation File(s) to H5EBSD",
+        "Filter_Name": "EbsdToH5Ebsd",
+        "Filter_Uuid": "{6e332fca-0475-5fec-821e-e01f668ec1d3}",
+        "InputPath": "Data/MIDAS_IN625/CTF",
+        "OutputFile": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+        "PaddingDigits": 3,
+        "RefFrameZDir": 0,
+        "SampleTransformation": {
+            "angle": 180,
+            "h": 0,
+            "k": 1,
+            "l": 0
+        },
+        "ZEndIndex": "800",
+        "ZResolution": 1,
+        "ZStartIndex": "700"
+    },
+    "PipelineBuilder": {
+        "Name": "01 Import IN625 to H5EBSD",
+        "Number_Filters": 1,
+        "Version": 6
+    }
+}

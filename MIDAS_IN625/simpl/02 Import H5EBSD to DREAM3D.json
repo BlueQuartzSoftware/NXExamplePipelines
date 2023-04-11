@@ -1,0 +1,82 @@
+{
+    "0": {
+        "AngleRepresentation": 1,
+        "CellAttributeMatrixName": "CellData",
+        "CellEnsembleAttributeMatrixName": "CellEnsembleData",
+        "DataContainerName": {
+            "Attribute Matrix Name": "",
+            "Data Array Name": "",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Import H5EBSD File",
+        "Filter_Name": "ReadH5Ebsd",
+        "Filter_Uuid": "{4ef7f56b-616e-5a80-9e68-1da8f35ad235}",
+        "InputFile": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+        "RefFrameZDir": 0,
+        "SelectedArrayNames": [
+            "Phases",
+            "Bands",
+            "X",
+            "BC",
+            "MAD",
+            "BS",
+            "Error",
+            "Y",
+            "EulerAngles"
+        ],
+        "UseTransformations": 1,
+        "ZEndIndex": 800,
+        "ZStartIndex": 700
+    },
+    "1": {
+        "CellEulerAnglesArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "EulerAngles",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "CellIPFColorsArrayName": "IPFColor",
+        "CellPhasesArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "Phases",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "CrystalStructuresArrayPath": {
+            "Attribute Matrix Name": "CellEnsembleData",
+            "Data Array Name": "CrystalStructures",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Generate IPF Colors",
+        "Filter_Name": "GenerateIPFColors",
+        "Filter_Uuid": "{a50e6532-8075-5de5-ab63-945feb0de7f7}",
+        "GoodVoxelsArrayPath": {
+            "Attribute Matrix Name": "",
+            "Data Array Name": "",
+            "Data Container Name": ""
+        },
+        "ReferenceDir": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+        },
+        "UseGoodVoxels": 0
+    },
+    "2": {
+        "FilterVersion": "2.0.447",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "02 Import H5EBSD to DREAM3D",
+        "Number_Filters": 3,
+        "Version": 6
+    }
+}

@@ -1,0 +1,141 @@
+{
+    "0": {
+        "FilterVersion": "2.0.447",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Name": "DataContainerReader",
+        "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
+        "InputFile": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
+        "InputFileDataContainerArrayProxy": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        7677634
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        6
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "IPFColor",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/FaceData",
+                                    "Tuple Dimensions": [
+                                        7677634
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 2,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "NodeType",
+                                    "Object Type": "DataArray<int8_t>",
+                                    "Path": "/DataContainers/TriangleDataContainer/VertexData",
+                                    "Tuple Dimensions": [
+                                        3658155
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "TriangleDataContainer",
+                    "Type": 4
+                }
+            ]
+        },
+        "OverwriteExistingDataContainers": 0
+    },
+    "1": {
+        "FilterVersion": "6.6.279",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Laplacian Smoothing",
+        "Filter_Name": "LaplacianSmoothing",
+        "Filter_Uuid": "{601c4885-c218-5da6-9fc7-519d85d241ad}",
+        "IterationSteps": 200,
+        "Lambda": 0.20000000298023224,
+        "MuFactor": -1.0299999713897705,
+        "QuadPointLambda": 0.10000000149011612,
+        "SurfaceMeshFaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "SurfaceMeshNodeTypeArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "SurfacePointLambda": 0,
+        "SurfaceQuadPointLambda": 0,
+        "SurfaceTripleLineLambda": 0,
+        "TripleLineLambda": 0.15000000596046448,
+        "UseTaubinSmoothing": 0
+    },
+    "2": {
+        "FilterVersion": "1.0.1325",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
+        "InternalTrianglesName": "InternalTrianglesDataContainer",
+        "NodeTypesArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "TriangleDataContainerName": {
+            "Attribute Matrix Name": "",
+            "Data Array Name": "",
+            "Data Container Name": "TriangleDataContainer"
+        }
+    },
+    "3": {
+        "FilterVersion": "2.0.447",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "10 IN625 Smooth Surface Mesh",
+        "Number_Filters": 4,
+        "Version": 6
+    }
+}
