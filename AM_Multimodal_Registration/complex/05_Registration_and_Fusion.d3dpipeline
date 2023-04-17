@@ -31,7 +31,7 @@
             "TDMS Keypoints/SharedVertexList",
             "TDMS Keypoints/Vertex Data"
           ],
-          "file_path": "/Users/mjackson/Workspace1/AM_Multimodal_Registration/NX_Output/04_GC1_InSituKeypoints.dream3d"
+          "file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d"
         }
       },
       "comments": "",
@@ -56,7 +56,7 @@
             "GC1 STL Keypoints/SharedVertexList",
             "GC1 STL Keypoints/VertexData"
           ],
-          "file_path": "/Users/mjackson/Workspace1/AM_Multimodal_Registration/NX_Output/03_GC1_STLKeypoints.dream3d"
+          "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
         },
         "Imported Pipeline": {
           "isDisabled": false,
@@ -158,7 +158,7 @@
             "GC1_CT KeyPoints/SharedVertexList",
             "GC1_CT KeyPoints/VertexData"
           ],
-          "file_path": "/Users/mjackson/Workspace1/AM_Multimodal_Registration/NX_Output/02_GC1_CTKeypoints.dream3d"
+          "file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d"
         }
       },
       "comments": "",
