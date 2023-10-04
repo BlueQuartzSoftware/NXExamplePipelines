@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "import_file_data": {
           "data_paths": [
             "ImageDataContainer",
             "ImageDataContainer/CellData",
@@ -36,7 +36,7 @@
     {
       "args": {
         "input_image_data_path": "GC1_CT_ImageData/CellData/Density",
-        "output_image_data_path": "GC1_CT_ImageData/CellData/GradMag",
+        "output_image_data_path": "GradMag",
         "selected_image_geom_path": "GC1_CT_ImageData",
         "use_image_spacing": true
       },
@@ -50,7 +50,7 @@
     {
       "args": {
         "array_to_threshold": "GC1_CT_ImageData/CellData/Density",
-        "created_mask_path": "GC1_CT_ImageData/CellData/Mask",
+        "created_mask_path": "Mask",
         "gradient_array": "GC1_CT_ImageData/CellData/GradMag"
       },
       "comments": "",
@@ -113,7 +113,7 @@
       "args": {
         "input_image_data_path": "GC1_CT_ImageData/CellData/Density",
         "mask_image_data_path": "GC1_CT_ImageData/CellData/8BitMask",
-        "output_image_data_path": "GC1_CT_ImageData/CellData/DensityMasked",
+        "output_image_data_path": "DensityMasked",
         "outside_value": 0.0,
         "selected_image_geom_path": "GC1_CT_ImageData"
       },
@@ -128,7 +128,7 @@
       "args": {
         "fully_connected": false,
         "input_image_data_path": "GC1_CT_ImageData/CellData/DensityMasked",
-        "output_image_data_path": "GC1_CT_ImageData/CellData/DensityMaskedFilled",
+        "output_image_data_path": "DensityMaskedFilled",
         "selected_image_geom_path": "GC1_CT_ImageData"
       },
       "comments": "",
@@ -154,7 +154,7 @@
     {
       "args": {
         "input_image_data_path": "GC1_CT_ImageData/CellData/DifferenceMap",
-        "output_image_data_path": "GC1_CT_ImageData/CellData/DifferenceMapNormalized",
+        "output_image_data_path": "DifferenceMapNormalized",
         "selected_image_geom_path": "GC1_CT_ImageData"
       },
       "comments": "",
@@ -169,7 +169,7 @@
         "input_image_data_path": "GC1_CT_ImageData/CellData/DifferenceMapNormalized",
         "inside_value": 1,
         "lower_threshold": 10.0,
-        "output_image_data_path": "GC1_CT_ImageData/CellData/Binarized",
+        "output_image_data_path": "Binarized",
         "outside_value": 0,
         "selected_image_geom_path": "GC1_CT_ImageData",
         "upper_threshold": 10000.0
@@ -198,7 +198,7 @@
           "type": "collection",
           "union": 0
         },
-        "created_data_path": "GC1_CT_ImageData/CellData/Mask"
+        "created_data_path": "Mask"
       },
       "comments": "",
       "filter": {

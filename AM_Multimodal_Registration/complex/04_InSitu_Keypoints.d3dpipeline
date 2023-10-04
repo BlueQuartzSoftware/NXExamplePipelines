@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "import_file_data": {
           "data_paths": [
             "HF_VertexDataContainer",
             "HF_VertexDataContainer/SharedVertexList",
@@ -54,7 +54,7 @@
           "type": "collection",
           "union": 0
         },
-        "created_data_path": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off"
+        "created_data_path": "Beam Off"
       },
       "comments": "",
       "filter": {

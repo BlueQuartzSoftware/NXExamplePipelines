@@ -1,11 +1,150 @@
 {
   "isDisabled": false,
-  "name": "05_Registration_and_Fusion.d3dpipeline",
-  "pinnedParams": [],
+  "name": "Untitled Pipeline",
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "export_file_path": "Data/Output/AM_Multimodal_Registration/05_GC1_Fused.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "complex::ExportDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "Imported Pipeline": {
+          "isDisabled": false,
+          "name": "Untitled Pipeline",
+          "pipeline": [
+            {
+              "args": {
+                "import_file_data": {
+                  "data_paths": [
+                    "HF_VertexDataContainer",
+                    "HF_VertexDataContainer/SharedVertexList",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/NumNeighbors",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/data_layer_times",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/file_layer_times",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/hf_time_res",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/layer_height",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/layer_thickness",
+                    "HF_VertexDataContainer/HF_SliceAttributeMatrix/lf_time_res",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/Audio",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF Temperature",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF Time",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/HF_SliceIds",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Drive",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Power",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/Off-Axis PD",
+                    "HF_VertexDataContainer/HF_VertexAttributeMatrix/Photodiode"
+                  ],
+                  "file_path": "Data/AM_Multimodal_Registration/GC1.dream3d"
+                }
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ImportDREAM3DFilter",
+                "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "array_thresholds": {
+                  "inverted": false,
+                  "thresholds": [
+                    {
+                      "array_path": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Laser Drive",
+                      "comparison": 2,
+                      "inverted": false,
+                      "type": "array",
+                      "union": 0,
+                      "value": 0.0
+                    }
+                  ],
+                  "type": "collection",
+                  "union": 0
+                },
+                "created_data_path": "Beam Off",
+                "created_mask_type": 10,
+                "custom_false_value": 0.0,
+                "custom_true_value": 1.0,
+                "use_custom_false_value": false,
+                "use_custom_true_value": false
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::MultiThresholdObjects",
+                "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "mask": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off",
+                "reduced_vertex": "TDMS Beam On",
+                "vertex_geom": "HF_VertexDataContainer"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::RemoveFlaggedVertices",
+                "uuid": "46099b4c-ef90-4fb3-b5e9-6c8c543c5be1"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "removed_data_path": [
+                  "HF_VertexDataContainer"
+                ]
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::DeleteData",
+                "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "grid_resolution": [
+                  0.10000000149011612,
+                  0.10000000149011612,
+                  0.10000000149011612
+                ],
+                "hull_vertex_geometry": "TDMS Keypoints",
+                "min_empty_neighbors": 4,
+                "vertex_geometry": "TDMS Beam On"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ApproximatePointCloudHull",
+                "uuid": "c19203b7-2217-4e52-bff4-7f611695421a"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "export_file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d",
+                "write_xdmf_file": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ExportDREAM3DFilter",
+                "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+              },
+              "isDisabled": false
+            }
+          ],
+          "version": 1
+        },
+        "import_file_data": {
           "data_paths": [
             "TDMS Beam On",
             "TDMS Beam On/SharedVertexList",
@@ -43,31 +182,20 @@
     },
     {
       "args": {
-        "Import_File_Data": {
-          "data_paths": [
-            "GC1_STL",
-            "GC1_STL/SharedTriList",
-            "GC1_STL/SharedVertexList",
-            "GC1_STL/Face Data",
-            "GC1_STL/Vertex Data",
-            "GC1_STL/Face Data/FaceNormals",
-            "GC1_STL/Face Data/FaceAreas",
-            "GC1 STL Keypoints",
-            "GC1 STL Keypoints/SharedVertexList",
-            "GC1 STL Keypoints/VertexData"
-          ],
-          "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
-        },
         "Imported Pipeline": {
           "isDisabled": false,
-          "name": "03_STL_Keypoints",
+          "name": "Untitled Pipeline",
           "pipeline": [
             {
               "args": {
+                "face_matrix": "Face Data",
                 "geometry_data_path": "GC1_STL",
                 "scale_factor": 25.399999618530273,
                 "scale_output": true,
-                "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl"
+                "shared_face_matrix": "SharedTriList",
+                "shared_vertex_matrix": "SharedVertexList",
+                "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
+                "vertex_matrix": "Vertex Data"
               },
               "comments": "",
               "filter": {
@@ -118,7 +246,23 @@
               },
               "isDisabled": false
             }
-          ]
+          ],
+          "version": 1
+        },
+        "import_file_data": {
+          "data_paths": [
+            "GC1_STL",
+            "GC1_STL/SharedTriList",
+            "GC1_STL/SharedVertexList",
+            "GC1_STL/Face Data",
+            "GC1_STL/Vertex Data",
+            "GC1_STL/Face Data/FaceNormals",
+            "GC1_STL/Face Data/FaceAreas",
+            "GC1 STL Keypoints",
+            "GC1 STL Keypoints/SharedVertexList",
+            "GC1 STL Keypoints/VertexData"
+          ],
+          "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
         }
       },
       "comments": "",
@@ -130,7 +274,228 @@
     },
     {
       "args": {
-        "Import_File_Data": {
+        "Imported Pipeline": {
+          "isDisabled": false,
+          "name": "Untitled Pipeline",
+          "pipeline": [
+            {
+              "args": {
+                "import_file_data": {
+                  "data_paths": [
+                    "ImageDataContainer",
+                    "ImageDataContainer/CellData",
+                    "ImageDataContainer/CellData/Density"
+                  ],
+                  "file_path": "Data/AM_Multimodal_Registration/GC1_CT.dream3d"
+                }
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ImportDREAM3DFilter",
+                "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "data_object": "ImageDataContainer",
+                "new_name": "GC1_CT_ImageData"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::RenameDataObject",
+                "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "input_image_data_path": "GC1_CT_ImageData/CellData/Density",
+                "output_image_data_path": "GradMag",
+                "selected_image_geom_path": "GC1_CT_ImageData",
+                "use_image_spacing": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ITKGradientMagnitudeImage",
+                "uuid": "719df7b2-8db2-43eb-a40c-a015982eec08"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "array_to_threshold": "GC1_CT_ImageData/CellData/Density",
+                "created_mask_path": "Mask",
+                "gradient_array": "GC1_CT_ImageData/CellData/GradMag"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::RobustAutomaticThreshold",
+                "uuid": "ade392e6-f0da-4cf3-bf11-dfe69e200b49"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "advanced_options": false,
+                "component_count": 1,
+                "data_format": "",
+                "initialization_value": "0",
+                "numeric_type": 4,
+                "output_data_array": "GC1_CT_ImageData/CellData/FeatureIds",
+                "tuple_dimensions": [
+                  [
+                    958.0,
+                    449.0,
+                    438.0
+                  ]
+                ]
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::CreateDataArray",
+                "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "conditional_array_path": "GC1_CT_ImageData/CellData/Mask",
+                "invert_mask": false,
+                "remove_value": "0",
+                "replace_value": "1",
+                "selected_array_path": "GC1_CT_ImageData/CellData/FeatureIds",
+                "use_conditional": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ConditionalSetValue",
+                "uuid": "bad9b7bd-1dc9-4f21-a889-6520e7a41881"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "removed_data_path": [
+                  "GC1_CT_ImageData/CellData/Mask"
+                ]
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::DeleteData",
+                "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "face_data_group_name": "FaceData",
+                "face_feature_attribute_matrix_name": "FaceFeatureData",
+                "face_labels_array_name": "FaceLabels",
+                "feature_ids_path": "GC1_CT_ImageData/CellData/FeatureIds",
+                "fix_problem_voxels": true,
+                "generate_triple_lines": false,
+                "grid_geometry_data_path": "GC1_CT_ImageData",
+                "node_types_array_name": "NodeType",
+                "selected_data_array_paths": [],
+                "triangle_geometry_name": "GC1_CT_QuickMesh",
+                "vertex_data_group_name": "VertexData"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::QuickSurfaceMeshFilter",
+                "uuid": "13dd00bd-ad49-4e04-95eb-3267952fd6e5"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "copy_triangle_array_paths": [
+                  "GC1_CT_QuickMesh/FaceData/FaceLabels"
+                ],
+                "copy_vertex_array_paths": [
+                  "GC1_CT_QuickMesh/VertexData/NodeType"
+                ],
+                "face_data_name": "FaceData",
+                "internal_triangle_geom": "GC1_CT Surface",
+                "node_types": "GC1_CT_QuickMesh/VertexData/NodeType",
+                "triangle_geom": "GC1_CT_QuickMesh",
+                "vertex_data_name": "VertexData"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ExtractInternalSurfacesFromTriangleGeometry",
+                "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "iteration_steps": 300,
+                "lambda_value": 0.20000000298023224,
+                "mu_factor": -1.0299999713897705,
+                "quad_point_lambda": 0.0,
+                "surface_mesh_node_type_array_path": "GC1_CT Surface/VertexData/NodeType",
+                "surface_point_lambda": 0.0,
+                "surface_quad_point_lambda": 0.0,
+                "surface_triple_line_lambda": 0.0,
+                "triangle_geometry_data_path": "GC1_CT Surface",
+                "triple_line_lambda": 0.0,
+                "use_taubin_smoothing": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::LaplacianSmoothingFilter",
+                "uuid": "0dd0916e-9305-4a7b-98cf-a6cfb97cb501"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "triangle_areas_array_path": "Face Areas",
+                "triangle_geometry_data_path": "GC1_CT Surface"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::CalculateTriangleAreasFilter",
+                "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "mask_array_path": "",
+                "number_of_samples": 100000,
+                "selected_data_array_paths": [],
+                "triangle_areas_array_path": "GC1_CT Surface/FaceData/Face Areas",
+                "triangle_geometry_path": "GC1_CT Surface",
+                "use_mask": false,
+                "vertex_data_group_path": "VertexData",
+                "vertex_geometry_path": "GC1_CT KeyPoints"
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::PointSampleTriangleGeometryFilter",
+                "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
+              },
+              "isDisabled": false
+            },
+            {
+              "args": {
+                "export_file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d",
+                "write_xdmf_file": true
+              },
+              "comments": "",
+              "filter": {
+                "name": "complex::ExportDREAM3DFilter",
+                "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+              },
+              "isDisabled": false
+            }
+          ],
+          "version": 1
+        },
+        "import_file_data": {
           "data_paths": [
             "GC1_CT_ImageData",
             "GC1_CT_ImageData/CellData",
@@ -142,9 +507,9 @@
             "GC1_CT_QuickMesh/SharedVertexList",
             "GC1_CT_QuickMesh/FaceData",
             "GC1_CT_QuickMesh/VertexData",
-            "GC1_CT_QuickMesh/FaceFeatureData",
-            "GC1_CT_QuickMesh/FaceData/FaceLabels",
             "GC1_CT_QuickMesh/VertexData/NodeType",
+            "GC1_CT_QuickMesh/FaceData/FaceLabels",
+            "GC1_CT_QuickMesh/FaceFeatureData",
             "GC1_CT Surface",
             "GC1_CT Surface/SharedTriList",
             "GC1_CT Surface/SharedVertexList",
@@ -200,7 +565,7 @@
     },
     {
       "args": {
-        "cell_attribute_matrix_path": "",
+        "cell_attribute_matrix_path": "GC1 STL Keypoints/VertexData",
         "computed_transformation_matrix": "GC1 STL Keypoints/Transform",
         "interpolation_type": 0,
         "manual_transformation_matrix": [
@@ -242,6 +607,7 @@
         ],
         "selected_image_geometry": "GC1_STL",
         "transformation_type": 1,
+        "translate_geometry_to_global_origin": false,
         "translation": [
           0.0,
           0.0,
@@ -257,7 +623,7 @@
     },
     {
       "args": {
-        "cell_attribute_matrix_path": "",
+        "cell_attribute_matrix_path": "TDMS Keypoints/Vertex Data",
         "computed_transformation_matrix": "TDMS Keypoints/Transform",
         "interpolation_type": 0,
         "manual_transformation_matrix": [
@@ -299,6 +665,7 @@
         ],
         "selected_image_geometry": "TDMS Beam On",
         "transformation_type": 1,
+        "translate_geometry_to_global_origin": false,
         "translation": [
           0.0,
           0.0,
@@ -311,19 +678,7 @@
         "uuid": "f5bbc16b-3426-4ae0-b27b-ba7862dc40fe"
       },
       "isDisabled": false
-    },
-    {
-      "args": {
-        "export_file_path": "Data/Output/AM_Multimodal_Registration/05_GC1_Fused.dream3d",
-        "write_xdmf_file": true
-      },
-      "comments": "",
-      "filter": {
-        "name": "complex::ExportDREAM3DFilter",
-        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
-      },
-      "isDisabled": false
     }
   ],
-  "workflowParams": []
+  "version": 1
 }
