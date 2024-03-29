@@ -1,6 +1,7 @@
 {
   "isDisabled": false,
-  "name": "Untitled Pipeline",
+  "name": "05_Registration_and_Fusion.d3dpipeline",
+  "pinnedParams": [],
   "pipeline": [
     {
       "args": {
@@ -9,7 +10,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
@@ -18,7 +19,7 @@
       "args": {
         "Imported Pipeline": {
           "isDisabled": false,
-          "name": "Untitled Pipeline",
+          "name": "04_InSitu_Keypoints",
           "pipeline": [
             {
               "args": {
@@ -49,7 +50,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ImportDREAM3DFilter",
+                "name": "nx::core::ReadDREAM3DFilter",
                 "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
               },
               "isDisabled": false
@@ -80,7 +81,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::MultiThresholdObjects",
+                "name": "nx::core::MultiThresholdObjects",
                 "uuid": "4246245e-1011-4add-8436-0af6bed19228"
               },
               "isDisabled": false
@@ -93,7 +94,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::RemoveFlaggedVertices",
+                "name": "nx::core::RemoveFlaggedVertices",
                 "uuid": "46099b4c-ef90-4fb3-b5e9-6c8c543c5be1"
               },
               "isDisabled": false
@@ -106,7 +107,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "nx::core::DeleteData",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -124,7 +125,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ApproximatePointCloudHull",
+                "name": "nx::core::ApproximatePointCloudHull",
                 "uuid": "c19203b7-2217-4e52-bff4-7f611695421a"
               },
               "isDisabled": false
@@ -136,7 +137,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ExportDREAM3DFilter",
+                "name": "nx::core::WriteDREAM3DFilter",
                 "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
               },
               "isDisabled": false
@@ -175,7 +176,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
@@ -184,22 +185,21 @@
       "args": {
         "Imported Pipeline": {
           "isDisabled": false,
-          "name": "Untitled Pipeline",
+          "name": "03_STL_Keypoints",
           "pipeline": [
             {
               "args": {
-                "face_matrix": "Face Data",
-                "geometry_data_path": "GC1_STL",
+                "face_attribute_matrix": "Face Data",
+                "face_normals_data_path": "Face Normals",
                 "scale_factor": 25.399999618530273,
                 "scale_output": true,
-                "shared_face_matrix": "SharedTriList",
-                "shared_vertex_matrix": "SharedVertexList",
                 "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
-                "vertex_matrix": "Vertex Data"
+                "triangle_geometry_name": "GC1_STL",
+                "vertex_attribute_matrix": "Vertex Data"
               },
               "comments": "",
               "filter": {
-                "name": "complex::StlFileReaderFilter",
+                "name": "nx::core::ReadStlFileFilter",
                 "uuid": "2f64bd45-9d28-4254-9e07-6aa7c6d3d015"
               },
               "isDisabled": false
@@ -211,7 +211,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::CalculateTriangleAreasFilter",
+                "name": "nx::core::CalculateTriangleAreasFilter",
                 "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
               },
               "isDisabled": false
@@ -220,16 +220,19 @@
               "args": {
                 "mask_array_path": "",
                 "number_of_samples": 100000,
+                "seed_array_name": "PointSampleTriangleGeometry SeedValue",
+                "seed_value": 5489,
                 "selected_data_array_paths": [],
                 "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
                 "triangle_geometry_path": "GC1_STL",
                 "use_mask": false,
+                "use_seed": false,
                 "vertex_data_group_path": "VertexData",
                 "vertex_geometry_path": "GC1 STL Keypoints"
               },
               "comments": "",
               "filter": {
-                "name": "complex::PointSampleTriangleGeometryFilter",
+                "name": "nx::core::PointSampleTriangleGeometryFilter",
                 "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
               },
               "isDisabled": false
@@ -241,7 +244,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ExportDREAM3DFilter",
+                "name": "nx::core::WriteDREAM3DFilter",
                 "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
               },
               "isDisabled": false
@@ -256,18 +259,19 @@
             "GC1_STL/SharedVertexList",
             "GC1_STL/Face Data",
             "GC1_STL/Vertex Data",
-            "GC1_STL/Face Data/FaceNormals",
+            "GC1_STL/Face Data/Face Normals",
             "GC1_STL/Face Data/FaceAreas",
             "GC1 STL Keypoints",
             "GC1 STL Keypoints/SharedVertexList",
-            "GC1 STL Keypoints/VertexData"
+            "GC1 STL Keypoints/VertexData",
+            "PointSampleTriangleGeometry SeedValue"
           ],
           "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
         }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
@@ -276,7 +280,7 @@
       "args": {
         "Imported Pipeline": {
           "isDisabled": false,
-          "name": "Untitled Pipeline",
+          "name": "02_CT_Keypoints",
           "pipeline": [
             {
               "args": {
@@ -291,7 +295,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ImportDREAM3DFilter",
+                "name": "nx::core::ReadDREAM3DFilter",
                 "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
               },
               "isDisabled": false
@@ -303,7 +307,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::RenameDataObject",
+                "name": "nx::core::RenameDataObject",
                 "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
               },
               "isDisabled": false
@@ -317,7 +321,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ITKGradientMagnitudeImage",
+                "name": "nx::core::ITKGradientMagnitudeImage",
                 "uuid": "719df7b2-8db2-43eb-a40c-a015982eec08"
               },
               "isDisabled": false
@@ -330,7 +334,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::RobustAutomaticThreshold",
+                "name": "nx::core::RobustAutomaticThreshold",
                 "uuid": "ade392e6-f0da-4cf3-bf11-dfe69e200b49"
               },
               "isDisabled": false
@@ -353,7 +357,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::CreateDataArray",
+                "name": "nx::core::CreateDataArray",
                 "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d"
               },
               "isDisabled": false
@@ -369,7 +373,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ConditionalSetValue",
+                "name": "nx::core::ConditionalSetValue",
                 "uuid": "bad9b7bd-1dc9-4f21-a889-6520e7a41881"
               },
               "isDisabled": false
@@ -382,7 +386,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "nx::core::DeleteData",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -403,7 +407,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::QuickSurfaceMeshFilter",
+                "name": "nx::core::QuickSurfaceMeshFilter",
                 "uuid": "13dd00bd-ad49-4e04-95eb-3267952fd6e5"
               },
               "isDisabled": false
@@ -418,13 +422,17 @@
                 ],
                 "face_data_name": "FaceData",
                 "internal_triangle_geom": "GC1_CT Surface",
+                "node_type_range": [
+                  0,
+                  8
+                ],
                 "node_types": "GC1_CT_QuickMesh/VertexData/NodeType",
                 "triangle_geom": "GC1_CT_QuickMesh",
                 "vertex_data_name": "VertexData"
               },
               "comments": "",
               "filter": {
-                "name": "complex::ExtractInternalSurfacesFromTriangleGeometry",
+                "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
                 "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
               },
               "isDisabled": false
@@ -445,7 +453,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::LaplacianSmoothingFilter",
+                "name": "nx::core::LaplacianSmoothingFilter",
                 "uuid": "0dd0916e-9305-4a7b-98cf-a6cfb97cb501"
               },
               "isDisabled": false
@@ -457,7 +465,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::CalculateTriangleAreasFilter",
+                "name": "nx::core::CalculateTriangleAreasFilter",
                 "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
               },
               "isDisabled": false
@@ -466,16 +474,19 @@
               "args": {
                 "mask_array_path": "",
                 "number_of_samples": 100000,
+                "seed_array_name": "PointSampleTriangleGeometry SeedValue",
+                "seed_value": 5489,
                 "selected_data_array_paths": [],
                 "triangle_areas_array_path": "GC1_CT Surface/FaceData/Face Areas",
                 "triangle_geometry_path": "GC1_CT Surface",
                 "use_mask": false,
+                "use_seed": false,
                 "vertex_data_group_path": "VertexData",
                 "vertex_geometry_path": "GC1_CT KeyPoints"
               },
               "comments": "",
               "filter": {
-                "name": "complex::PointSampleTriangleGeometryFilter",
+                "name": "nx::core::PointSampleTriangleGeometryFilter",
                 "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
               },
               "isDisabled": false
@@ -487,7 +498,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::ExportDREAM3DFilter",
+                "name": "nx::core::WriteDREAM3DFilter",
                 "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
               },
               "isDisabled": false
@@ -528,7 +539,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
@@ -543,7 +554,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::IterativeClosestPointFilter",
+        "name": "nx::core::IterativeClosestPointFilter",
         "uuid": "3a206668-fa44-418d-b78e-9fd803b8fb98"
       },
       "isDisabled": false
@@ -558,7 +569,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::IterativeClosestPointFilter",
+        "name": "nx::core::IterativeClosestPointFilter",
         "uuid": "3a206668-fa44-418d-b78e-9fd803b8fb98"
       },
       "isDisabled": false
@@ -616,7 +627,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ApplyTransformationToGeometryFilter",
+        "name": "nx::core::ApplyTransformationToGeometryFilter",
         "uuid": "f5bbc16b-3426-4ae0-b27b-ba7862dc40fe"
       },
       "isDisabled": false
@@ -674,11 +685,12 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ApplyTransformationToGeometryFilter",
+        "name": "nx::core::ApplyTransformationToGeometryFilter",
         "uuid": "f5bbc16b-3426-4ae0-b27b-ba7862dc40fe"
       },
       "isDisabled": false
     }
   ],
-  "version": 1
+  "version": 1,
+  "workflowParams": []
 }

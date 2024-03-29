@@ -571,9 +571,9 @@
             "Data Container Name": "GC1_CT_ImageData"
         },
         "FeaturePhasesArrayPath": {
-            "Attribute Matrix Name": "\t",
-            "Data Array Name": "\t",
-            "Data Container Name": "\t"
+            "Attribute Matrix Name": "",
+            "Data Array Name": "",
+            "Data Container Name": ""
         },
         "FilterVersion": "6.6.351",
         "Filter_Enabled": true,

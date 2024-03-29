@@ -1,0 +1,1830 @@
+{
+    "00": {
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Name": "DataContainerReader",
+        "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
+        "InputFile": "Data/Output/GammaPrime/GammaPrimeStatistics.dream3d",
+        "InputFileDataContainerArrayProxy": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EqualizedGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EqualizedGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "FeatureIds",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "ImageData",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MedianGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MedianGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Omega3s",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "OtsuGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "OtsuGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Precipitates",
+                                    "Object Type": "DataArray<bool>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "CellData",
+                            "Type": 3
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Active",
+                                    "Object Type": "DataArray<bool>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "AspectRatios",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "AxisEulerAngles",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "AxisLengths",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Centroids",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Mask",
+                                    "Object Type": "DataArray<bool>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "NumElements",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Omega3s",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Volumes",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "CellFeatureData",
+                            "Type": 7
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "ImageDataContainer",
+                    "Type": 0
+                }
+            ]
+        },
+        "OverwriteExistingDataContainers": 0
+    },
+    "01": {
+        "BackgroundValue": 0,
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Binary Contour Image Filter",
+        "Filter_Name": "ITKBinaryContourImage",
+        "Filter_Uuid": "{3c451ac9-bfef-5e41-bae9-3957a0fc26a1}",
+        "ForegroundValue": 1,
+        "FullyConnected": 1,
+        "NewCellArrayName": "GrainBoundary",
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "MaskGrain1",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "02": {
+        "BackgroundValue": 0,
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Signed Maurer Distance Map Image Filter",
+        "Filter_Name": "ITKSignedMaurerDistanceMapImage",
+        "Filter_Uuid": "{bb15d42a-3077-582a-be1a-76b2bae172e9}",
+        "InsideIsPositive": 0,
+        "NewCellArrayName": "DistanceToBoundary",
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "GrainBoundary",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "SquaredDistance": 0,
+        "UseImageSpacing": 1
+    },
+    "03": {
+        "ComputeByIndex": 1,
+        "DestinationAttributeMatrix": {
+            "Attribute Matrix Name": "CellFeatureData",
+            "Data Array Name": "",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FeatureIdsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "FeatureIds",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "1.0.97",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Find Attribute Array Statistics",
+        "Filter_Name": "FindArrayStatistics",
+        "Filter_Uuid": "{bf35f515-294b-55ed-8c69-211b7e69cb56}",
+        "FindLength": 0,
+        "FindMax": 0,
+        "FindMean": 1,
+        "FindMedian": 0,
+        "FindMin": 0,
+        "FindStdDeviation": 0,
+        "FindSummation": 0,
+        "LengthArrayName": "Length",
+        "MaskArrayPath": {
+            "Attribute Matrix Name": "",
+            "Data Array Name": "",
+            "Data Container Name": ""
+        },
+        "MaximumArrayName": "Maximum",
+        "MeanArrayName": "MeanDistance",
+        "MedianArrayName": "Median",
+        "MinimumArrayName": "Minimum",
+        "SelectedArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "DistanceToBoundary",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "StandardizeData": 0,
+        "StandardizedArrayName": "Standardized",
+        "StdDeviationArrayName": "StandardDeviation",
+        "SummationArrayName": "Summation",
+        "UseMask": 0
+    },
+    "04": {
+        "CalculatedArray": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "GrainFeatureIds",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Attribute Array Calculator",
+        "Filter_Name": "ArrayCalculator",
+        "Filter_Uuid": "{7ff0ebb3-7b0d-5ff7-b9d8-5147031aca10}",
+        "InfixEquation": "MaskGrain1 + 1",
+        "ScalarType": 4,
+        "SelectedAttributeMatrix": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "Units": 1
+    },
+    "05": {
+        "FaceAttributeMatrixName": "FaceData",
+        "FaceLabelsArrayName": "FaceLabels",
+        "FeatureAttributeMatrixName": "FaceFeatureData",
+        "FeatureIdsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "FeatureIds",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "6.5.171",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Quick Surface Mesh",
+        "Filter_Name": "QuickSurfaceMesh",
+        "Filter_Uuid": "{07b49e30-3900-5c34-862a-f1fb48bad568}",
+        "NodeTypesArrayName": "NodeType",
+        "SelectedDataArrayPaths": [
+            {
+                "Attribute Matrix Name": "CellData",
+                "Data Array Name": "DistanceToBoundary",
+                "Data Container Name": "ImageDataContainer"
+            }
+        ],
+        "SurfaceDataContainerName": "TriangleDataContainer",
+        "VertexAttributeMatrixName": "VertexData"
+    },
+    "06": {
+        "FilterVersion": "1.0.97",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
+        "InternalTrianglesName": "PrecipitatesSurface",
+        "NodeTypesArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "TriangleDataContainerName": "TriangleDataContainer"
+    },
+    "07": {
+        "DataArraysToRemove": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "DistanceToBoundary",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EqualizedGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EqualizedGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FeatureIds",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "GrainBoundary",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "GrainFeatureIds",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "ImageData",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MaskGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MaskGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MedianGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MedianGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Omega3s",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "OtsuGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "OtsuGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Precipitates",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "RawGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "RawGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "CellData",
+                            "Type": 3
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Active",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AspectRatios",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AxisEulerAngles",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AxisLengths",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Centroids",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Mask",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MeanDistance",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NumElements",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Omega3s",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Volumes",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "CellFeatureData",
+                            "Type": 7
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "ImageDataContainer",
+                    "Type": 0
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "DistanceToBoundary",
+                                    "Object Type": "float",
+                                    "Path": "GrainBoundaryDataContainer/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "int32_t",
+                                    "Path": "GrainBoundaryDataContainer/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NodeType",
+                                    "Object Type": "int8_t",
+                                    "Path": "GrainBoundaryDataContainer/VertexData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "PrecipitatesSurface",
+                    "Type": 4
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "DistanceToBoundary",
+                                    "Object Type": "float",
+                                    "Path": "TriangleDataContainer/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "int32_t",
+                                    "Path": "TriangleDataContainer/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NodeType",
+                                    "Object Type": "int8_t",
+                                    "Path": "TriangleDataContainer/VertexData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "TriangleDataContainer",
+                    "Type": 4
+                }
+            ]
+        },
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Delete Data",
+        "Filter_Name": "RemoveArrays",
+        "Filter_Uuid": "{7b1c8f46-90dd-584a-b3ba-34e16958a7d0}"
+    },
+    "08": {
+        "FilterVersion": "6.5.171",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Laplacian Smoothing",
+        "Filter_Name": "LaplacianSmoothing",
+        "Filter_Uuid": "{601c4885-c218-5da6-9fc7-519d85d241ad}",
+        "IterationSteps": 50,
+        "Lambda": 0.10000000149011612,
+        "MuFactor": -1.0299999713897705,
+        "QuadPointLambda": 0,
+        "SurfaceMeshFaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "PrecipitatesSurface"
+        },
+        "SurfaceMeshNodeTypeArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "PrecipitatesSurface"
+        },
+        "SurfacePointLambda": 0,
+        "SurfaceQuadPointLambda": 0,
+        "SurfaceTripleLineLambda": 0,
+        "TripleLineLambda": 0,
+        "UseTaubinSmoothing": 0
+    },
+    "09": {
+        "FaceAttributeMatrixName": "FaceData",
+        "FaceLabelsArrayName": "FaceLabels",
+        "FeatureAttributeMatrixName": "FaceFeatureData",
+        "FeatureIdsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "GrainFeatureIds",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "6.5.171",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Quick Surface Mesh",
+        "Filter_Name": "QuickSurfaceMesh",
+        "Filter_Uuid": "{07b49e30-3900-5c34-862a-f1fb48bad568}",
+        "NodeTypesArrayName": "NodeType",
+        "SelectedDataArrayPaths": [
+        ],
+        "SurfaceDataContainerName": "TriangleDataContainer",
+        "VertexAttributeMatrixName": "VertexData"
+    },
+    "10": {
+        "FilterVersion": "1.0.97",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
+        "InternalTrianglesName": "GrainBoundary",
+        "NodeTypesArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "TriangleDataContainer"
+        },
+        "TriangleDataContainerName": "TriangleDataContainer"
+    },
+    "11": {
+        "DataArraysToRemove": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "int32_t",
+                                    "Path": "GrainBoundary/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NodeType",
+                                    "Object Type": "int8_t",
+                                    "Path": "GrainBoundary/VertexData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "GrainBoundary",
+                    "Type": 4
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "DistanceToBoundary",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EqualizedGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EqualizedGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FeatureIds",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "GrainBoundary",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "GrainFeatureIds",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "ImageData",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MaskGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MaskGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MedianGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MedianGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Omega3s",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "OtsuGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "OtsuGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Precipitates",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "RawGrain1",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "RawGrain2",
+                                    "Object Type": "uint8_t",
+                                    "Path": "ImageDataContainer/CellData/",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "CellData",
+                            "Type": 3
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Active",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AspectRatios",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AxisEulerAngles",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "AxisLengths",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Centroids",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "EquivalentDiameters",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Mask",
+                                    "Object Type": "bool",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "MeanDistance",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NumElements",
+                                    "Object Type": "int32_t",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Omega3s",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "Volumes",
+                                    "Object Type": "float",
+                                    "Path": "ImageDataContainer/CellFeatureData/",
+                                    "Tuple Dimensions": [
+                                        1097
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "CellFeatureData",
+                            "Type": 7
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "ImageDataContainer",
+                    "Type": 0
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "DistanceToBoundary",
+                                    "Object Type": "float",
+                                    "Path": "PrecipitatesSurface/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "int32_t",
+                                    "Path": "PrecipitatesSurface/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NodeType",
+                                    "Object Type": "int8_t",
+                                    "Path": "PrecipitatesSurface/VertexData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 0,
+                    "Name": "PrecipitatesSurface",
+                    "Type": 4
+                },
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        2
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "FaceLabels",
+                                    "Object Type": "int32_t",
+                                    "Path": "TriangleDataContainer/FaceData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceData",
+                            "Type": 2
+                        },
+                        {
+                            "Data Arrays": [
+                            ],
+                            "Flag": 0,
+                            "Name": "FaceFeatureData",
+                            "Type": 6
+                        },
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 0,
+                                    "Name": "NodeType",
+                                    "Object Type": "int8_t",
+                                    "Path": "TriangleDataContainer/VertexData/",
+                                    "Tuple Dimensions": [
+                                        0
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 0,
+                            "Name": "VertexData",
+                            "Type": 0
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "TriangleDataContainer",
+                    "Type": 4
+                }
+            ]
+        },
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Delete Data",
+        "Filter_Name": "RemoveArrays",
+        "Filter_Uuid": "{7b1c8f46-90dd-584a-b3ba-34e16958a7d0}"
+    },
+    "12": {
+        "FilterVersion": "6.5.171",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Laplacian Smoothing",
+        "Filter_Name": "LaplacianSmoothing",
+        "Filter_Uuid": "{601c4885-c218-5da6-9fc7-519d85d241ad}",
+        "IterationSteps": 50,
+        "Lambda": 0.10000000149011612,
+        "MuFactor": -1.0299999713897705,
+        "QuadPointLambda": 0,
+        "SurfaceMeshFaceLabelsArrayPath": {
+            "Attribute Matrix Name": "FaceData",
+            "Data Array Name": "FaceLabels",
+            "Data Container Name": "GrainBoundary"
+        },
+        "SurfaceMeshNodeTypeArrayPath": {
+            "Attribute Matrix Name": "VertexData",
+            "Data Array Name": "NodeType",
+            "Data Container Name": "GrainBoundary"
+        },
+        "SurfacePointLambda": 0,
+        "SurfaceQuadPointLambda": 0,
+        "SurfaceTripleLineLambda": 0,
+        "TripleLineLambda": 0,
+        "UseTaubinSmoothing": 0
+    },
+    "13": {
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/GammaPrime/GammaPrimeBoundaryDistance.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "5_GammaPrimeBoundaryDistance",
+        "Number_Filters": 14,
+        "Version": 6
+    }
+}

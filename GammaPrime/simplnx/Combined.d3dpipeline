@@ -1,0 +1,929 @@
+{
+  "isDisabled": false,
+  "name": "Combined.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "cell_attribute_matrix_name": "CellData",
+        "color_weights": [
+          0.21250000596046448,
+          0.715399980545044,
+          0.07209999859333038
+        ],
+        "convert_to_gray_scale": false,
+        "image_data_array_name": "ImageData",
+        "image_geometry_path": "ImageDataContainer",
+        "image_transform_choice": 0,
+        "input_file_list_info": {
+          "end_index": 56,
+          "file_extension": ".tif",
+          "file_prefix": "GammaPrime",
+          "file_suffix": "",
+          "increment_index": 1,
+          "input_path": "Data/GammaPrime/",
+          "ordering": 0,
+          "padding_digits": 4,
+          "start_index": 0
+        },
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "spacing": [
+          17.399999618530273,
+          17.399999618530273,
+          50.0
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKImportImageStack",
+        "uuid": "dcf980b7-ecca-46d1-af31-ac65f6e3b6bb"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+        "label_offset": 0,
+        "number_of_histogram_bins": 256,
+        "number_of_thresholds": 1,
+        "output_image_data_path": "MaskGrain1",
+        "return_bin_midpoint": false,
+        "selected_image_geom_path": "ImageDataContainer",
+        "valley_emphasis": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+        "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "fully_connected": false,
+        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "kernel_radius": [
+          7,
+          7,
+          7
+        ],
+        "kernel_type": 2,
+        "output_image_data_path": "MaskGrain1 (filtered)",
+        "preserve_intensities": false,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKClosingByReconstructionImage",
+        "uuid": "b5ff32a8-e799-4f72-8d13-e2581f748562"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "ImageDataContainer/CellData/MaskGrain1"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+        "new_name": "MaskGrain1"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RenameDataObject",
+        "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "fully_connected": false,
+        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "kernel_radius": [
+          7,
+          7,
+          7
+        ],
+        "kernel_type": 2,
+        "output_image_data_path": "MaskGrain1 (filtered)",
+        "preserve_intensities": false,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOpeningByReconstructionImage",
+        "uuid": "c4225a23-0b23-4782-b509-296fb39a672b"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "ImageDataContainer/CellData/MaskGrain1"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+        "new_name": "MaskGrain1"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RenameDataObject",
+        "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "maximum": 1.0,
+        "output_image_data_path": "MaskGrain2",
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKInvertIntensityImage",
+        "uuid": "9958d587-5698-4ea5-b8ea-fb71428b5d02"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "output_image_data_path": "RawGrain1",
+        "outside_value": 0.0,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMaskImage",
+        "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
+        "output_image_data_path": "RawGrain2",
+        "outside_value": 0.0,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMaskImage",
+        "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/RawGrain1",
+        "output_image_data_path": "MedianGrain1",
+        "radius": [
+          2,
+          2,
+          1
+        ],
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMedianImage",
+        "uuid": "a60ca165-59ac-486b-b4b4-0f0c24d80af8"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/RawGrain2",
+        "output_image_data_path": "MedianGrain2",
+        "radius": [
+          2,
+          2,
+          1
+        ],
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMedianImage",
+        "uuid": "a60ca165-59ac-486b-b4b4-0f0c24d80af8"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "alpha": 0.30000001192092896,
+        "beta": 0.30000001192092896,
+        "input_image_data_path": "ImageDataContainer/CellData/MedianGrain1",
+        "output_image_data_path": "EqualizedGrain1",
+        "radius": [
+          35,
+          35,
+          5
+        ],
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKAdaptiveHistogramEqualizationImage",
+        "uuid": "ea3e7439-8327-4190-8ff7-49ecc321718f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "alpha": 0.30000001192092896,
+        "beta": 0.30000001192092896,
+        "input_image_data_path": "ImageDataContainer/CellData/MedianGrain2",
+        "output_image_data_path": "EqualizedGrain2",
+        "radius": [
+          35,
+          35,
+          5
+        ],
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKAdaptiveHistogramEqualizationImage",
+        "uuid": "ea3e7439-8327-4190-8ff7-49ecc321718f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "output_image_data_path": "EqualizedGrain1 (filtered)",
+        "outside_value": 0.0,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMaskImage",
+        "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "ImageDataContainer/CellData/EqualizedGrain1"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)",
+        "new_name": "EqualizedGrain1"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RenameDataObject",
+        "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
+        "output_image_data_path": "EqualizedGrain2 (filtered)",
+        "outside_value": 0.0,
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKMaskImage",
+        "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "ImageDataContainer/CellData/EqualizedGrain2"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)",
+        "new_name": "EqualizedGrain2"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RenameDataObject",
+        "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+        "label_offset": 0,
+        "number_of_histogram_bins": 256,
+        "number_of_thresholds": 3,
+        "output_image_data_path": "OtsuGrain1",
+        "return_bin_midpoint": false,
+        "selected_image_geom_path": "ImageDataContainer",
+        "valley_emphasis": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+        "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+        "label_offset": 0,
+        "number_of_histogram_bins": 256,
+        "number_of_thresholds": 3,
+        "output_image_data_path": "OtsuGrain2",
+        "return_bin_midpoint": false,
+        "selected_image_geom_path": "ImageDataContainer",
+        "valley_emphasis": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+        "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 1.0
+            },
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 1,
+              "value": 3.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Precipitates",
+        "created_mask_type": 1,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 1.0
+            },
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 1,
+              "value": 3.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Precipitates (Bool)",
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "active_array_path": "Active",
+        "cell_feature_group_path": "CellFeatureData",
+        "feature_ids_path": "FeatureIds",
+        "grid_geometry_path": "ImageDataContainer",
+        "input_array_path": "ImageDataContainer/CellData/Precipitates",
+        "mask_path": "ImageDataContainer/CellData/Precipitates (Bool)",
+        "randomize_features": false,
+        "scalar_tolerance": 0,
+        "use_mask": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ScalarSegmentFeaturesFilter",
+        "uuid": "e067cd97-9bbf-4c92-89a6-3cb4fdb76c93"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "equivalent_diameters_path": "EquivalentDiameters",
+        "feature_attribute_matrix": "ImageDataContainer/CellFeatureData",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "geometry_path": "ImageDataContainer",
+        "num_elements_path": "NumElements",
+        "save_element_sizes": false,
+        "volumes_path": "Volumes"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CalculateFeatureSizesFilter",
+        "uuid": "c666ee17-ca58-4969-80d0-819986c72485"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "ImageDataContainer/CellFeatureData/NumElements",
+              "comparison": 1,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 30.0
+            },
+            {
+              "array_path": "ImageDataContainer/CellFeatureData/NumElements",
+              "comparison": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 1,
+              "value": 50000.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Mask",
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "created_image_geometry_prefix": "Extracted_Feature",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "fill_removed_features": false,
+        "flagged_features_array_path": "ImageDataContainer/CellFeatureData/Mask",
+        "functionality": 0,
+        "ignored_data_array_paths": [],
+        "image_geometry": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RemoveFlaggedFeaturesFilter",
+        "uuid": "6e8cc6ec-8b9b-402e-9deb-85bd1cdba743"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "centroids_array_path": "Centroids",
+        "feature_attribute_matrix": "ImageDataContainer/CellFeatureData",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "selected_image_geometry": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::FindFeatureCentroidsFilter",
+        "uuid": "c6875ac7-8bdd-4f69-b6ce-82ac09bd3421"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "ImageDataContainer/CellFeatureData/Volumes"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "aspect_ratios_array_name": "AspectRatios",
+        "axis_euler_angles_array_name": "AxisEulerAngles",
+        "axis_lengths_array_name": "AxisLengths",
+        "centroids_array_path": "ImageDataContainer/CellFeatureData/Centroids",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "omega3s_array_name": "Omega3s",
+        "selected_image_geometry": "ImageDataContainer",
+        "volumes_array_name": "Volumes"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::FindShapesFilter",
+        "uuid": "036b17d5-23bb-4a24-9187-c4a8dd918792"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "created_array_suffix": "",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "selected_feature_array_path": [
+          "ImageDataContainer/CellFeatureData/EquivalentDiameters",
+          "ImageDataContainer/CellFeatureData/Omega3s"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CopyFeatureArrayToElementArray",
+        "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "delimiter": 2,
+        "file_extension": ".csv",
+        "includes": 1,
+        "max_val_per_line": 1,
+        "output_dir": "Data/",
+        "output_path": "Data/Output/GammaPrime/GammaPrimeStatistics.csv",
+        "output_style": 1,
+        "selected_data_array_paths": [
+          "ImageDataContainer/CellFeatureData/Active",
+          "ImageDataContainer/CellFeatureData/AspectRatios",
+          "ImageDataContainer/CellFeatureData/AxisEulerAngles",
+          "ImageDataContainer/CellFeatureData/AxisLengths",
+          "ImageDataContainer/CellFeatureData/Centroids",
+          "ImageDataContainer/CellFeatureData/EquivalentDiameters",
+          "ImageDataContainer/CellFeatureData/Mask",
+          "ImageDataContainer/CellFeatureData/NumElements",
+          "ImageDataContainer/CellFeatureData/Omega3s",
+          "ImageDataContainer/CellFeatureData/Volumes"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteASCIIDataFilter",
+        "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "background_value": 0.0,
+        "foreground_value": 1.0,
+        "fully_connected": true,
+        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "output_image_data_path": "GrainBoundary",
+        "selected_image_geom_path": "ImageDataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKBinaryContourImage",
+        "uuid": "ed214e76-6954-49b4-817b-13f92315e722"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "background_value": 0.0,
+        "input_image_data_path": "ImageDataContainer/CellData/GrainBoundary",
+        "inside_is_positive": false,
+        "output_image_data_path": "DistanceToBoundary",
+        "selected_image_geom_path": "ImageDataContainer",
+        "squared_distance": false,
+        "use_image_spacing": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKSignedMaurerDistanceMapImage",
+        "uuid": "e81f72d3-e806-4afe-ab4c-795c6a3f526f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "compute_by_index": true,
+        "destination_attribute_matrix": "ImageDataContainer/CellFeatureData-2",
+        "feature_has_data_array_name": "FeatureHasData",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "find_histogram": false,
+        "find_length": false,
+        "find_max": false,
+        "find_mean": true,
+        "find_median": false,
+        "find_min": false,
+        "find_modal_bin_ranges": false,
+        "find_mode": false,
+        "find_std_deviation": false,
+        "find_summation": false,
+        "find_unique_values": false,
+        "histogram_array_name": "Histogram",
+        "length_array_name": "Length",
+        "mask_array_path": "",
+        "max_range": 0.0,
+        "maximum_array_name": "Maximum",
+        "mean_array_name": "MeanDistance",
+        "median_array_name": "Median",
+        "min_range": 0.0,
+        "minimum_array_name": "Minimum",
+        "modal_bin_array_name": "Modal Histogram Bin Ranges",
+        "mode_array_name": "Mode",
+        "most_populated_bin_array_name": "Most Populated Bin",
+        "num_bins": 1,
+        "number_unique_values": "NumUniqueValues",
+        "selected_array_path": "ImageDataContainer/CellData/DistanceToBoundary",
+        "standardize_data": false,
+        "standardized_array_name": "Standardized",
+        "std_deviation_array_name": "StandardDeviation",
+        "summation_array_name": "Summation",
+        "use_full_range": false,
+        "use_mask": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::FindArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "calculated_array": "ImageDataContainer/CellData/GrainFeatureIds",
+        "calculator_parameter": {
+          "equation": "MaskGrain1 + 1",
+          "selected_group": "ImageDataContainer/CellData",
+          "units": 1
+        },
+        "scalar_type": 4
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ArrayCalculatorFilter",
+        "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "apply_smoothing": true,
+        "face_data_group_name": "FaceData",
+        "face_feature_attribute_matrix_name": "FaceFeatureData",
+        "face_labels_array_name": "FaceLabels",
+        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "grid_geometry_data_path": "ImageDataContainer",
+        "max_distance_from_voxel": 1.0,
+        "node_types_array_name": "NodeType",
+        "relaxation_factor": 0.5,
+        "selected_data_array_paths": [
+          "ImageDataContainer/CellData/DistanceToBoundary",
+          "ImageDataContainer/CellData/GrainFeatureIds"
+        ],
+        "smoothing_iterations": 20,
+        "triangle_geometry_name": "TriangleDataContainer",
+        "vertex_data_group_name": "VertexData"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::SurfaceNetsFilter",
+        "uuid": "13ddf0bd-af49-4e0f-95fb-3267952fd6e5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "calculated_array": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "calculator_parameter": {
+          "equation": "NodeType + 2",
+          "selected_group": "TriangleDataContainer/VertexData",
+          "units": 0
+        },
+        "scalar_type": 0
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ArrayCalculatorFilter",
+        "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "copy_triangle_array_paths": [
+          "TriangleDataContainer/FaceData/DistanceToBoundary",
+          "TriangleDataContainer/FaceData/FaceLabels",
+          "TriangleDataContainer/FaceData/GrainFeatureIds"
+        ],
+        "copy_vertex_array_paths": [
+          "TriangleDataContainer/VertexData/NodeType",
+          "TriangleDataContainer/VertexData/Node Type Corrected"
+        ],
+        "face_data_name": "FaceData",
+        "internal_triangle_geom": "PrecipitatesSurface",
+        "node_type_range": [
+          0,
+          8
+        ],
+        "node_types": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "triangle_geom": "TriangleDataContainer",
+        "vertex_data_name": "VertexData"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
+        "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "TriangleDataContainer"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "apply_smoothing": true,
+        "face_data_group_name": "FaceData",
+        "face_feature_attribute_matrix_name": "FaceFeatureData",
+        "face_labels_array_name": "FaceLabels",
+        "feature_ids_path": "ImageDataContainer/CellData/GrainFeatureIds",
+        "grid_geometry_data_path": "ImageDataContainer",
+        "max_distance_from_voxel": 1.0,
+        "node_types_array_name": "NodeType",
+        "relaxation_factor": 0.5,
+        "selected_data_array_paths": [
+          "ImageDataContainer/CellData/GrainFeatureIds"
+        ],
+        "smoothing_iterations": 20,
+        "triangle_geometry_name": "TriangleDataContainer",
+        "vertex_data_group_name": "VertexData"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::SurfaceNetsFilter",
+        "uuid": "13ddf0bd-af49-4e0f-95fb-3267952fd6e5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "calculated_array": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "calculator_parameter": {
+          "equation": "NodeType + 2",
+          "selected_group": "TriangleDataContainer/VertexData",
+          "units": 0
+        },
+        "scalar_type": 0
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ArrayCalculatorFilter",
+        "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "copy_triangle_array_paths": [
+          "TriangleDataContainer/FaceData/FaceLabels",
+          "TriangleDataContainer/FaceData/GrainFeatureIds"
+        ],
+        "copy_vertex_array_paths": [
+          "TriangleDataContainer/VertexData/NodeType"
+        ],
+        "face_data_name": "FaceData",
+        "internal_triangle_geom": "GrainBoundary",
+        "node_type_range": [
+          0,
+          8
+        ],
+        "node_types": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "triangle_geom": "TriangleDataContainer",
+        "vertex_data_name": "VertexData"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
+        "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": [
+          "TriangleDataContainer"
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::DeleteData",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/GammaPrime/GammaPrimeBoundaryDistance.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}

@@ -488,7 +488,7 @@
         "Filter_Uuid": "{5fbf9204-2c6c-597b-856a-f4612adbac38}",
         "MaxValPerLine": -1,
         "OutputFilePath": "Data/Output/MIDAS_IN625/08_IN625_Statistics.txt",
-        "OutputPath": "C:/Users/donegasp",
+        "OutputPath": "Users/donegasp",
         "OutputStyle": 1,
         "SelectedDataArrayPaths": [
             {

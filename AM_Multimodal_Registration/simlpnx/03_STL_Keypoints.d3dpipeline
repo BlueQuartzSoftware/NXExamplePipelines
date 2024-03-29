@@ -5,14 +5,17 @@
   "pipeline": [
     {
       "args": {
-        "geometry_data_path": "GC1_STL",
+        "face_attribute_matrix": "Face Data",
+        "face_normals_data_path": "Face Normals",
         "scale_factor": 25.399999618530273,
         "scale_output": true,
-        "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl"
+        "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
+        "triangle_geometry_name": "GC1_STL",
+        "vertex_attribute_matrix": "Vertex Data"
       },
       "comments": "",
       "filter": {
-        "name": "complex::StlFileReaderFilter",
+        "name": "nx::core::ReadStlFileFilter",
         "uuid": "2f64bd45-9d28-4254-9e07-6aa7c6d3d015"
       },
       "isDisabled": false
@@ -24,7 +27,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::CalculateTriangleAreasFilter",
+        "name": "nx::core::CalculateTriangleAreasFilter",
         "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
       },
       "isDisabled": false
@@ -33,16 +36,19 @@
       "args": {
         "mask_array_path": "",
         "number_of_samples": 100000,
+        "seed_array_name": "PointSampleTriangleGeometry SeedValue",
+        "seed_value": 5489,
         "selected_data_array_paths": [],
         "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
         "triangle_geometry_path": "GC1_STL",
         "use_mask": false,
+        "use_seed": false,
         "vertex_data_group_path": "VertexData",
         "vertex_geometry_path": "GC1 STL Keypoints"
       },
       "comments": "",
       "filter": {
-        "name": "complex::PointSampleTriangleGeometryFilter",
+        "name": "nx::core::PointSampleTriangleGeometryFilter",
         "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
       },
       "isDisabled": false
@@ -54,11 +60,12 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
     }
   ],
+  "version": 1,
   "workflowParams": []
 }

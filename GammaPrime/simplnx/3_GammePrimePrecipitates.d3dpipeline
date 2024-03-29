@@ -1,0 +1,180 @@
+{
+  "isDisabled": false,
+  "name": "3_GammePrimePrecipitates.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_file_data": {
+          "data_paths": [
+            "ImageDataContainer",
+            "ImageDataContainer/CellData",
+            "ImageDataContainer/CellData/EqualizedGrain1",
+            "ImageDataContainer/CellData/EqualizedGrain2",
+            "ImageDataContainer/CellData/ImageData",
+            "ImageDataContainer/CellData/MaskGrain1",
+            "ImageDataContainer/CellData/MaskGrain2",
+            "ImageDataContainer/CellData/MedianGrain1",
+            "ImageDataContainer/CellData/MedianGrain2",
+            "ImageDataContainer/CellData/RawGrain1",
+            "ImageDataContainer/CellData/RawGrain2"
+          ],
+          "file_path": "Data/Output/GammaPrime/GammaPrimeSmoothed.dream3d"
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+        "label_offset": 0,
+        "number_of_histogram_bins": 256,
+        "number_of_thresholds": 3,
+        "output_image_data_path": "OtsuGrain1",
+        "return_bin_midpoint": false,
+        "selected_image_geom_path": "ImageDataContainer",
+        "valley_emphasis": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+        "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+        "label_offset": 0,
+        "number_of_histogram_bins": 256,
+        "number_of_thresholds": 3,
+        "output_image_data_path": "OtsuGrain2",
+        "return_bin_midpoint": false,
+        "selected_image_geom_path": "ImageDataContainer",
+        "valley_emphasis": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+        "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 1.0
+            },
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 1,
+              "value": 3.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Precipitates",
+        "created_mask_type": 1,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 1.0
+            },
+            {
+              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+              "comparison": 2,
+              "inverted": false,
+              "type": "array",
+              "union": 1,
+              "value": 3.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Precipitates (Bool)",
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "active_array_path": "Active",
+        "cell_feature_group_path": "CellFeatureData",
+        "feature_ids_path": "FeatureIds",
+        "grid_geometry_path": "ImageDataContainer",
+        "input_array_path": "ImageDataContainer/CellData/Precipitates",
+        "mask_path": "ImageDataContainer/CellData/Precipitates (Bool)",
+        "randomize_features": false,
+        "scalar_tolerance": 0,
+        "use_mask": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ScalarSegmentFeaturesFilter",
+        "uuid": "e067cd97-9bbf-4c92-89a6-3cb4fdb76c93"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/GammaPrime/GammaPrimePrecipitates.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}

@@ -1,0 +1,269 @@
+{
+    "0": {
+        "FilterVersion": "1.2.609",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Name": "DataContainerReader",
+        "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
+        "InputFile": "Output/GammaPrime/GammaPrimeSmoothed.dream3d",
+        "InputFileDataContainerArrayProxy": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EqualizedGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EqualizedGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "ImageData",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MedianGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MedianGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "CellData",
+                            "Type": 3
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "ImageDataContainer",
+                    "Type": 0
+                }
+            ]
+        },
+        "OverwriteExistingDataContainers": 0
+    },
+    "1": {
+        "FilterVersion": "1.0.443",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Otsu Multiple Thresholds Image Filter",
+        "Filter_Name": "ITKOtsuMultipleThresholdsImage",
+        "Filter_Uuid": "{6e66563a-edcf-5e11-bc1d-ceed36d8493f}",
+        "LabelOffset": 0,
+        "NewCellArrayName": "OtsuGrain1",
+        "NumberOfHistogramBins": 256,
+        "NumberOfThresholds": 3,
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "EqualizedGrain1",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "ValleyEmphasis": 1
+    },
+    "2": {
+        "FilterVersion": "1.0.443",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Otsu Multiple Thresholds Image Filter",
+        "Filter_Name": "ITKOtsuMultipleThresholdsImage",
+        "Filter_Uuid": "{6e66563a-edcf-5e11-bc1d-ceed36d8493f}",
+        "LabelOffset": 0,
+        "NewCellArrayName": "OtsuGrain2",
+        "NumberOfHistogramBins": 256,
+        "NumberOfThresholds": 3,
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "EqualizedGrain2",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "ValleyEmphasis": 1
+    },
+    "3": {
+        "DestinationArrayName": "Precipitates",
+        "FilterVersion": "1.2.609",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Threshold Objects 2",
+        "Filter_Name": "MultiThresholdObjects2",
+        "Filter_Uuid": "{686d5393-2b02-5c86-b887-dd81a8ae80f2}",
+        "SelectedThresholds": {
+            "Attribute Matrix Name": "CellData",
+            "Data Container Name": "ImageDataContainer",
+            "Thresholds": [
+                {
+                    "Attribute Array Name": "OtsuGrain1",
+                    "Comparison Operator": 2,
+                    "Comparison Value": 1,
+                    "Union Operator": 0
+                },
+                {
+                    "Comparison Values": [
+                        {
+                            "Attribute Array Name": "OtsuGrain2",
+                            "Comparison Operator": 2,
+                            "Comparison Value": 3,
+                            "Union Operator": 0
+                        }
+                    ],
+                    "Invert Comparison": false,
+                    "Union Operator": 1
+                }
+            ]
+        }
+    },
+    "4": {
+        "ActiveArrayName": "Active",
+        "CellFeatureAttributeMatrixName": "CellFeatureData",
+        "FeatureIdsArrayName": "FeatureIds",
+        "FilterVersion": "6.5.3",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Segment Features (Scalar)",
+        "Filter_Name": "ScalarSegmentFeatures",
+        "Filter_Uuid": "{2c5edebf-95d8-511f-b787-90ee2adf485c}",
+        "GoodVoxelsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "Precipitates",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "ScalarArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "Precipitates",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "ScalarTolerance": 0,
+        "UseGoodVoxels": 1
+    },
+    "5": {
+        "FilterVersion": "1.2.609",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Output/GammaPrime/GammaPrimePrecipitates.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "3_GammaPrimePrecipitates",
+        "Number_Filters": 6,
+        "Version": 6
+    }
+}

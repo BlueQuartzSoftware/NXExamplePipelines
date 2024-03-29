@@ -1,0 +1,48 @@
+{
+    "0": {
+        "CellAttributeMatrixName": "CellData",
+        "DataContainerName": "ImageDataContainer",
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Import Images (3D Stack)",
+        "Filter_Name": "ITKImportImageStack",
+        "Filter_Uuid": "{cf7d7497-9573-5102-bedd-38f86a6cdfd4}",
+        "ImageDataArrayName": "ImageData",
+        "InputFileListInfo": {
+            "EndIndex": 56,
+            "FileExtension": "tif",
+            "FilePrefix": "GammaPrime",
+            "FileSuffix": "",
+            "IncrementIndex": 1,
+            "InputPath": "Data/GammaPrime",
+            "Ordering": 0,
+            "PaddingDigits": 4,
+            "StartIndex": 0
+        },
+        "Origin": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "Resolution": {
+            "x": 17.399999618530273,
+            "y": 17.399999618530273,
+            "z": 50
+        }
+    },
+    "1": {
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "0_GammaPrimeInitialImport",
+        "Number_Filters": 2,
+        "Version": 6
+    }
+}

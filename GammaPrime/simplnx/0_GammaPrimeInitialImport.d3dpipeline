@@ -1,0 +1,62 @@
+{
+  "isDisabled": false,
+  "name": "0_GammaPrimeInitialImport.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "cell_attribute_matrix_name": "CellData",
+        "color_weights": [
+          0.21250000596046448,
+          0.715399980545044,
+          0.07209999859333038
+        ],
+        "convert_to_gray_scale": false,
+        "image_data_array_name": "ImageData",
+        "image_geometry_path": "ImageDataContainer",
+        "image_transform_choice": 0,
+        "input_file_list_info": {
+          "end_index": 56,
+          "file_extension": ".tif",
+          "file_prefix": "GammaPrime",
+          "file_suffix": "",
+          "increment_index": 1,
+          "input_path": "Data/GammaPrime/",
+          "ordering": 0,
+          "padding_digits": 4,
+          "start_index": 0
+        },
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "spacing": [
+          17.399999618530273,
+          17.399999618530273,
+          50.0
+        ]
+      },
+      "comments": "Parameter conversion error: DataContainerCreationFilterParameter json '\"ImageDataContainer\"' does not contain 'Data Container Name'\n",
+      "filter": {
+        "name": "nx::core::ITKImportImageStack",
+        "uuid": "dcf980b7-ecca-46d1-af31-ac65f6e3b6bb"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
+        "write_xdmf_file": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}

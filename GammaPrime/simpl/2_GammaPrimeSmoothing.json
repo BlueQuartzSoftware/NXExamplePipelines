@@ -1,0 +1,239 @@
+{
+    "0": {
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Name": "DataContainerReader",
+        "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
+        "InputFile": "Data/Output/GammaPrime/GammaPrimeMaskedGrains.dream3d",
+        "InputFileDataContainerArrayProxy": {
+            "Data Containers": [
+                {
+                    "Attribute Matricies": [
+                        {
+                            "Data Arrays": [
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "ImageData",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MaskGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain1",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "RawGrain2",
+                                    "Object Type": "DataArray<uint8_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        737,
+                                        446,
+                                        57
+                                    ],
+                                    "Version": 2
+                                }
+                            ],
+                            "Flag": 2,
+                            "Name": "CellData",
+                            "Type": 3
+                        }
+                    ],
+                    "Flag": 2,
+                    "Name": "ImageDataContainer",
+                    "Type": 0
+                }
+            ]
+        },
+        "OverwriteExistingDataContainers": 0
+    },
+    "1": {
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Median Image Filter",
+        "Filter_Name": "ITKMedianImage",
+        "Filter_Uuid": "{cc27ee9a-9946-56ad-afd4-6e98b71f417d}",
+        "NewCellArrayName": "MedianGrain1",
+        "Radius": {
+            "x": 2,
+            "y": 2,
+            "z": 1
+        },
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "RawGrain1",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "2": {
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Median Image Filter",
+        "Filter_Name": "ITKMedianImage",
+        "Filter_Uuid": "{cc27ee9a-9946-56ad-afd4-6e98b71f417d}",
+        "NewCellArrayName": "MedianGrain2",
+        "Radius": {
+            "x": 2,
+            "y": 2,
+            "z": 1
+        },
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "RawGrain2",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "3": {
+        "Alpha": 0.30000001192092896,
+        "Beta": 0.30000001192092896,
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Adaptive Histogram Equalization Image Filter",
+        "Filter_Name": "ITKAdaptiveHistogramEqualizationImage",
+        "Filter_Uuid": "{2d5a7599-5e01-5489-a107-23b704d2b5eb}",
+        "NewCellArrayName": "EqualizedGrain1",
+        "Radius": {
+            "x": 35,
+            "y": 35,
+            "z": 5
+        },
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "MedianGrain1",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "4": {
+        "Alpha": 0.30000001192092896,
+        "Beta": 0.30000001192092896,
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Adaptive Histogram Equalization Image Filter",
+        "Filter_Name": "ITKAdaptiveHistogramEqualizationImage",
+        "Filter_Uuid": "{2d5a7599-5e01-5489-a107-23b704d2b5eb}",
+        "NewCellArrayName": "EqualizedGrain2",
+        "Radius": {
+            "x": 35,
+            "y": 35,
+            "z": 5
+        },
+        "SaveAsNewArray": 1,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "MedianGrain2",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "5": {
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Mask Image Filter",
+        "Filter_Name": "ITKMaskImage",
+        "Filter_Uuid": "{97102d65-9c32-576a-9177-c59d958bad10}",
+        "MaskCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "MaskGrain1",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "NewCellArrayName": "",
+        "OutsideValue": 0,
+        "SaveAsNewArray": 0,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "EqualizedGrain1",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "6": {
+        "FilterVersion": "1.0.504",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "ITK::Mask Image Filter",
+        "Filter_Name": "ITKMaskImage",
+        "Filter_Uuid": "{97102d65-9c32-576a-9177-c59d958bad10}",
+        "MaskCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "MaskGrain2",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "NewCellArrayName": "",
+        "OutsideValue": 0,
+        "SaveAsNewArray": 0,
+        "SelectedCellArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "EqualizedGrain2",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "7": {
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Name": "DataContainerWriter",
+        "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
+        "OutputFile": "Data/Output/GammaPrime/GammaPrimeSmoothed.dream3d",
+        "WriteTimeSeries": 0,
+        "WriteXdmfFile": 1
+    },
+    "PipelineBuilder": {
+        "Name": "2_GammaPrimeSmoothing",
+        "Number_Filters": 8,
+        "Version": 6
+    }
+}

@@ -238,7 +238,7 @@
         "OutputType": 2
     },
     "2": {
-        "AlignmentShiftFileName": "C:/Users/donegasp",
+        "AlignmentShiftFileName": "Users/donegasp",
         "CellPhasesArrayPath": {
             "Attribute Matrix Name": "CellData",
             "Data Array Name": "Phases",
