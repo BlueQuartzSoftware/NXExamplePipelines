@@ -5,13 +5,13 @@
   "pipeline": [
     {
       "args": {
-        "face_attribute_matrix": "Face Data",
-        "face_normals_data_path": "Face Normals",
+        "face_attribute_matrix_name": "Face Data",
+        "face_normals_name": "Face Normals",
         "scale_factor": 25.399999618530273,
         "scale_output": true,
         "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
-        "triangle_geometry_name": "GC1_STL",
-        "vertex_attribute_matrix": "Vertex Data"
+        "output_triangle_geometry_path": "GC1_STL",
+        "vertex_attribute_matrix_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -22,8 +22,8 @@
     },
     {
       "args": {
-        "triangle_areas_array_path": "FaceAreas",
-        "triangle_geometry_data_path": "GC1_STL"
+        "triangle_areas_array_name": "FaceAreas",
+        "input_triangle_geometry_path": "GC1_STL"
       },
       "comments": "",
       "filter": {
@@ -38,13 +38,13 @@
         "number_of_samples": 100000,
         "seed_array_name": "PointSampleTriangleGeometry SeedValue",
         "seed_value": 5489,
-        "selected_data_array_paths": [],
+        "input_data_array_paths": [],
         "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
-        "triangle_geometry_path": "GC1_STL",
+        "input_triangle_geometry_path": "GC1_STL",
         "use_mask": false,
         "use_seed": false,
-        "vertex_data_group_path": "VertexData",
-        "vertex_geometry_path": "GC1 STL Keypoints"
+        "vertex_data_group_name": "VertexData",
+        "output_vertex_geometry_path": "GC1 STL Keypoints"
       },
       "comments": "",
       "filter": {

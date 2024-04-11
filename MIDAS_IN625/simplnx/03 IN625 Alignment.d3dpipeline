@@ -56,7 +56,7 @@
         "good_voxels_array_path": "Mask",
         "misorientation_tolerance": 5.0,
         "quats_array_path": "DataContainer/CellData/Quaternions",
-        "selected_image_geometry_path": "DataContainer",
+        "input_image_geometry_path": "DataContainer",
         "use_good_voxels": false,
         "write_alignment_shifts": false
       },

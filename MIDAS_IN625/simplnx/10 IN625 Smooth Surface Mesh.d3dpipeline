@@ -40,7 +40,7 @@
         "surface_point_lambda": 0.0,
         "surface_quad_point_lambda": 0.0,
         "surface_triple_line_lambda": 0.0,
-        "triangle_geometry_data_path": "TriangleDataContainer",
+        "input_triangle_geometry_path": "TriangleDataContainer",
         "triple_line_lambda": 0.15000000596046448,
         "use_taubin_smoothing": false
       },
@@ -59,7 +59,7 @@
         "copy_vertex_array_paths": [
           "TriangleDataContainer/VertexData/NodeType"
         ],
-        "face_data_name": "FaceData",
+        "triangle_attribute_matrix_name": "FaceData",
         "internal_triangle_geom": "InternalTrianglesDataContainer",
         "node_types": "TriangleDataContainer/VertexData/NodeType",
         "triangle_geom": "TriangleDataContainer",

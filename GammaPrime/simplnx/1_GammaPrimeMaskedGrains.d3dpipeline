@@ -19,9 +19,9 @@
                 ],
                 "convert_to_gray_scale": false,
                 "image_data_array_name": "ImageData",
-                "image_geometry_path": "ImageDataContainer",
+                "output_image_geometry_path": "ImageDataContainer",
                 "image_transform_choice": 0,
-                "input_file_list_info": {
+                "input_file_list_object": {
                   "end_index": 56,
                   "file_extension": ".tif",
                   "file_prefix": "GammaPrime",
@@ -65,7 +65,7 @@
           ],
           "version": 1
         },
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "ImageDataContainer",
             "ImageDataContainer/CellData",
@@ -87,9 +87,9 @@
         "label_offset": 0,
         "number_of_histogram_bins": 256,
         "number_of_thresholds": 1,
-        "output_image_data_path": "MaskGrain1",
+        "output_array_name": "MaskGrain1",
         "return_bin_midpoint": false,
-        "selected_image_geom_path": "ImageDataContainer",
+        "input_image_geometry_path": "ImageDataContainer",
         "valley_emphasis": false
       },
       "comments": "",
@@ -109,9 +109,9 @@
           7
         ],
         "kernel_type": 2,
-        "output_image_data_path": "MaskGrain1 (filtered)",
+        "output_array_name": "MaskGrain1 (filtered)",
         "preserve_intensities": false,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -135,7 +135,7 @@
     },
     {
       "args": {
-        "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+        "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
         "new_name": "MaskGrain1"
       },
       "comments": "",
@@ -155,9 +155,9 @@
           7
         ],
         "kernel_type": 2,
-        "output_image_data_path": "MaskGrain1 (filtered)",
+        "output_array_name": "MaskGrain1 (filtered)",
         "preserve_intensities": false,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -181,7 +181,7 @@
     },
     {
       "args": {
-        "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+        "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
         "new_name": "MaskGrain1"
       },
       "comments": "",
@@ -195,8 +195,8 @@
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
         "maximum": 1.0,
-        "output_image_data_path": "MaskGrain2",
-        "selected_image_geom_path": "ImageDataContainer"
+        "output_array_name": "MaskGrain2",
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -209,9 +209,9 @@
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/ImageData",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
-        "output_image_data_path": "RawGrain1",
+        "output_array_name": "RawGrain1",
         "outside_value": 0.0,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -224,9 +224,9 @@
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/ImageData",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
-        "output_image_data_path": "RawGrain2",
+        "output_array_name": "RawGrain2",
         "outside_value": 0.0,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {

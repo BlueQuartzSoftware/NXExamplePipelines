@@ -23,7 +23,7 @@
           "pipeline": [
             {
               "args": {
-                "import_file_data": {
+                "import_data_object": {
                   "data_paths": [
                     "HF_VertexDataContainer",
                     "HF_VertexDataContainer/SharedVertexList",
@@ -57,7 +57,7 @@
             },
             {
               "args": {
-                "array_thresholds": {
+                "array_thresholds_object": {
                   "inverted": false,
                   "thresholds": [
                     {
@@ -72,7 +72,7 @@
                   "type": "collection",
                   "union": 0
                 },
-                "created_data_path": "Beam Off",
+                "output_data_array_name": "Beam Off",
                 "created_mask_type": 10,
                 "custom_false_value": 0.0,
                 "custom_true_value": 1.0,
@@ -145,7 +145,7 @@
           ],
           "version": 1
         },
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "TDMS Beam On",
             "TDMS Beam On/SharedVertexList",
@@ -189,13 +189,13 @@
           "pipeline": [
             {
               "args": {
-                "face_attribute_matrix": "Face Data",
-                "face_normals_data_path": "Face Normals",
+                "face_attribute_matrix_name": "Face Data",
+                "face_normals_name": "Face Normals",
                 "scale_factor": 25.399999618530273,
                 "scale_output": true,
                 "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
-                "triangle_geometry_name": "GC1_STL",
-                "vertex_attribute_matrix": "Vertex Data"
+                "output_triangle_geometry_path": "GC1_STL",
+                "vertex_attribute_matrix_name": "Vertex Data"
               },
               "comments": "",
               "filter": {
@@ -206,8 +206,8 @@
             },
             {
               "args": {
-                "triangle_areas_array_path": "FaceAreas",
-                "triangle_geometry_data_path": "GC1_STL"
+                "triangle_areas_array_name": "FaceAreas",
+                "input_triangle_geometry_path": "GC1_STL"
               },
               "comments": "",
               "filter": {
@@ -222,13 +222,13 @@
                 "number_of_samples": 100000,
                 "seed_array_name": "PointSampleTriangleGeometry SeedValue",
                 "seed_value": 5489,
-                "selected_data_array_paths": [],
+                "input_data_array_paths": [],
                 "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
-                "triangle_geometry_path": "GC1_STL",
+                "input_triangle_geometry_path": "GC1_STL",
                 "use_mask": false,
                 "use_seed": false,
                 "vertex_data_group_path": "VertexData",
-                "vertex_geometry_path": "GC1 STL Keypoints"
+                "output_vertex_geometry_path": "GC1 STL Keypoints"
               },
               "comments": "",
               "filter": {
@@ -252,7 +252,7 @@
           ],
           "version": 1
         },
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "GC1_STL",
             "GC1_STL/SharedTriList",
@@ -284,7 +284,7 @@
           "pipeline": [
             {
               "args": {
-                "import_file_data": {
+                "import_data_object": {
                   "data_paths": [
                     "ImageDataContainer",
                     "ImageDataContainer/CellData",
@@ -302,7 +302,7 @@
             },
             {
               "args": {
-                "data_object": "ImageDataContainer",
+                "source_data_object_path": "ImageDataContainer",
                 "new_name": "GC1_CT_ImageData"
               },
               "comments": "",
@@ -315,8 +315,8 @@
             {
               "args": {
                 "input_image_data_path": "GC1_CT_ImageData/CellData/Density",
-                "output_image_data_path": "GradMag",
-                "selected_image_geom_path": "GC1_CT_ImageData",
+                "output_array_name": "GradMag",
+                "input_image_geometry_path": "GC1_CT_ImageData",
                 "use_image_spacing": true
               },
               "comments": "",
@@ -328,9 +328,9 @@
             },
             {
               "args": {
-                "array_to_threshold": "GC1_CT_ImageData/CellData/Density",
-                "created_mask_path": "Mask",
-                "gradient_array": "GC1_CT_ImageData/CellData/GradMag"
+                "input_array_path": "GC1_CT_ImageData/CellData/Density",
+                "created_mask_name": "Mask",
+                "gradient_array_path": "GC1_CT_ImageData/CellData/GradMag"
               },
               "comments": "",
               "filter": {
@@ -341,12 +341,12 @@
             },
             {
               "args": {
-                "advanced_options": false,
+                "set_tuple_dimensions": false,
                 "component_count": 1,
                 "data_format": "",
-                "initialization_value": "0",
+                "initialization_value_str": "0",
                 "numeric_type": 4,
-                "output_data_array": "GC1_CT_ImageData/CellData/FeatureIds",
+                "output_array_path": "GC1_CT_ImageData/CellData/FeatureIds",
                 "tuple_dimensions": [
                   [
                     958.0,
@@ -399,10 +399,10 @@
                 "feature_ids_path": "GC1_CT_ImageData/CellData/FeatureIds",
                 "fix_problem_voxels": true,
                 "generate_triple_lines": false,
-                "grid_geometry_data_path": "GC1_CT_ImageData",
+                "input_grid_geometry_path": "GC1_CT_ImageData",
                 "node_types_array_name": "NodeType",
-                "selected_data_array_paths": [],
-                "triangle_geometry_name": "GC1_CT_QuickMesh",
+                "input_data_array_paths": [],
+                "output_triangle_geometry_path": "GC1_CT_QuickMesh",
                 "vertex_data_group_name": "VertexData"
               },
               "comments": "",
@@ -420,7 +420,7 @@
                 "copy_vertex_array_paths": [
                   "GC1_CT_QuickMesh/VertexData/NodeType"
                 ],
-                "face_data_name": "FaceData",
+                "triangle_attribute_matrix_name": "FaceData",
                 "internal_triangle_geom": "GC1_CT Surface",
                 "node_type_range": [
                   0,
@@ -447,7 +447,7 @@
                 "surface_point_lambda": 0.0,
                 "surface_quad_point_lambda": 0.0,
                 "surface_triple_line_lambda": 0.0,
-                "triangle_geometry_data_path": "GC1_CT Surface",
+                "input_triangle_geometry_path": "GC1_CT Surface",
                 "triple_line_lambda": 0.0,
                 "use_taubin_smoothing": true
               },
@@ -460,8 +460,8 @@
             },
             {
               "args": {
-                "triangle_areas_array_path": "Face Areas",
-                "triangle_geometry_data_path": "GC1_CT Surface"
+                "triangle_areas_array_name": "Face Areas",
+                "input_triangle_geometry_path": "GC1_CT Surface"
               },
               "comments": "",
               "filter": {
@@ -476,13 +476,13 @@
                 "number_of_samples": 100000,
                 "seed_array_name": "PointSampleTriangleGeometry SeedValue",
                 "seed_value": 5489,
-                "selected_data_array_paths": [],
+                "input_data_array_paths": [],
                 "triangle_areas_array_path": "GC1_CT Surface/FaceData/Face Areas",
-                "triangle_geometry_path": "GC1_CT Surface",
+                "input_triangle_geometry_path": "GC1_CT Surface",
                 "use_mask": false,
                 "use_seed": false,
                 "vertex_data_group_path": "VertexData",
-                "vertex_geometry_path": "GC1_CT KeyPoints"
+                "output_vertex_geometry_path": "GC1_CT KeyPoints"
               },
               "comments": "",
               "filter": {
@@ -506,7 +506,7 @@
           ],
           "version": 1
         },
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "GC1_CT_ImageData",
             "GC1_CT_ImageData/CellData",
@@ -547,10 +547,10 @@
     {
       "args": {
         "apply_transformation": true,
-        "moving_vertex": "GC1 STL Keypoints",
+        "input_moving_vertex_geometry_path": "GC1 STL Keypoints",
         "num_iterations": 100,
-        "target_vertex": "GC1_CT KeyPoints",
-        "transform_array": "GC1 STL Keypoints/Transform"
+        "input_target_vertex_geometry_path": "GC1_CT KeyPoints",
+        "transform_array_path": "GC1 STL Keypoints/Transform"
       },
       "comments": "",
       "filter": {
@@ -562,10 +562,10 @@
     {
       "args": {
         "apply_transformation": true,
-        "moving_vertex": "TDMS Keypoints",
+        "input_moving_vertex_geometry_path": "TDMS Keypoints",
         "num_iterations": 100,
-        "target_vertex": "GC1_CT KeyPoints",
-        "transform_array": "TDMS Keypoints/Transform"
+        "input_target_vertex_geometry_path": "GC1_CT KeyPoints",
+        "transform_array_path": "TDMS Keypoints/Transform"
       },
       "comments": "",
       "filter": {
@@ -577,7 +577,7 @@
     {
       "args": {
         "cell_attribute_matrix_path": "GC1 STL Keypoints/VertexData",
-        "computed_transformation_matrix": "GC1 STL Keypoints/Transform",
+        "computed_transformation_matrix_path": "GC1 STL Keypoints/Transform",
         "interpolation_type": 0,
         "manual_transformation_matrix": [
           [
@@ -616,7 +616,7 @@
           1.0,
           1.0
         ],
-        "selected_image_geometry": "GC1_STL",
+        "input_image_geometry_path": "GC1_STL",
         "transformation_type": 1,
         "translate_geometry_to_global_origin": false,
         "translation": [
@@ -635,7 +635,7 @@
     {
       "args": {
         "cell_attribute_matrix_path": "TDMS Keypoints/Vertex Data",
-        "computed_transformation_matrix": "TDMS Keypoints/Transform",
+        "computed_transformation_matrix_path": "TDMS Keypoints/Transform",
         "interpolation_type": 0,
         "manual_transformation_matrix": [
           [
@@ -674,7 +674,7 @@
           1.0,
           1.0
         ],
-        "selected_image_geometry": "TDMS Beam On",
+        "input_image_geometry_path": "TDMS Beam On",
         "transformation_type": 1,
         "translate_geometry_to_global_origin": false,
         "translation": [

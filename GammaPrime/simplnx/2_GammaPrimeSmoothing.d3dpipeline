@@ -25,9 +25,9 @@
                         ],
                         "convert_to_gray_scale": false,
                         "image_data_array_name": "ImageData",
-                        "image_geometry_path": "ImageDataContainer",
+                        "output_image_geometry_path": "ImageDataContainer",
                         "image_transform_choice": 0,
-                        "input_file_list_info": {
+                        "input_file_list_object": {
                           "end_index": 56,
                           "file_extension": ".tif",
                           "file_prefix": "GammaPrime",
@@ -71,7 +71,7 @@
                   ],
                   "version": 1
                 },
-                "import_file_data": {
+                "import_data_object": {
                   "data_paths": [
                     "ImageDataContainer",
                     "ImageDataContainer/CellData",
@@ -93,9 +93,9 @@
                 "label_offset": 0,
                 "number_of_histogram_bins": 256,
                 "number_of_thresholds": 1,
-                "output_image_data_path": "MaskGrain1",
+                "output_array_name": "MaskGrain1",
                 "return_bin_midpoint": false,
-                "selected_image_geom_path": "ImageDataContainer",
+                "input_image_geometry_path": "ImageDataContainer",
                 "valley_emphasis": false
               },
               "comments": "",
@@ -115,9 +115,9 @@
                   7
                 ],
                 "kernel_type": 2,
-                "output_image_data_path": "MaskGrain1 (filtered)",
+                "output_array_name": "MaskGrain1 (filtered)",
                 "preserve_intensities": false,
-                "selected_image_geom_path": "ImageDataContainer"
+                "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
               "filter": {
@@ -141,7 +141,7 @@
             },
             {
               "args": {
-                "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
                 "new_name": "MaskGrain1"
               },
               "comments": "",
@@ -161,9 +161,9 @@
                   7
                 ],
                 "kernel_type": 2,
-                "output_image_data_path": "MaskGrain1 (filtered)",
+                "output_array_name": "MaskGrain1 (filtered)",
                 "preserve_intensities": false,
-                "selected_image_geom_path": "ImageDataContainer"
+                "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
               "filter": {
@@ -187,7 +187,7 @@
             },
             {
               "args": {
-                "data_object": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
+                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
                 "new_name": "MaskGrain1"
               },
               "comments": "",
@@ -201,8 +201,8 @@
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
                 "maximum": 1.0,
-                "output_image_data_path": "MaskGrain2",
-                "selected_image_geom_path": "ImageDataContainer"
+                "output_array_name": "MaskGrain2",
+                "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
               "filter": {
@@ -215,9 +215,9 @@
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/ImageData",
                 "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
-                "output_image_data_path": "RawGrain1",
+                "output_array_name": "RawGrain1",
                 "outside_value": 0.0,
-                "selected_image_geom_path": "ImageDataContainer"
+                "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
               "filter": {
@@ -230,9 +230,9 @@
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/ImageData",
                 "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
-                "output_image_data_path": "RawGrain2",
+                "output_array_name": "RawGrain2",
                 "outside_value": 0.0,
-                "selected_image_geom_path": "ImageDataContainer"
+                "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
               "filter": {
@@ -256,7 +256,7 @@
           ],
           "version": 1
         },
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "ImageDataContainer",
             "ImageDataContainer/CellData",
@@ -279,13 +279,13 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/RawGrain1",
-        "output_image_data_path": "MedianGrain1",
+        "output_array_name": "MedianGrain1",
         "radius": [
           2,
           2,
           1
         ],
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -297,13 +297,13 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/RawGrain2",
-        "output_image_data_path": "MedianGrain2",
+        "output_array_name": "MedianGrain2",
         "radius": [
           2,
           2,
           1
         ],
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -317,13 +317,13 @@
         "alpha": 0.30000001192092896,
         "beta": 0.30000001192092896,
         "input_image_data_path": "ImageDataContainer/CellData/MedianGrain1",
-        "output_image_data_path": "EqualizedGrain1",
+        "output_array_name": "EqualizedGrain1",
         "radius": [
           35,
           35,
           5
         ],
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -337,13 +337,13 @@
         "alpha": 0.30000001192092896,
         "beta": 0.30000001192092896,
         "input_image_data_path": "ImageDataContainer/CellData/MedianGrain2",
-        "output_image_data_path": "EqualizedGrain2",
+        "output_array_name": "EqualizedGrain2",
         "radius": [
           35,
           35,
           5
         ],
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -356,9 +356,9 @@
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
-        "output_image_data_path": "EqualizedGrain1 (filtered)",
+        "output_array_name": "EqualizedGrain1 (filtered)",
         "outside_value": 0.0,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -382,7 +382,7 @@
     },
     {
       "args": {
-        "data_object": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)",
+        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)",
         "new_name": "EqualizedGrain1"
       },
       "comments": "",
@@ -396,9 +396,9 @@
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
-        "output_image_data_path": "EqualizedGrain2 (filtered)",
+        "output_array_name": "EqualizedGrain2 (filtered)",
         "outside_value": 0.0,
-        "selected_image_geom_path": "ImageDataContainer"
+        "input_image_geometry_path": "ImageDataContainer"
       },
       "comments": "",
       "filter": {
@@ -422,7 +422,7 @@
     },
     {
       "args": {
-        "data_object": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)",
+        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)",
         "new_name": "EqualizedGrain2"
       },
       "comments": "",

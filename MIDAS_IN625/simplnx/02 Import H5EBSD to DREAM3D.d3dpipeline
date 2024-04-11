@@ -7,7 +7,7 @@
       "args": {
         "cell_attribute_matrix_name": "CellData",
         "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
-        "data_container_name": "DataContainer",
+        "output_image_geometry_path": "DataContainer",
         "read_h5_ebsd_filter": {
           "end_slice": 800,
           "euler_representation": 1,

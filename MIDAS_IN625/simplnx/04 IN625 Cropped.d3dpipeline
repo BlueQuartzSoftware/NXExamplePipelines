@@ -39,7 +39,7 @@
       "args": {
         "cell_feature_attribute_matrix": "CellFeatureData",
         "feature_ids": "",
-        "selected_image_geometry": "DataContainer",
+        "input_image_geometry_path": "DataContainer",
         "max_voxel": [
           500,
           500,
@@ -50,7 +50,7 @@
           100,
           0
         ],
-        "created_image_geometry": "ImageDataContainer",
+        "output_image_geometry_path": "ImageDataContainer",
         "remove_original_geometry": true,
         "renumber_features": false,
         "update_origin": true

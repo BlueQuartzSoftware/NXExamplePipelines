@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "input_file_list_info": {
+        "input_file_list_object": {
           "end_index": 800,
           "file_extension": ".ctf",
           "file_prefix": "result_fit_",

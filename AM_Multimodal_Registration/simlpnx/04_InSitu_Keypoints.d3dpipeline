@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "HF_VertexDataContainer",
             "HF_VertexDataContainer/SharedVertexList",
@@ -39,7 +39,7 @@
     },
     {
       "args": {
-        "array_thresholds": {
+        "array_thresholds_object": {
           "inverted": false,
           "thresholds": [
             {
@@ -54,7 +54,7 @@
           "type": "collection",
           "union": 0
         },
-        "created_data_path": "Beam Off"
+        "output_data_array_name": "Beam Off"
       },
       "comments": "",
       "filter": {
@@ -65,9 +65,9 @@
     },
     {
       "args": {
-        "mask": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off",
-        "reduced_vertex": "TDMS Beam On",
-        "vertex_geom": "HF_VertexDataContainer"
+        "mask_path": "HF_VertexDataContainer/HF_VertexAttributeMatrix/Beam Off",
+        "output_vertex_geometry_path": "TDMS Beam On",
+        "input_vertex_geometry_path": "HF_VertexDataContainer"
       },
       "comments": "",
       "filter": {
@@ -94,9 +94,9 @@
           0.10000000149011612,
           0.10000000149011612
         ],
-        "hull_vertex_geometry": "TDMS Keypoints",
+        "output_vertex_geometry_path": "TDMS Keypoints",
         "min_empty_neighbors": 4,
-        "vertex_geometry": "TDMS Beam On"
+        "input_vertex_geometry_path": "TDMS Beam On"
       },
       "comments": "",
       "filter": {

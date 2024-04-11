@@ -13,9 +13,9 @@
         ],
         "convert_to_gray_scale": false,
         "image_data_array_name": "ImageData",
-        "image_geometry_path": "ImageDataContainer",
+        "output_image_geometry_path": "ImageDataContainer",
         "image_transform_choice": 0,
-        "input_file_list_info": {
+        "input_file_list_object": {
           "end_index": 56,
           "file_extension": ".tif",
           "file_prefix": "GammaPrime",

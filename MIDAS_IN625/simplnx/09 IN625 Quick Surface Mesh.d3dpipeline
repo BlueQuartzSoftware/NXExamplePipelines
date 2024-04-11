@@ -64,12 +64,12 @@
         "feature_ids_path": "DataContainer/CellData/FeatureIds",
         "fix_problem_voxels": true,
         "generate_triple_lines": false,
-        "grid_geometry_data_path": "DataContainer",
+        "input_grid_geometry_path": "DataContainer",
         "node_types_array_name": "TriangleDataContainer/VertexData/NodeType",
-        "selected_data_array_paths": [
+        "input_data_array_paths": [
           "DataContainer/CellData/IPFColors"
         ],
-        "triangle_geometry_name": "TriangleDataContainer",
+        "output_triangle_geometry_path": "TriangleDataContainer",
         "vertex_data_group_name": "VertexData"
       },
       "filter": {

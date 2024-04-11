@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "import_file_data": {
+        "import_data_object": {
           "data_paths": [
             "ImageDataContainer",
             "ImageDataContainer/CellData",
@@ -35,9 +35,9 @@
         "label_offset": 0,
         "number_of_histogram_bins": 256,
         "number_of_thresholds": 3,
-        "output_image_data_path": "OtsuGrain1",
+        "output_array_name": "OtsuGrain1",
         "return_bin_midpoint": false,
-        "selected_image_geom_path": "ImageDataContainer",
+        "input_image_geometry_path": "ImageDataContainer",
         "valley_emphasis": true
       },
       "comments": "",
@@ -53,9 +53,9 @@
         "label_offset": 0,
         "number_of_histogram_bins": 256,
         "number_of_thresholds": 3,
-        "output_image_data_path": "OtsuGrain2",
+        "output_array_name": "OtsuGrain2",
         "return_bin_midpoint": false,
-        "selected_image_geom_path": "ImageDataContainer",
+        "input_image_geometry_path": "ImageDataContainer",
         "valley_emphasis": true
       },
       "comments": "",
@@ -67,7 +67,7 @@
     },
     {
       "args": {
-        "array_thresholds": {
+        "array_thresholds_object": {
           "inverted": false,
           "thresholds": [
             {
@@ -90,7 +90,7 @@
           "type": "collection",
           "union": 0
         },
-        "created_data_path": "Precipitates",
+        "output_data_array_name": "Precipitates",
         "created_mask_type": 1,
         "custom_false_value": 0.0,
         "custom_true_value": 1.0,
@@ -106,7 +106,7 @@
     },
     {
       "args": {
-        "array_thresholds": {
+        "array_thresholds_object": {
           "inverted": false,
           "thresholds": [
             {
@@ -129,7 +129,7 @@
           "type": "collection",
           "union": 0
         },
-        "created_data_path": "Precipitates (Bool)",
+        "output_data_array_name": "Precipitates (Bool)",
         "created_mask_type": 10,
         "custom_false_value": 0.0,
         "custom_true_value": 1.0,
@@ -145,10 +145,10 @@
     },
     {
       "args": {
-        "active_array_path": "Active",
-        "cell_feature_group_path": "CellFeatureData",
-        "feature_ids_path": "FeatureIds",
-        "grid_geometry_path": "ImageDataContainer",
+        "active_array_name": "Active",
+        "cell_feature_group_name": "CellFeatureData",
+        "feature_ids_name": "FeatureIds",
+        "input_image_geometry_path": "ImageDataContainer",
         "input_array_path": "ImageDataContainer/CellData/Precipitates",
         "mask_path": "ImageDataContainer/CellData/Precipitates (Bool)",
         "randomize_features": false,
