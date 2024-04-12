@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "import_data_object": {
           "data_paths": [
             "TriangleDataContainer",
             "TriangleDataContainer/FaceData",
@@ -33,7 +33,7 @@
     {
       "args": {
         "iteration_steps": 200,
-        "lambda": 0.20000000298023224,
+        "lambda_value": 0.20000000298023224,
         "mu_factor": 0.20000000298023224,
         "quad_point_lambda": 0.10000000149011612,
         "surface_mesh_node_type_array_path": "TriangleDataContainer/VertexData/NodeType",
@@ -60,10 +60,10 @@
           "TriangleDataContainer/VertexData/NodeType"
         ],
         "triangle_attribute_matrix_name": "FaceData",
-        "internal_triangle_geom": "InternalTrianglesDataContainer",
-        "node_types": "TriangleDataContainer/VertexData/NodeType",
-        "triangle_geom": "TriangleDataContainer",
-        "vertex_data_name": "VertexData"
+        "output_triangle_geometry_path": "InternalTrianglesDataContainer",
+        "node_types_path": "TriangleDataContainer/VertexData/NodeType",
+        "input_triangle_geometry_path": "TriangleDataContainer",
+        "vertex_attribute_matrix_name": "VertexData"
       },
       "filter": {
         "name": "complex::ExtractInternalSurfacesFromTriangleGeometry",

@@ -498,7 +498,7 @@
           "selected_group": "ImageDataContainer/CellData",
           "units": 1
         },
-        "scalar_type": 4
+        "scalar_type_index": 4
       },
       "comments": "",
       "filter": {
@@ -540,7 +540,7 @@
           "selected_group": "TriangleDataContainer/VertexData",
           "units": 0
         },
-        "scalar_type": 0
+        "scalar_type_index": 0
       },
       "comments": "We need to do this because the surface nets code basically only generates node types that are 0 or 1 but the extract Internal Surfaces from Triangle Geometry needs 2,3 or 4. This is probably a temporary fix",
       "filter": {
@@ -616,7 +616,7 @@
           "selected_group": "TriangleDataContainer/VertexData",
           "units": 0
         },
-        "scalar_type": 0
+        "scalar_type_index": 0
       },
       "comments": "",
       "filter": {

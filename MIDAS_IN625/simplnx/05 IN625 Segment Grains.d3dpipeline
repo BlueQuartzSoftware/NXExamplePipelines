@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "import_data_object": {
           "data_paths": null,
           "file_path": "Data/Output/MIDAS_IN625/04_IN625_Cropped.dream3d"
         },
@@ -15,7 +15,7 @@
           "pipeline": [
             {
               "args": {
-                "Import_File_Data": {
+                "import_data_object": {
                   "data_paths": [
                     "DataContainer",
                     "DataContainer/CellData",
@@ -40,7 +40,7 @@
                   "pipeline": [
                     {
                       "args": {
-                        "Import_File_Data": {
+                        "import_data_object": {
                           "data_paths": [
                             "DataContainer",
                             "DataContainer/CellData",
@@ -67,7 +67,7 @@
                                 "cell_attribute_matrix_name": "CellData",
                                 "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
                                 "output_image_geometry_path": "DataContainer",
-                                "read_h5_ebsd_filter": {
+                                "read_h5_ebsd_object": {
                                   "end_slice": 800,
                                   "euler_representation": 1,
                                   "hdf5_data_paths": [
@@ -94,16 +94,16 @@
                             {
                               "args": {
                                 "cell_euler_angles_array_path": "DataContainer/CellData/EulerAngles",
-                                "cell_ip_fcolors_array_name": "IPFColors",
+                                "cell_ipf_colors_array_name": "IPFColors",
                                 "cell_phases_array_path": "DataContainer/CellData/Phases",
                                 "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
-                                "good_voxels_array_path": "",
+                                "mask_array_path": "",
                                 "reference_dir": [
                                   0.0,
                                   0.0,
                                   1.0
                                 ],
-                                "use_good_voxels": false
+                                "use_mask": false
                               },
                               "comments": "",
                               "filter": {
@@ -137,9 +137,9 @@
                     {
                       "args": {
                         "input_orientation_array_path": "DataContainer/CellData/EulerAngles",
-                        "input_type": 0,
+                        "input_representation_index": 0,
                         "output_orientation_array_name": "Quaternions",
-                        "output_type": 2
+                        "output_representation_index": 2
                       },
                       "comments": "",
                       "filter": {
@@ -153,11 +153,11 @@
                         "alignment_shift_file_name": "DREAM3D-Build/DREAM3DNX-Release-x64/Bin/Data/Output/Alignment_By_Misorientation_Shifts.txt",
                         "cell_phases_array_path": "DataContainer/CellData/Phases",
                         "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
-                        "good_voxels_array_path": "Mask",
+                        "mask_array_path": "Mask",
                         "misorientation_tolerance": 5.0,
-                        "quats_array_path": "DataContainer/CellData/Quaternions",
+                        "cell_quats_array_path": "DataContainer/CellData/Quaternions",
                         "input_image_geometry_path": "DataContainer",
-                        "use_good_voxels": false,
+                        "use_mask": false,
                         "write_alignment_shifts": false
                       },
                       "comments": "",
@@ -191,9 +191,9 @@
             },
             {
               "args": {
-                "cell_feature_attribute_matrix": "CellFeatureData",
+                "cell_feature_attribute_matrix_path": "CellFeatureData",
                 "output_image_geometry_path": "ImageDataContainer",
-                "feature_ids": "",
+                "feature_ids_path": "",
                 "max_voxel": [
                   500,
                   500,
@@ -207,7 +207,7 @@
                 "remove_original_geometry": true,
                 "renumber_features": false,
                 "input_image_geometry_path": "DataContainer",
-                "update_origin": true
+                "use_physical_bounds": false
               },
               "comments": "",
               "filter": {
@@ -245,12 +245,12 @@
         "cell_phases_array_path": "DataContainer/CellData/Phases",
         "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
         "feature_ids_array_name": "FeatureIds",
-        "good_voxels_array_path": "",
+        "cell_mask_array_path": "",
         "input_image_geometry_path": "DataContainer",
         "misorientation_tolerance": 2.5,
-        "quats_array_path": "DataContainer/CellData/Quaternions",
+        "cell_quats_array_path": "DataContainer/CellData/Quaternions",
         "randomize_features": true,
-        "use_good_voxels": false
+        "use_mask": false
       },
       "comments": "",
       "filter": {

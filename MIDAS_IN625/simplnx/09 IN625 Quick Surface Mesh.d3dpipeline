@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "Import_File_Data": {
+        "import_data_object": {
           "data_paths": [
             "DataContainer/CellEnsembleData",
             "DataContainer/CellEnsembleData/CrystalStructures",
@@ -60,12 +60,12 @@
     {
       "args": {
         "face_data_group_name": "FaceData",
-        "face_labels_array_name": "TriangleDataContainer/FaceData/FaceLabels",
+        "face_labels_array_name": "FaceLabels",
         "feature_ids_path": "DataContainer/CellData/FeatureIds",
         "fix_problem_voxels": true,
         "generate_triple_lines": false,
         "input_grid_geometry_path": "DataContainer",
-        "node_types_array_name": "TriangleDataContainer/VertexData/NodeType",
+        "node_types_array_name": "NodeType",
         "input_data_array_paths": [
           "DataContainer/CellData/IPFColors"
         ],
