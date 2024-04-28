@@ -249,7 +249,7 @@
     "FilterVersion": "1.0.1163",
     "Filter_Enabled": true,
     "Filter_Human_Label": "Remove Flagged Vertices",
-    "Filter_Name": "RemoveFlaggedVertices",
+    "Filter_Name": "RemoveFlaggedVerticesFilter",
     "Filter_Uuid": "{379ccc67-16dd-530a-984f-177db2314bac}",
     "MaskArrayPath": {
       "Attribute Matrix Name": "HF_VertexAttributeMatrix",
@@ -736,7 +736,7 @@
     "FilterVersion": "1.0.1163",
     "Filter_Enabled": true,
     "Filter_Human_Label": "Approximate Point Cloud Hull",
-    "Filter_Name": "ApproximatePointCloudHull",
+    "Filter_Name": "ApproximatePointCloudHullFilter",
     "Filter_Uuid": "{fab669ad-66c6-5a39-bdb7-fc47b94311ed}",
     "GridResolution": {
       "x": 0.10000000149011612,

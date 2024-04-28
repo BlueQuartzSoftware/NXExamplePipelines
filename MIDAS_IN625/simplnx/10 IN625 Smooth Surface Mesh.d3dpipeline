@@ -66,7 +66,7 @@
         "vertex_attribute_matrix_name": "VertexData"
       },
       "filter": {
-        "name": "complex::ExtractInternalSurfacesFromTriangleGeometry",
+        "name": "complex::ExtractInternalSurfacesFromTriangleGeometryFilter",
         "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
       },
       "isDisabled": false

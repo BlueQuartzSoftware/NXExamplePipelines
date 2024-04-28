@@ -249,7 +249,7 @@
                               },
                               "comments": "",
                               "filter": {
-                                "name": "complex::CropImageGeometry",
+                                "name": "complex::CropImageGeometryFilter",
                                 "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
                               },
                               "isDisabled": false
@@ -331,7 +331,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::CalculateFeatureSizesFilter",
+                "name": "complex::ComputeFeatureSizesFilter",
                 "uuid": "c666ee17-ca58-4969-80d0-819986c72485"
               },
               "isDisabled": false
@@ -368,7 +368,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::FindNeighbors",
+                "name": "complex::FindNeighborsFilter",
                 "uuid": "7177e88c-c3ab-4169-abe9-1fdaff20e598"
               },
               "isDisabled": false
@@ -387,7 +387,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::MinNeighbors",
+                "name": "complex::MinNeighborsFilter",
                 "uuid": "4ab5153f-6014-4e6d-bbd6-194068620389"
               },
               "isDisabled": false
@@ -398,7 +398,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -409,7 +409,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -420,7 +420,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -431,7 +431,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -442,7 +442,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -453,7 +453,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "complex::DeleteData",
+                "name": "complex::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -492,7 +492,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::CalculateFeatureSizesFilter",
+        "name": "complex::ComputeFeatureSizesFilter",
         "uuid": "c666ee17-ca58-4969-80d0-819986c72485"
       },
       "isDisabled": false
@@ -517,7 +517,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::DeleteData",
+        "name": "complex::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -607,7 +607,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::CopyFeatureArrayToElementArray",
+        "name": "complex::CopyFeatureArrayToElementArrayFilter",
         "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
       },
       "isDisabled": false
@@ -620,7 +620,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::CopyFeatureArrayToElementArray",
+        "name": "complex::CopyFeatureArrayToElementArrayFilter",
         "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
       },
       "isDisabled": false
@@ -633,7 +633,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "complex::CopyFeatureArrayToElementArray",
+        "name": "complex::CopyFeatureArrayToElementArrayFilter",
         "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
       },
       "isDisabled": false

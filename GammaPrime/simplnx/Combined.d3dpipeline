@@ -14,7 +14,7 @@
         "convert_to_gray_scale": false,
         "image_data_array_name": "ImageData",
         "output_image_geometry_path": "ImageDataContainer",
-        "image_transform_choice": 0,
+        "image_transform_index": 0,
         "input_file_list_object": {
           "end_index": 56,
           "file_extension": ".tif",
@@ -91,7 +91,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -103,7 +103,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
@@ -137,7 +137,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -149,7 +149,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
@@ -297,7 +297,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -309,7 +309,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
@@ -337,7 +337,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -349,7 +349,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
@@ -499,7 +499,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::CalculateFeatureSizesFilter",
+        "name": "nx::core::ComputeFeatureSizesFilter",
         "uuid": "c666ee17-ca58-4969-80d0-819986c72485"
       },
       "isDisabled": false
@@ -582,7 +582,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -616,20 +616,20 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::CopyFeatureArrayToElementArray",
+        "name": "nx::core::CopyFeatureArrayToElementArrayFilter",
         "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "delimiter": 2,
+        "delimiter_index": 2,
         "file_extension": ".csv",
-        "includes": 1,
+        "header_option_index": 1,
         "max_val_per_line": 1,
         "output_dir": "Data/",
         "output_path": "Data/Output/GammaPrime/GammaPrimeStatistics.csv",
-        "output_style": 1,
+        "output_style_index": 1,
         "input_data_array_paths": [
           "ImageDataContainer/CellFeatureData/Active",
           "ImageDataContainer/CellFeatureData/AspectRatios",
@@ -724,7 +724,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::FindArrayStatisticsFilter",
+        "name": "nx::core::ComputeArrayStatisticsFilter",
         "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
       },
       "isDisabled": false
@@ -812,7 +812,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometryFilter",
         "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
       },
       "isDisabled": false
@@ -825,7 +825,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
@@ -893,7 +893,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometryFilter",
         "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
       },
       "isDisabled": false
@@ -906,7 +906,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false

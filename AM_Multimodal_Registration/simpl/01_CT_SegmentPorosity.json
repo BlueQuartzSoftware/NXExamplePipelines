@@ -81,7 +81,7 @@
         "FilterVersion": "1.0.1215",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Robust Automatic Threshold",
-        "Filter_Name": "RobustAutomaticThreshold",
+        "Filter_Name": "RobustAutomaticThresholdFilter",
         "Filter_Uuid": "{3062fc2c-76b2-5c50-92b7-edbbb424c41d}",
         "GradientMagnitudeArrayPath": {
             "Attribute Matrix Name": "CellData",
@@ -98,7 +98,7 @@
         "FilterVersion": "2.0.490",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Create Data Array",
-        "Filter_Name": "CreateDataArray",
+        "Filter_Name": "CreateDataArrayFilter",
         "Filter_Uuid": "{77f392fb-c1eb-57da-a1b1-e7acf9239fb8}",
         "InitializationRange": {
             "Max": 0,
@@ -124,7 +124,7 @@
         "FilterVersion": "2.0.490",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Replace Value in Array (Conditional)",
-        "Filter_Name": "ConditionalSetValue",
+        "Filter_Name": "ConditionalSetValueFilter",
         "Filter_Uuid": "{47cafe63-83cc-5826-9521-4fb5bea684ef}",
         "ReplaceValue": 1,
         "SelectedArrayPath": {

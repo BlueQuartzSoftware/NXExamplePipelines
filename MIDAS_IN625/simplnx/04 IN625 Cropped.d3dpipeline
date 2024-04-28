@@ -56,7 +56,7 @@
         "use_physical_bounds": false
       },
       "filter": {
-        "name": "complex::CropImageGeometry",
+        "name": "complex::CropImageGeometryFilter",
         "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
       },
       "isDisabled": false

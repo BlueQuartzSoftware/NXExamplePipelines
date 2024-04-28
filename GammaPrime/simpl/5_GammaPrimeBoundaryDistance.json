@@ -438,7 +438,7 @@
         "FilterVersion": "1.0.97",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Find Attribute Array Statistics",
-        "Filter_Name": "FindArrayStatistics",
+        "Filter_Name": "ComputeArrayStatistics",
         "Filter_Uuid": "{bf35f515-294b-55ed-8c69-211b7e69cb56}",
         "FindLength": 0,
         "FindMax": 0,
@@ -517,7 +517,7 @@
         "FilterVersion": "1.0.97",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
-        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometryFilter",
         "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
         "InternalTrianglesName": "PrecipitatesSurface",
         "NodeTypesArrayPath": {
@@ -1156,7 +1156,7 @@
         "FilterVersion": "1.0.97",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
-        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometryFilter",
         "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
         "InternalTrianglesName": "GrainBoundary",
         "NodeTypesArrayPath": {

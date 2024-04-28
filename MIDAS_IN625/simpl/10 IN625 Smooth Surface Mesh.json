@@ -109,7 +109,7 @@
         "FilterVersion": "1.0.1325",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Extract Internal Surfaces from Triangle Geometry",
-        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometry",
+        "Filter_Name": "ExtractInternalSurfacesFromTriangleGeometryFilter",
         "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
         "InternalTrianglesName": "InternalTrianglesDataContainer",
         "NodeTypesArrayPath": {

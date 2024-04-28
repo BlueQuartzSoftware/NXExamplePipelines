@@ -94,7 +94,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::RemoveFlaggedVertices",
+                "name": "nx::core::RemoveFlaggedVerticesFilter",
                 "uuid": "46099b4c-ef90-4fb3-b5e9-6c8c543c5be1"
               },
               "isDisabled": false
@@ -107,7 +107,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::DeleteData",
+                "name": "nx::core::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -125,7 +125,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ApproximatePointCloudHull",
+                "name": "nx::core::ApproximatePointCloudHullFilter",
                 "uuid": "c19203b7-2217-4e52-bff4-7f611695421a"
               },
               "isDisabled": false
@@ -211,7 +211,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::CalculateTriangleAreasFilter",
+                "name": "nx::core::ComputeTriangleAreasFilter",
                 "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
               },
               "isDisabled": false
@@ -307,7 +307,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::RenameDataObject",
+                "name": "nx::core::RenameDataObjectFilter",
                 "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
               },
               "isDisabled": false
@@ -334,7 +334,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::RobustAutomaticThreshold",
+                "name": "nx::core::RobustAutomaticThresholdFilter",
                 "uuid": "ade392e6-f0da-4cf3-bf11-dfe69e200b49"
               },
               "isDisabled": false
@@ -345,7 +345,7 @@
                 "component_count": 1,
                 "data_format": "",
                 "initialization_value_str": "0",
-                "numeric_type": 4,
+                "numeric_type_index": 4,
                 "output_array_path": "GC1_CT_ImageData/CellData/FeatureIds",
                 "tuple_dimensions": [
                   [
@@ -357,7 +357,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::CreateDataArray",
+                "name": "nx::core::CreateDataArrayFilter",
                 "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d"
               },
               "isDisabled": false
@@ -373,7 +373,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ConditionalSetValue",
+                "name": "nx::core::ConditionalSetValueFilter",
                 "uuid": "bad9b7bd-1dc9-4f21-a889-6520e7a41881"
               },
               "isDisabled": false
@@ -386,7 +386,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::DeleteData",
+                "name": "nx::core::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
@@ -432,7 +432,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometry",
+                "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometryFilter",
                 "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
               },
               "isDisabled": false
@@ -465,7 +465,7 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::CalculateTriangleAreasFilter",
+                "name": "nx::core::ComputeTriangleAreasFilter",
                 "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
               },
               "isDisabled": false
@@ -578,7 +578,7 @@
       "args": {
         "cell_attribute_matrix_path": "GC1 STL Keypoints/VertexData",
         "computed_transformation_matrix_path": "GC1 STL Keypoints/Transform",
-        "interpolation_type": 0,
+        "interpolation_type_index": 0,
         "manual_transformation_matrix": [
           [
             1.0,
@@ -617,7 +617,7 @@
           1.0
         ],
         "input_image_geometry_path": "GC1_STL",
-        "transformation_type": 1,
+        "transformation_type_index": 1,
         "translate_geometry_to_global_origin": false,
         "translation": [
           0.0,
@@ -636,7 +636,7 @@
       "args": {
         "cell_attribute_matrix_path": "TDMS Keypoints/Vertex Data",
         "computed_transformation_matrix_path": "TDMS Keypoints/Transform",
-        "interpolation_type": 0,
+        "interpolation_type_index": 0,
         "manual_transformation_matrix": [
           [
             1.0,
@@ -675,7 +675,7 @@
           1.0
         ],
         "input_image_geometry_path": "TDMS Beam On",
-        "transformation_type": 1,
+        "transformation_type_index": 1,
         "translate_geometry_to_global_origin": false,
         "translation": [
           0.0,

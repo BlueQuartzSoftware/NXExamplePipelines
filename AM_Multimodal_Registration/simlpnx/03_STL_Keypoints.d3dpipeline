@@ -27,7 +27,7 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::CalculateTriangleAreasFilter",
+        "name": "nx::core::ComputeTriangleAreasFilter",
         "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
       },
       "isDisabled": false

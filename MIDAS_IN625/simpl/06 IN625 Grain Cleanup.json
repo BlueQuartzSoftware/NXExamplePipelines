@@ -275,7 +275,7 @@
         "FilterVersion": "6.6.279",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Find Feature Neighbors",
-        "Filter_Name": "FindNeighbors",
+        "Filter_Name": "FindNeighborsFilter",
         "Filter_Uuid": "{97cf66f8-7a9b-5ec2-83eb-f8c4c8a17bac}",
         "NeighborListArrayName": "NeighborList",
         "NumNeighborsArrayName": "NumNeighbors",
@@ -299,7 +299,7 @@
         "FilterVersion": "6.6.279",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Minimum Number of Neighbors",
-        "Filter_Name": "MinNeighbors",
+        "Filter_Name": "MinNeighborsFilter",
         "Filter_Uuid": "{dab5de3c-5f81-5bb5-8490-73521e1183ea}",
         "IgnoredDataArrayPaths": [
         ],

@@ -641,7 +641,7 @@
         "FilterVersion": "2.0.447",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Create Element Array from Feature Array",
-        "Filter_Name": "CopyFeatureArrayToElementArray",
+        "Filter_Name": "CopyFeatureArrayToElementArrayFilter",
         "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
         "SelectedFeatureArrayPath": {
             "Attribute Matrix Name": "CellFeatureData",
@@ -659,7 +659,7 @@
         "FilterVersion": "2.0.447",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Create Element Array from Feature Array",
-        "Filter_Name": "CopyFeatureArrayToElementArray",
+        "Filter_Name": "CopyFeatureArrayToElementArrayFilter",
         "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
         "SelectedFeatureArrayPath": {
             "Attribute Matrix Name": "CellFeatureData",
@@ -677,7 +677,7 @@
         "FilterVersion": "2.0.447",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Create Element Array from Feature Array",
-        "Filter_Name": "CopyFeatureArrayToElementArray",
+        "Filter_Name": "CopyFeatureArrayToElementArrayFilter",
         "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
         "SelectedFeatureArrayPath": {
             "Attribute Matrix Name": "CellFeatureData",

@@ -13,8 +13,7 @@
         ],
         "convert_to_gray_scale": false,
         "image_data_array_name": "ImageData",
-        "output_image_geometry_path": "ImageDataContainer",
-        "image_transform_choice": 0,
+        "image_transform_index": 0,
         "input_file_list_object": {
           "end_index": 56,
           "file_extension": ".tif",
@@ -31,15 +30,16 @@
           0.0,
           0.0
         ],
+        "output_image_geometry_path": "ImageDataContainer",
         "spacing": [
           17.399999618530273,
           17.399999618530273,
           50.0
         ]
       },
-      "comments": "Parameter conversion error: DataContainerCreationFilterParameter json '\"ImageDataContainer\"' does not contain 'Data Container Name'\n",
+      "comments": "",
       "filter": {
-        "name": "nx::core::ITKImportImageStack",
+        "name": "nx::core::ITKImportImageStackFilter",
         "uuid": "dcf980b7-ecca-46d1-af31-ac65f6e3b6bb"
       },
       "isDisabled": false

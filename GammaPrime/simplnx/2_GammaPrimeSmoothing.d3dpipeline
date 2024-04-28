@@ -25,8 +25,7 @@
                         ],
                         "convert_to_gray_scale": false,
                         "image_data_array_name": "ImageData",
-                        "output_image_geometry_path": "ImageDataContainer",
-                        "image_transform_choice": 0,
+                        "image_transform_index": 0,
                         "input_file_list_object": {
                           "end_index": 56,
                           "file_extension": ".tif",
@@ -43,15 +42,16 @@
                           0.0,
                           0.0
                         ],
+                        "output_image_geometry_path": "ImageDataContainer",
                         "spacing": [
-                          1.0,
-                          1.0,
-                          1.0
+                          17.399999618530273,
+                          17.399999618530273,
+                          50.0
                         ]
                       },
                       "comments": "",
                       "filter": {
-                        "name": "nx::core::ITKImportImageStack",
+                        "name": "nx::core::ITKImportImageStackFilter",
                         "uuid": "dcf980b7-ecca-46d1-af31-ac65f6e3b6bb"
                       },
                       "isDisabled": false
@@ -90,17 +90,17 @@
             {
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                "input_image_geometry_path": "ImageDataContainer",
                 "label_offset": 0,
                 "number_of_histogram_bins": 256,
                 "number_of_thresholds": 1,
                 "output_array_name": "MaskGrain1",
                 "return_bin_midpoint": false,
-                "input_image_geometry_path": "ImageDataContainer",
                 "valley_emphasis": false
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKOtsuMultipleThresholdsImage",
+                "name": "nx::core::ITKOtsuMultipleThresholdsImageFilter",
                 "uuid": "30f37bcd-701f-4e64-aa9d-1181469d3fb5"
               },
               "isDisabled": false
@@ -109,6 +109,7 @@
               "args": {
                 "fully_connected": false,
                 "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                "input_image_geometry_path": "ImageDataContainer",
                 "kernel_radius": [
                   7,
                   7,
@@ -116,12 +117,11 @@
                 ],
                 "kernel_type_index": 2,
                 "output_array_name": "MaskGrain1 (filtered)",
-                "preserve_intensities": false,
-                "input_image_geometry_path": "ImageDataContainer"
+                "preserve_intensities": false
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKClosingByReconstructionImage",
+                "name": "nx::core::ITKClosingByReconstructionImageFilter",
                 "uuid": "b5ff32a8-e799-4f72-8d13-e2581f748562"
               },
               "isDisabled": false
@@ -134,19 +134,19 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::DeleteData",
+                "name": "nx::core::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
             },
             {
               "args": {
-                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
-                "new_name": "MaskGrain1"
+                "new_name": "MaskGrain1",
+                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)"
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::RenameDataObject",
+                "name": "nx::core::RenameDataObjectFilter",
                 "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
               },
               "isDisabled": false
@@ -155,6 +155,7 @@
               "args": {
                 "fully_connected": false,
                 "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                "input_image_geometry_path": "ImageDataContainer",
                 "kernel_radius": [
                   7,
                   7,
@@ -162,12 +163,11 @@
                 ],
                 "kernel_type_index": 2,
                 "output_array_name": "MaskGrain1 (filtered)",
-                "preserve_intensities": false,
-                "input_image_geometry_path": "ImageDataContainer"
+                "preserve_intensities": false
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKOpeningByReconstructionImage",
+                "name": "nx::core::ITKOpeningByReconstructionImageFilter",
                 "uuid": "c4225a23-0b23-4782-b509-296fb39a672b"
               },
               "isDisabled": false
@@ -180,19 +180,19 @@
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::DeleteData",
+                "name": "nx::core::DeleteDataFilter",
                 "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
               },
               "isDisabled": false
             },
             {
               "args": {
-                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)",
-                "new_name": "MaskGrain1"
+                "new_name": "MaskGrain1",
+                "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)"
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::RenameDataObject",
+                "name": "nx::core::RenameDataObjectFilter",
                 "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
               },
               "isDisabled": false
@@ -200,13 +200,13 @@
             {
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                "input_image_geometry_path": "ImageDataContainer",
                 "maximum": 1.0,
-                "output_array_name": "MaskGrain2",
-                "input_image_geometry_path": "ImageDataContainer"
+                "output_array_name": "MaskGrain2"
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKInvertIntensityImage",
+                "name": "nx::core::ITKInvertIntensityImageFilter",
                 "uuid": "9958d587-5698-4ea5-b8ea-fb71428b5d02"
               },
               "isDisabled": false
@@ -214,14 +214,14 @@
             {
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                "input_image_geometry_path": "ImageDataContainer",
                 "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
                 "output_array_name": "RawGrain1",
-                "outside_value": 0.0,
-                "input_image_geometry_path": "ImageDataContainer"
+                "outside_value": 0.0
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKMaskImage",
+                "name": "nx::core::ITKMaskImageFilter",
                 "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
               },
               "isDisabled": false
@@ -229,14 +229,14 @@
             {
               "args": {
                 "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                "input_image_geometry_path": "ImageDataContainer",
                 "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
                 "output_array_name": "RawGrain2",
-                "outside_value": 0.0,
-                "input_image_geometry_path": "ImageDataContainer"
+                "outside_value": 0.0
               },
               "comments": "",
               "filter": {
-                "name": "nx::core::ITKMaskImage",
+                "name": "nx::core::ITKMaskImageFilter",
                 "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
               },
               "isDisabled": false
@@ -279,17 +279,17 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/RawGrain1",
+        "input_image_geometry_path": "ImageDataContainer",
         "output_array_name": "MedianGrain1",
         "radius": [
           2,
           2,
           1
-        ],
-        "input_image_geometry_path": "ImageDataContainer"
+        ]
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKMedianImage",
+        "name": "nx::core::ITKMedianImageFilter",
         "uuid": "a60ca165-59ac-486b-b4b4-0f0c24d80af8"
       },
       "isDisabled": false
@@ -297,17 +297,17 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/RawGrain2",
+        "input_image_geometry_path": "ImageDataContainer",
         "output_array_name": "MedianGrain2",
         "radius": [
           2,
           2,
           1
-        ],
-        "input_image_geometry_path": "ImageDataContainer"
+        ]
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKMedianImage",
+        "name": "nx::core::ITKMedianImageFilter",
         "uuid": "a60ca165-59ac-486b-b4b4-0f0c24d80af8"
       },
       "isDisabled": false
@@ -317,17 +317,17 @@
         "alpha": 0.30000001192092896,
         "beta": 0.30000001192092896,
         "input_image_data_path": "ImageDataContainer/CellData/MedianGrain1",
+        "input_image_geometry_path": "ImageDataContainer",
         "output_array_name": "EqualizedGrain1",
         "radius": [
           35,
           35,
           5
-        ],
-        "input_image_geometry_path": "ImageDataContainer"
+        ]
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKAdaptiveHistogramEqualizationImage",
+        "name": "nx::core::ITKAdaptiveHistogramEqualizationImageFilter",
         "uuid": "ea3e7439-8327-4190-8ff7-49ecc321718f"
       },
       "isDisabled": false
@@ -337,17 +337,17 @@
         "alpha": 0.30000001192092896,
         "beta": 0.30000001192092896,
         "input_image_data_path": "ImageDataContainer/CellData/MedianGrain2",
+        "input_image_geometry_path": "ImageDataContainer",
         "output_array_name": "EqualizedGrain2",
         "radius": [
           35,
           35,
           5
-        ],
-        "input_image_geometry_path": "ImageDataContainer"
+        ]
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKAdaptiveHistogramEqualizationImage",
+        "name": "nx::core::ITKAdaptiveHistogramEqualizationImageFilter",
         "uuid": "ea3e7439-8327-4190-8ff7-49ecc321718f"
       },
       "isDisabled": false
@@ -355,14 +355,14 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+        "input_image_geometry_path": "ImageDataContainer",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
         "output_array_name": "EqualizedGrain1 (filtered)",
-        "outside_value": 0.0,
-        "input_image_geometry_path": "ImageDataContainer"
+        "outside_value": 0.0
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKMaskImage",
+        "name": "nx::core::ITKMaskImageFilter",
         "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
       },
       "isDisabled": false
@@ -375,19 +375,19 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)",
-        "new_name": "EqualizedGrain1"
+        "new_name": "EqualizedGrain1",
+        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)"
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
@@ -395,14 +395,14 @@
     {
       "args": {
         "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+        "input_image_geometry_path": "ImageDataContainer",
         "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
         "output_array_name": "EqualizedGrain2 (filtered)",
-        "outside_value": 0.0,
-        "input_image_geometry_path": "ImageDataContainer"
+        "outside_value": 0.0
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::ITKMaskImage",
+        "name": "nx::core::ITKMaskImageFilter",
         "uuid": "d3138266-3f34-4d6e-8e21-904c94351293"
       },
       "isDisabled": false
@@ -415,19 +415,19 @@
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::DeleteData",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)",
-        "new_name": "EqualizedGrain2"
+        "new_name": "EqualizedGrain2",
+        "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)"
       },
       "comments": "",
       "filter": {
-        "name": "nx::core::RenameDataObject",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false

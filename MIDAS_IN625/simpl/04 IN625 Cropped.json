@@ -256,7 +256,7 @@
         "FilterVersion": "6.6.279",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Crop Geometry (Image)",
-        "Filter_Name": "CropImageGeometry",
+        "Filter_Name": "CropImageGeometryFilter",
         "Filter_Uuid": "{baa4b7fe-31e5-5e63-a2cb-0bb9d844cfaf}",
         "NewDataContainerName": {
             "Attribute Matrix Name": "",
