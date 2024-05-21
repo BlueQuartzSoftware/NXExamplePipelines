@@ -6,20 +6,20 @@
       "args": {
         "import_data_object": {
           "data_paths": [
-            "DataContainer/CellEnsembleData",
-            "DataContainer/CellEnsembleData/CrystalStructures",
-            "DataContainer/CellEnsembleData/LatticeConstants",
+            "DataContainer/Cell Ensemble Data",
+            "DataContainer/Cell Ensemble Data/CrystalStructures",
+            "DataContainer/Cell Ensemble Data/LatticeConstants",
             "DataContainer",
-            "DataContainer/CellData",
-            "DataContainer/CellData/BC",
-            "DataContainer/CellData/BS",
-            "DataContainer/CellData/Bands",
-            "DataContainer/CellData/Error",
-            "DataContainer/CellData/EulerAngles",
-            "DataContainer/CellData/MAD",
-            "DataContainer/CellData/Phases",
-            "DataContainer/CellData/IPFColors",
-            "DataContainer/CellData/Quaternions"
+            "DataContainer/Cell Data",
+            "DataContainer/Cell Data/BC",
+            "DataContainer/Cell Data/BS",
+            "DataContainer/Cell Data/Bands",
+            "DataContainer/Cell Data/Error",
+            "DataContainer/Cell Data/EulerAngles",
+            "DataContainer/Cell Data/MAD",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/IPFColors",
+            "DataContainer/Cell Data/Quaternions"
           ],
           "file_path": "Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d"
         },
@@ -37,7 +37,7 @@
     },
     {
       "args": {
-        "cell_feature_attribute_matrix_path": "CellFeatureData",
+        "cell_feature_attribute_matrix_path": "Cell Feature Data",
         "feature_ids_path": "",
         "input_image_geometry_path": "DataContainer",
         "max_voxel": [

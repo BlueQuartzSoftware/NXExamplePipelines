@@ -8,22 +8,22 @@
         "import_data_object": {
           "data_paths": [
             "DataContainer",
-            "DataContainer/CellData",
-            "DataContainer/CellData/Bands",
-            "DataContainer/CellData/Error",
-            "DataContainer/CellData/MAD",
-            "DataContainer/CellData/BC",
-            "DataContainer/CellData/BS",
-            "DataContainer/CellData/EulerAngles",
-            "DataContainer/CellData/Phases",
-            "DataContainer/CellData/IPFColors",
-            "DataContainer/CellData/Quaternions",
-            "DataContainer/CellEnsembleData",
-            "DataContainer/CellEnsembleData/CrystalStructures",
-            "DataContainer/CellEnsembleData/LatticeConstants",
-            "DataContainer/CellFeatureData",
-            "DataContainer/CellFeatureData/Active",
-            "DataContainer/CellData/FeatureIds"
+            "DataContainer/Cell Data",
+            "DataContainer/Cell Data/Bands",
+            "DataContainer/Cell Data/Error",
+            "DataContainer/Cell Data/MAD",
+            "DataContainer/Cell Data/BC",
+            "DataContainer/Cell Data/BS",
+            "DataContainer/Cell Data/EulerAngles",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/IPFColors",
+            "DataContainer/Cell Data/Quaternions",
+            "DataContainer/Cell Ensemble Data",
+            "DataContainer/Cell Ensemble Data/CrystalStructures",
+            "DataContainer/Cell Ensemble Data/LatticeConstants",
+            "DataContainer/Cell Feature Data",
+            "DataContainer/Cell Feature Data/Active",
+            "DataContainer/Cell Data/FeatureIds"
           ],
           "file_path": "Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d"
         },
@@ -46,19 +46,19 @@
                         "import_data_object": {
                           "data_paths": [
                             "DataContainer",
-                            "DataContainer/CellData",
-                            "DataContainer/CellData/Bands",
-                            "DataContainer/CellData/Error",
-                            "DataContainer/CellData/MAD",
-                            "DataContainer/CellData/BC",
-                            "DataContainer/CellData/BS",
-                            "DataContainer/CellData/EulerAngles",
-                            "DataContainer/CellData/Phases",
-                            "DataContainer/CellEnsembleData",
-                            "DataContainer/CellEnsembleData/CrystalStructures",
-                            "DataContainer/CellEnsembleData/LatticeConstants",
-                            "DataContainer/CellData/IPFColors",
-                            "DataContainer/CellData/Quaternions"
+                            "DataContainer/Cell Data",
+                            "DataContainer/Cell Data/Bands",
+                            "DataContainer/Cell Data/Error",
+                            "DataContainer/Cell Data/MAD",
+                            "DataContainer/Cell Data/BC",
+                            "DataContainer/Cell Data/BS",
+                            "DataContainer/Cell Data/EulerAngles",
+                            "DataContainer/Cell Data/Phases",
+                            "DataContainer/Cell Ensemble Data",
+                            "DataContainer/Cell Ensemble Data/CrystalStructures",
+                            "DataContainer/Cell Ensemble Data/LatticeConstants",
+                            "DataContainer/Cell Data/IPFColors",
+                            "DataContainer/Cell Data/Quaternions"
                           ],
                           "file_path": "Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d"
                         },
@@ -71,18 +71,18 @@
                                 "import_data_object": {
                                   "data_paths": [
                                     "DataContainer",
-                                    "DataContainer/CellData",
-                                    "DataContainer/CellData/Bands",
-                                    "DataContainer/CellData/Error",
-                                    "DataContainer/CellData/MAD",
-                                    "DataContainer/CellData/BC",
-                                    "DataContainer/CellData/BS",
-                                    "DataContainer/CellData/EulerAngles",
-                                    "DataContainer/CellData/Phases",
-                                    "DataContainer/CellEnsembleData",
-                                    "DataContainer/CellEnsembleData/CrystalStructures",
-                                    "DataContainer/CellEnsembleData/LatticeConstants",
-                                    "DataContainer/CellData/IPFColors"
+                                    "DataContainer/Cell Data",
+                                    "DataContainer/Cell Data/Bands",
+                                    "DataContainer/Cell Data/Error",
+                                    "DataContainer/Cell Data/MAD",
+                                    "DataContainer/Cell Data/BC",
+                                    "DataContainer/Cell Data/BS",
+                                    "DataContainer/Cell Data/EulerAngles",
+                                    "DataContainer/Cell Data/Phases",
+                                    "DataContainer/Cell Ensemble Data",
+                                    "DataContainer/Cell Ensemble Data/CrystalStructures",
+                                    "DataContainer/Cell Ensemble Data/LatticeConstants",
+                                    "DataContainer/Cell Data/IPFColors"
                                   ],
                                   "file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d"
                                 },
@@ -92,8 +92,8 @@
                                   "pipeline": [
                                     {
                                       "args": {
-                                        "cell_attribute_matrix_name": "CellData",
-                                        "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
+                                        "cell_attribute_matrix_name": "Cell Data",
+                                        "cell_ensemble_attribute_matrix_name": "Cell Ensemble Data",
                                         "output_image_geometry_path": "DataContainer",
                                         "read_h5_ebsd_object": {
                                           "end_slice": 800,
@@ -121,10 +121,10 @@
                                     },
                                     {
                                       "args": {
-                                        "cell_euler_angles_array_path": "DataContainer/CellData/EulerAngles",
+                                        "cell_euler_angles_array_path": "DataContainer/Cell Data/EulerAngles",
                                         "cell_ipf_colors_array_name": "IPFColors",
-                                        "cell_phases_array_path": "DataContainer/CellData/Phases",
-                                        "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                                        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+                                        "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
                                         "mask_array_path": "",
                                         "reference_dir": [
                                           0.0,
@@ -164,7 +164,7 @@
                             },
                             {
                               "args": {
-                                "input_orientation_array_path": "DataContainer/CellData/EulerAngles",
+                                "input_orientation_array_path": "DataContainer/Cell Data/EulerAngles",
                                 "input_representation_index": 0,
                                 "output_orientation_array_name": "Quaternions",
                                 "output_representation_index": 2
@@ -179,11 +179,11 @@
                             {
                               "args": {
                                 "alignment_shift_file_name": "Data/Output/Alignment_By_Misorientation_Shifts.txt",
-                                "cell_phases_array_path": "DataContainer/CellData/Phases",
-                                "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                                "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+                                "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
                                 "mask_array_path": "Mask",
                                 "misorientation_tolerance": 5.0,
-                                "quats_array_path": "DataContainer/CellData/Quaternions",
+                                "quats_array_path": "DataContainer/Cell Data/Quaternions",
                                 "input_image_geometry_path": "DataContainer",
                                 "use_mask": false,
                                 "write_alignment_shifts": false
@@ -219,7 +219,7 @@
                     },
                     {
                       "args": {
-                        "cell_feature_attribute_matrix_path": "CellFeatureData",
+                        "cell_feature_attribute_matrix_path": "Cell Feature Data",
                         "output_image_geometry_path": "ImageDataContainer",
                         "feature_ids_path": "",
                         "max_voxel": [
@@ -269,14 +269,14 @@
             {
               "args": {
                 "active_array_name": "Active",
-                "cell_feature_attribute_matrix_name": "CellFeatureData",
-                "cell_phases_array_path": "DataContainer/CellData/Phases",
-                "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+                "cell_feature_attribute_matrix_name": "Cell Feature Data",
+                "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+                "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
                 "feature_ids_array_name": "FeatureIds",
                 "mask_array_path": "",
                 "input_image_geometry_path": "DataContainer",
                 "misorientation_tolerance": 2.5,
-                "quats_array_path": "DataContainer/CellData/Quaternions",
+                "quats_array_path": "DataContainer/Cell Data/Quaternions",
                 "randomize_features": true,
                 "use_mask": false
               },
@@ -312,8 +312,8 @@
     {
       "args": {
         "equivalent_diameters_name": "EquivalentDiameters",
-        "feature_attribute_matrix_path": "DataContainer/CellFeatureData",
-        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
         "input_image_geometry_path": "DataContainer",
         "num_elements_name": "NumElements",
         "save_element_sizes": false,
@@ -329,16 +329,16 @@
     {
       "args": {
         "apply_single_phase": false,
-        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
         "feature_phases_path": "",
         "input_image_geometry_path": "DataContainer",
         "min_allowed_features_size": 8,
-        "num_cells_path": "DataContainer/CellFeatureData/NumElements",
+        "num_cells_path": "DataContainer/Cell Feature Data/NumElements",
         "phase_number": 0
       },
       "comments": "",
       "filter": {
-        "name": "complex::RemoveMinimumSizeFeaturesFilter",
+        "name": "complex::RequireMinimumSizeFeaturesFilter",
         "uuid": "074472d3-ba8d-4a1a-99f2-2d56a0d082a0"
       },
       "isDisabled": false
@@ -346,8 +346,8 @@
     {
       "args": {
         "boundary_cells_name": "BoundaryCells",
-        "cell_feature_array_path": "DataContainer/CellFeatureData",
-        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "cell_feature_array_path": "DataContainer/Cell Feature Data",
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
         "input_image_geometry_path": "DataContainer",
         "neighbor_list_name": "NeighborList2",
         "number_of_neighbors_name": "NumNeighbors2",
@@ -366,18 +366,18 @@
     {
       "args": {
         "apply_to_single_phase": false,
-        "cell_attribute_matrix_path": "DataContainer/CellData",
-        "feature_ids_path": "DataContainer/CellData/FeatureIds",
+        "cell_attribute_matrix_path": "DataContainer/Cell Data",
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
         "feature_phases_path": "Data Container/Feature Data/Phases",
         "ignored_voxel_arrays": [],
         "input_image_geometry_path": "DataContainer",
         "min_num_neighbors": 1,
-        "num_neighbors_path": "DataContainer/CellFeatureData/NumNeighbors2",
+        "num_neighbors_path": "DataContainer/Cell Feature Data/NumNeighbors2",
         "phase_number": 0
       },
       "comments": "",
       "filter": {
-        "name": "complex::MinNeighborsFilter",
+        "name": "complex::RequireMinNumNeighborsFilter",
         "uuid": "4ab5153f-6014-4e6d-bbd6-194068620389"
       },
       "isDisabled": false
@@ -385,12 +385,12 @@
     {
       "args": {
         "removed_data_path": [
-          "DataContainer/CellFeatureData/EquivalentDiameters",
-          "DataContainer/CellFeatureData/NeighborList2",
-          "DataContainer/CellFeatureData/NumElements",
-          "DataContainer/CellFeatureData/NumNeighbors2",
-          "DataContainer/CellFeatureData/SharedSurfaceAreaList2",
-          "DataContainer/CellFeatureData/Volumes"
+          "DataContainer/Cell Feature Data/EquivalentDiameters",
+          "DataContainer/Cell Feature Data/NeighborList2",
+          "DataContainer/Cell Feature Data/NumElements",
+          "DataContainer/Cell Feature Data/NumNeighbors2",
+          "DataContainer/Cell Feature Data/SharedSurfaceAreaList2",
+          "DataContainer/Cell Feature Data/Volumes"
         ]
       },
       "comments": "",

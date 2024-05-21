@@ -40,14 +40,14 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "FaceFeatureData",
+                            "Name": "Face Feature Data",
                             "Type": 6
                         },
                         {
@@ -59,7 +59,7 @@
                                     "Flag": 2,
                                     "Name": "NodeType",
                                     "Object Type": "DataArray<int8_t>",
-                                    "Path": "/DataContainers/TriangleDataContainer/VertexData",
+                                    "Path": "/DataContainers/TriangleDataContainer/Vertex Data",
                                     "Tuple Dimensions": [
                                         3658155
                                     ],
@@ -67,7 +67,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -90,12 +90,12 @@
         "MuFactor": -1.0299999713897705,
         "QuadPointLambda": 0.10000000149011612,
         "SurfaceMeshFaceLabelsArrayPath": {
-            "Attribute Matrix Name": "FaceData",
+            "Attribute Matrix Name": "Face Data",
             "Data Array Name": "FaceLabels",
             "Data Container Name": "TriangleDataContainer"
         },
         "SurfaceMeshNodeTypeArrayPath": {
-            "Attribute Matrix Name": "VertexData",
+            "Attribute Matrix Name": "Vertex Data",
             "Data Array Name": "NodeType",
             "Data Container Name": "TriangleDataContainer"
         },
@@ -113,7 +113,7 @@
         "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
         "InternalTrianglesName": "InternalTrianglesDataContainer",
         "NodeTypesArrayPath": {
-            "Attribute Matrix Name": "VertexData",
+            "Attribute Matrix Name": "Vertex Data",
             "Data Array Name": "NodeType",
             "Data Container Name": "TriangleDataContainer"
         },

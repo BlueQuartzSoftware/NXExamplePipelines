@@ -19,7 +19,7 @@
                                     "Flag": 2,
                                     "Name": "ImageData",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -29,7 +29,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -53,7 +53,7 @@
         "NumberOfThresholds": 1,
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "ImageData",
             "Data Container Name": "ImageDataContainer"
         },
@@ -76,7 +76,7 @@
         "PreserveIntensities": 0,
         "SaveAsNewArray": 0,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "MaskGrain1",
             "Data Container Name": "ImageDataContainer"
         }
@@ -98,7 +98,7 @@
         "PreserveIntensities": 0,
         "SaveAsNewArray": 0,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "MaskGrain1",
             "Data Container Name": "ImageDataContainer"
         }
@@ -113,7 +113,7 @@
         "NewCellArrayName": "MaskGrain2",
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "MaskGrain1",
             "Data Container Name": "ImageDataContainer"
         }
@@ -125,7 +125,7 @@
         "Filter_Name": "ITKMaskImage",
         "Filter_Uuid": "{97102d65-9c32-576a-9177-c59d958bad10}",
         "MaskCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "MaskGrain1",
             "Data Container Name": "ImageDataContainer"
         },
@@ -133,7 +133,7 @@
         "OutsideValue": 0,
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "ImageData",
             "Data Container Name": "ImageDataContainer"
         }
@@ -145,7 +145,7 @@
         "Filter_Name": "ITKMaskImage",
         "Filter_Uuid": "{97102d65-9c32-576a-9177-c59d958bad10}",
         "MaskCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "MaskGrain2",
             "Data Container Name": "ImageDataContainer"
         },
@@ -153,7 +153,7 @@
         "OutsideValue": 0,
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "ImageData",
             "Data Container Name": "ImageDataContainer"
         }

@@ -19,7 +19,7 @@
                                     "Flag": 2,
                                     "Name": "BC",
                                     "Object Type": "DataArray<int32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -34,7 +34,7 @@
                                     "Flag": 2,
                                     "Name": "BS",
                                     "Object Type": "DataArray<int32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -49,7 +49,7 @@
                                     "Flag": 0,
                                     "Name": "Bands",
                                     "Object Type": "DataArray<int32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -64,7 +64,7 @@
                                     "Flag": 0,
                                     "Name": "Error",
                                     "Object Type": "DataArray<int32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -79,7 +79,7 @@
                                     "Flag": 2,
                                     "Name": "EulerAngles",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -94,7 +94,7 @@
                                     "Flag": 2,
                                     "Name": "IPFColor",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -109,7 +109,7 @@
                                     "Flag": 2,
                                     "Name": "MAD",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -124,7 +124,7 @@
                                     "Flag": 2,
                                     "Name": "Phases",
                                     "Object Type": "DataArray<int32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -139,7 +139,7 @@
                                     "Flag": 2,
                                     "Name": "Quaternions",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -154,7 +154,7 @@
                                     "Flag": 0,
                                     "Name": "X",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -169,7 +169,7 @@
                                     "Flag": 0,
                                     "Name": "Y",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         600,
                                         600,
@@ -179,7 +179,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         },
                         {
@@ -191,7 +191,7 @@
                                     "Flag": 2,
                                     "Name": "CrystalStructures",
                                     "Object Type": "DataArray<uint32_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellEnsembleData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Ensemble Data",
                                     "Tuple Dimensions": [
                                         2
                                     ],
@@ -204,7 +204,7 @@
                                     "Flag": 2,
                                     "Name": "LatticeConstants",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellEnsembleData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Ensemble Data",
                                     "Tuple Dimensions": [
                                         2
                                     ],
@@ -217,7 +217,7 @@
                                     "Flag": 2,
                                     "Name": "MaterialName",
                                     "Object Type": "StringDataArray",
-                                    "Path": "/DataContainers/ImageDataContainer/CellEnsembleData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Ensemble Data",
                                     "Tuple Dimensions": [
                                         2
                                     ],
@@ -225,7 +225,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellEnsembleData",
+                            "Name": "Cell Ensemble Data",
                             "Type": 11
                         }
                     ],
@@ -239,17 +239,17 @@
     },
     "1": {
         "CellAttributeMatrixPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "",
             "Data Container Name": "ImageDataContainer"
         },
         "CellFeatureAttributeMatrixPath": {
-            "Attribute Matrix Name": "CellFeatureData",
+            "Attribute Matrix Name": "Cell Feature Data",
             "Data Array Name": "",
             "Data Container Name": "ImageDataContainer"
         },
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "ImageDataContainer"
         },

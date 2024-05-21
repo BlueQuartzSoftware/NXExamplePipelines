@@ -5,7 +5,7 @@
   "pipeline": [
     {
       "args": {
-        "cell_attribute_matrix_name": "CellData",
+        "cell_attribute_matrix_name": "Cell Data",
         "color_weights": [
           0.21250000596046448,
           0.715399980545044,

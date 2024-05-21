@@ -1,6 +1,6 @@
 {
     "0": {
-        "CellAttributeMatrixName": "CellData",
+        "CellAttributeMatrixName": "Cell Data",
         "DataContainerName": "ImageDataContainer",
         "FilterVersion": "1.0.504",
         "Filter_Enabled": true,

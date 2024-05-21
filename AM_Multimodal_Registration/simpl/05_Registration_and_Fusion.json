@@ -14,7 +14,7 @@
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -54,14 +54,14 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "FaceFeatureData",
+                            "Name": "Face Feature Data",
                             "Type": 6
                         },
                         {
@@ -73,7 +73,7 @@
                                     "Flag": 2,
                                     "Name": "NodeType",
                                     "Object Type": "DataArray<int8_t>",
-                                    "Path": "/DataContainers/GC1_CT Surface/VertexData",
+                                    "Path": "/DataContainers/GC1_CT SurfaceVertex Data",
                                     "Tuple Dimensions": [
                                         1787990
                                     ],
@@ -81,7 +81,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -155,7 +155,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -182,14 +182,14 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "FaceFeatureData",
+                            "Name": "Face Feature Data",
                             "Type": 6
                         },
                         {
@@ -201,7 +201,7 @@
                                     "Flag": 2,
                                     "Name": "NodeType",
                                     "Object Type": "DataArray<int8_t>",
-                                    "Path": "/DataContainers/GC1_QuickSurfaceMesh/VertexData",
+                                    "Path": "/DataContainers/GC1_QuickSurfaceMeshVertex Data",
                                     "Tuple Dimensions": [
                                         3880808
                                     ],
@@ -209,7 +209,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -243,7 +243,7 @@
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -283,14 +283,14 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 2,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -595,7 +595,7 @@
     },
     "05": {
         "CellAttributeMatrixPath": {
-            "Attribute Matrix Name": "VertexData",
+            "Attribute Matrix Name": "Vertex Data",
             "Data Array Name": "",
             "Data Container Name": "GC1_STL"
         },

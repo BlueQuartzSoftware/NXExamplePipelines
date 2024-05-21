@@ -5,8 +5,8 @@
   "pipeline": [
     {
       "args": {
-        "cell_attribute_matrix_name": "CellData",
-        "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
+        "cell_attribute_matrix_name": "Cell Data",
+        "cell_ensemble_attribute_matrix_name": "Cell Ensemble Data",
         "output_image_geometry_path": "DataContainer",
         "read_h5_ebsd_object": {
           "end_slice": 800,
@@ -34,10 +34,10 @@
     },
     {
       "args": {
-        "cell_euler_angles_array_path": "DataContainer/CellData/EulerAngles",
+        "cell_euler_angles_array_path": "DataContainer/Cell Data/EulerAngles",
         "cell_ipf_colors_array_name": "IPFColors",
-        "cell_phases_array_path": "DataContainer/CellData/Phases",
-        "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+        "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
         "mask_array_path": "",
         "reference_dir": [
           0.0,

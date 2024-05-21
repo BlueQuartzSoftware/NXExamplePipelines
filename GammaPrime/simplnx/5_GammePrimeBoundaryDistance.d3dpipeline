@@ -35,7 +35,7 @@
                                           "pipeline": [
                                             {
                                               "args": {
-                                                "cell_attribute_matrix_name": "CellData",
+                                                "cell_attribute_matrix_name": "Cell Data",
                                                 "color_weights": [
                                                   0.21250000596046448,
                                                   0.715399980545044,
@@ -92,8 +92,8 @@
                                         "import_data_object": {
                                           "data_paths": [
                                             "ImageDataContainer",
-                                            "ImageDataContainer/CellData",
-                                            "ImageDataContainer/CellData/ImageData"
+                                            "ImageDataContainer/Cell Data",
+                                            "ImageDataContainer/Cell Data/ImageData"
                                           ],
                                           "file_path": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d"
                                         }
@@ -107,7 +107,7 @@
                                     },
                                     {
                                       "args": {
-                                        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
                                         "input_image_geometry_path": "ImageDataContainer",
                                         "label_offset": 0,
                                         "number_of_histogram_bins": 256,
@@ -126,7 +126,7 @@
                                     {
                                       "args": {
                                         "fully_connected": false,
-                                        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
                                         "input_image_geometry_path": "ImageDataContainer",
                                         "kernel_radius": [
                                           7,
@@ -147,7 +147,7 @@
                                     {
                                       "args": {
                                         "removed_data_path": [
-                                          "ImageDataContainer/CellData/MaskGrain1"
+                                          "ImageDataContainer/Cell Data/MaskGrain1"
                                         ]
                                       },
                                       "comments": "",
@@ -160,7 +160,7 @@
                                     {
                                       "args": {
                                         "new_name": "MaskGrain1",
-                                        "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)"
+                                        "source_data_object_path": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)"
                                       },
                                       "comments": "",
                                       "filter": {
@@ -172,7 +172,7 @@
                                     {
                                       "args": {
                                         "fully_connected": false,
-                                        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
                                         "input_image_geometry_path": "ImageDataContainer",
                                         "kernel_radius": [
                                           7,
@@ -193,7 +193,7 @@
                                     {
                                       "args": {
                                         "removed_data_path": [
-                                          "ImageDataContainer/CellData/MaskGrain1"
+                                          "ImageDataContainer/Cell Data/MaskGrain1"
                                         ]
                                       },
                                       "comments": "",
@@ -206,7 +206,7 @@
                                     {
                                       "args": {
                                         "new_name": "MaskGrain1",
-                                        "source_data_object_path": "ImageDataContainer/CellData/MaskGrain1 (filtered)"
+                                        "source_data_object_path": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)"
                                       },
                                       "comments": "",
                                       "filter": {
@@ -217,7 +217,7 @@
                                     },
                                     {
                                       "args": {
-                                        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
                                         "input_image_geometry_path": "ImageDataContainer",
                                         "maximum": 1.0,
                                         "output_array_name": "MaskGrain2"
@@ -231,9 +231,9 @@
                                     },
                                     {
                                       "args": {
-                                        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
                                         "input_image_geometry_path": "ImageDataContainer",
-                                        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                                        "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
                                         "output_array_name": "RawGrain1",
                                         "outside_value": 0.0
                                       },
@@ -246,9 +246,9 @@
                                     },
                                     {
                                       "args": {
-                                        "input_image_data_path": "ImageDataContainer/CellData/ImageData",
+                                        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
                                         "input_image_geometry_path": "ImageDataContainer",
-                                        "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
+                                        "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain2",
                                         "output_array_name": "RawGrain2",
                                         "outside_value": 0.0
                                       },
@@ -277,12 +277,12 @@
                                 "import_data_object": {
                                   "data_paths": [
                                     "ImageDataContainer",
-                                    "ImageDataContainer/CellData",
-                                    "ImageDataContainer/CellData/ImageData",
-                                    "ImageDataContainer/CellData/MaskGrain1",
-                                    "ImageDataContainer/CellData/MaskGrain2",
-                                    "ImageDataContainer/CellData/RawGrain1",
-                                    "ImageDataContainer/CellData/RawGrain2"
+                                    "ImageDataContainer/Cell Data",
+                                    "ImageDataContainer/Cell Data/ImageData",
+                                    "ImageDataContainer/Cell Data/MaskGrain1",
+                                    "ImageDataContainer/Cell Data/MaskGrain2",
+                                    "ImageDataContainer/Cell Data/RawGrain1",
+                                    "ImageDataContainer/Cell Data/RawGrain2"
                                   ],
                                   "file_path": "Data/Output/GammaPrime/GammaPrimeMaskedGrains.dream3d"
                                 }
@@ -296,7 +296,7 @@
                             },
                             {
                               "args": {
-                                "input_image_data_path": "ImageDataContainer/CellData/RawGrain1",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/RawGrain1",
                                 "input_image_geometry_path": "ImageDataContainer",
                                 "output_array_name": "MedianGrain1",
                                 "radius": [
@@ -314,7 +314,7 @@
                             },
                             {
                               "args": {
-                                "input_image_data_path": "ImageDataContainer/CellData/RawGrain2",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/RawGrain2",
                                 "input_image_geometry_path": "ImageDataContainer",
                                 "output_array_name": "MedianGrain2",
                                 "radius": [
@@ -334,7 +334,7 @@
                               "args": {
                                 "alpha": 0.30000001192092896,
                                 "beta": 0.30000001192092896,
-                                "input_image_data_path": "ImageDataContainer/CellData/MedianGrain1",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/MedianGrain1",
                                 "input_image_geometry_path": "ImageDataContainer",
                                 "output_array_name": "EqualizedGrain1",
                                 "radius": [
@@ -354,7 +354,7 @@
                               "args": {
                                 "alpha": 0.30000001192092896,
                                 "beta": 0.30000001192092896,
-                                "input_image_data_path": "ImageDataContainer/CellData/MedianGrain2",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/MedianGrain2",
                                 "input_image_geometry_path": "ImageDataContainer",
                                 "output_array_name": "EqualizedGrain2",
                                 "radius": [
@@ -372,9 +372,9 @@
                             },
                             {
                               "args": {
-                                "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/EqualizedGrain1",
                                 "input_image_geometry_path": "ImageDataContainer",
-                                "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+                                "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
                                 "output_array_name": "EqualizedGrain1 (filtered)",
                                 "outside_value": 0.0
                               },
@@ -388,7 +388,7 @@
                             {
                               "args": {
                                 "removed_data_path": [
-                                  "ImageDataContainer/CellData/EqualizedGrain1"
+                                  "ImageDataContainer/Cell Data/EqualizedGrain1"
                                 ]
                               },
                               "comments": "",
@@ -401,7 +401,7 @@
                             {
                               "args": {
                                 "new_name": "EqualizedGrain1",
-                                "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain1 (filtered)"
+                                "source_data_object_path": "ImageDataContainer/Cell Data/EqualizedGrain1 (filtered)"
                               },
                               "comments": "",
                               "filter": {
@@ -412,9 +412,9 @@
                             },
                             {
                               "args": {
-                                "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+                                "input_image_data_path": "ImageDataContainer/Cell Data/EqualizedGrain2",
                                 "input_image_geometry_path": "ImageDataContainer",
-                                "mask_image_data_path": "ImageDataContainer/CellData/MaskGrain2",
+                                "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain2",
                                 "output_array_name": "EqualizedGrain2 (filtered)",
                                 "outside_value": 0.0
                               },
@@ -428,7 +428,7 @@
                             {
                               "args": {
                                 "removed_data_path": [
-                                  "ImageDataContainer/CellData/EqualizedGrain2"
+                                  "ImageDataContainer/Cell Data/EqualizedGrain2"
                                 ]
                               },
                               "comments": "",
@@ -441,7 +441,7 @@
                             {
                               "args": {
                                 "new_name": "EqualizedGrain2",
-                                "source_data_object_path": "ImageDataContainer/CellData/EqualizedGrain2 (filtered)"
+                                "source_data_object_path": "ImageDataContainer/Cell Data/EqualizedGrain2 (filtered)"
                               },
                               "comments": "",
                               "filter": {
@@ -468,16 +468,16 @@
                         "import_data_object": {
                           "data_paths": [
                             "ImageDataContainer",
-                            "ImageDataContainer/CellData",
-                            "ImageDataContainer/CellData/ImageData",
-                            "ImageDataContainer/CellData/MaskGrain1",
-                            "ImageDataContainer/CellData/MaskGrain2",
-                            "ImageDataContainer/CellData/RawGrain1",
-                            "ImageDataContainer/CellData/RawGrain2",
-                            "ImageDataContainer/CellData/MedianGrain1",
-                            "ImageDataContainer/CellData/MedianGrain2",
-                            "ImageDataContainer/CellData/EqualizedGrain1",
-                            "ImageDataContainer/CellData/EqualizedGrain2"
+                            "ImageDataContainer/Cell Data",
+                            "ImageDataContainer/Cell Data/ImageData",
+                            "ImageDataContainer/Cell Data/MaskGrain1",
+                            "ImageDataContainer/Cell Data/MaskGrain2",
+                            "ImageDataContainer/Cell Data/RawGrain1",
+                            "ImageDataContainer/Cell Data/RawGrain2",
+                            "ImageDataContainer/Cell Data/MedianGrain1",
+                            "ImageDataContainer/Cell Data/MedianGrain2",
+                            "ImageDataContainer/Cell Data/EqualizedGrain1",
+                            "ImageDataContainer/Cell Data/EqualizedGrain2"
                           ],
                           "file_path": "Data/Output/GammaPrime/GammaPrimeSmoothed.dream3d"
                         }
@@ -491,7 +491,7 @@
                     },
                     {
                       "args": {
-                        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain1",
+                        "input_image_data_path": "ImageDataContainer/Cell Data/EqualizedGrain1",
                         "input_image_geometry_path": "ImageDataContainer",
                         "label_offset": 0,
                         "number_of_histogram_bins": 256,
@@ -509,7 +509,7 @@
                     },
                     {
                       "args": {
-                        "input_image_data_path": "ImageDataContainer/CellData/EqualizedGrain2",
+                        "input_image_data_path": "ImageDataContainer/Cell Data/EqualizedGrain2",
                         "input_image_geometry_path": "ImageDataContainer",
                         "label_offset": 0,
                         "number_of_histogram_bins": 256,
@@ -531,7 +531,7 @@
                           "inverted": false,
                           "thresholds": [
                             {
-                              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+                              "array_path": "ImageDataContainer/Cell Data/OtsuGrain1",
                               "comparison": 2,
                               "inverted": false,
                               "type": "array",
@@ -539,7 +539,7 @@
                               "value": 1.0
                             },
                             {
-                              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+                              "array_path": "ImageDataContainer/Cell Data/OtsuGrain2",
                               "comparison": 2,
                               "inverted": false,
                               "type": "array",
@@ -570,7 +570,7 @@
                           "inverted": false,
                           "thresholds": [
                             {
-                              "array_path": "ImageDataContainer/CellData/OtsuGrain1",
+                              "array_path": "ImageDataContainer/Cell Data/OtsuGrain1",
                               "comparison": 2,
                               "inverted": false,
                               "type": "array",
@@ -578,7 +578,7 @@
                               "value": 1.0
                             },
                             {
-                              "array_path": "ImageDataContainer/CellData/OtsuGrain2",
+                              "array_path": "ImageDataContainer/Cell Data/OtsuGrain2",
                               "comparison": 2,
                               "inverted": false,
                               "type": "array",
@@ -606,11 +606,11 @@
                     {
                       "args": {
                         "active_array_name": "Active",
-                        "cell_feature_group_name": "CellFeatureData",
+                        "cell_feature_group_name": "Cell Feature Data",
                         "feature_ids_name": "FeatureIds",
-                        "input_array_path": "ImageDataContainer/CellData/Precipitates",
+                        "input_array_path": "ImageDataContainer/Cell Data/Precipitates",
                         "input_image_geometry_path": "ImageDataContainer",
-                        "mask_path": "ImageDataContainer/CellData/Precipitates (Bool)",
+                        "mask_path": "ImageDataContainer/Cell Data/Precipitates (Bool)",
                         "randomize_features": false,
                         "scalar_tolerance": 0,
                         "use_mask": true
@@ -640,23 +640,23 @@
                 "import_data_object": {
                   "data_paths": [
                     "ImageDataContainer",
-                    "ImageDataContainer/CellData",
-                    "ImageDataContainer/CellData/ImageData",
-                    "ImageDataContainer/CellData/MaskGrain1",
-                    "ImageDataContainer/CellData/MaskGrain2",
-                    "ImageDataContainer/CellData/RawGrain1",
-                    "ImageDataContainer/CellData/RawGrain2",
-                    "ImageDataContainer/CellData/MedianGrain1",
-                    "ImageDataContainer/CellData/MedianGrain2",
-                    "ImageDataContainer/CellData/EqualizedGrain1",
-                    "ImageDataContainer/CellData/EqualizedGrain2",
-                    "ImageDataContainer/CellData/OtsuGrain1",
-                    "ImageDataContainer/CellData/OtsuGrain2",
-                    "ImageDataContainer/CellData/Precipitates",
-                    "ImageDataContainer/CellData/Precipitates (Bool)",
-                    "ImageDataContainer/CellFeatureData",
-                    "ImageDataContainer/CellFeatureData/Active",
-                    "ImageDataContainer/CellData/FeatureIds"
+                    "ImageDataContainer/Cell Data",
+                    "ImageDataContainer/Cell Data/ImageData",
+                    "ImageDataContainer/Cell Data/MaskGrain1",
+                    "ImageDataContainer/Cell Data/MaskGrain2",
+                    "ImageDataContainer/Cell Data/RawGrain1",
+                    "ImageDataContainer/Cell Data/RawGrain2",
+                    "ImageDataContainer/Cell Data/MedianGrain1",
+                    "ImageDataContainer/Cell Data/MedianGrain2",
+                    "ImageDataContainer/Cell Data/EqualizedGrain1",
+                    "ImageDataContainer/Cell Data/EqualizedGrain2",
+                    "ImageDataContainer/Cell Data/OtsuGrain1",
+                    "ImageDataContainer/Cell Data/OtsuGrain2",
+                    "ImageDataContainer/Cell Data/Precipitates",
+                    "ImageDataContainer/Cell Data/Precipitates (Bool)",
+                    "ImageDataContainer/Cell Feature Data",
+                    "ImageDataContainer/Cell Feature Data/Active",
+                    "ImageDataContainer/Cell Data/FeatureIds"
                   ],
                   "file_path": "Data/Output/GammaPrime/GammaPrimePrecipitates.dream3d"
                 }
@@ -671,8 +671,8 @@
             {
               "args": {
                 "equivalent_diameters_name": "EquivalentDiameters",
-                "feature_attribute_matrix_path": "ImageDataContainer/CellFeatureData",
-                "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+                "feature_attribute_matrix_path": "ImageDataContainer/Cell Feature Data",
+                "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
                 "input_image_geometry_path": "ImageDataContainer",
                 "num_elements_name": "NumElements",
                 "save_element_sizes": false,
@@ -691,7 +691,7 @@
                   "inverted": false,
                   "thresholds": [
                     {
-                      "array_path": "ImageDataContainer/CellFeatureData/NumElements",
+                      "array_path": "ImageDataContainer/Cell Feature Data/NumElements",
                       "comparison": 1,
                       "inverted": false,
                       "type": "array",
@@ -699,7 +699,7 @@
                       "value": 30.0
                     },
                     {
-                      "array_path": "ImageDataContainer/CellFeatureData/NumElements",
+                      "array_path": "ImageDataContainer/Cell Feature Data/NumElements",
                       "comparison": 0,
                       "inverted": false,
                       "type": "array",
@@ -726,9 +726,9 @@
             },
             {
               "args": {
-                "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+                "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
                 "fill_removed_features": false,
-                "flagged_features_array_path": "ImageDataContainer/CellFeatureData/Mask",
+                "flagged_features_array_path": "ImageDataContainer/Cell Feature Data/Mask",
                 "ignored_data_array_paths": [],
                 "input_image_geometry_path": "ImageDataContainer",
                 "operation_type_index": 0,
@@ -744,8 +744,8 @@
             {
               "args": {
                 "centroids_array_name": "Centroids",
-                "feature_attribute_matrix_path": "ImageDataContainer/CellFeatureData",
-                "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+                "feature_attribute_matrix_path": "ImageDataContainer/Cell Feature Data",
+                "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
                 "input_image_geometry_path": "ImageDataContainer"
               },
               "comments": "",
@@ -758,7 +758,7 @@
             {
               "args": {
                 "removed_data_path": [
-                  "ImageDataContainer/CellFeatureData/Volumes"
+                  "ImageDataContainer/Cell Feature Data/Volumes"
                 ]
               },
               "comments": "",
@@ -773,8 +773,8 @@
                 "aspect_ratios_array_name": "AspectRatios",
                 "axis_euler_angles_array_name": "AxisEulerAngles",
                 "axis_lengths_array_name": "AxisLengths",
-                "centroids_array_path": "ImageDataContainer/CellFeatureData/Centroids",
-                "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+                "centroids_array_path": "ImageDataContainer/Cell Feature Data/Centroids",
+                "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
                 "input_image_geometry_path": "ImageDataContainer",
                 "omega3s_array_name": "Omega3s",
                 "volumes_array_name": "Volumes"
@@ -789,10 +789,10 @@
             {
               "args": {
                 "created_array_suffix": "",
-                "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+                "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
                 "selected_feature_array_paths": [
-                  "ImageDataContainer/CellFeatureData/EquivalentDiameters",
-                  "ImageDataContainer/CellFeatureData/Omega3s"
+                  "ImageDataContainer/Cell Feature Data/EquivalentDiameters",
+                  "ImageDataContainer/Cell Feature Data/Omega3s"
                 ]
               },
               "comments": "",
@@ -808,16 +808,16 @@
                 "file_extension": ".csv",
                 "header_option_index": 1,
                 "input_data_array_paths": [
-                  "ImageDataContainer/CellFeatureData/Active",
-                  "ImageDataContainer/CellFeatureData/AspectRatios",
-                  "ImageDataContainer/CellFeatureData/AxisEulerAngles",
-                  "ImageDataContainer/CellFeatureData/AxisLengths",
-                  "ImageDataContainer/CellFeatureData/Centroids",
-                  "ImageDataContainer/CellFeatureData/EquivalentDiameters",
-                  "ImageDataContainer/CellFeatureData/Mask",
-                  "ImageDataContainer/CellFeatureData/NumElements",
-                  "ImageDataContainer/CellFeatureData/Omega3s",
-                  "ImageDataContainer/CellFeatureData/Volumes"
+                  "ImageDataContainer/Cell Feature Data/Active",
+                  "ImageDataContainer/Cell Feature Data/AspectRatios",
+                  "ImageDataContainer/Cell Feature Data/AxisEulerAngles",
+                  "ImageDataContainer/Cell Feature Data/AxisLengths",
+                  "ImageDataContainer/Cell Feature Data/Centroids",
+                  "ImageDataContainer/Cell Feature Data/EquivalentDiameters",
+                  "ImageDataContainer/Cell Feature Data/Mask",
+                  "ImageDataContainer/Cell Feature Data/NumElements",
+                  "ImageDataContainer/Cell Feature Data/Omega3s",
+                  "ImageDataContainer/Cell Feature Data/Volumes"
                 ],
                 "max_val_per_line": 1,
                 "output_dir": "Data/",
@@ -849,34 +849,34 @@
         "import_data_object": {
           "data_paths": [
             "ImageDataContainer",
-            "ImageDataContainer/CellData",
-            "ImageDataContainer/CellData/ImageData",
-            "ImageDataContainer/CellData/MaskGrain1",
-            "ImageDataContainer/CellData/MaskGrain2",
-            "ImageDataContainer/CellData/RawGrain1",
-            "ImageDataContainer/CellData/RawGrain2",
-            "ImageDataContainer/CellData/MedianGrain1",
-            "ImageDataContainer/CellData/MedianGrain2",
-            "ImageDataContainer/CellData/EqualizedGrain1",
-            "ImageDataContainer/CellData/EqualizedGrain2",
-            "ImageDataContainer/CellData/OtsuGrain1",
-            "ImageDataContainer/CellData/OtsuGrain2",
-            "ImageDataContainer/CellData/Precipitates",
-            "ImageDataContainer/CellData/Precipitates (Bool)",
-            "ImageDataContainer/CellFeatureData",
-            "ImageDataContainer/CellFeatureData/Active",
-            "ImageDataContainer/CellData/FeatureIds",
-            "ImageDataContainer/CellFeatureData/EquivalentDiameters",
-            "ImageDataContainer/CellFeatureData/NumElements",
-            "ImageDataContainer/CellFeatureData/Mask",
-            "ImageDataContainer/CellFeatureData/Centroids",
-            "ImageDataContainer/CellFeatureData/Omega3s",
-            "ImageDataContainer/CellFeatureData/AxisLengths",
-            "ImageDataContainer/CellFeatureData/AxisEulerAngles",
-            "ImageDataContainer/CellFeatureData/AspectRatios",
-            "ImageDataContainer/CellFeatureData/Volumes",
-            "ImageDataContainer/CellData/EquivalentDiameters",
-            "ImageDataContainer/CellData/Omega3s"
+            "ImageDataContainer/Cell Data",
+            "ImageDataContainer/Cell Data/ImageData",
+            "ImageDataContainer/Cell Data/MaskGrain1",
+            "ImageDataContainer/Cell Data/MaskGrain2",
+            "ImageDataContainer/Cell Data/RawGrain1",
+            "ImageDataContainer/Cell Data/RawGrain2",
+            "ImageDataContainer/Cell Data/MedianGrain1",
+            "ImageDataContainer/Cell Data/MedianGrain2",
+            "ImageDataContainer/Cell Data/EqualizedGrain1",
+            "ImageDataContainer/Cell Data/EqualizedGrain2",
+            "ImageDataContainer/Cell Data/OtsuGrain1",
+            "ImageDataContainer/Cell Data/OtsuGrain2",
+            "ImageDataContainer/Cell Data/Precipitates",
+            "ImageDataContainer/Cell Data/Precipitates (Bool)",
+            "ImageDataContainer/Cell Feature Data",
+            "ImageDataContainer/Cell Feature Data/Active",
+            "ImageDataContainer/Cell Data/FeatureIds",
+            "ImageDataContainer/Cell Feature Data/EquivalentDiameters",
+            "ImageDataContainer/Cell Feature Data/NumElements",
+            "ImageDataContainer/Cell Feature Data/Mask",
+            "ImageDataContainer/Cell Feature Data/Centroids",
+            "ImageDataContainer/Cell Feature Data/Omega3s",
+            "ImageDataContainer/Cell Feature Data/AxisLengths",
+            "ImageDataContainer/Cell Feature Data/AxisEulerAngles",
+            "ImageDataContainer/Cell Feature Data/AspectRatios",
+            "ImageDataContainer/Cell Feature Data/Volumes",
+            "ImageDataContainer/Cell Data/EquivalentDiameters",
+            "ImageDataContainer/Cell Data/Omega3s"
           ],
           "file_path": "Data/Output/GammaPrime/GammaPrimeStatistics.dream3d"
         }
@@ -893,7 +893,7 @@
         "background_value": 0.0,
         "foreground_value": 1.0,
         "fully_connected": true,
-        "input_image_data_path": "ImageDataContainer/CellData/MaskGrain1",
+        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
         "input_image_geometry_path": "ImageDataContainer",
         "output_array_name": "GrainBoundary"
       },
@@ -907,7 +907,7 @@
     {
       "args": {
         "background_value": 0.0,
-        "input_image_data_path": "ImageDataContainer/CellData/GrainBoundary",
+        "input_image_data_path": "ImageDataContainer/Cell Data/GrainBoundary",
         "input_image_geometry_path": "ImageDataContainer",
         "inside_is_positive": false,
         "output_array_name": "DistanceToBoundary",
@@ -924,9 +924,9 @@
     {
       "args": {
         "compute_by_index": true,
-        "destination_attribute_matrix_path": "ImageDataContainer/CellFeatureData-2",
+        "destination_attribute_matrix_path": "ImageDataContainer/Cell Feature Data-2",
         "feature_has_data_array_name": "FeatureHasData",
-        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
         "find_histogram": false,
         "find_length": false,
         "find_max": false,
@@ -952,7 +952,7 @@
         "most_populated_bin_array_name": "Most Populated Bin",
         "num_bins": 1,
         "number_unique_values_name": "NumUniqueValues",
-        "selected_array_path": "ImageDataContainer/CellData/DistanceToBoundary",
+        "selected_array_path": "ImageDataContainer/Cell Data/DistanceToBoundary",
         "standardize_data": false,
         "standardized_array_name": "Standardized",
         "std_deviation_array_name": "StandardDeviation",
@@ -969,10 +969,10 @@
     },
     {
       "args": {
-        "calculated_array_path": "ImageDataContainer/CellData/GrainFeatureIds",
+        "calculated_array_path": "ImageDataContainer/Cell Data/GrainFeatureIds",
         "calculator_parameter": {
           "equation": "MaskGrain1 + 1",
-          "selected_group": "ImageDataContainer/CellData",
+          "selected_group": "ImageDataContainer/Cell Data",
           "units": 1
         },
         "scalar_type_index": 4
@@ -987,12 +987,12 @@
     {
       "args": {
         "apply_smoothing": true,
-        "face_data_group_name": "FaceData",
-        "face_feature_attribute_matrix_name": "FaceFeatureData",
+        "face_data_group_name": "Face Data",
+        "face_feature_attribute_matrix_name": "Face Feature Data",
         "face_labels_array_name": "FaceLabels",
-        "feature_ids_path": "ImageDataContainer/CellData/FeatureIds",
+        "feature_ids_path": "ImageDataContainer/Cell Data/FeatureIds",
         "input_data_array_paths": [
-          "ImageDataContainer/CellData/DistanceToBoundary"
+          "ImageDataContainer/Cell Data/DistanceToBoundary"
         ],
         "input_grid_geometry_path": "ImageDataContainer",
         "max_distance_from_voxel": 1.0,
@@ -1000,7 +1000,7 @@
         "output_triangle_geometry_path": "TriangleDataContainer",
         "relaxation_factor": 0.5,
         "smoothing_iterations": 20,
-        "vertex_data_group_name": "VertexData"
+        "vertex_data_group_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -1011,10 +1011,10 @@
     },
     {
       "args": {
-        "calculated_array_path": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "calculated_array_path": "TriangleDataContainer/Vertex Data/Node Type Corrected",
         "calculator_parameter": {
           "equation": "NodeType + 2",
-          "selected_group": "TriangleDataContainer/VertexData",
+          "selected_group": "TriangleDataContainer/Vertex Data",
           "units": 0
         },
         "scalar_type_index": 0
@@ -1029,22 +1029,22 @@
     {
       "args": {
         "copy_triangle_array_paths": [
-          "TriangleDataContainer/FaceData/DistanceToBoundary",
-          "TriangleDataContainer/FaceData/FaceLabels"
+          "TriangleDataContainer/Face Data/DistanceToBoundary",
+          "TriangleDataContainer/Face Data/FaceLabels"
         ],
         "copy_vertex_array_paths": [
-          "TriangleDataContainer/VertexData/NodeType",
-          "TriangleDataContainer/VertexData/Node Type Corrected"
+          "TriangleDataContainer/Vertex Data/NodeType",
+          "TriangleDataContainer/Vertex Data/Node Type Corrected"
         ],
         "input_triangle_geometry_path": "TriangleDataContainer",
         "node_type_range": [
           0,
           8
         ],
-        "node_types_path": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "node_types_path": "TriangleDataContainer/Vertex Data/Node Type Corrected",
         "output_triangle_geometry_path": "PrecipitatesSurface",
-        "triangle_attribute_matrix_name": "FaceData",
-        "vertex_attribute_matrix_name": "VertexData"
+        "triangle_attribute_matrix_name": "Face Data",
+        "vertex_attribute_matrix_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -1069,10 +1069,10 @@
     {
       "args": {
         "apply_smoothing": true,
-        "face_data_group_name": "FaceData",
-        "face_feature_attribute_matrix_name": "FaceFeatureData",
+        "face_data_group_name": "Face Data",
+        "face_feature_attribute_matrix_name": "Face Feature Data",
         "face_labels_array_name": "FaceLabels",
-        "feature_ids_path": "ImageDataContainer/CellData/GrainFeatureIds",
+        "feature_ids_path": "ImageDataContainer/Cell Data/GrainFeatureIds",
         "input_data_array_paths": [],
         "input_grid_geometry_path": "ImageDataContainer",
         "max_distance_from_voxel": 1.0,
@@ -1080,7 +1080,7 @@
         "output_triangle_geometry_path": "TriangleDataContainer",
         "relaxation_factor": 0.5,
         "smoothing_iterations": 20,
-        "vertex_data_group_name": "VertexData"
+        "vertex_data_group_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -1091,10 +1091,10 @@
     },
     {
       "args": {
-        "calculated_array_path": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "calculated_array_path": "TriangleDataContainer/Vertex Data/Node Type Corrected",
         "calculator_parameter": {
           "equation": "NodeType + 2",
-          "selected_group": "TriangleDataContainer/VertexData",
+          "selected_group": "TriangleDataContainer/Vertex Data",
           "units": 0
         },
         "scalar_type_index": 0
@@ -1109,20 +1109,20 @@
     {
       "args": {
         "copy_triangle_array_paths": [
-          "TriangleDataContainer/FaceData/FaceLabels"
+          "TriangleDataContainer/Face Data/FaceLabels"
         ],
         "copy_vertex_array_paths": [
-          "TriangleDataContainer/VertexData/NodeType"
+          "TriangleDataContainer/Vertex Data/NodeType"
         ],
         "input_triangle_geometry_path": "TriangleDataContainer",
         "node_type_range": [
           0,
           8
         ],
-        "node_types_path": "TriangleDataContainer/VertexData/Node Type Corrected",
+        "node_types_path": "TriangleDataContainer/Vertex Data/Node Type Corrected",
         "output_triangle_geometry_path": "GrainBoundary",
-        "triangle_attribute_matrix_name": "FaceData",
-        "vertex_attribute_matrix_name": "VertexData"
+        "triangle_attribute_matrix_name": "Face Data",
+        "vertex_attribute_matrix_name": "Vertex Data"
       },
       "comments": "",
       "filter": {

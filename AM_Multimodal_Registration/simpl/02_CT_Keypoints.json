@@ -19,7 +19,7 @@
                                     "Flag": 2,
                                     "Name": "Density",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         438,
                                         449,
@@ -29,7 +29,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -66,7 +66,7 @@
         "Filter_Uuid": "{3aa99151-e722-51a0-90ba-71e93347ab09}",
         "NewCellArrayName": "GradMag",
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Density",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -74,7 +74,7 @@
     },
     "03": {
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Mask",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -84,12 +84,12 @@
         "Filter_Name": "RobustAutomaticThresholdFilter",
         "Filter_Uuid": "{3062fc2c-76b2-5c50-92b7-edbbb424c41d}",
         "GradientMagnitudeArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "GradMag",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "InputArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Density",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -107,7 +107,7 @@
         "InitializationType": 0,
         "InitializationValue": "0",
         "NewArray": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -117,7 +117,7 @@
     },
     "05": {
         "ConditionalArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Mask",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -128,7 +128,7 @@
         "Filter_Uuid": "{47cafe63-83cc-5826-9521-4fb5bea684ef}",
         "ReplaceValue": 1,
         "SelectedArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -202,7 +202,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -219,11 +219,11 @@
         "Filter_Uuid": "{7b1c8f46-90dd-584a-b3ba-34e16958a7d0}"
     },
     "07": {
-        "FaceAttributeMatrixName": "FaceData",
+        "FaceAttributeMatrixName": "Face Data",
         "FaceLabelsArrayName": "FaceLabels",
-        "FeatureAttributeMatrixName": "FaceFeatureData",
+        "FeatureAttributeMatrixName": "Face Feature Data",
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -241,7 +241,7 @@
             "Data Array Name": "",
             "Data Container Name": "GC1_QuickSurfaceMesh"
         },
-        "VertexAttributeMatrixName": "VertexData"
+        "VertexAttributeMatrixName": "Vertex Data"
     },
     "08": {
         "FilterVersion": "1.0.1215",
@@ -251,7 +251,7 @@
         "Filter_Uuid": "{52a069b4-6a46-5810-b0ec-e0693c636034}",
         "InternalTrianglesName": "GC1_CT Surface",
         "NodeTypesArrayPath": {
-            "Attribute Matrix Name": "VertexData",
+            "Attribute Matrix Name": "Vertex Data",
             "Data Array Name": "NodeType",
             "Data Container Name": "GC1_QuickSurfaceMesh"
         },
@@ -275,7 +275,7 @@
                                     "Flag": 0,
                                     "Name": "FaceLabels",
                                     "Object Type": "int32_t",
-                                    "Path": "CT Surface/FaceData/",
+                                    "Path": "CT Surface/Face Data/",
                                     "Tuple Dimensions": [
                                         0
                                     ],
@@ -283,14 +283,14 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 0,
-                            "Name": "FaceFeatureData",
+                            "Name": "Face Feature Data",
                             "Type": 6
                         },
                         {
@@ -302,7 +302,7 @@
                                     "Flag": 0,
                                     "Name": "NodeType",
                                     "Object Type": "int8_t",
-                                    "Path": "CT Surface/VertexData/",
+                                    "Path": "CT Surface/Vertex Data/",
                                     "Tuple Dimensions": [
                                         0
                                     ],
@@ -310,7 +310,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -384,7 +384,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -403,7 +403,7 @@
                                     "Flag": 0,
                                     "Name": "FaceLabels",
                                     "Object Type": "int32_t",
-                                    "Path": "TriangleDataContainer/FaceData/",
+                                    "Path": "TriangleDataContainer/Face Data/",
                                     "Tuple Dimensions": [
                                         0
                                     ],
@@ -411,14 +411,14 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "FaceData",
+                            "Name": "Face Data",
                             "Type": 2
                         },
                         {
                             "Data Arrays": [
                             ],
                             "Flag": 0,
-                            "Name": "FaceFeatureData",
+                            "Name": "Face Feature Data",
                             "Type": 6
                         },
                         {
@@ -430,7 +430,7 @@
                                     "Flag": 0,
                                     "Name": "NodeType",
                                     "Object Type": "int8_t",
-                                    "Path": "TriangleDataContainer/VertexData/",
+                                    "Path": "TriangleDataContainer/Vertex Data/",
                                     "Tuple Dimensions": [
                                         0
                                     ],
@@ -438,7 +438,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "VertexData",
+                            "Name": "Vertex Data",
                             "Type": 0
                         }
                     ],
@@ -472,12 +472,12 @@
         "MuFactor": -1.0299999713897705,
         "QuadPointLambda": 0,
         "SurfaceMeshFaceLabelsArrayPath": {
-            "Attribute Matrix Name": "FaceData",
+            "Attribute Matrix Name": "Face Data",
             "Data Array Name": "FaceLabels",
             "Data Container Name": "GC1_CT Surface"
         },
         "SurfaceMeshNodeTypeArrayPath": {
-            "Attribute Matrix Name": "VertexData",
+            "Attribute Matrix Name": "Vertex Data",
             "Data Array Name": "NodeType",
             "Data Container Name": "GC1_CT Surface"
         },
@@ -494,7 +494,7 @@
         "Filter_Name": "TriangleAreaFilter",
         "Filter_Uuid": "{a9900cc3-169e-5a1b-bcf4-7569e1950d41}",
         "SurfaceMeshTriangleAreasArrayPath": {
-            "Attribute Matrix Name": "FaceData",
+            "Attribute Matrix Name": "Face Data",
             "Data Array Name": "FaceAreas",
             "Data Container Name": "GC1_CT Surface"
         }
@@ -520,7 +520,7 @@
         "SelectedDataArrayPaths": [
         ],
         "TriangleAreasArrayPath": {
-            "Attribute Matrix Name": "FaceData",
+            "Attribute Matrix Name": "Face Data",
             "Data Array Name": "FaceAreas",
             "Data Container Name": "GC1_CT Surface"
         },
@@ -530,7 +530,7 @@
             "Data Container Name": "GC1_CT Surface"
         },
         "UseMask": 0,
-        "VertexAttributeMatrixName": "VertexData",
+        "VertexAttributeMatrixName": "Vertex Data",
         "VertexGeometry": "GC1_CT KeyPoints"
     },
     "13": {

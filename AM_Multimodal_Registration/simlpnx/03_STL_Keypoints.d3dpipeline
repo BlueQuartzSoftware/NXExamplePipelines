@@ -43,7 +43,7 @@
         "input_triangle_geometry_path": "GC1_STL",
         "use_mask": false,
         "use_seed": false,
-        "vertex_data_group_name": "VertexData",
+        "vertex_data_group_name": "Vertex Data",
         "output_vertex_geometry_path": "GC1 STL Keypoints"
       },
       "comments": "",

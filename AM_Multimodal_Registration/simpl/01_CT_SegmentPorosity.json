@@ -19,7 +19,7 @@
                                     "Flag": 2,
                                     "Name": "Density",
                                     "Object Type": "DataArray<float>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         438,
                                         449,
@@ -29,7 +29,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -66,7 +66,7 @@
         "Filter_Uuid": "{3aa99151-e722-51a0-90ba-71e93347ab09}",
         "NewCellArrayName": "GradMag",
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Density",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -74,7 +74,7 @@
     },
     "03": {
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Mask",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -84,12 +84,12 @@
         "Filter_Name": "RobustAutomaticThresholdFilter",
         "Filter_Uuid": "{3062fc2c-76b2-5c50-92b7-edbbb424c41d}",
         "GradientMagnitudeArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "GradMag",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "InputArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Density",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -107,7 +107,7 @@
         "InitializationType": 0,
         "InitializationValue": "0",
         "NewArray": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "8BitMask",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -117,7 +117,7 @@
     },
     "05": {
         "ConditionalArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Mask",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -128,7 +128,7 @@
         "Filter_Uuid": "{47cafe63-83cc-5826-9521-4fb5bea684ef}",
         "ReplaceValue": 1,
         "SelectedArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "8BitMask",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -202,7 +202,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -225,14 +225,14 @@
         "Filter_Name": "ITKMaskImage",
         "Filter_Uuid": "{97102d65-9c32-576a-9177-c59d958bad10}",
         "MaskCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "8BitMask",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "NewCellArrayName": "DensityMasked",
         "OutsideValue": 0,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Density",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -246,14 +246,14 @@
         "FullyConnected": 0,
         "NewCellArrayName": "DensityMaskedFilled",
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DensityMasked",
             "Data Container Name": "GC1_CT_ImageData"
         }
     },
     "09": {
         "DifferenceMapArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DifferenceMap",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -263,12 +263,12 @@
         "Filter_Name": "FindDifferenceMap",
         "Filter_Uuid": "{29086169-20ce-52dc-b13e-824694d759aa}",
         "FirstInputArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DensityMaskedFilled",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "SecondInputArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DensityMasked",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -281,7 +281,7 @@
         "Filter_Uuid": "{5b905619-c46b-5690-b6fa-8e97cf4537b8}",
         "NewCellArrayName": "DifferenceMapNormalized",
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DifferenceMap",
             "Data Container Name": "GC1_CT_ImageData"
         }
@@ -297,7 +297,7 @@
         "NewCellArrayName": "Binarized",
         "OutsideValue": 0,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "DifferenceMapNormalized",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -312,7 +312,7 @@
         "Filter_Uuid": "{686d5393-2b02-5c86-b887-dd81a8ae80f2}",
         "ScalarType": 10,
         "SelectedThresholds": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Container Name": "GC1_CT_ImageData",
             "Thresholds": [
                 {
@@ -326,7 +326,7 @@
     },
     "13": {
         "ActiveArrayName": "Active",
-        "CellFeatureAttributeMatrixName": "CellFeatureData",
+        "CellFeatureAttributeMatrixName": "Cell Feature Data",
         "FeatureIdsArrayName": "FeatureIds",
         "FilterVersion": "6.6.351",
         "Filter_Enabled": true,
@@ -334,13 +334,13 @@
         "Filter_Name": "ScalarSegmentFeatures",
         "Filter_Uuid": "{2c5edebf-95d8-511f-b787-90ee2adf485c}",
         "GoodVoxelsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Mask",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "RandomizeFeatureIds": 1,
         "ScalarArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Binarized",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -506,7 +506,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         },
                         {
@@ -518,7 +518,7 @@
                                     "Flag": 0,
                                     "Name": "Active",
                                     "Object Type": "bool",
-                                    "Path": "GC1_CT_ImageData/CellFeatureData/",
+                                    "Path": "GC1_CT_ImageData/Cell Feature Data/",
                                     "Tuple Dimensions": [
                                         0
                                     ],
@@ -526,7 +526,7 @@
                                 }
                             ],
                             "Flag": 0,
-                            "Name": "CellFeatureData",
+                            "Name": "Cell Feature Data",
                             "Type": 7
                         }
                     ],
@@ -545,12 +545,12 @@
     "15": {
         "EquivalentDiametersArrayName": "EquivalentDiameters",
         "FeatureAttributeMatrixName": {
-            "Attribute Matrix Name": "CellFeatureData",
+            "Attribute Matrix Name": "Cell Feature Data",
             "Data Array Name": "",
             "Data Container Name": "GC1_CT_ImageData"
         },
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -566,7 +566,7 @@
     "16": {
         "ApplyToSinglePhase": 0,
         "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "FeatureIds",
             "Data Container Name": "GC1_CT_ImageData"
         },
@@ -584,7 +584,7 @@
         ],
         "MinAllowedFeatureSize": 9,
         "NumCellsArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
+            "Attribute Matrix Name": "Cell Feature Data",
             "Data Array Name": "NumElements",
             "Data Container Name": "GC1_CT_ImageData"
         },

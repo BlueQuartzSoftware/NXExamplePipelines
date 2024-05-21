@@ -111,8 +111,8 @@
     },
     {
       "args": {
-        "face_data_group_name": "FaceData",
-        "face_feature_attribute_matrix_name": "FaceFeatureData",
+        "face_data_group_name": "Face Data",
+        "face_feature_attribute_matrix_name": "Face Feature Data",
         "face_labels_array_name": "FaceLabels",
         "feature_ids_path": "GC1_CT_ImageData/CellData/FeatureIds",
         "fix_problem_voxels": true,
@@ -121,7 +121,7 @@
         "node_types_array_name": "NodeType",
         "input_data_array_paths": [],
         "output_triangle_geometry_path": "GC1_CT_QuickMesh",
-        "vertex_data_group_name": "VertexData"
+        "vertex_data_group_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -133,16 +133,16 @@
     {
       "args": {
         "copy_triangle_array_paths": [
-          "GC1_CT_QuickMesh/FaceData/FaceLabels"
+          "GC1_CT_QuickMesh/Face Data/FaceLabels"
         ],
         "copy_vertex_array_paths": [
-          "GC1_CT_QuickMesh/VertexData/NodeType"
+          "GC1_CT_QuickMesh/Vertex Data/NodeType"
         ],
-        "triangle_attribute_matrix_name": "FaceData",
+        "triangle_attribute_matrix_name": "Face Data",
         "output_triangle_geometry_path": "GC1_CT Surface",
-        "node_types_path": "GC1_CT_QuickMesh/VertexData/NodeType",
+        "node_types_path": "GC1_CT_QuickMesh/Vertex Data/NodeType",
         "input_triangle_geometry_path": "GC1_CT_QuickMesh",
-        "vertex_attribute_matrix_name": "VertexData"
+        "vertex_attribute_matrix_name": "Vertex Data"
       },
       "comments": "",
       "filter": {
@@ -157,7 +157,7 @@
         "lambda_value": 0.25,
         "mu_factor": -1.0299999713897705,
         "quad_point_lambda": 0.0,
-        "surface_mesh_node_type_array_path": "GC1_CT Surface/VertexData/NodeType",
+        "surface_mesh_node_type_array_path": "GC1_CT Surface/Vertex Data/NodeType",
         "surface_point_lambda": 0.0,
         "surface_quad_point_lambda": 0.0,
         "surface_triple_line_lambda": 0.0,
@@ -189,10 +189,10 @@
         "mask_array_path": "",
         "number_of_samples": 100000,
         "input_data_array_paths": [],
-        "triangle_areas_array_path": "GC1_CT Surface/FaceData/Face Areas",
+        "triangle_areas_array_path": "GC1_CT Surface/Face Data/Face Areas",
         "input_triangle_geometry_path": "GC1_CT Surface",
         "use_mask": false,
-        "vertex_data_group_name": "VertexData",
+        "vertex_data_group_name": "Vertex Data",
         "output_vertex_geometry_path": "GC1_CT KeyPoints"
       },
       "comments": "",

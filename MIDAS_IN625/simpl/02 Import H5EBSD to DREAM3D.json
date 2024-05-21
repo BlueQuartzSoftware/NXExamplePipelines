@@ -1,8 +1,8 @@
 {
     "0": {
         "AngleRepresentation": 1,
-        "CellAttributeMatrixName": "CellData",
-        "CellEnsembleAttributeMatrixName": "CellEnsembleData",
+        "CellAttributeMatrixName": "Cell Data",
+        "CellEnsembleAttributeMatrixName": "Cell Ensemble Data",
         "DataContainerName": {
             "Attribute Matrix Name": "",
             "Data Array Name": "",
@@ -32,18 +32,18 @@
     },
     "1": {
         "CellEulerAnglesArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "EulerAngles",
             "Data Container Name": "ImageDataContainer"
         },
         "CellIPFColorsArrayName": "IPFColor",
         "CellPhasesArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Phases",
             "Data Container Name": "ImageDataContainer"
         },
         "CrystalStructuresArrayPath": {
-            "Attribute Matrix Name": "CellEnsembleData",
+            "Attribute Matrix Name": "Cell Ensemble Data",
             "Data Array Name": "CrystalStructures",
             "Data Container Name": "ImageDataContainer"
         },

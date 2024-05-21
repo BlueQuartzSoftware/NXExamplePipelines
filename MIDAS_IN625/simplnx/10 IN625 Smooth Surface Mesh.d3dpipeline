@@ -9,12 +9,12 @@
           "data_paths": [
             "TriangleDataContainer",
             "TriangleDataContainer/FaceData",
-            "TriangleDataContainer/VertexData",
+            "TriangleDataContainer/Vertex Data",
             "TriangleDataContainer/SharedTriList",
             "TriangleDataContainer/SharedVertexList",
-            "TriangleDataContainer/FaceData/IPFColors",
-            "TriangleDataContainer/FaceData/FaceLabels",
-            "TriangleDataContainer/VertexData/NodeType"
+            "TriangleDataContainer/Face Data/IPFColors",
+            "TriangleDataContainer/Face Data/FaceLabels",
+            "TriangleDataContainer/Vertex Data/NodeType"
           ],
           "file_path": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d"
         },
@@ -36,7 +36,7 @@
         "lambda_value": 0.20000000298023224,
         "mu_factor": 0.20000000298023224,
         "quad_point_lambda": 0.10000000149011612,
-        "surface_mesh_node_type_array_path": "TriangleDataContainer/VertexData/NodeType",
+        "surface_mesh_node_type_array_path": "TriangleDataContainer/Vertex Data/NodeType",
         "surface_point_lambda": 0.0,
         "surface_quad_point_lambda": 0.0,
         "surface_triple_line_lambda": 0.0,
@@ -53,17 +53,17 @@
     {
       "args": {
         "copy_triangle_array_paths": [
-          "TriangleDataContainer/FaceData/IPFColors",
-          "TriangleDataContainer/FaceData/FaceLabels"
+          "TriangleDataContainer/Face Data/IPFColors",
+          "TriangleDataContainer/Face Data/FaceLabels"
         ],
         "copy_vertex_array_paths": [
-          "TriangleDataContainer/VertexData/NodeType"
+          "TriangleDataContainer/Vertex Data/NodeType"
         ],
-        "triangle_attribute_matrix_name": "FaceData",
+        "triangle_attribute_matrix_name": "Face Data",
         "output_triangle_geometry_path": "InternalTrianglesDataContainer",
-        "node_types_path": "TriangleDataContainer/VertexData/NodeType",
+        "node_types_path": "TriangleDataContainer/Vertex Data/NodeType",
         "input_triangle_geometry_path": "TriangleDataContainer",
-        "vertex_attribute_matrix_name": "VertexData"
+        "vertex_attribute_matrix_name": "Vertex Data"
       },
       "filter": {
         "name": "complex::ExtractInternalSurfacesFromTriangleGeometryFilter",

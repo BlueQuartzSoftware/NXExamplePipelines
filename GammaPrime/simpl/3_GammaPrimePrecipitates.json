@@ -19,7 +19,7 @@
                                     "Flag": 2,
                                     "Name": "EqualizedGrain1",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -34,7 +34,7 @@
                                     "Flag": 2,
                                     "Name": "EqualizedGrain2",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -49,7 +49,7 @@
                                     "Flag": 2,
                                     "Name": "ImageData",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -64,7 +64,7 @@
                                     "Flag": 2,
                                     "Name": "MaskGrain1",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -79,7 +79,7 @@
                                     "Flag": 2,
                                     "Name": "MaskGrain2",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -94,7 +94,7 @@
                                     "Flag": 2,
                                     "Name": "MedianGrain1",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -109,7 +109,7 @@
                                     "Flag": 2,
                                     "Name": "MedianGrain2",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -124,7 +124,7 @@
                                     "Flag": 2,
                                     "Name": "RawGrain1",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -139,7 +139,7 @@
                                     "Flag": 2,
                                     "Name": "RawGrain2",
                                     "Object Type": "DataArray<uint8_t>",
-                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Path": "/DataContainers/ImageDataContainer/Cell Data",
                                     "Tuple Dimensions": [
                                         737,
                                         446,
@@ -149,7 +149,7 @@
                                 }
                             ],
                             "Flag": 2,
-                            "Name": "CellData",
+                            "Name": "Cell Data",
                             "Type": 3
                         }
                     ],
@@ -173,7 +173,7 @@
         "NumberOfThresholds": 3,
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "EqualizedGrain1",
             "Data Container Name": "ImageDataContainer"
         },
@@ -191,7 +191,7 @@
         "NumberOfThresholds": 3,
         "SaveAsNewArray": 1,
         "SelectedCellArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "EqualizedGrain2",
             "Data Container Name": "ImageDataContainer"
         },
@@ -205,7 +205,7 @@
         "Filter_Name": "MultiThresholdObjects2",
         "Filter_Uuid": "{686d5393-2b02-5c86-b887-dd81a8ae80f2}",
         "SelectedThresholds": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Container Name": "ImageDataContainer",
             "Thresholds": [
                 {
@@ -231,7 +231,7 @@
     },
     "4": {
         "ActiveArrayName": "Active",
-        "CellFeatureAttributeMatrixName": "CellFeatureData",
+        "CellFeatureAttributeMatrixName": "Cell Feature Data",
         "FeatureIdsArrayName": "FeatureIds",
         "FilterVersion": "6.5.3",
         "Filter_Enabled": true,
@@ -239,12 +239,12 @@
         "Filter_Name": "ScalarSegmentFeatures",
         "Filter_Uuid": "{2c5edebf-95d8-511f-b787-90ee2adf485c}",
         "GoodVoxelsArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Precipitates",
             "Data Container Name": "ImageDataContainer"
         },
         "ScalarArrayPath": {
-            "Attribute Matrix Name": "CellData",
+            "Attribute Matrix Name": "Cell Data",
             "Data Array Name": "Precipitates",
             "Data Container Name": "ImageDataContainer"
         },
