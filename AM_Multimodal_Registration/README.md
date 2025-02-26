@@ -12,7 +12,7 @@ The pipelines intend to recreate the data and results as they appear in the pape
 
 ## ToDo
 
-The `complex` based pipelines still need additional filter writing as of APRIL 10, 2023 to fill out the last few filters of the '05' pipeline.
+The `simplnx` based pipelines still need additional filter writing as of APRIL 10, 2023 to fill out the last few filters of the '05' pipeline.
 
 The `SIMPL` pipelines will all run but the user will need a computer with at least 128GB of RAM to allow the last pipeline (O5) to complete.
 

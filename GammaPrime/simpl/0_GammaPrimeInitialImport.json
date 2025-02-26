@@ -33,7 +33,7 @@
     "1": {
         "FilterVersion": "1.2.828",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Human_Label": "Write DREAM3D-NX Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
         "OutputFile": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",

@@ -2,7 +2,7 @@
     "0": {
         "FilterVersion": "2.0.447",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Human_Label": "Read DREAM3D-NX Data File",
         "Filter_Name": "DataContainerReader",
         "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
         "InputFile": "Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d",
@@ -244,7 +244,7 @@
     "6": {
         "FilterVersion": "2.0.447",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Human_Label": "Write DREAM3D-NX Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
         "OutputFile": "Data/Output/MIDAS_IN625/11_IN625_MeshStatistics.dream3d",

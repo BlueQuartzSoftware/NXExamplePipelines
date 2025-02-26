@@ -15,7 +15,7 @@
             "TriangleDataContainer/Face Data/IPFColors",
             "TriangleDataContainer/Face Data/FaceLabels",
             "TriangleDataContainer/Vertex Data/NodeType",
-            "TriangleDataContainer/Edge List"
+            "TriangleDataContainer/SharedEdgeList"
           ],
           "file_path": "Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d"
         },

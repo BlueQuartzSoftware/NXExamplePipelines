@@ -17,8 +17,8 @@
           "start_index": 700
         },
         "output_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
-        "reference_frame": 1,
-        "stacking_order": 0,
+        "reference_frame_index": 1,
+        "stacking_order_index": 0,
         "z_spacing": 1.0
       },
       "comments": "",

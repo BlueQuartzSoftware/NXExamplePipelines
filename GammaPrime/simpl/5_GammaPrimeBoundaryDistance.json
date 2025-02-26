@@ -2,7 +2,7 @@
     "00": {
         "FilterVersion": "1.2.828",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Read DREAM.3D Data File",
+        "Filter_Human_Label": "Read DREAM3D-NX Data File",
         "Filter_Name": "DataContainerReader",
         "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
         "InputFile": "Data/Output/GammaPrime/GammaPrimeStatistics.dream3d",
@@ -1815,7 +1815,7 @@
     "13": {
         "FilterVersion": "1.2.828",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Human_Label": "Write DREAM3D-NX Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
         "OutputFile": "Data/Output/GammaPrime/GammaPrimeBoundaryDistance.dream3d",

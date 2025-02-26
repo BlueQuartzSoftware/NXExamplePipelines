@@ -66,7 +66,7 @@
     "3": {
         "FilterVersion": "2.0.490",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Write DREAM.3D Data File",
+        "Filter_Human_Label": "Write DREAM3D-NX Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
         "OutputFile": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d",
