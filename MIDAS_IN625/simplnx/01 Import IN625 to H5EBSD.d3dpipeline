@@ -6,28 +6,45 @@
     {
       "args": {
         "input_file_list_object": {
-          "end_index": 800,
-          "file_extension": ".ctf",
-          "file_prefix": "result_fit_",
-          "file_suffix": "",
-          "increment_index": 1,
-          "input_path": "Data/MIDAS_IN625/CTF",
-          "ordering": 0,
-          "padding_digits": 3,
-          "start_index": 700
+          "value": {
+            "end_index": 800,
+            "file_extension": ".ctf",
+            "file_prefix": "result_fit_",
+            "file_suffix": "",
+            "increment_index": 1,
+            "input_path": "/Users/mjackson/DREAM3DNXData/Data/MIDAS_IN625/CTF",
+            "ordering": 0,
+            "padding_digits": 3,
+            "start_index": 700
+          },
+          "version": 1
         },
-        "output_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
-        "reference_frame_index": 1,
-        "stacking_order_index": 0,
-        "z_spacing": 1.0
+        "output_file_path": {
+          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "reference_frame_index": {
+          "value": 1,
+          "version": 1
+        },
+        "stacking_order_index": {
+          "value": 0,
+          "version": 1
+        },
+        "z_spacing": {
+          "value": 1.0,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::EbsdToH5EbsdFilter",
+        "name": "nx::core::EbsdToH5EbsdFilter",
         "uuid": "2d05ca72-0a1b-4aec-b9b0-bc470845c448"
       },
       "isDisabled": false
     }
   ],
+  "version": 1,
   "workflowParams": []
 }

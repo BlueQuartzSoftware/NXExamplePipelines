@@ -6,99 +6,150 @@
     {
       "args": {
         "import_data_object": {
-          "data_paths": [
-            "DataContainer/Cell Ensemble Data",
-            "DataContainer/Cell Ensemble Data/CrystalStructures",
-            "DataContainer/Cell Ensemble Data/LatticeConstants",
-            "DataContainer",
-            "DataContainer/Cell Data",
-            "DataContainer/Cell Data/BC",
-            "DataContainer/Cell Data/BS",
-            "DataContainer/Cell Data/Bands",
-            "DataContainer/Cell Data/Error",
-            "DataContainer/Cell Data/EulerAngles",
-            "DataContainer/Cell Data/MAD",
-            "DataContainer/Cell Data/Phases",
-            "DataContainer/Cell Data/IPFColors",
-            "DataContainer/Cell Data/Quaternions",
-            "DataContainer/Cell Feature Data",
-            "DataContainer/Cell Feature Data/Active",
-            "DataContainer/Cell Data/FeatureIds",
-            "DataContainer/Cell Feature Data/EquivalentDiameters",
-            "DataContainer/Cell Feature Data/NumElements",
-            "DataContainer/Cell Feature Data/Centroids",
-            "DataContainer/Cell Feature Data/Omega3s",
-            "DataContainer/Cell Feature Data/AxisLengths",
-            "DataContainer/Cell Feature Data/AxisEulerAngles",
-            "DataContainer/Cell Feature Data/AspectRatios",
-            "DataContainer/Cell Feature Data/Shape Volumes",
-            "DataContainer/Cell Data/GBManhattanDistances",
-            "DataContainer/Cell Data/TJManhattanDistances",
-            "DataContainer/Cell Data/QPManhattanDistances",
-            "DataContainer/Cell Feature Data/AvgQuats",
-            "DataContainer/Cell Feature Data/AvgEulerAngles",
-            "DataContainer/Cell Data/KernelAverageMisorientations",
-            "DataContainer/Cell Data/EquivalentDiameters",
-            "DataContainer/Cell Data/Omega3s",
-            "DataContainer/Cell Data/AvgEulerAngles",
-            "DataContainer/Cell Data/AvgIPFColor"
-          ],
-          "file_path": "Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d"
+          "value": {
+            "data_paths": [
+              "DataContainer/Cell Data/AvgEulerAngles",
+              "DataContainer/Cell Data/AvgIPFColor",
+              "DataContainer/Cell Data/BC",
+              "DataContainer/Cell Data/BS",
+              "DataContainer/Cell Data/Bands",
+              "DataContainer/Cell Data/EquivalentDiameters",
+              "DataContainer/Cell Data/Error",
+              "DataContainer/Cell Data/EulerAngles",
+              "DataContainer/Cell Data/FeatureIds",
+              "DataContainer/Cell Data/GBManhattanDistances",
+              "DataContainer/Cell Data/IPFColors",
+              "DataContainer/Cell Data/KernelAverageMisorientations",
+              "DataContainer/Cell Data/MAD",
+              "DataContainer/Cell Data/Omega3s",
+              "DataContainer/Cell Data/Phases",
+              "DataContainer/Cell Data/QPManhattanDistances",
+              "DataContainer/Cell Data/Quaternions",
+              "DataContainer/Cell Data/TJManhattanDistances",
+              "DataContainer/Cell Ensemble Data/CrystalStructures",
+              "DataContainer/Cell Ensemble Data/LatticeConstants",
+              "DataContainer/Cell Ensemble Data/MaterialName",
+              "DataContainer/Cell Feature Data/Active",
+              "DataContainer/Cell Feature Data/AspectRatios",
+              "DataContainer/Cell Feature Data/AvgEulerAngles",
+              "DataContainer/Cell Feature Data/AvgQuats",
+              "DataContainer/Cell Feature Data/AxisEulerAngles",
+              "DataContainer/Cell Feature Data/AxisLengths",
+              "DataContainer/Cell Feature Data/Centroids",
+              "DataContainer/Cell Feature Data/EquivalentDiameters",
+              "DataContainer/Cell Feature Data/NumElements",
+              "DataContainer/Cell Feature Data/NumNeighbors2",
+              "DataContainer/Cell Feature Data/Omega3s",
+              "DataContainer/Cell Feature Data/Shape Volumes"
+            ],
+            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
         },
-        "Imported Pipeline": {
-          "isDisabled": false,
-          "name": "Untitled Pipeline",
-          "pipeline": []
-        }
+        "parameters_version": 1
       },
+      "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "face_data_group_name": "Face Data",
-        "face_labels_array_name": "FaceLabels",
-        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
-        "fix_problem_voxels": true,
-        "generate_triple_lines": false,
-        "input_grid_geometry_path": "DataContainer",
-        "node_types_array_name": "NodeType",
-        "input_data_array_paths": [
-          "DataContainer/Cell Data/IPFColors"
-        ],
-        "output_triangle_geometry_path": "TriangleDataContainer",
-        "vertex_data_group_name": "Vertex Data"
+        "face_data_group_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "face_feature_attribute_matrix_name": {
+          "value": "Face Feature Data",
+          "version": 1
+        },
+        "face_labels_array_name": {
+          "value": "FaceLabels",
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "DataContainer/Cell Data/FeatureIds",
+          "version": 1
+        },
+        "fix_problem_voxels": {
+          "value": true,
+          "version": 1
+        },
+        "generate_triple_lines": {
+          "value": false,
+          "version": 1
+        },
+        "input_data_array_paths": {
+          "value": [
+            "DataContainer/Cell Data/IPFColors"
+          ],
+          "version": 1
+        },
+        "input_grid_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "node_types_array_name": {
+          "value": "NodeType",
+          "version": 1
+        },
+        "output_triangle_geometry_path": {
+          "value": "TriangleDataContainer",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
+      "comments": "",
       "filter": {
-        "name": "complex::QuickSurfaceMeshFilter",
+        "name": "nx::core::QuickSurfaceMeshFilter",
         "uuid": "13dd00bd-ad49-4e04-95eb-3267952fd6e5"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "removed_data_path": ["DataContainer"]
+        "parameters_version": 1,
+        "removed_data_path": {
+          "value": [
+            "DataContainer"
+          ],
+          "version": 1
+        }
       },
+      "comments": "",
       "filter": {
-        "name": "complex::DeleteDataFilter",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "export_file_path": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
+      "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
     }
   ],
+  "version": 1,
   "workflowParams": []
 }

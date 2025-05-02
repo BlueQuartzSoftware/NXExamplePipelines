@@ -6,77 +6,140 @@
     {
       "args": {
         "import_data_object": {
-          "data_paths": [
-            "DataContainer/Cell Ensemble Data",
-            "DataContainer/Cell Ensemble Data/CrystalStructures",
-            "DataContainer/Cell Ensemble Data/LatticeConstants",
-            "DataContainer",
-            "DataContainer/Cell Data",
-            "DataContainer/Cell Data/BC",
-            "DataContainer/Cell Data/BS",
-            "DataContainer/Cell Data/Bands",
-            "DataContainer/Cell Data/Error",
-            "DataContainer/Cell Data/EulerAngles",
-            "DataContainer/Cell Data/MAD",
-            "DataContainer/Cell Data/Phases",
-            "DataContainer/Cell Data/IPFColors"
-          ],
-          "file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d"
+          "value": {
+            "data_paths": [
+              "DataContainer/Cell Data/BC",
+              "DataContainer/Cell Data/BS",
+              "DataContainer/Cell Data/Bands",
+              "DataContainer/Cell Data/Error",
+              "DataContainer/Cell Data/EulerAngles",
+              "DataContainer/Cell Data/IPFColors",
+              "DataContainer/Cell Data/MAD",
+              "DataContainer/Cell Data/Phases",
+              "DataContainer/Cell Ensemble Data/CrystalStructures",
+              "DataContainer/Cell Ensemble Data/LatticeConstants",
+              "DataContainer/Cell Ensemble Data/MaterialName"
+            ],
+            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
         },
-        "Imported Pipeline": {
-          "isDisabled": false,
-          "name": "Untitled Pipeline",
-          "pipeline": []
-        }
+        "parameters_version": 1
       },
+      "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "input_orientation_array_path": "DataContainer/Cell Data/EulerAngles",
-        "input_representation_index": 0,
-        "output_orientation_array_name": "Quaternions",
-        "output_representation_index": 2
+        "input_orientation_array_path": {
+          "value": "DataContainer/Cell Data/EulerAngles",
+          "version": 1
+        },
+        "input_representation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "output_orientation_array_name": {
+          "value": "Quaternions",
+          "version": 1
+        },
+        "output_representation_index": {
+          "value": 2,
+          "version": 1
+        },
+        "parameters_version": 1
       },
+      "comments": "",
       "filter": {
-        "name": "complex::ConvertOrientations",
+        "name": "nx::core::ConvertOrientationsFilter",
         "uuid": "501e54e6-a66f-4eeb-ae37-00e649c00d4b"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "alignment_shift_file_name": "Data/Output/Alignment_By_Misorientation_Shifts.txt",
-        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
-        "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
-        "mask_array_path": "Mask",
-        "misorientation_tolerance": 5.0,
-        "quats_array_path": "DataContainer/Cell Data/Quaternions",
-        "input_image_geometry_path": "DataContainer",
-        "use_mask": false,
-        "write_alignment_shifts": false
+        "alignment_attribute_matrix_name": {
+          "value": "Alignment Shifts Data",
+          "version": 1
+        },
+        "cell_phases_array_path": {
+          "value": "DataContainer/Cell Data/Phases",
+          "version": 1
+        },
+        "crystal_structures_array_path": {
+          "value": "DataContainer/Cell Ensemble Data/CrystalStructures",
+          "version": 1
+        },
+        "cumulative_shifts_array_name": {
+          "value": "Cumulative Shifts",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "Mask",
+          "version": 1
+        },
+        "misorientation_tolerance": {
+          "value": 5.0,
+          "version": 1
+        },
+        "parameters_version": 2,
+        "quats_array_path": {
+          "value": "DataContainer/Cell Data/Quaternions",
+          "version": 1
+        },
+        "relative_shifts_array_name": {
+          "value": "Relative Shifts",
+          "version": 1
+        },
+        "slices_array_name": {
+          "value": "Slice Indices",
+          "version": 1
+        },
+        "store_alignment_shifts": {
+          "value": false,
+          "version": 1
+        },
+        "use_mask": {
+          "value": false,
+          "version": 1
+        }
       },
+      "comments": "",
       "filter": {
-        "name": "complex::AlignSectionsMisorientationFilter",
+        "name": "nx::core::AlignSectionsMisorientationFilter",
         "uuid": "8df2135c-7079-49f4-9756-4f3c028a5ced"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "export_file_path": "Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/03_IN625_Aligned.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
+      "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
     }
   ],
+  "version": 1,
   "workflowParams": []
 }

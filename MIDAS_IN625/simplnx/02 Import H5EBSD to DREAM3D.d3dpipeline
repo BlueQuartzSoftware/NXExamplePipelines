@@ -5,66 +5,109 @@
   "pipeline": [
     {
       "args": {
-        "cell_attribute_matrix_name": "Cell Data",
-        "cell_ensemble_attribute_matrix_name": "Cell Ensemble Data",
-        "output_image_geometry_path": "DataContainer",
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "cell_ensemble_attribute_matrix_name": {
+          "value": "Cell Ensemble Data",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "parameters_version": 1,
         "read_h5_ebsd_object": {
-          "end_slice": 800,
-          "euler_representation": 1,
-          "hdf5_data_paths": [
-            "BC",
-            "BS",
-            "Bands",
-            "Error",
-            "EulerAngles",
-            "MAD",
-            "Phases"
-          ],
-          "input_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
-          "start_slice": 700,
-          "use_recommended_transform": true
+          "value": {
+            "end_slice": 800,
+            "euler_representation": 1,
+            "hdf5_data_paths": [
+              "BC",
+              "BS",
+              "Bands",
+              "Error",
+              "EulerAngles",
+              "MAD",
+              "Phases"
+            ],
+            "input_file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+            "start_slice": 700,
+            "use_recommended_transform": true
+          },
+          "version": 1
         }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ReadH5EbsdFilter",
+        "name": "nx::core::ReadH5EbsdFilter",
         "uuid": "db291b6c-9aaf-432d-9547-430c865a539c"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "cell_euler_angles_array_path": "DataContainer/Cell Data/EulerAngles",
-        "cell_ipf_colors_array_name": "IPFColors",
-        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
-        "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
-        "mask_array_path": "",
-        "reference_dir": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "use_mask": false
+        "cell_euler_angles_array_path": {
+          "value": "DataContainer/Cell Data/EulerAngles",
+          "version": 1
+        },
+        "cell_ipf_colors_array_name": {
+          "value": "IPFColors",
+          "version": 1
+        },
+        "cell_phases_array_path": {
+          "value": "DataContainer/Cell Data/Phases",
+          "version": 1
+        },
+        "crystal_structures_array_path": {
+          "value": "DataContainer/Cell Ensemble Data/CrystalStructures",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "reference_dir": {
+          "value": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "version": 1
+        },
+        "use_mask": {
+          "value": false,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::GenerateIPFColorsFilter",
+        "name": "nx::core::ComputeIPFColorsFilter",
         "uuid": "64cb4f27-6e5e-4dd2-8a03-0c448cb8f5e6"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "export_file_path": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
     }
   ],
+  "version": 1,
   "workflowParams": []
 }
