@@ -5,37 +5,88 @@
   "pipeline": [
     {
       "args": {
-        "cell_attribute_matrix_name": "Cell Data",
-        "color_weights": [
-          0.21250000596046448,
-          0.715399980545044,
-          0.07209999859333038
-        ],
-        "convert_to_gray_scale": false,
-        "image_data_array_name": "ImageData",
-        "image_transform_index": 0,
-        "input_file_list_object": {
-          "end_index": 56,
-          "file_extension": ".tif",
-          "file_prefix": "GammaPrime",
-          "file_suffix": "",
-          "increment_index": 1,
-          "input_path": "Data/GammaPrime/",
-          "ordering": 0,
-          "padding_digits": 4,
-          "start_index": 0
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
         },
-        "origin": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "output_image_geometry_path": "ImageDataContainer",
-        "spacing": [
-          17.399999618530273,
-          17.399999618530273,
-          50.0
-        ]
+        "change_image_data_type": {
+          "value": false,
+          "version": 1
+        },
+        "color_weights": {
+          "value": [
+            0.21250000596046448,
+            0.715399980545044,
+            0.07209999859333038
+          ],
+          "version": 1
+        },
+        "convert_to_gray_scale": {
+          "value": false,
+          "version": 1
+        },
+        "exact_xy_dimensions": {
+          "value": [
+            100,
+            100
+          ],
+          "version": 1
+        },
+        "image_data_array_name": {
+          "value": "ImageData",
+          "version": 1
+        },
+        "image_data_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "image_transform_index": {
+          "value": 0,
+          "version": 1
+        },
+        "input_file_list_object": {
+          "value": {
+            "end_index": 56,
+            "file_extension": ".tif",
+            "file_prefix": "GammaPrime",
+            "file_suffix": "",
+            "increment_index": 1,
+            "input_path": "Data/GammaPrime/",
+            "ordering": 0,
+            "padding_digits": 4,
+            "start_index": 0
+          },
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "parameters_version": 2,
+        "resample_images_index": {
+          "value": 0,
+          "version": 1
+        },
+        "scaling": {
+          "value": 100.0,
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            17.399999618530273,
+            17.399999618530273,
+            50.0
+          ],
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -46,8 +97,15 @@
     },
     {
       "args": {
-        "export_file_path": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {

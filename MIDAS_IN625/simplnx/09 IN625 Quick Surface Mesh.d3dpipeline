@@ -42,7 +42,7 @@
               "DataContainer/Cell Feature Data/Omega3s",
               "DataContainer/Cell Feature Data/Shape Volumes"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -62,10 +62,6 @@
           "value": "Face Data",
           "version": 1
         },
-        "face_feature_attribute_matrix_name": {
-          "value": "Face Feature Data",
-          "version": 1
-        },
         "face_labels_array_name": {
           "value": "FaceLabels",
           "version": 1
@@ -76,10 +72,6 @@
         },
         "fix_problem_voxels": {
           "value": true,
-          "version": 1
-        },
-        "generate_triple_lines": {
-          "value": false,
           "version": 1
         },
         "input_data_array_paths": {
@@ -133,7 +125,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
+          "value": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
           "version": 1
         },
         "parameters_version": 1,

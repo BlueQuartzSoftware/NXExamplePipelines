@@ -24,7 +24,7 @@
               "DataContainer/Cell Feature Data/Active",
               "DataContainer/Cell Feature Data/NumNeighbors2"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/06_IN625_GrainCleanup.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/06_IN625_GrainCleanup.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -422,7 +422,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
+          "value": "Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
           "version": 1
         },
         "parameters_version": 1,

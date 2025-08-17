@@ -21,7 +21,7 @@
               "DataContainer/Cell Ensemble Data/LatticeConstants",
               "DataContainer/Cell Ensemble Data/MaterialName"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/04_IN625_Cropped.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/04_IN625_Cropped.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -93,7 +93,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d",
+          "value": "Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d",
           "version": 1
         },
         "parameters_version": 1,

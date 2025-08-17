@@ -31,7 +31,7 @@
               "MAD",
               "Phases"
             ],
-            "input_file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+            "input_file_path": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
             "start_slice": 700,
             "use_recommended_transform": true
           },
@@ -91,7 +91,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
+          "value": "Data/Output/MIDAS_IN625/02_IN625_IPFColors.dream3d",
           "version": 1
         },
         "parameters_version": 1,

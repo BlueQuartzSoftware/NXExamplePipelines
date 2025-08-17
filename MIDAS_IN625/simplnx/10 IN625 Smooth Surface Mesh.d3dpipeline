@@ -15,7 +15,7 @@
               "TriangleDataContainer/Shared Vertex List",
               "TriangleDataContainer/Vertex Data/NodeType"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/09_IN625_QuickSurfaceMesh.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -138,7 +138,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d",
+          "value": "Data/Output/MIDAS_IN625/10_IN625_SmoothSurfaceMesh.dream3d",
           "version": 1
         },
         "parameters_version": 1,

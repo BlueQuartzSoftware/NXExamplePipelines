@@ -32,7 +32,7 @@
               "TDMS Keypoints/SharedVertexList",
               "TDMS Keypoints/Vertex Data"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d"
           },
           "version": 1
         },
@@ -62,7 +62,7 @@
               "GC1 STL Keypoints/Vertex Data",
               "PointSampleTriangleGeometry SeedValue"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
           },
           "version": 1
         },
@@ -106,7 +106,7 @@
               "GC1_CT KeyPoints/SharedVertexList",
               "GC1_CT KeyPoints/Vertex Data"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d"
           },
           "version": 1
         },
@@ -629,7 +629,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/AM_Multimodal_Registration/05_GC1_Fused.dream3d",
+          "value": "Data/Output/AM_Multimodal_Registration/05_GC1_Fused.dream3d",
           "version": 1
         },
         "parameters_version": 1,

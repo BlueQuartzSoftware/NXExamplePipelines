@@ -42,7 +42,7 @@
               "DataContainer/Cell Feature Data/Omega3s",
               "DataContainer/Cell Feature Data/Shape Volumes"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/07_IN625_Statistics.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -67,7 +67,7 @@
           "version": 1
         },
         "feature_data_file": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/08_IN625_Statistics.csv",
+          "value": "Data/Output/MIDAS_IN625/08_IN625_Statistics.csv",
           "version": 1
         },
         "parameters_version": 1,

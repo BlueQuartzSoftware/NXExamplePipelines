@@ -5,74 +5,17 @@
   "pipeline": [
     {
       "args": {
-        "Imported Pipeline": {
-          "isDisabled": false,
-          "name": "0_GammaPrimeInitialImport",
-          "pipeline": [
-            {
-              "args": {
-                "cell_attribute_matrix_name": "Cell Data",
-                "color_weights": [
-                  0.21250000596046448,
-                  0.715399980545044,
-                  0.07209999859333038
-                ],
-                "convert_to_gray_scale": false,
-                "image_data_array_name": "ImageData",
-                "image_transform_index": 0,
-                "input_file_list_object": {
-                  "end_index": 56,
-                  "file_extension": ".tif",
-                  "file_prefix": "GammaPrime",
-                  "file_suffix": "",
-                  "increment_index": 1,
-                  "input_path": "Data/GammaPrime/",
-                  "ordering": 0,
-                  "padding_digits": 4,
-                  "start_index": 0
-                },
-                "origin": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "output_image_geometry_path": "ImageDataContainer",
-                "spacing": [
-                  17.399999618530273,
-                  17.399999618530273,
-                  50.0
-                ]
-              },
-              "comments": "",
-              "filter": {
-                "name": "nx::core::ITKImportImageStackFilter",
-                "uuid": "dcf980b7-ecca-46d1-af31-ac65f6e3b6bb"
-              },
-              "isDisabled": false
-            },
-            {
-              "args": {
-                "export_file_path": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
-                "write_xdmf_file": true
-              },
-              "comments": "",
-              "filter": {
-                "name": "nx::core::WriteDREAM3DFilter",
-                "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
-              },
-              "isDisabled": false
-            }
-          ],
-          "version": 1
-        },
         "import_data_object": {
-          "data_paths": [
-            "ImageDataContainer",
-            "ImageDataContainer/Cell Data",
-            "ImageDataContainer/Cell Data/ImageData"
-          ],
-          "file_path": "Data/Output/GammaPrime/GammaPrimeInitial.dream3d"
-        }
+          "value": {
+            "data_paths": [
+              "ImageDataContainer/Cell Data/ImageData"
+            ],
+            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/GammaPrime/GammaPrimeInitial.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
@@ -83,14 +26,39 @@
     },
     {
       "args": {
-        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
-        "input_image_geometry_path": "ImageDataContainer",
-        "label_offset": 0,
-        "number_of_histogram_bins": 256,
-        "number_of_thresholds": 1,
-        "output_array_name": "MaskGrain1",
-        "return_bin_midpoint": false,
-        "valley_emphasis": false
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/ImageData",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "label_offset": {
+          "value": 0,
+          "version": 1
+        },
+        "number_of_histogram_bins": {
+          "value": 256,
+          "version": 1
+        },
+        "number_of_thresholds": {
+          "value": 1,
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "MaskGrain1",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "return_bin_midpoint": {
+          "value": false,
+          "version": 1
+        },
+        "valley_emphasis": {
+          "value": false,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -101,17 +69,39 @@
     },
     {
       "args": {
-        "fully_connected": false,
-        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
-        "input_image_geometry_path": "ImageDataContainer",
-        "kernel_radius": [
-          7,
-          7,
-          7
-        ],
-        "kernel_type_index": 2,
-        "output_array_name": "MaskGrain1 (filtered)",
-        "preserve_intensities": false
+        "fully_connected": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "kernel_radius": {
+          "value": [
+            7,
+            7,
+            7
+          ],
+          "version": 1
+        },
+        "kernel_type_index": {
+          "value": 2,
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "MaskGrain1 (filtered)",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "preserve_intensities": {
+          "value": false,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -122,9 +112,13 @@
     },
     {
       "args": {
-        "removed_data_path": [
-          "ImageDataContainer/Cell Data/MaskGrain1"
-        ]
+        "parameters_version": 1,
+        "removed_data_path": {
+          "value": [
+            "ImageDataContainer/Cell Data/MaskGrain1"
+          ],
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -135,8 +129,19 @@
     },
     {
       "args": {
-        "new_name": "MaskGrain1",
-        "source_data_object_path": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)"
+        "allow_overwrite": {
+          "value": false,
+          "version": 1
+        },
+        "new_name": {
+          "value": "MaskGrain1",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "source_data_object_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -147,17 +152,39 @@
     },
     {
       "args": {
-        "fully_connected": false,
-        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
-        "input_image_geometry_path": "ImageDataContainer",
-        "kernel_radius": [
-          7,
-          7,
-          7
-        ],
-        "kernel_type_index": 2,
-        "output_array_name": "MaskGrain1 (filtered)",
-        "preserve_intensities": false
+        "fully_connected": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "kernel_radius": {
+          "value": [
+            7,
+            7,
+            7
+          ],
+          "version": 1
+        },
+        "kernel_type_index": {
+          "value": 2,
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "MaskGrain1 (filtered)",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "preserve_intensities": {
+          "value": false,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -168,9 +195,13 @@
     },
     {
       "args": {
-        "removed_data_path": [
-          "ImageDataContainer/Cell Data/MaskGrain1"
-        ]
+        "parameters_version": 1,
+        "removed_data_path": {
+          "value": [
+            "ImageDataContainer/Cell Data/MaskGrain1"
+          ],
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -181,8 +212,19 @@
     },
     {
       "args": {
-        "new_name": "MaskGrain1",
-        "source_data_object_path": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)"
+        "allow_overwrite": {
+          "value": false,
+          "version": 1
+        },
+        "new_name": {
+          "value": "MaskGrain1",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "source_data_object_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1 (filtered)",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -193,10 +235,23 @@
     },
     {
       "args": {
-        "input_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
-        "input_image_geometry_path": "ImageDataContainer",
-        "maximum": 1.0,
-        "output_array_name": "MaskGrain2"
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "maximum": {
+          "value": 1.0,
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "MaskGrain2",
+          "version": 1
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
@@ -207,11 +262,27 @@
     },
     {
       "args": {
-        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
-        "input_image_geometry_path": "ImageDataContainer",
-        "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain1",
-        "output_array_name": "RawGrain1",
-        "outside_value": 0.0
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/ImageData",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "mask_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain1",
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "RawGrain1",
+          "version": 1
+        },
+        "outside_value": {
+          "value": 0.0,
+          "version": 1
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
@@ -222,11 +293,27 @@
     },
     {
       "args": {
-        "input_image_data_path": "ImageDataContainer/Cell Data/ImageData",
-        "input_image_geometry_path": "ImageDataContainer",
-        "mask_image_data_path": "ImageDataContainer/Cell Data/MaskGrain2",
-        "output_array_name": "RawGrain2",
-        "outside_value": 0.0
+        "input_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/ImageData",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        },
+        "mask_image_data_path": {
+          "value": "ImageDataContainer/Cell Data/MaskGrain2",
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "RawGrain2",
+          "version": 1
+        },
+        "outside_value": {
+          "value": 0.0,
+          "version": 1
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
@@ -237,8 +324,15 @@
     },
     {
       "args": {
-        "export_file_path": "Data/Output/GammaPrime/GammaPrimeMaskedGrains.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/GammaPrime/GammaPrimeMaskedGrains.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {

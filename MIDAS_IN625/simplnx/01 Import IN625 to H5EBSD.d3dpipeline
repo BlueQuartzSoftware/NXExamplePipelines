@@ -12,7 +12,7 @@
             "file_prefix": "result_fit_",
             "file_suffix": "",
             "increment_index": 1,
-            "input_path": "/Users/mjackson/DREAM3DNXData/Data/MIDAS_IN625/CTF",
+            "input_path": "Data/MIDAS_IN625/CTF",
             "ordering": 0,
             "padding_digits": 3,
             "start_index": 700
@@ -20,7 +20,7 @@
           "version": 1
         },
         "output_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
+          "value": "Data/Output/MIDAS_IN625/01_IN625_RawEBSD.h5ebsd",
           "version": 1
         },
         "parameters_version": 1,

@@ -23,7 +23,7 @@
               "DataContainer/Cell Ensemble Data/MaterialName",
               "DataContainer/Cell Feature Data/Active"
             ],
-            "file_path": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d",
+            "file_path": "Data/Output/MIDAS_IN625/05_IN625_SegmentGrains.dream3d",
             "path_import_policy": 1
           },
           "version": 2
@@ -231,7 +231,7 @@
     {
       "args": {
         "export_file_path": {
-          "value": "/Users/mjackson/DREAM3DNXData/Data/Output/MIDAS_IN625/06_IN625_GrainCleanup.dream3d",
+          "value": "Data/Output/MIDAS_IN625/06_IN625_GrainCleanup.dream3d",
           "version": 1
         },
         "parameters_version": 1,
