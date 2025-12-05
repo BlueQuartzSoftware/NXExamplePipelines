@@ -5,13 +5,43 @@
   "pipeline": [
     {
       "args": {
-        "face_attribute_matrix_name": "Face Data",
-        "face_normals_name": "Face Normals",
-        "scale_factor": 25.399999618530273,
-        "scale_output": true,
-        "stl_file_path": "Data/AM_Multimodal_Registration/GC1.stl",
-        "output_triangle_geometry_path": "GC1_STL",
-        "vertex_attribute_matrix_name": "Vertex Data"
+        "create_face_labels": {
+          "value": true,
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "face_labels_name": {
+          "value": "Face Labels",
+          "version": 1
+        },
+        "face_normals_name": {
+          "value": "Face Normals",
+          "version": 1
+        },
+        "output_triangle_geometry_path": {
+          "value": "GC1_STL",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "scale_factor": {
+          "value": 25.399999618530273,
+          "version": 1
+        },
+        "scale_output": {
+          "value": true,
+          "version": 1
+        },
+        "stl_file_path": {
+          "value": "Data/AM_Multimodal_Registration/GC1.stl",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -22,8 +52,15 @@
     },
     {
       "args": {
-        "triangle_areas_array_name": "FaceAreas",
-        "input_triangle_geometry_path": "GC1_STL"
+        "input_triangle_geometry_path": {
+          "value": "GC1_STL",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "triangle_areas_array_name": {
+          "value": "FaceAreas",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -34,17 +71,51 @@
     },
     {
       "args": {
-        "mask_array_path": "",
-        "number_of_samples": 100000,
-        "seed_array_name": "PointSampleTriangleGeometry SeedValue",
-        "seed_value": 5489,
-        "input_data_array_paths": [],
-        "triangle_areas_array_path": "GC1_STL/Face Data/FaceAreas",
-        "input_triangle_geometry_path": "GC1_STL",
-        "use_mask": false,
-        "use_seed": false,
-        "vertex_data_group_name": "Vertex Data",
-        "output_vertex_geometry_path": "GC1 STL Keypoints"
+        "input_data_array_paths": {
+          "value": [],
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "GC1_STL",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "",
+          "version": 1
+        },
+        "number_of_samples": {
+          "value": 100000,
+          "version": 1
+        },
+        "output_vertex_geometry_path": {
+          "value": "GC1 STL Keypoints",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "PointSampleTriangleGeometry SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "triangle_areas_array_path": {
+          "value": "GC1_STL/Face Data/FaceAreas",
+          "version": 1
+        },
+        "use_mask": {
+          "value": false,
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -55,8 +126,15 @@
     },
     {
       "args": {
-        "export_file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
@@ -66,6 +144,7 @@
       "isDisabled": false
     }
   ],
+  "pipeline_uuid": "74bdbea9-e603-4cc8-8c7f-b179d6990fb9",
   "version": 1,
   "workflowParams": []
 }

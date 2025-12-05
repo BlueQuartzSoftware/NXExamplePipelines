@@ -6,212 +6,451 @@
     {
       "args": {
         "import_data_object": {
-          "data_paths": [
-            "ImageDataContainer",
-            "ImageDataContainer/CellData",
-            "ImageDataContainer/CellData/Density"
-          ],
-          "file_path": "Data/AM_Multimodal_Registration/GC1_CT.dream3d"
-        }
+          "value": {
+            "data_paths": [
+              "ImageDataContainer",
+              "ImageDataContainer/CellData",
+              "ImageDataContainer/CellData/Density"
+            ],
+            "file_path": "Data/AM_Multimodal_Registration/GC1_CT.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
-        "name": "complex::ImportDREAM3DFilter",
+        "name": "nx::core::ReadDREAM3DFilter",
         "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "source_data_object_path": "ImageDataContainer",
-        "new_name": "GC1_CT_ImageData"
+        "allow_overwrite": {
+          "value": false,
+          "version": 1
+        },
+        "new_name": {
+          "value": "GC1_CT_ImageData",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "source_data_object_path": {
+          "value": "ImageDataContainer",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::RenameDataObjectFilter",
+        "name": "nx::core::RenameDataObjectFilter",
         "uuid": "911a3aa9-d3c2-4f66-9451-8861c4b726d5"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "input_image_data_path": "GC1_CT_ImageData/CellData/Density",
-        "output_array_name": "GradMag",
-        "input_image_geometry_path": "GC1_CT_ImageData",
-        "use_image_spacing": true
+        "input_image_data_path": {
+          "value": "GC1_CT_ImageData/CellData/Density",
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "GC1_CT_ImageData",
+          "version": 1
+        },
+        "output_array_name": {
+          "value": "GradMag",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "use_image_spacing": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ITKGradientMagnitudeImage",
+        "name": "nx::core::ITKGradientMagnitudeImageFilter",
         "uuid": "719df7b2-8db2-43eb-a40c-a015982eec08"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "input_array_path": "GC1_CT_ImageData/CellData/Density",
-        "created_mask_name": "Mask",
-        "gradient_array_path": "GC1_CT_ImageData/CellData/GradMag"
+        "created_mask_name": {
+          "value": "Mask",
+          "version": 1
+        },
+        "gradient_array_path": {
+          "value": "GC1_CT_ImageData/CellData/GradMag",
+          "version": 1
+        },
+        "input_array_path": {
+          "value": "GC1_CT_ImageData/CellData/Density",
+          "version": 1
+        },
+        "parameters_version": 1
       },
       "comments": "",
       "filter": {
-        "name": "complex::RobustAutomaticThresholdFilter",
+        "name": "nx::core::RobustAutomaticThresholdFilter",
         "uuid": "ade392e6-f0da-4cf3-bf11-dfe69e200b49"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "set_tuple_dimensions": false,
-        "component_count": 1,
-        "data_format": "",
-        "initialization_value_str": "0",
-        "numeric_type_index": 4,
-        "output_array_path": "GC1_CT_ImageData/CellData/FeatureIds",
-        "tuple_dimensions": [
-          [
-            958.0,
-            449.0,
-            438.0
-          ]
-        ]
+        "component_count": {
+          "value": 1,
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "initialization_value_str": {
+          "value": "0",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 4,
+          "version": 1
+        },
+        "output_array_path": {
+          "value": "GC1_CT_ImageData/CellData/FeatureIds",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "set_tuple_dimensions": {
+          "value": false,
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              958.0,
+              449.0,
+              438.0
+            ]
+          ],
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::CreateDataArrayFilter",
+        "name": "nx::core::CreateDataArrayFilter",
         "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "conditional_array_path": "GC1_CT_ImageData/CellData/Mask",
-        "remove_value": "0",
-        "replace_value": "1",
-        "selected_array_path": "GC1_CT_ImageData/CellData/FeatureIds",
-        "use_conditional": true
+        "conditional_array_path": {
+          "value": "GC1_CT_ImageData/CellData/Mask",
+          "version": 1
+        },
+        "invert_mask": {
+          "value": false,
+          "version": 1
+        },
+        "parameters_version": 1,
+        "remove_value": {
+          "value": "0",
+          "version": 1
+        },
+        "replace_value": {
+          "value": "1",
+          "version": 1
+        },
+        "selected_array_path": {
+          "value": "GC1_CT_ImageData/CellData/FeatureIds",
+          "version": 1
+        },
+        "use_conditional": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ConditionalSetValueFilter",
+        "name": "nx::core::ConditionalSetValueFilter",
         "uuid": "bad9b7bd-1dc9-4f21-a889-6520e7a41881"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "removed_data_path": ["GC1_CT_ImageData/CellData/Mask"]
+        "parameters_version": 1,
+        "removed_data_path": {
+          "value": [
+            "GC1_CT_ImageData/CellData/Mask"
+          ],
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::DeleteDataFilter",
+        "name": "nx::core::DeleteDataFilter",
         "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "face_data_group_name": "Face Data",
-        "face_labels_array_name": "FaceLabels",
-        "feature_ids_path": "GC1_CT_ImageData/CellData/FeatureIds",
-        "fix_problem_voxels": true,
-        "input_grid_geometry_path": "GC1_CT_ImageData",
-        "node_types_array_name": "NodeType",
-        "input_data_array_paths": [],
-        "output_triangle_geometry_path": "GC1_CT_QuickMesh",
-        "vertex_data_group_name": "Vertex Data"
+        "face_data_group_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "face_labels_array_name": {
+          "value": "FaceLabels",
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "GC1_CT_ImageData/CellData/FeatureIds",
+          "version": 1
+        },
+        "fix_problem_voxels": {
+          "value": true,
+          "version": 1
+        },
+        "input_data_array_paths": {
+          "value": [],
+          "version": 1
+        },
+        "input_feature_data_array_paths": {
+          "value": [],
+          "version": 1
+        },
+        "input_grid_geometry_path": {
+          "value": "GC1_CT_ImageData",
+          "version": 1
+        },
+        "node_types_array_name": {
+          "value": "NodeType",
+          "version": 1
+        },
+        "output_triangle_geometry_path": {
+          "value": "GC1_CT_QuickMesh",
+          "version": 1
+        },
+        "parameters_version": 2,
+        "repair_triangle_winding": {
+          "value": true,
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::QuickSurfaceMeshFilter",
+        "name": "nx::core::QuickSurfaceMeshFilter",
         "uuid": "13dd00bd-ad49-4e04-95eb-3267952fd6e5"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "copy_triangle_array_paths": [
-          "GC1_CT_QuickMesh/Face Data/FaceLabels"
-        ],
-        "copy_vertex_array_paths": [
-          "GC1_CT_QuickMesh/Vertex Data/NodeType"
-        ],
-        "triangle_attribute_matrix_name": "Face Data",
-        "output_triangle_geometry_path": "GC1_CT Surface",
-        "node_types_path": "GC1_CT_QuickMesh/Vertex Data/NodeType",
-        "input_triangle_geometry_path": "GC1_CT_QuickMesh",
-        "vertex_attribute_matrix_name": "Vertex Data"
+        "copy_triangle_array_paths": {
+          "value": [
+            "GC1_CT_QuickMesh/Face Data/FaceLabels"
+          ],
+          "version": 1
+        },
+        "copy_vertex_array_paths": {
+          "value": [
+            "GC1_CT_QuickMesh/Vertex Data/NodeType"
+          ],
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "GC1_CT_QuickMesh",
+          "version": 1
+        },
+        "node_type_range": {
+          "value": [
+            0,
+            8
+          ],
+          "version": 1
+        },
+        "node_types_path": {
+          "value": "GC1_CT_QuickMesh/Vertex Data/NodeType",
+          "version": 1
+        },
+        "output_triangle_geometry_path": {
+          "value": "GC1_CT Surface",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "triangle_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ExtractInternalSurfacesFromTriangleGeometryFilter",
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometryFilter",
         "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "iteration_steps": 300,
-        "lambda_value": 0.25,
-        "mu_factor": -1.0299999713897705,
-        "quad_point_lambda": 0.0,
-        "surface_mesh_node_type_array_path": "GC1_CT Surface/Vertex Data/NodeType",
-        "surface_point_lambda": 0.0,
-        "surface_quad_point_lambda": 0.0,
-        "surface_triple_line_lambda": 0.0,
-        "input_triangle_geometry_path": "GC1_CT Surface",
-        "triple_line_lambda": 0.0,
-        "use_taubin_smoothing": true
+        "input_triangle_geometry_path": {
+          "value": "GC1_CT Surface",
+          "version": 1
+        },
+        "iteration_steps": {
+          "value": 300,
+          "version": 1
+        },
+        "lambda_value": {
+          "value": 0.25,
+          "version": 1
+        },
+        "mu_factor": {
+          "value": -1.0299999713897705,
+          "version": 1
+        },
+        "parameters_version": 1,
+        "quad_point_lambda": {
+          "value": 0.0,
+          "version": 1
+        },
+        "surface_mesh_node_type_array_path": {
+          "value": "GC1_CT Surface/Vertex Data/NodeType",
+          "version": 1
+        },
+        "surface_point_lambda": {
+          "value": 0.0,
+          "version": 1
+        },
+        "surface_quad_point_lambda": {
+          "value": 0.0,
+          "version": 1
+        },
+        "surface_triple_line_lambda": {
+          "value": 0.0,
+          "version": 1
+        },
+        "triple_line_lambda": {
+          "value": 0.0,
+          "version": 1
+        },
+        "use_taubin_smoothing": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::LaplacianSmoothingFilter",
+        "name": "nx::core::LaplacianSmoothingFilter",
         "uuid": "0dd0916e-9305-4a7b-98cf-a6cfb97cb501"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "triangle_areas_array_name": "Face Areas",
-        "input_triangle_geometry_path": "GC1_CT Surface"
+        "input_triangle_geometry_path": {
+          "value": "GC1_CT Surface",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "triangle_areas_array_name": {
+          "value": "Face Areas",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ComputeTriangleAreasFilter",
+        "name": "nx::core::ComputeTriangleAreasFilter",
         "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "mask_array_path": "",
-        "number_of_samples": 100000,
-        "input_data_array_paths": [],
-        "triangle_areas_array_path": "GC1_CT Surface/Face Data/Face Areas",
-        "input_triangle_geometry_path": "GC1_CT Surface",
-        "use_mask": false,
-        "vertex_data_group_name": "Vertex Data",
-        "output_vertex_geometry_path": "GC1_CT KeyPoints"
+        "input_data_array_paths": {
+          "value": [],
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "GC1_CT Surface",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "",
+          "version": 1
+        },
+        "number_of_samples": {
+          "value": 100000,
+          "version": 1
+        },
+        "output_vertex_geometry_path": {
+          "value": "GC1_CT KeyPoints",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "PointSampleTriangleGeometry SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "triangle_areas_array_path": {
+          "value": "GC1_CT Surface/Face Data/Face Areas",
+          "version": 1
+        },
+        "use_mask": {
+          "value": false,
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::PointSampleTriangleGeometryFilter",
+        "name": "nx::core::PointSampleTriangleGeometryFilter",
         "uuid": "ee34ef95-aa04-4ad3-8232-5783a880d279"
       },
       "isDisabled": false
     },
     {
       "args": {
-        "export_file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d",
-        "write_xdmf_file": true
+        "export_file_path": {
+          "value": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        }
       },
       "comments": "",
       "filter": {
-        "name": "complex::ExportDREAM3DFilter",
+        "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
       },
       "isDisabled": false
     }
   ],
+  "pipeline_uuid": "46edc3f8-6285-4996-8f14-38ea1a38fdc7",
+  "version": 1,
   "workflowParams": []
 }

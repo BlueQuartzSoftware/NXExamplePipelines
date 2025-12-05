@@ -8,19 +8,6 @@
         "import_data_object": {
           "value": {
             "data_paths": [
-              "TDMS Beam On",
-              "TDMS Beam On/SharedVertexList",
-              "TDMS Beam On/HF_VertexAttributeMatrix",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Audio",
-              "TDMS Beam On/HF_VertexAttributeMatrix/HF Temperature",
-              "TDMS Beam On/HF_VertexAttributeMatrix/HF Time",
-              "TDMS Beam On/HF_VertexAttributeMatrix/HF_SliceIds",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Laser Drive",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Laser Power",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Off-Axis PD",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Photodiode",
-              "TDMS Beam On/HF_VertexAttributeMatrix/Beam Off",
-              "TDMS Beam On/HF_SliceAttributeMatrix",
               "TDMS Beam On/HF_SliceAttributeMatrix/NumNeighbors",
               "TDMS Beam On/HF_SliceAttributeMatrix/data_layer_times",
               "TDMS Beam On/HF_SliceAttributeMatrix/file_layer_times",
@@ -28,13 +15,23 @@
               "TDMS Beam On/HF_SliceAttributeMatrix/layer_height",
               "TDMS Beam On/HF_SliceAttributeMatrix/layer_thickness",
               "TDMS Beam On/HF_SliceAttributeMatrix/lf_time_res",
-              "TDMS Keypoints",
-              "TDMS Keypoints/SharedVertexList",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Audio",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Beam Off",
+              "TDMS Beam On/HF_VertexAttributeMatrix/HF Temperature",
+              "TDMS Beam On/HF_VertexAttributeMatrix/HF Time",
+              "TDMS Beam On/HF_VertexAttributeMatrix/HF_SliceIds",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Laser Drive",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Laser Power",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Off-Axis PD",
+              "TDMS Beam On/HF_VertexAttributeMatrix/Photodiode",
+              "TDMS Beam On/Shared Vertex List",
+              "TDMS Keypoints/Shared Vertex List",
               "TDMS Keypoints/Vertex Data"
             ],
-            "file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/04_GC1_InSituKeypoints.dream3d",
+            "path_import_policy": 1
           },
-          "version": 1
+          "version": 2
         },
         "parameters_version": 1
       },
@@ -50,21 +47,20 @@
         "import_data_object": {
           "value": {
             "data_paths": [
-              "GC1_STL",
-              "GC1_STL/SharedTriList",
-              "GC1_STL/SharedVertexList",
-              "GC1_STL/Face Data",
-              "GC1_STL/Vertex Data",
+              "GC1 STL Keypoints/Shared Vertex List",
+              "GC1 STL Keypoints/Vertex Data",
+              "GC1_STL/Face Data/Face Labels",
               "GC1_STL/Face Data/Face Normals",
               "GC1_STL/Face Data/FaceAreas",
-              "GC1 STL Keypoints",
-              "GC1 STL Keypoints/SharedVertexList",
-              "GC1 STL Keypoints/Vertex Data",
+              "GC1_STL/Shared Faces List",
+              "GC1_STL/Shared Vertex List",
+              "GC1_STL/Vertex Data",
               "PointSampleTriangleGeometry SeedValue"
             ],
-            "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/03_GC1_STLKeypoints.dream3d",
+            "path_import_policy": 1
           },
-          "version": 1
+          "version": 2
         },
         "parameters_version": 1
       },
@@ -80,35 +76,26 @@
         "import_data_object": {
           "value": {
             "data_paths": [
-              "GC1_CT_ImageData",
-              "GC1_CT_ImageData/CellData",
-              "GC1_CT_ImageData/CellData/Density",
-              "GC1_CT_ImageData/CellData/GradMag",
-              "GC1_CT_ImageData/CellData/FeatureIds",
-              "GC1_CT_QuickMesh",
-              "GC1_CT_QuickMesh/SharedTriList",
-              "GC1_CT_QuickMesh/SharedVertexList",
-              "GC1_CT_QuickMesh/Face Data",
-              "GC1_CT_QuickMesh/Vertex Data",
-              "GC1_CT_QuickMesh/Vertex Data/NodeType",
-              "GC1_CT_QuickMesh/Face Data/FaceLabels",
-              "GC1_CT_QuickMesh/Face Feature Data",
-              "GC1_CT Surface",
-              "GC1_CT Surface/SharedTriList",
-              "GC1_CT Surface/SharedVertexList",
-              "GC1_CT Surface/Face Data",
-              "GC1_CT Surface/Vertex Data",
-              "GC1_CT Surface/Vertex Data/NodeType",
-              "GC1_CT Surface/Face Data/FaceLabels",
-              "GC1_CT Surface/Edge List",
+              "GC1_CT KeyPoints/Shared Vertex List",
+              "GC1_CT KeyPoints/Vertex Data",
               "GC1_CT Surface/Face Data/Face Areas",
-              "GC1_CT KeyPoints",
-              "GC1_CT KeyPoints/SharedVertexList",
-              "GC1_CT KeyPoints/Vertex Data"
+              "GC1_CT Surface/Face Data/FaceLabels",
+              "GC1_CT Surface/Shared Faces List",
+              "GC1_CT Surface/Shared Vertex List",
+              "GC1_CT Surface/Vertex Data/NodeType",
+              "GC1_CT_ImageData/CellData/Density",
+              "GC1_CT_ImageData/CellData/FeatureIds",
+              "GC1_CT_ImageData/CellData/GradMag",
+              "GC1_CT_QuickMesh/Face Data/FaceLabels",
+              "GC1_CT_QuickMesh/Shared Faces List",
+              "GC1_CT_QuickMesh/Shared Vertex List",
+              "GC1_CT_QuickMesh/Vertex Data/NodeType",
+              "PointSampleTriangleGeometry SeedValue"
             ],
-            "file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d"
+            "file_path": "Data/Output/AM_Multimodal_Registration/02_GC1_CTKeypoints.dream3d",
+            "path_import_policy": 1
           },
-          "version": 1
+          "version": 2
         },
         "parameters_version": 1
       },
@@ -228,7 +215,11 @@
           ],
           "version": 1
         },
-        "parameters_version": 1,
+        "output_transform_matrix_path": {
+          "value": "Transformation Matrix",
+          "version": 1
+        },
+        "parameters_version": 2,
         "rotation": {
           "value": [
             0.0,
@@ -236,6 +227,10 @@
             1.0,
             90.0
           ],
+          "version": 1
+        },
+        "save_transform_matrix": {
+          "value": false,
           "version": 1
         },
         "scale": {
@@ -317,7 +312,11 @@
           ],
           "version": 1
         },
-        "parameters_version": 1,
+        "output_transform_matrix_path": {
+          "value": "Transformation Matrix",
+          "version": 1
+        },
+        "parameters_version": 2,
         "rotation": {
           "value": [
             0.0,
@@ -325,6 +324,10 @@
             1.0,
             90.0
           ],
+          "version": 1
+        },
+        "save_transform_matrix": {
+          "value": false,
           "version": 1
         },
         "scale": {
@@ -385,11 +388,19 @@
           "value": "",
           "version": 1
         },
+        "out_of_bounds_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "out_of_bounds_value": {
+          "value": 18446744073709551615,
+          "version": 1
+        },
         "output_image_geometry_path": {
           "value": "ImageDataContainer",
           "version": 1
         },
-        "parameters_version": 1,
+        "parameters_version": 2,
         "sampling_grid_index": {
           "value": 1,
           "version": 1
@@ -646,6 +657,7 @@
       "isDisabled": false
     }
   ],
+  "pipeline_uuid": "4c592458-0159-462a-b7a3-9d9c62d1c531",
   "version": 1,
   "workflowParams": []
 }
