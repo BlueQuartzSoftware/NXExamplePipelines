@@ -1,0 +1,426 @@
+{
+  "version": 1,
+  "scope": "Selected Bentheimer import, resolution, ROI, padding, fusion and VTK interchange occurrences; not full filter validation.",
+  "filters": [
+    {
+      "filter": "CreateImageGeometryFilter",
+      "uuid": "c4320659-1a84-461d-939e-c7c10229a504",
+      "pipeline": "(01) Bentheimer Native Volume Preparation.d3dpipeline",
+      "step": 0,
+      "purpose": "Create the native 75 cubed grid at 18 micrometer spacing. Both released cubes span 1350 micrometers per axis; use a common example-local corner origin."
+    },
+    {
+      "filter": "ReadRawBinaryFilter",
+      "uuid": "dd159366-5f12-42db-af6d-a33592ae8a89",
+      "pipeline": "(01) Bentheimer Native Volume Preparation.d3dpipeline",
+      "step": 1,
+      "purpose": "Import exact author-normalized UInt16 little-endian bytes as one scalar per cell. Inherit tuple dimensions from CellData; no byte header, normalization, cropping, or axis permutation is applied."
+    },
+    {
+      "filter": "CreateImageGeometryFilter",
+      "uuid": "c4320659-1a84-461d-939e-c7c10229a504",
+      "pipeline": "(01) Bentheimer Native Volume Preparation.d3dpipeline",
+      "step": 2,
+      "purpose": "Create the native 225 cubed grid at 6 micrometer spacing. Both released cubes span 1350 micrometers per axis; use a common example-local corner origin."
+    },
+    {
+      "filter": "ReadRawBinaryFilter",
+      "uuid": "dd159366-5f12-42db-af6d-a33592ae8a89",
+      "pipeline": "(01) Bentheimer Native Volume Preparation.d3dpipeline",
+      "step": 3,
+      "purpose": "Import exact author-normalized UInt16 little-endian bytes as one scalar per cell. Inherit tuple dimensions from CellData; no byte header, normalization, cropping, or axis permutation is applied."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(01) Bentheimer Native Volume Preparation.d3dpipeline",
+      "step": 4,
+      "purpose": "Save a reusable checkpoint, retaining source arrays and explicitly named derived results."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the complete predecessor checkpoint; retain both native grids and all saved arrays."
+    },
+    {
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Express the author-normalized intensity on a shared Float32 scale using the fixed paper display maximum 20000. Preserve values above one; this is neither per-volume min-max normalization nor a probability."
+    },
+    {
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Express the author-normalized intensity on a shared Float32 scale using the fixed paper display maximum 20000. Preserve values above one; this is neither per-volume min-max normalization nor a probability."
+    },
+    {
+      "filter": "ResampleImageGeomFilter",
+      "uuid": "9783ea2c-4cf7-46de-ab21-b40d91a48c5b",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 3,
+      "purpose": "Replicate each 18 micrometer cell onto an exact 225 cubed, 6 micrometer grid. Retain the native geometry. This nearest-neighbor mapping adds no measured detail and does not reproduce cubic interpolation or EDSR."
+    },
+    {
+      "filter": "ComputeDifferencesMapFilter",
+      "uuid": "5a0ee5b5-c135-4535-85d0-9c2058943099",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 4,
+      "purpose": "Compute absolute Float32 differences between matching cells of the mapped 18 micrometer scan and the measured 6 micrometer scan. Equal grid dimensions, spacing and origins must be established before interpreting this as spatial discrepancy."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 5,
+      "purpose": "Compute count, minimum, maximum and mean over every common-grid cell. These are intensity summaries, not porosity, permeability, or accuracy scores."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(02) Bentheimer Common Grid Comparison.d3dpipeline",
+      "step": 6,
+      "purpose": "Save a reusable checkpoint, retaining source arrays and explicitly named derived results."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the complete predecessor checkpoint; retain both native grids and all saved arrays."
+    },
+    {
+      "filter": "SetImageGeomOriginScalingFilter",
+      "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates."
+    },
+    {
+      "filter": "SetImageGeomOriginScalingFilter",
+      "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates."
+    },
+    {
+      "filter": "SetImageGeomOriginScalingFilter",
+      "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 3,
+      "purpose": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates."
+    },
+    {
+      "filter": "ComputeCoordinatesImageGeomFilter",
+      "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 4,
+      "purpose": "Create three-component Float32 X,Y,Z cell-center coordinates after geometry placement: origin + (index + 0.5) * spacing. X varies fastest."
+    },
+    {
+      "filter": "ComputeCoordinateThresholdFilter",
+      "uuid": "04986173-dcfa-4d27-85ed-85af8b947a69",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 5,
+      "purpose": "Select cells whose complete lower and upper corners lie within the inclusive [-405,405] micrometer cube. The UInt8 mask represents an example-selected 810 micrometer interior region, not a measured pore phase or a representative elementary volume."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 6,
+      "purpose": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores."
+    },
+    {
+      "filter": "ComputeCoordinatesImageGeomFilter",
+      "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 7,
+      "purpose": "Create three-component Float32 X,Y,Z cell-center coordinates after geometry placement: origin + (index + 0.5) * spacing. X varies fastest."
+    },
+    {
+      "filter": "ComputeCoordinateThresholdFilter",
+      "uuid": "04986173-dcfa-4d27-85ed-85af8b947a69",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 8,
+      "purpose": "Select cells whose complete lower and upper corners lie within the inclusive [-405,405] micrometer cube. The UInt8 mask represents an example-selected 810 micrometer interior region, not a measured pore phase or a representative elementary volume."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 9,
+      "purpose": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 10,
+      "purpose": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 11,
+      "purpose": "Copy inclusive XYZ indices 15..59 from BentheimerVLR18um into BentheimerVLR_ROI18um; this is the already declared physical ROI [-405,405] micrometers. Retain the full original geometry."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 12,
+      "purpose": "Copy inclusive XYZ indices 45..179 from BentheimerLR6um into BentheimerLR_ROI6um; this is the already declared physical ROI [-405,405] micrometers. Retain the full original geometry."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 13,
+      "purpose": "Keep only ScaledIntensity and the all-one InteriorROI support mask in each working crop. Remove copied coordinate arrays and non-cell statistics from these copies; all original full-volume outputs remain intact."
+    },
+    {
+      "filter": "PadImageGeometryFilter",
+      "uuid": "1a003f19-aa26-406c-bbef-061f508fc422",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 14,
+      "purpose": "Add six 6-micrometer cells on every side into a separate 147-cubed reference grid. Update the lower-corner origin from -405 to -441 to preserve the selected data placement. Zero-filled margin means outside the chosen ROI, not unmeasured scanner area."
+    },
+    {
+      "filter": "ComputeCoordinatesImageGeomFilter",
+      "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 15,
+      "purpose": "Compute all reference cell centers after final padding and origin placement, including the added margin. Do not pad an old coordinate array with zero and treat it as valid reference coordinates."
+    },
+    {
+      "filter": "CreateAttributeMatrixFilter",
+      "uuid": "a6a28355-ee69-4874-bcac-76ed427423ed",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 16,
+      "purpose": "Create a separate 147 by 147 by 147 destination matrix for sampled coarse values; keep native fine values in CellData without name collisions."
+    },
+    {
+      "filter": "NearestPointFuseRegularGridsFilter",
+      "uuid": "c8746bf8-fa5f-48b0-8a47-11023402e543",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 17,
+      "purpose": "Copy coarse ScaledIntensity and InteriorROI onto the fixed padded fine grid. For these aligned 18-to-6 micrometer grids, each source voxel repeats 3 times per axis. Zero source-support mask marks fill outside the source ROI; no averaging, registration or super-resolution is performed."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 18,
+      "purpose": "Summarize copied coarse intensities only where sampled InteriorROI is nonzero. Exclude the zero-filled margin; repeated samples do not add independent measurements."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 19,
+      "purpose": "Copy inclusive Z indices 0..66 from the measured fine ROI, retaining all X/Y cells, intensity and support. These are contiguous pieces of one acquisition, not separate scans requiring registration. Preserve source coordinates and micrometer units."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 20,
+      "purpose": "Copy inclusive Z indices 67..134 from the measured fine ROI, retaining all X/Y cells, intensity and support. These are contiguous pieces of one acquisition, not separate scans requiring registration. Preserve source coordinates and micrometer units."
+    },
+    {
+      "filter": "AppendImageGeometryFilter",
+      "uuid": "c62c5c89-5ea8-4948-99ca-51cbc5b54b05",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 21,
+      "purpose": "Reassemble lower then upper slab along Z with matching spacing, retaining both pieces. Append concatenates tuple blocks; it does not register scans or check whether physical origins are contiguous. These crop bounds guarantee a shared interface at Z=-3 micrometers. The new geometry uses the lower slab origin and micrometer units; output cell matrix is named Cell Data."
+    },
+    {
+      "filter": "ComputeCoordinatesImageGeomFilter",
+      "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 22,
+      "purpose": "Compute new cell centers from the final reassembled geometry. Reassembly must preserve the original ROI placement, not just its tuple count and values."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 23,
+      "purpose": "Retain the unmodified ROI intensity beside the assembled values for an explicit per-cell equality check. Copy an array, not an Image Geometry."
+    },
+    {
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 24,
+      "purpose": "Compare all assembled intensities against the same original ROI tuple positions. Every difference must be zero; this tests concatenation and order, not agreement between independent scans."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 25,
+      "purpose": "Summarize all 2,460,375 reconstruction differences. Count must match the original ROI and minimum, maximum and mean must all be zero. Retained support must also match; no default-filled data are expected."
+    },
+    {
+      "filter": "WriteVtkStructuredPointsFilter",
+      "uuid": "68a4d758-c5ff-43d3-a394-1508ad00a0d2",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 26,
+      "purpose": "Export selected cell intensity and support as binary legacy STRUCTURED_POINTS. Point dimensions are 148 cubed; cell values are 147 cubed. Coordinates retain micrometer numbers, but VTK does not store that unit."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+      "step": 27,
+      "purpose": "Save a reusable checkpoint, retaining source arrays and explicitly named derived results."
+    },
+    {
+      "filter": "ExtractPipelineToFileFilter",
+      "uuid": "27203c99-9975-4528-88cc-42b270165d79",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 0,
+      "purpose": "Recover the processing recipe embedded in the predecessor DREAM3D checkpoint beside the VTK round-trip result. This is provenance for example 03 only; it does not bundle raw data, earlier stages, binaries or GUI state. Inspect paths before replaying because outputs may be overwritten. The predecessor must exist before preflight."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 1,
+      "purpose": "Read the complete predecessor checkpoint with import policy All. Retain the padded reference for VTK comparison and the unpadded fine ROI for contouring, with all existing context arrays. An include-list would require path_import_policy=1; a nonempty list is ignored by policy 0."
+    },
+    {
+      "filter": "ReadVtkStructuredPointsFilter",
+      "uuid": "60d55662-ca7a-4be7-b0a0-ed6e785eb51b",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 2,
+      "purpose": "Read CELL_DATA only from the predecessor export. The file must exist before preflight; point counts in its header are one larger per axis than the imported cell dimensions."
+    },
+    {
+      "filter": "ComputeCoordinatesImageGeomFilter",
+      "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 3,
+      "purpose": "Reconstruct cell-center positions from the imported header geometry. Micrometers come from this example's provenance, not a unit declaration in the VTK file."
+    },
+    {
+      "filter": "ComputeDifferencesMapFilter",
+      "uuid": "5a0ee5b5-c135-4535-85d0-9c2058943099",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 4,
+      "purpose": "Compare corresponding saved reference and imported values; all components should be zero for this exact binary round trip. Geometry and mask checks remain necessary."
+    },
+    {
+      "filter": "ComputeDifferencesMapFilter",
+      "uuid": "5a0ee5b5-c135-4535-85d0-9c2058943099",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 5,
+      "purpose": "Compare corresponding saved reference and imported values; all components should be zero for this exact binary round trip. Geometry and mask checks remain necessary."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 6,
+      "purpose": "Use the imported support mask to exclude the fill margin from count and intensity statistics; zero intensity alone is not a validity test."
+    },
+    {
+      "filter": "FlyingEdges3DFilter",
+      "uuid": "c15b1af6-c43d-44ba-b180-f0130afafc8e",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 7,
+      "purpose": "Extract the 0.400025 contour from the unpadded measured fine ROI. The levels correspond to 8000.5 and 10000.5 original normalized counts, divided by 20000. Half-count positions avoid exact ties with quantized cell values. They bracket part of the low-count intensity interval between dark and bright bands; neither is a calibrated pore/solid threshold. Float32 signal preserves the fractional level. Avoid artificial closure against padding fill."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 8,
+      "purpose": "Copy the native contour vertices and triangles into an explicitly Micrometer geometry. Flying Edges currently loses the source unit tag (#1792). Coordinates remain in the source micrometer scale; this is metadata repair, not numerical rescaling. Raw gradient normals are omitted; geometric face normals are recomputed after placement correction."
+    },
+    {
+      "filter": "ApplyTransformationToGeometryFilter",
+      "uuid": "f5bbc16b-3426-4ae0-b27b-ba7862dc40fe",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 9,
+      "purpose": "Correct the current Flying Edges point-versus-cell position mismatch (#1808): add half of the 6 micrometer spacing on every axis. Native samples were placed at lower corners, while measured cell values belong at centers. This translation is version-dependent; remove it when the filter is corrected, and verify the scalar crossing at every vertex."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 10,
+      "purpose": "Remove the scratch mesh carrying incorrect unit metadata and uncorrected point positions. Retain the original calibrated image and the explicitly corrected output mesh."
+    },
+    {
+      "filter": "ComputeTriangleAreasFilter",
+      "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 11,
+      "purpose": "Compute triangle area in square micrometers after final placement. This is contour geometry, not a measured pore-surface area or a segmentation-validation result."
+    },
+    {
+      "filter": "TriangleNormalFilter",
+      "uuid": "8133d419-1919-4dbf-a5bf-1c97282ba63f",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 12,
+      "purpose": "Compute geometric unit face normals from the retained triangle winding. No grain labels, crystal orientations or crystallographic boundary interpretation are assigned."
+    },
+    {
+      "filter": "FlyingEdges3DFilter",
+      "uuid": "c15b1af6-c43d-44ba-b180-f0130afafc8e",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 13,
+      "purpose": "Extract the 0.500025 contour from the unpadded measured fine ROI. The levels correspond to 8000.5 and 10000.5 original normalized counts, divided by 20000. Half-count positions avoid exact ties with quantized cell values. They bracket part of the low-count intensity interval between dark and bright bands; neither is a calibrated pore/solid threshold. Float32 signal preserves the fractional level. Avoid artificial closure against padding fill."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 14,
+      "purpose": "Copy the native contour vertices and triangles into an explicitly Micrometer geometry. Flying Edges currently loses the source unit tag (#1792). Coordinates remain in the source micrometer scale; this is metadata repair, not numerical rescaling. Raw gradient normals are omitted; geometric face normals are recomputed after placement correction."
+    },
+    {
+      "filter": "ApplyTransformationToGeometryFilter",
+      "uuid": "f5bbc16b-3426-4ae0-b27b-ba7862dc40fe",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 15,
+      "purpose": "Correct the current Flying Edges point-versus-cell position mismatch (#1808): add half of the 6 micrometer spacing on every axis. Native samples were placed at lower corners, while measured cell values belong at centers. This translation is version-dependent; remove it when the filter is corrected, and verify the scalar crossing at every vertex."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 16,
+      "purpose": "Remove the scratch mesh carrying incorrect unit metadata and uncorrected point positions. Retain the original calibrated image and the explicitly corrected output mesh."
+    },
+    {
+      "filter": "ComputeTriangleAreasFilter",
+      "uuid": "b149addd-c0c8-4010-a264-596005eaf2a5",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 17,
+      "purpose": "Compute triangle area in square micrometers after final placement. This is contour geometry, not a measured pore-surface area or a segmentation-validation result."
+    },
+    {
+      "filter": "TriangleNormalFilter",
+      "uuid": "8133d419-1919-4dbf-a5bf-1c97282ba63f",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 18,
+      "purpose": "Compute geometric unit face normals from the retained triangle winding. No grain labels, crystal orientations or crystallographic boundary interpretation are assigned."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(04) Bentheimer VTK Interchange.d3dpipeline",
+      "step": 19,
+      "purpose": "Keep original and imported grids, difference diagnostics, coordinates and masked summaries together for review."
+    }
+  ]
+}
