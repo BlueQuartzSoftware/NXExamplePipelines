@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "scope": "Selected filters in measured Ti64 cleanup, threshold and mask-morphology examples.",
+  "filters": [
+    {
+      "filter": "ReadImageFilter",
+      "uuid": "7391288d-3d0b-492e-93c9-e128e05c9737",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the full paper-linked grayscale raster without cropping; preserve uint8 source pixels and use uncalibrated pixel coordinates."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 1,
+      "purpose": "Copy inclusive X/Y pixels 4..599 into Ti64 while retaining the full Source Image."
+    },
+    {
+      "filter": "ConvertDataFilter",
+      "uuid": "6dc586cc-59fb-4ee8-90ff-2d3587da12f5",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 2,
+      "purpose": "Copy cropped uint8 intensity to float32 so later image processing does not round intermediate values to integers."
+    },
+    {
+      "filter": "RescaleIntensityImageFilter",
+      "uuid": "30b7dbef-0d41-4feb-9e45-ed4def61eae2",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 3,
+      "purpose": "Normalize the common cropped float32 input to the 0..1 range before subsequent comparison branches."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 4,
+      "purpose": "Summarize normalized intensity over every cropped pixel without a feature index or mask."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(01) Ti64 Image Preparation.d3dpipeline",
+      "step": 5,
+      "purpose": "Save source, prepared crop, floating-point arrays, and summary as the shared checkpoint."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(02) Ti64 Smoothing Comparison.d3dpipeline",
+      "step": 0,
+      "purpose": "Load the preparation checkpoint with both image geometries, the original intensity, and the common float32 UnitIntensity baseline."
+    },
+    {
+      "filter": "MedianImageFilter",
+      "uuid": "bf4671ab-ebdf-4c4c-a4b1-0cdcaa005d9d",
+      "pipeline": "(02) Ti64 Smoothing Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Median of a 3 by 3 XY neighborhood, including repeated edge values; compare isolated-intensity suppression from the common input."
+    },
+    {
+      "filter": "DiscreteGaussianImageFilter",
+      "uuid": "2ddd8df9-a4d8-44e0-94b3-0776c1cdf096",
+      "pipeline": "(02) Ti64 Smoothing Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Discrete Gaussian with variance 1 pixel squared per XY axis; retain a separate output from the original UnitIntensity."
+    },
+    {
+      "filter": "BinaryThresholdImageFilter",
+      "uuid": "4bf09378-e159-4437-9ce2-3f4c3b5ad7ae",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 1,
+      "purpose": "Select inclusive [0.35, 1.0] brightness from UnitIntensity into uint8 0/1 BrightOriginal."
+    },
+    {
+      "filter": "BinaryThresholdImageFilter",
+      "uuid": "4bf09378-e159-4437-9ce2-3f4c3b5ad7ae",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 2,
+      "purpose": "Select inclusive [0.35, 1.0] brightness from MedianR1 into uint8 0/1 BrightMedianR1."
+    },
+    {
+      "filter": "BinaryThresholdImageFilter",
+      "uuid": "4bf09378-e159-4437-9ce2-3f4c3b5ad7ae",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 3,
+      "purpose": "Select inclusive [0.35, 1.0] brightness from GaussianV1 into uint8 0/1 BrightGaussianV1."
+    },
+    {
+      "filter": "BinaryThresholdImageFilter",
+      "uuid": "4bf09378-e159-4437-9ce2-3f4c3b5ad7ae",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 4,
+      "purpose": "Select inclusive [0.35, 1.0] brightness from GaussianV4 into uint8 0/1 BrightGaussianV4."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 5,
+      "purpose": "Summarize all 355216 cells of BrightOriginal; Summation counts selected pixels and Mean gives their fraction."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 6,
+      "purpose": "Summarize all 355216 cells of BrightMedianR1; Summation counts selected pixels and Mean gives their fraction."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 7,
+      "purpose": "Summarize all 355216 cells of BrightGaussianV1; Summation counts selected pixels and Mean gives their fraction."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 8,
+      "purpose": "Summarize all 355216 cells of BrightGaussianV4; Summation counts selected pixels and Mean gives their fraction."
+    },
+    {
+      "filter": "GradientMagnitudeImageFilter",
+      "uuid": "e9bc5ba0-a6db-4537-aff3-86d8b535327e",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 9,
+      "purpose": "Compute float32 central-difference gradient magnitude of the same GaussianV1 image, in pixel space. Flat regions contribute little weight; this is not a calibrated physical gradient."
+    },
+    {
+      "filter": "RobustAutomaticThresholdFilter",
+      "uuid": "ade392e6-f0da-4cf3-bf11-dfe69e200b49",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 10,
+      "purpose": "Select GaussianV1 >= its single gradient-weighted global cutoff into a bool mask. The filter does not save the cutoff; it is not a local adaptive threshold or a material-phase classifier."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 11,
+      "purpose": "Copy the unchanged automatic bool mask in the same parent before in-place morphology; keep opening and closing as independent branches."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 12,
+      "purpose": "Copy the unchanged automatic bool mask in the same parent before in-place morphology; keep opening and closing as independent branches."
+    },
+    {
+      "filter": "ErodeDilateMaskFilter",
+      "uuid": "cab66cd1-f64c-42b4-8f94-18f0835a967f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 13,
+      "purpose": "Opening, first pass: erode true cells beside existing false XY neighbors. Each pass uses a four-neighbor cross, not a square or disk; out-of-image neighbors are ignored."
+    },
+    {
+      "filter": "ErodeDilateMaskFilter",
+      "uuid": "cab66cd1-f64c-42b4-8f94-18f0835a967f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 14,
+      "purpose": "Opening, second pass: dilate the eroded mask by one existing XY face-neighbor layer. Each pass uses a four-neighbor cross, not a square or disk; out-of-image neighbors are ignored."
+    },
+    {
+      "filter": "ErodeDilateMaskFilter",
+      "uuid": "cab66cd1-f64c-42b4-8f94-18f0835a967f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 15,
+      "purpose": "Closing, first pass: dilate the original automatic mask by one existing XY face-neighbor layer. Each pass uses a four-neighbor cross, not a square or disk; out-of-image neighbors are ignored."
+    },
+    {
+      "filter": "ErodeDilateMaskFilter",
+      "uuid": "cab66cd1-f64c-42b4-8f94-18f0835a967f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 16,
+      "purpose": "Closing, second pass: erode the dilated mask beside existing false XY neighbors. Each pass uses a four-neighbor cross, not a square or disk; out-of-image neighbors are ignored."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 17,
+      "purpose": "Count all pixels and true pixels in RobustGaussianV1 using only Length and Summation; selected fraction is Summation/Length."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 18,
+      "purpose": "Count all pixels and true pixels in RobustGaussianV1_OpenedXY1 using only Length and Summation; selected fraction is Summation/Length."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Ti64 Threshold Sensitivity.d3dpipeline",
+      "step": 19,
+      "purpose": "Count all pixels and true pixels in RobustGaussianV1_ClosedXY1 using only Length and Summation; selected fraction is Summation/Length."
+    }
+  ]
+}
