@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(01) Ti64 Raw Pattern Inspection.d3dpipeline",
+  "markdown_file": "(01) Ti64 Raw Pattern Inspection.md",
+  "title": "Ti64 Raw Pattern Inspection",
+  "summary": "Import a measured UP1 scan crop, preserve source acquisition identity, and export two complete detector patterns for inspection.",
+  "industries": {
+    "primary": [
+      "Materials characterization"
+    ],
+    "secondary": [
+      "Microscopy software interoperability"
+    ]
+  },
+  "use_cases": [
+    "Inspect raw EBSD detector data before external indexing",
+    "Preserve scan-to-pattern identity through a crop"
+  ],
+  "keywords": [
+    "EBSD",
+    "UP1",
+    "Ti64",
+    "detector pattern",
+    "scan tuples",
+    "component shape",
+    "PyEBSDIndex"
+  ],
+  "inputs": [
+    {
+      "path": "Data/PyEBSDIndex_Ti64/Ti64_930C4hr_Scan4_ROI32.up1",
+      "role": "Measured-derived 32 x 32 acquisition crop; every retained detector byte is unchanged."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/PyEBSDIndex_Ti64/Inspection/Ti64_RawPatternInspection.dream3d",
+      "role": "Full scan crop, selected patterns, geometry and identity arrays."
+    },
+    {
+      "path": "Data/Output/PyEBSDIndex_Ti64/Inspection/Patterns.bin",
+      "role": "Two headerless 116 x 116 uint8 detector patterns in CSV row order."
+    },
+    {
+      "path": "Data/Output/PyEBSDIndex_Ti64/Inspection/SelectedPatternManifest.csv",
+      "role": "Local and original acquisition indices for the selected patterns."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "measured-derived-author-notebook",
+    "asset_keys": [
+      "Ti64_930C4hr_Scan4_ROI32.up1"
+    ],
+    "source_url": "https://zenodo.org/records/8400425/files/PyEBSDIndexDemo.zip?download=1",
+    "hash_scope": "The SHA512 identifies the derived input, not the full 20.4 GB archive or complete 3.36 GB member.",
+    "archive_provenance_file": "DataSources.json",
+    "paper_doi": "10.1107/S1600576723010221",
+    "reference_visual": "Author notebook cells 13-14 illustrate direct detector-pattern inspection; this example uses different explicitly named scan locations.",
+    "target_traits": {
+      "scan_dimensions": [
+        32,
+        32,
+        1
+      ],
+      "pattern_shape": [
+        116,
+        116
+      ],
+      "pixel_type": "uint8",
+      "scan_spacing_micrometers": [
+        0.25,
+        0.25
+      ]
+    },
+    "known_differences": [
+      "First 32 x 32 scan crop instead of the full 500 x 500 map.",
+      "Two adjacent raw patterns rather than the notebook region beginning at (300,300).",
+      "No NLPAR or indexing."
+    ],
+    "prepared_input_sha512": "6d30640bb9d9a6b15949d61a0d518d4b288af9ba9fac15a64e0b61849334b7cbe8fefd60d03c5c50527624945402570922e0ba1a1aa8d8cdf48aa48e1eb521df"
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Represent the known 32x32 square acquisition grid in micrometers. Cell centers are (column*0.25,row*0.25,0) relative to the first retained scan point. Z spacing is a 2D placeholder; no absolute specimen origin is claimed.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "geometry_type_index": 0,
+        "length_unit_index": 6,
+        "warnings_as_errors": false,
+        "array_handling_index": 1,
+        "dimensions": [
+          32,
+          32,
+          1
+        ],
+        "origin": [
+          -0.125,
+          -0.125,
+          -0.5
+        ],
+        "spacing": [
+          0.25,
+          0.25,
+          1.0
+        ],
+        "output_geometry_path": "Scan32",
+        "cell_attribute_matrix_name": "Cell Data",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_attribute_matrix_name": "Edge Data",
+        "face_attribute_matrix_name": "Face Data",
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "",
+        "edge_list_path": "",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": ""
+      },
+      "input_paths": [],
+      "output_paths": [
+        "Scan32"
+      ]
+    },
+    {
+      "index": 1,
+      "filter": "ReadEbsdPatternFileFilter",
+      "uuid": "cd975a45-53de-4ace-ac16-d99638a44d6a",
+      "role": "Read the measured-derived version 3 UP1 crop without changing detector intensities. The geometry supplies 1024 scan tuples; each tuple has 116 x 116 uint8 detector components. The version 1 row/column override is disabled.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "input_file": "Data/PyEBSDIndex_Ti64/Ti64_930C4hr_Scan4_ROI32.up1",
+        "set_scan_dimensions": false,
+        "number_of_rows": 1,
+        "number_of_columns": 1,
+        "output_array_path": "Scan32/Cell Data/Patterns"
+      },
+      "input_paths": [
+        "Data/PyEBSDIndex_Ti64/Ti64_930C4hr_Scan4_ROI32.up1"
+      ],
+      "output_paths": [
+        "Scan32/Cell Data/Patterns"
+      ]
+    },
+    {
+      "index": 2,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "Record local scan identity 0..1023 before cropping. X varies fastest: LocalScanIndex=row*32+column. This is not an index into detector pixels.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "output_array_path": "Scan32/Cell Data/LocalScanIndex",
+        "numeric_type_index": 5,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "component_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "init_type_index": 1,
+        "init_value": "0",
+        "starting_fill_value": "0",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "InitializeDataFilter SeedValue",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      },
+      "input_paths": [
+        "Scan32/Cell Data"
+      ],
+      "output_paths": [
+        "Scan32/Cell Data/LocalScanIndex"
+      ]
+    },
+    {
+      "index": 3,
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "role": "Recover identity in the original 500-column acquisition using row=floor(local/32) and column=local-row*32. This formula assumes the documented first 32 rows / first 32 columns crop.",
+      "parameters_version": 2,
+      "key_parameters": {
+        "calculated_array_path": "Scan32/Cell Data/SourceScanIndex",
+        "calculator_parameter": {
+          "equation": "floor(LocalScanIndex/32)*500+LocalScanIndex-floor(LocalScanIndex/32)*32",
+          "selected_group": "Scan32/Cell Data",
+          "units": 0
+        },
+        "scalar_type_index": 5
+      },
+      "input_paths": [
+        "Scan32/Cell Data/LocalScanIndex"
+      ],
+      "output_paths": [
+        "Scan32/Cell Data/SourceScanIndex"
+      ]
+    },
+    {
+      "index": 4,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Copy adjacent acquisition cells (15,15) and (16,15), inclusive, retaining every complete detector pattern and both index arrays. Keep Scan32 intact. This is a scan crop, not a crop of the 116 x 116 detector image or a phase-based selection.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          15,
+          15,
+          0
+        ],
+        "max_voxel": [
+          16,
+          15,
+          0
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "Scan32",
+        "renumber_features": false,
+        "feature_ids_path": "",
+        "cell_feature_attribute_matrix_path": "",
+        "output_image_geometry_path": "Selected Patterns"
+      },
+      "input_paths": [
+        "Scan32"
+      ],
+      "output_paths": [
+        "Selected Patterns"
+      ]
+    },
+    {
+      "index": 5,
+      "filter": "WriteBinaryDataFilter",
+      "uuid": "06912cbc-9745-4098-8d44-c674974d2ca8",
+      "role": "Write Patterns.bin with two unchanged uint8 detector patterns (26,912 bytes, pattern then row then column). This headerless stream is not a UP1 file; use the CSV and DREAM3D checkpoint for identity and shape.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "endian_index": 0,
+        "output_path": "Data/Output/PyEBSDIndex_Ti64/Inspection",
+        "file_extension": ".bin",
+        "input_data_array_paths": [
+          "Selected Patterns/Cell Data/Patterns"
+        ]
+      },
+      "input_paths": [
+        "Selected Patterns/Cell Data/Patterns"
+      ],
+      "output_paths": [
+        "Data/Output/PyEBSDIndex_Ti64/Inspection/Patterns.bin"
+      ]
+    },
+    {
+      "index": 6,
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "role": "Keep both rows, including output tuple 0. Expected local indices 495,496 map to original scan indices 7515,7516. Recover original column=index%500 and row=index//500; these are acquisition indices, not detector coordinates.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "output_style_index": 1,
+        "output_path": "Data/Output/PyEBSDIndex_Ti64/Inspection/SelectedPatternManifest.csv",
+        "output_dir": "",
+        "file_extension": ".csv",
+        "max_val_per_line": 1,
+        "delimiter_index": 2,
+        "header_option_index": 1,
+        "input_data_array_paths": [
+          "Selected Patterns/Cell Data/LocalScanIndex",
+          "Selected Patterns/Cell Data/SourceScanIndex"
+        ]
+      },
+      "input_paths": [
+        "Selected Patterns/Cell Data/LocalScanIndex",
+        "Selected Patterns/Cell Data/SourceScanIndex"
+      ],
+      "output_paths": [
+        "Data/Output/PyEBSDIndex_Ti64/Inspection/SelectedPatternManifest.csv"
+      ]
+    },
+    {
+      "index": 7,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save all 1024 original cropped-scan patterns, the selected two-pattern copy, relative acquisition geometry and both identity arrays. No orientations, indexing quality, phase labels or strain measures are calculated.",
+      "parameters_version": 2,
+      "key_parameters": {
+        "export_file_path": "Data/Output/PyEBSDIndex_Ti64/Inspection/Ti64_RawPatternInspection.dream3d",
+        "write_xdmf_file": false,
+        "use_compression": true,
+        "compression_level": 5
+      },
+      "input_paths": [
+        "Scan32",
+        "Selected Patterns"
+      ],
+      "output_paths": [
+        "Data/Output/PyEBSDIndex_Ti64/Inspection/Ti64_RawPatternInspection.dream3d"
+      ]
+    }
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "pyebsdindex-ti64-python-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Inspect raw EBSD detector patterns",
+      "Export patterns without losing scan identity"
+    ],
+    "questions_to_ask": [
+      "What are the scan dimensions, step size and source crop offsets?",
+      "Does the task need raw intensity inspection or crystallographic indexing?"
+    ],
+    "constraints": [
+      "Never identify phases or orientations from this pipeline output.",
+      "The absolute specimen origin and detector calibration are not established.",
+      "Do not describe the source crop as a full-archive checksum verification."
+    ],
+    "related_pipelines": []
+  },
+  "citations": [
+    {
+      "title": "PyEBSDIndex Demo",
+      "authors": [
+        "David Rowenhorst",
+        "Patrick Callahan"
+      ],
+      "year": 2023,
+      "url": "https://zenodo.org/records/8400425",
+      "doi": "10.5281/zenodo.8400425",
+      "scope": "pipeline_workflow",
+      "dataset": {
+        "availability": "The public archive contains the original UP1 file and author notebook. This example uses the explicitly documented measured-derived 32 x 32 scan crop, prepared separately.",
+        "url": "https://zenodo.org/records/8400425",
+        "doi": "10.5281/zenodo.8400425",
+        "license": "CC BY 4.0; see SourceDataLicense.md.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Author-notebook-based import/crop/inspection only. The full paper was unavailable. No NLPAR, Radon transform, pattern-center optimization, indexing, orientations, phase discrimination or paper accuracy/speed result is reproduced."
+      },
+      "role": "Complete author notebook and measured source file define the acquisition context; this example demonstrates only the input inspection stage.",
+      "contributors": [
+        "Håkon Ånes"
+      ],
+      "notebook_member": "PyEBSDIndexDemo/Ti64 Demo/Ti64_index.ipynb"
+    }
+  ],
+  "last_verified": {
+    "date": "2026-10-14",
+    "native": "Windows in-memory Release preflight and execution passed through CTest.",
+    "independent_outputs": "28 checks passed, including exact import of all 13778944 detector values and source identity.",
+    "not_verified": [
+      "Scientific interpretation approval",
+      "Generated Python execution",
+      "OOC execution",
+      "Native GUI use",
+      "Installer inclusion"
+    ]
+  },
+  "related_paper": {
+    "title": "Fast Radon transforms for high-precision EBSD orientation determination using PyEBSDIndex",
+    "authors": [
+      "David J. Rowenhorst",
+      "Patrick G. Callahan",
+      "Håkon W. Ånes"
+    ],
+    "year": 2024,
+    "doi": "10.1107/S1600576723010221",
+    "url": "https://doi.org/10.1107/S1600576723010221",
+    "scope": "deferred_future_extension",
+    "role": "Deferred extension reference only; metadata and abstract checked, full text unavailable and no paper algorithms implemented."
+  }
+}

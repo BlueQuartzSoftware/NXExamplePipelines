@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "dataset": {
+    "availability": "The public archive contains the original UP1 file and author notebook. This example uses the explicitly documented measured-derived 32 x 32 scan crop, prepared separately.",
+    "url": "https://zenodo.org/records/8400425",
+    "doi": "10.5281/zenodo.8400425",
+    "license": "CC BY 4.0; see SourceDataLicense.md.",
+    "included": false,
+    "reproduction_status": "illustrative",
+    "reproduction_notes": "Author-notebook-based import/crop/inspection only. The full paper was unavailable. No NLPAR, Radon transform, pattern-center optimization, indexing, orientations, phase discrimination or paper accuracy/speed result is reproduced."
+  },
+  "source_member": "PyEBSDIndexDemo/Ti64 Demo/Ti64_930C4hr_Scan4_cr.up1",
+  "notebook_member": "PyEBSDIndexDemo/Ti64 Demo/Ti64_index.ipynb",
+  "notebook_sha256": "8413bfc3ba4dc6f15e295981103d11e6ff586424e1d93ab5da8e4c80ea63cce0",
+  "archive_url": "https://zenodo.org/records/8400425/files/PyEBSDIndexDemo.zip?download=1",
+  "archive_bytes": 20363949747,
+  "publisher_archive_md5": "843cd002373d63f5873d074832c956c1",
+  "full_archive_md5_verified": false,
+  "full_member_crc_verified": false,
+  "archive_verification_note": "Local intake used checked bounded byte ranges and cross-checked the MDF mirror. Full archive/member checksums were not verified.",
+  "files": [
+    {
+      "filename": "Ti64_930C4hr_Scan4_ROI32.up1",
+      "runtime_path": "Data/PyEBSDIndex_Ti64/Ti64_930C4hr_Scan4_ROI32.up1",
+      "bytes": 13778986,
+      "sha256": "d2b867000c219c7e95e55d23e289a41ef2b31ac0300b1f45223320d1b87190af",
+      "sha512": "6d30640bb9d9a6b15949d61a0d518d4b288af9ba9fac15a64e0b61849334b7cbe8fefd60d03c5c50527624945402570922e0ba1a1aa8d8cdf48aa48e1eb521df",
+      "type": "measured-derived",
+      "selection": "Original scan columns 0..31 and rows 0..31, in source row-major order; each complete 116 x 116 uint8 detector pattern retained unchanged.",
+      "transformation": "Copy original 42-byte version 3 header and change only row/column counts to 32. Preserve every selected detector byte, header flags and scan steps. No contrast processing, noise injection, interpolation, indexing or frame rotation.",
+      "original_scan_dimensions_xy": [
+        500,
+        500
+      ],
+      "scan_dimensions_xy": [
+        32,
+        32
+      ],
+      "detector_dimensions_xy": [
+        116,
+        116
+      ],
+      "pixel_type": "uint8",
+      "scan_step_micrometers": [
+        0.25,
+        0.25
+      ],
+      "included": false
+    }
+  ],
+  "package_status": "Not included in normal DREAM3D-NX packages. Dataset/pipeline approval and final packaging are pending.",
+  "paper_expansion": {
+    "doi": "10.1107/S1600576723010221",
+    "status": "Deferred until full-text access and method/capability review."
+  },
+  "title": "PyEBSDIndex Demo",
+  "authors": [
+    "David Rowenhorst",
+    "Patrick Callahan"
+  ],
+  "contributors": [
+    "Håkon Ånes"
+  ],
+  "publication_date": "2023-10-02",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_verified_from": "https://zenodo.org/api/records/8400425",
+  "last_metadata_check": "2026-10-14"
+}

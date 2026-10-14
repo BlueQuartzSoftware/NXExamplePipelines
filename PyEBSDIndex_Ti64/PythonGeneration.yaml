@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "pyebsdindex-ti64-python-v1",
+  "title": "Ti64 raw pattern inspection to Python generation",
+  "source_authority": ".d3dpipeline",
+  "converter_api": "simplnx_utilities.generate_python_pipeline",
+  "required_modules": [
+    "simplnx",
+    "orientationanalysis",
+    "imageprocessing",
+    "simplnx_utilities"
+  ],
+  "working_directory": "A writable folder containing Data/PyEBSDIndex_Ti64 and Data/Output.",
+  "output_lifetime": "temporary",
+  "verification_status": "Not verified: generated Python execution is separate from native pipeline validation.",
+  "failure_behavior": "Report a missing module, load error, generation error, or execution error. Do not silently substitute handwritten Python.",
+  "regeneration_rule": "Regenerate temporary Python from the authoritative .d3dpipeline after any filter, argument, comment, or path change.",
+  "path_rules": {
+    "pipeline_reference_base": "pipeline_suite_root",
+    "runtime_data_base": "chosen_cli_working_directory",
+    "input_paths": "Data/PyEBSDIndex_Ti64/Ti64_930C4hr_Scan4_ROI32.up1",
+    "output_paths": "Preserve Data/Output/PyEBSDIndex_Ti64/Inspection paths."
+  },
+  "generation": {
+    "language": "Python",
+    "steps": [
+      "Use the Python environment supplied with the matching DREAM3D-NX application.",
+      "Import simplnx, orientationanalysis, imageprocessing, and simplnx_utilities before loading the pipeline. The current converter imports imageprocessing even when these pipelines use no ImageProcessing filters.",
+      "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
+      "Call simplnx_utilities.generate_python_pipeline(pipeline).",
+      "Compile the returned program and write it to a temporary .py file.",
+      "Generate and execute the single pipeline from the chosen writable working folder containing the prepared UP1 crop. Check all declared outputs and discard temporary Python after validation."
+    ],
+    "reference_code": [
+      "import simplnx as nx",
+      "import orientationanalysis",
+      "import imageprocessing",
+      "import simplnx_utilities",
+      "pipeline = nx.Pipeline.from_file(pipeline_path)",
+      "code = simplnx_utilities.generate_python_pipeline(pipeline)",
+      "compile(code, str(pipeline_path), 'exec')"
+    ]
+  },
+  "validation": {
+    "syntax": "Compile the generated text with Python compile().",
+    "structure": "Match generated filter calls and order to enabled pipeline steps.",
+    "paths": "Check every relative input and output path against the source pipeline.",
+    "execution": "Verify all 1024 imported patterns, source indices 7515/7516, two complete 116 x 116 uint8 patterns, the 26912-byte Patterns.bin, and both manifest rows. Generated Python execution is not verified.",
+    "storage": "Validate OOC separately before claiming OOC support."
+  },
+  "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified.",
+  "pipeline_files": [
+    "(01) Ti64 Raw Pattern Inspection.d3dpipeline"
+  ],
+  "execution_order": [
+    "(01) Ti64 Raw Pattern Inspection.d3dpipeline"
+  ]
+}
