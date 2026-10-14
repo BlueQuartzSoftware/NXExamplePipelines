@@ -34,5 +34,15 @@
     }
   ],
   "catalogue_discrepancy": "The catalogue/tutorial state all grains have at least 27 voxels. The actual download contains grain 1049 with 23 voxels touching a crop face. The example preserves and flags it; historical cause is not established by the file.",
-  "packaging_status": "Not added to normal data installation. Track the original 567,693,056-byte file for later dataset/pipeline approval; a lossless smaller runtime derivative is a separate packaging decision."
+  "packaging_status": "Not added to normal data installation. Track the original 567,693,056-byte file for later dataset/pipeline approval; a lossless smaller runtime derivative is a separate packaging decision.",
+  "onscale_dependents": [
+    {
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "input_type": "Predecessor output; no additional source dataset."
+    },
+    {
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "input_type": "Predecessor output; no additional source dataset."
+    }
+  ]
 }

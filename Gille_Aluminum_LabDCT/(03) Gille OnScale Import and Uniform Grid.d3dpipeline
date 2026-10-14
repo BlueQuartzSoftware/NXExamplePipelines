@@ -1,0 +1,124 @@
+{
+  "isDisabled": false,
+  "name": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+  "pinnedParams": [],
+  "workflowParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "input_file": {
+          "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl",
+          "version": 1
+        },
+        "fallback_origin": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "fallback_spacing": {
+          "value": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": 1
+        },
+        "output_rect_grid_geometry_path": {
+          "value": "ImportedOnScale_m",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "feature_ids_array_name": {
+          "value": "GrainId",
+          "version": 1
+        },
+        "phase_attribute_matrix_name": {
+          "value": "Material Data",
+          "version": 1
+        },
+        "material_names_array_name": {
+          "value": "Material Names",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the table written by stage 02. All three axes are present, so fallback settings are unused. The reader assigns meters and stores the name for positive material ID k at row k-1; the cell IDs themselves remain unchanged.",
+      "filter": {
+        "name": "nx::core::ReadOnScaleTableFileFilter",
+        "uuid": "232dc909-d77f-4e62-8fd9-1ff0442b5709"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "rectilinear_grid_path": {
+          "value": "ImportedOnScale_m",
+          "version": 1
+        },
+        "input_data_array_paths": {
+          "value": [
+            "ImportedOnScale_m/Cell Data/GrainId"
+          ],
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            24,
+            24,
+            24
+          ],
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "RecoveredImage_m",
+          "version": 1
+        },
+        "image_geom_cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Recover an equivalent uniform image from the imported uniformly spaced rectilinear bounds. Keeping 24x24x24 tests the representation change without intentional coarsening. This is not evidence about nonuniform-grid or lower-resolution label accuracy.",
+      "filter": {
+        "name": "nx::core::ResampleRectGridToImageGeomFilter",
+        "uuid": "28ed3258-41b2-45a0-8f37-6574264650f9"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": {
+          "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d",
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save the imported rectilinear bounds, material-name table, and uniform image for comparison with the stage 02 export source.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1
+}

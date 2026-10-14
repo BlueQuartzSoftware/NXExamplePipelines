@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "gille-aluminum-labdct-python-generation-v1",
-  "title": "Gille aluminum LabDCT preparation to Python generation",
+  "title": "Gille LabDCT preparation and OnScale interchange to Python generation",
   "source_authority": ".d3dpipeline",
   "converter_api": "simplnx_utilities.generate_python_pipeline",
   "required_modules": [
@@ -18,7 +18,7 @@
   "path_rules": {
     "pipeline_reference_base": "pipeline_suite_root",
     "runtime_data_base": "chosen_cli_working_directory",
-    "input_paths": "Retain the original public HDF5 beneath Data/Gille_Aluminum_LabDCT_Examples.",
+    "input_paths": "Keep the raw HDF5 under Data/Gille_Aluminum_LabDCT_Examples. Keep generated predecessor DREAM3D and table files under Data/Output/Gille_Aluminum_LabDCT_Examples.",
     "output_paths": "Retain Data/Output/Gille_Aluminum_LabDCT_Examples outputs."
   },
   "generation": {
@@ -29,7 +29,7 @@
       "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
       "Call simplnx_utilities.generate_python_pipeline(pipeline).",
       "Compile the returned program and write it to a temporary .py file.",
-      "Generate and execute the single authoritative pipeline with the original public HDF5 staged. Validate source arrays, orientation/color conversions, units, counts, crop flags and grain CSV; discard temporary Python after validation."
+      "Generate and execute stages 01, 02, and 03 in order. Each stage needs its predecessor output before preflight. Check the original preparation and both OnScale transfers; discard temporary Python after validation."
     ],
     "reference_code": [
       "import simplnx as nx",
@@ -45,14 +45,19 @@
     "syntax": "Compile the generated text with Python compile().",
     "structure": "Match generated filter calls and order to enabled pipeline steps.",
     "paths": "Check every relative input and output path against the source pipeline.",
-    "execution": "Check all1666 original grain IDs,1650000voxels,931boundary grains,grain 1049with 23 voxels,mm units,source fields and native orientation/color/quality/size outputs. Generated Python is NOT VERIFIED. Verify both 1.65M-row exports: FFT radians-to-degree conversion/rounding and one-based X-fastest voxel IDs; SPPARKS Values-only header/site-state contract. External solvers are not validated.",
+    "execution": "Check all1666 original grain IDs,1650000voxels,931boundary grains,grain 1049with 23 voxels,mm units,source fields and native orientation/color/quality/size outputs. Generated Python is NOT VERIFIED. Verify both 1.65M-row exports: FFT radians-to-degree conversion/rounding and one-based X-fastest voxel IDs; SPPARKS Values-only header/site-state contract. External solvers are not validated. For OnScale stages, verify 13824 original ROI labels,37 observed IDs,935 material-name slots with id-1 lookup,meter bounds and same-grid image recovery. The compact ROI must not retain the full-source Grain Data table.",
     "storage": "Validate OOC separately before claiming OOC support."
   },
   "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified.",
   "pipeline_files": [
-    "(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
+    "(01) Gille Aluminum LabDCT Preparation.d3dpipeline",
+    "(02) Gille OnScale Export.d3dpipeline",
+    "(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
   ],
   "execution_order": [
-    "(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
-  ]
+    "(01) Gille Aluminum LabDCT Preparation.d3dpipeline",
+    "(02) Gille OnScale Export.d3dpipeline",
+    "(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
+  ],
+  "onscale_contract": "Run 02 after preparation. Run 03 only after the table exists, including for preflight. Preserve original grain IDs, local meter geometry, reader name row = id - 1 and same grid dimensions. Generated Python is unverified."
 }

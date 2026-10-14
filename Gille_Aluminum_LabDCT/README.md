@@ -1,8 +1,14 @@
 # Gille aluminium LabDCT examples
 
-Input datasets and generated results are stored separately. Keep the documented `Data/...` paths under a writable working folder; the pipeline file can remain here. Existing validation notes describe the original simplnx runs. This repository copy does not add a test harness or establish additional scientific validation.
+Keep input datasets and generated results outside this repository, under the documented `Data/...` paths in a writable working folder. The pipeline files can remain here.
 
-The combined [LabDCT Preparation](%2801%29%20Gille%20Aluminum%20LabDCT%20Preparation.md) pipeline imports a public measured AA6016 T4 grain-map crop, handles orientation conventions, and reports observed grain sizes with crop-boundary flags. It is preparation for further analysis, not a reproduction of the associated deformation study.
+These examples use the same public measured AA6016 T4 grain-map crop. Preparation preserves its orientation conventions and grain identities; the two additional OnScale stages demonstrate file and grid conversion. They do not reproduce the associated paper's deformation study.
+
+| Run order | Purpose and dependency |
+| --- | --- |
+| [01 LabDCT Preparation](%2801%29%20Gille%20Aluminum%20LabDCT%20Preparation.md) | Read the original HDF5, prepare orientations and observed grain statistics, and write native, FFT and SPPARKS outputs. |
+| [02 OnScale Export](%2802%29%20Gille%20OnScale%20Export.md) | Read the stage-01 checkpoint, preserve a measured 24³ ROI and export its unchanged grain labels in local metre coordinates. |
+| [03 OnScale Import and Uniform Grid](%2803%29%20Gille%20OnScale%20Import%20and%20Uniform%20Grid.md) | Read the stage-02 table into a Rectilinear Grid and recover an equivalent uniform Image Geometry. |
 
 ## Setup and run
 
@@ -13,10 +19,16 @@ The combined [LabDCT Preparation](%2801%29%20Gille%20Aluminum%20LabDCT%20Prepara
 ```text
 nxrunner --preflight "<pipeline-folder>/(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
 nxrunner --execute "<pipeline-folder>/(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
+nxrunner --preflight "<pipeline-folder>/(02) Gille OnScale Export.d3dpipeline"
+nxrunner --execute "<pipeline-folder>/(02) Gille OnScale Export.d3dpipeline"
+nxrunner --preflight "<pipeline-folder>/(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
+nxrunner --execute "<pipeline-folder>/(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
 ```
 
-For GUI use, set absolute file paths if relative `Data/...` paths do not resolve. The 14-step pipeline writes `GilleAluminum.dream3d`, `GilleAluminum_Grains.csv`, `GilleAluminum_FFT.txt` and `GilleAluminum_SPPARKS.txt`. Read the companion before interpreting colour keys, millimetre units, crop-boundary sizes, source preprocessing or the two distinct export contracts. The text files are microstructure data, not complete or validated solver setups.
+Execute each predecessor before preflighting its successor. In particular, stage 03 must read the exported table during preflight; this dependency is why export and import are separate pipelines. Stages 02 and 03 use SimplnxCore; stage 01 also needs OrientationAnalysis.
 
-The `.d3dpipeline` is executable authority. YAML records constraints and verified reference values; `PythonGeneration.yaml` describes temporary generation. Native Windows in-memory execution and independent numeric checks are verified. GUI, OOC, generated Python and scientific interpretation remain unverified.
+For GUI use, set absolute file paths if relative `Data/...` paths do not resolve. Stage 01 writes `GilleAluminum.dream3d`, `GilleAluminum_Grains.csv`, `GilleAluminum_FFT.txt` and `GilleAluminum_SPPARKS.txt` under `Data/Output/Gille_Aluminum_LabDCT_Examples/`. Stage 02 writes `OnScale/Export/GilleROI24.flxtbl` and `GilleROI24_Export.dream3d` in that export directory. Stage 03 writes `OnScale/Import/GilleROI24_RoundTrip.dream3d`.
 
-Raw data is not installed by this category. The registered test accepts the original file through the optional `SIMPLNX_GILLE_LABDCT_EXAMPLE_FILE` CMake cache setting or the runtime `Data/Gille_Aluminum_LabDCT_Examples/` location. It reports a skip when neither is available, and rejects a configured missing file or checksum mismatch.
+Read the companions before interpreting orientation colours, crop-boundary sizes, coordinate units or material-name indexing. The OnScale cube contains 37 observed grain IDs despite its 935 name slots; its names do not describe 935 physical phases. Text exports require additional solver setup, and this collection does not establish OnScale or Avizo runtime compatibility.
+
+The `.d3dpipeline` is executable authority. YAML records constraints and reference checks; `PythonGeneration.yaml` describes temporary generation. GUI, OOC and generated Python remain unverified. The original data are not included here or installed by this collection. Preserve the [source attribution and CC BY 4.0 terms](SourceDataLicense.md) with derived results.

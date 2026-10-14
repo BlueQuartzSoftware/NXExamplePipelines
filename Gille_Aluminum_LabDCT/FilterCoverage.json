@@ -100,6 +100,77 @@
       "pipeline": "(01) Gille Aluminum LabDCT Preparation.d3dpipeline",
       "step": 13,
       "purpose": "Save the unchanged reconstruction labels and scalar fields, explicit orientation/color conversions, source phase metadata and grain preparation table. No segmentation, small-grain removal, Neper meshing, DIC or CP-FE simulation is performed. Preserve the native arrays beside the two independent simulation-interchange text products."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the existing measured LabDCT preparation checkpoint. Preserve grain identities and millimeter geometry; this stage does not reconstruct or segment grains."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 1,
+      "purpose": "Copy the inclusive central 24x24x24 region with all its cell arrays. Retain original GrainId values and measured millimeter placement. This bounded region is for interchange checks, not a representative-volume claim."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 2,
+      "purpose": "Create a separate local ROI in meters: the source 0.004 mm cell size becomes 4e-6 m. Local origin zero deliberately removes the global placement, retained in MeasuredROI_mm. Equal dimensions avoid the OnScale writer axis-reorder path."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 3,
+      "purpose": "Copy every grain label without interpolation or renumbering into the meter geometry. Coordinates change units and origin; the grain-label array does not change."
+    },
+    {
+      "filter": "WriteOnScaleTableFileFilter",
+      "uuid": "494a4c6d-01c9-4f55-a0d4-32ee6e67c329",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 4,
+      "purpose": "Export grid bounds in meters and original grain IDs. The ROI has 37 observed grain IDs with gaps up to 935. Names Phase_<id> are generated format labels for these grains, not 935 observed grains or physical phases. This file has no constitutive model or orientation-to-material-axis assignment."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 5,
+      "purpose": "Remove the temporary full input and the inherited Grain Data table after export. Its sizes and boundary flags describe the full predecessor, not this ROI. Retain cropped cell arrays, phase metadata, measured millimeter placement, and the local meter grid. The predecessor file is unchanged."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "step": 6,
+      "purpose": "Save the measured ROI and the meter-grid export source for coordinate, unit and label checks."
+    },
+    {
+      "filter": "ReadOnScaleTableFileFilter",
+      "uuid": "232dc909-d77f-4e62-8fd9-1ff0442b5709",
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the table written by stage 02. All three axes are present, so fallback settings are unused. The reader assigns meters and stores the name for positive material ID k at row k-1; the cell IDs themselves remain unchanged."
+    },
+    {
+      "filter": "ResampleRectGridToImageGeomFilter",
+      "uuid": "28ed3258-41b2-45a0-8f37-6574264650f9",
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "step": 1,
+      "purpose": "Recover an equivalent uniform image from the imported uniformly spaced rectilinear bounds. Keeping 24x24x24 tests the representation change without intentional coarsening. This is not evidence about nonuniform-grid or lower-resolution label accuracy."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "step": 2,
+      "purpose": "Save the imported rectilinear bounds, material-name table, and uniform image for comparison with the stage 02 export source."
     }
-  ]
+  ],
+  "scope": "All steps of the measured preparation and two staged OnScale interchange examples."
 }
