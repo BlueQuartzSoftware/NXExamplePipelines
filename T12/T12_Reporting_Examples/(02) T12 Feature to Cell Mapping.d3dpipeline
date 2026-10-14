@@ -1,0 +1,375 @@
+{
+  "isDisabled": false,
+  "name": "(02) T12 Feature to Cell Mapping.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_data_object": {
+          "value": {
+            "data_paths": [],
+            "file_path": "Data/Output/T12_Reporting_Examples/Derived/T12_ReportingFields.dream3d",
+            "path_import_policy": 0
+          },
+          "version": 2
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the complete saved checkpoint; preserve its original T12 labels and arrays.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_feature_array_paths": {
+          "value": [
+            "T12/Cell Feature Data/GrainOrientationSpread",
+            "T12/Cell Feature Data/GOSZScore",
+            "T12/Cell Feature Data/ReportableFeatures"
+          ],
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "T12/Cell Data/FeatureIds",
+          "version": 1
+        },
+        "created_array_suffix": {
+          "value": "_Cell",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Broadcast three grain values through unchanged FeatureIds; feature ID 0 maps to row 0.",
+      "filter": {
+        "name": "nx::core::CopyFeatureArrayToElementArrayFilter",
+        "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "T12/Cell Data/GrainOrientationSpread_Cell",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "T12/CellWeightedGOSSummary",
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "T12/Cell Data/ReportableFeatures_Cell",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "Cell Data/FeatureIds",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "FeatureHasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "Reduced Feature Ids Indices",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "Length",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": true,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "Median",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "Mode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": true,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "StandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "Summation",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "Standardized",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "NumUniqueValues",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Each accepted cell contributes its grain GOS once. Compare this pixel-weighted mean with the equal-grain mean saved in T12/ReportingReferenceSummary for the same eligible grains.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "T12",
+          "version": 1
+        },
+        "feature_ids_array_path": {
+          "value": "T12/Cell Data/FeatureIds",
+          "version": 1
+        },
+        "output_edge_geometry_path": {
+          "value": "T12BoundaryEdges_Raw",
+          "version": 1
+        },
+        "z_value_choice_index": {
+          "value": 1,
+          "version": 1
+        },
+        "custom_z_value": {
+          "value": 0.0,
+          "version": 1
+        },
+        "extract_virtual_sample_edges": {
+          "value": false,
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Trace shared pixel faces where original FeatureIds differ, including grain/background interfaces. Omit the artificial image perimeter. Place edges on the single-slice top Z face for overlay, not as an extra measured section.",
+      "filter": {
+        "name": "nx::core::ExtractFeatureBoundaries2DFilter",
+        "uuid": "e7d2f9b8-4a3c-5d1e-8f6a-9b0c2d3e4f5a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 3,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "T12BoundaryEdges",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": true,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "T12BoundaryEdges_Raw/Shared Vertex List",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "T12BoundaryEdges_Raw/Shared Edge List",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the generated vertices and edges into an explicit Micrometer geometry without rescaling. Boundary extraction currently defaults unit metadata instead of retaining the source image unit.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "T12BoundaryEdges_Raw"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove only the temporary boundary geometry. Keep the original T12 image, labels, feature values, copied cell fields and summaries.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "export_file_path": {
+          "value": "Data/Output/T12_Reporting_Examples/Mapping/T12_FeatureMaps.dream3d",
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save the complete data structure with compression and without an XDMF sidecar.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}
