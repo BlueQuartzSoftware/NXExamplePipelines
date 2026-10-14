@@ -165,11 +165,25 @@
       "purpose": "Recover an equivalent uniform image from the imported uniformly spaced rectilinear bounds. Keeping 24x24x24 tests the representation change without intentional coarsening. This is not evidence about nonuniform-grid or lower-resolution label accuracy."
     },
     {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "step": 2,
+      "purpose": "Restore the known PhaseId 1 as a scalar Int32 cell array, inheriting the recovered grid dimensions. Every original measured ROI cell is phase 1. This restores source phase identity lost by the label-only table; a multiphase or unindexed input requires its actual phase map, not a constant."
+    },
+    {
+      "filter": "CreateEnsembleInfoFilter",
+      "uuid": "8ce3d70c-49fe-4812-a1eb-7ce4c962a59d",
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "step": 3,
+      "purpose": "Restore Aluminum and cubic-high symmetry at ensemble row 1, with reserved row 0 created by the filter. Primary is the declared NX classification for the one indexed aluminum phase, not a new measurement. The 935 imported material-name slots identify grain labels, not physical phases."
+    },
+    {
       "filter": "WriteDREAM3DFilter",
       "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
       "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
-      "step": 2,
-      "purpose": "Save the imported rectilinear bounds, material-name table, and uniform image for comparison with the stage 02 export source."
+      "step": 4,
+      "purpose": "Save the imported rectilinear bounds, material-name table, uniform image and restored phase identity for comparison with the stage 02 export source and native preparation."
     }
   ],
   "scope": "All steps of the measured preparation and two staged OnScale interchange examples."

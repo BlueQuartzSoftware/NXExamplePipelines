@@ -94,6 +94,130 @@
     },
     {
       "args": {
+        "output_array_path": {
+          "value": "RecoveredImage_m/Cell Data/PhaseId",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 4,
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "set_tuple_dimensions": {
+          "value": false,
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "component_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "init_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "init_value": {
+          "value": "1",
+          "version": 1
+        },
+        "starting_fill_value": {
+          "value": "0",
+          "version": 1
+        },
+        "step_operation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "step_value": {
+          "value": "1",
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "seed_array_name": {
+          "value": "InitializeDataFilter SeedValue",
+          "version": 1
+        },
+        "standardize_seed": {
+          "value": false,
+          "version": 1
+        },
+        "init_start_range": {
+          "value": "0",
+          "version": 1
+        },
+        "init_end_range": {
+          "value": "1",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Restore the known PhaseId 1 as a scalar Int32 cell array, inheriting the recovered grid dimensions. Every original measured ROI cell is phase 1. This restores source phase identity lost by the label-only table; a multiphase or unindexed input requires its actual phase map, not a constant.",
+      "filter": {
+        "name": "nx::core::CreateDataArrayAdvancedFilter",
+        "uuid": "f23464df-abcc-40cf-bf99-f71463df633c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "ensemble": {
+          "value": [
+            [
+              "Cubic-High m-3m",
+              "Primary",
+              "Aluminum"
+            ]
+          ],
+          "version": 1
+        },
+        "cell_ensemble_attribute_matrix_path": {
+          "value": "RecoveredImage_m/Cell Ensemble Data",
+          "version": 1
+        },
+        "crystal_structures_array_name": {
+          "value": "CrystalStructures",
+          "version": 1
+        },
+        "phase_types_array_name": {
+          "value": "PhaseTypes",
+          "version": 1
+        },
+        "phase_names_array_name": {
+          "value": "MaterialName",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Restore Aluminum and cubic-high symmetry at ensemble row 1, with reserved row 0 created by the filter. Primary is the declared NX classification for the one indexed aluminum phase, not a new measurement. The 935 imported material-name slots identify grain labels, not physical phases.",
+      "filter": {
+        "name": "nx::core::CreateEnsembleInfoFilter",
+        "uuid": "8ce3d70c-49fe-4812-a1eb-7ce4c962a59d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
         "export_file_path": {
           "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d",
           "version": 1
@@ -112,7 +236,7 @@
         },
         "parameters_version": 2
       },
-      "comments": "Save the imported rectilinear bounds, material-name table, and uniform image for comparison with the stage 02 export source.",
+      "comments": "Save the imported rectilinear bounds, material-name table, uniform image and restored phase identity for comparison with the stage 02 export source and native preparation.",
       "filter": {
         "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"

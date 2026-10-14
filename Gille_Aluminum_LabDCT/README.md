@@ -8,7 +8,7 @@ These examples use the same public measured AA6016 T4 grain-map crop. Preparatio
 | --- | --- |
 | [01 LabDCT Preparation](%2801%29%20Gille%20Aluminum%20LabDCT%20Preparation.md) | Read the original HDF5, prepare orientations and observed grain statistics, and write native, FFT and SPPARKS outputs. |
 | [02 OnScale Export](%2802%29%20Gille%20OnScale%20Export.md) | Read the stage-01 checkpoint, preserve a measured 24³ ROI and export its unchanged grain labels in local metre coordinates. |
-| [03 OnScale Import and Uniform Grid](%2803%29%20Gille%20OnScale%20Import%20and%20Uniform%20Grid.md) | Read the stage-02 table into a Rectilinear Grid and recover an equivalent uniform Image Geometry. |
+| [03 OnScale Import and Uniform Grid](%2803%29%20Gille%20OnScale%20Import%20and%20Uniform%20Grid.md) | Read the stage-02 table into a Rectilinear Grid, recover an equivalent uniform Image Geometry, and restore its known single aluminum phase. |
 
 ## Setup and run
 
@@ -25,7 +25,7 @@ nxrunner --preflight "<pipeline-folder>/(03) Gille OnScale Import and Uniform Gr
 nxrunner --execute "<pipeline-folder>/(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
 ```
 
-Execute each predecessor before preflighting its successor. In particular, stage 03 must read the exported table during preflight; this dependency is why export and import are separate pipelines. Stages 02 and 03 use SimplnxCore; stage 01 also needs OrientationAnalysis.
+Execute each predecessor before preflighting its successor. In particular, stage 03 must read the exported table during preflight; this dependency is why export and import are separate pipelines. All stages use SimplnxCore; stages 01 and 03 also need OrientationAnalysis.
 
 For GUI use, set absolute file paths if relative `Data/...` paths do not resolve. Stage 01 writes `GilleAluminum.dream3d`, `GilleAluminum_Grains.csv`, `GilleAluminum_FFT.txt` and `GilleAluminum_SPPARKS.txt` under `Data/Output/Gille_Aluminum_LabDCT_Examples/`. Stage 02 writes `OnScale/Export/GilleROI24.flxtbl` and `GilleROI24_Export.dream3d` in that export directory. Stage 03 writes `OnScale/Import/GilleROI24_RoundTrip.dream3d`.
 
