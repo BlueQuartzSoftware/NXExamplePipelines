@@ -1,0 +1,1681 @@
+{
+  "isDisabled": false,
+  "name": "(03) Bentheimer Interior Region Comparison.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_data_object": {
+          "value": {
+            "data_paths": [],
+            "file_path": "Data/Output/Bentheimer_Resolution_Examples/Comparison/CommonGridComparison.dream3d",
+            "path_import_policy": 0
+          },
+          "version": 2
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the complete predecessor checkpoint; retain both native grids and all saved arrays.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "BentheimerVLR18um",
+          "version": 1
+        },
+        "change_origin": {
+          "value": true,
+          "version": 1
+        },
+        "center_origin": {
+          "value": false,
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            -675.0,
+            -675.0,
+            -675.0
+          ],
+          "version": 1
+        },
+        "change_spacing": {
+          "value": false,
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            18.0,
+            18.0,
+            18.0
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates.",
+      "filter": {
+        "name": "nx::core::SetImageGeomOriginScalingFilter",
+        "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "BentheimerLR6um",
+          "version": 1
+        },
+        "change_origin": {
+          "value": true,
+          "version": 1
+        },
+        "center_origin": {
+          "value": false,
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            -675.0,
+            -675.0,
+            -675.0
+          ],
+          "version": 1
+        },
+        "change_spacing": {
+          "value": false,
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            6.0,
+            6.0,
+            6.0
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates.",
+      "filter": {
+        "name": "nx::core::SetImageGeomOriginScalingFilter",
+        "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "BentheimerVLRMapped6um",
+          "version": 1
+        },
+        "change_origin": {
+          "value": true,
+          "version": 1
+        },
+        "center_origin": {
+          "value": false,
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            -675.0,
+            -675.0,
+            -675.0
+          ],
+          "version": 1
+        },
+        "change_spacing": {
+          "value": false,
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            6.0,
+            6.0,
+            6.0
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Set the explicit lower-corner origin to (-675,-675,-675) micrometers without changing spacing or data. This centers the example-local 1350 micrometer field of view; it does not recover scanner coordinates.",
+      "filter": {
+        "name": "nx::core::SetImageGeomOriginScalingFilter",
+        "uuid": "057bc7fd-c84a-4902-9397-87e51b1b1fe0"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "selected_image_geom_path": {
+          "value": "BentheimerVLR18um",
+          "version": 1
+        },
+        "coords_array_path": {
+          "value": "BentheimerVLR18um/CellData/CoordinatesMicrometers",
+          "version": 1
+        },
+        "indices_array_path": {
+          "value": "BentheimerVLR18um/CellData/UnusedIndices",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create three-component Float32 X,Y,Z cell-center coordinates after geometry placement: origin + (index + 0.5) * spacing. X varies fastest.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinatesImageGeomFilter",
+        "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "container_shape_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "invert_container": {
+          "value": false,
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            -405.0,
+            -405.0,
+            -405.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            405.0,
+            405.0,
+            405.0
+          ],
+          "version": 1
+        },
+        "sphere_info": {
+          "value": [
+            0.0,
+            0.0,
+            0.0,
+            405.0
+          ],
+          "version": 1
+        },
+        "selected_geometry_path": {
+          "value": "BentheimerVLR18um",
+          "version": 1
+        },
+        "created_mask_path": {
+          "value": "BentheimerVLR18um/CellData/InteriorROI",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Select cells whose complete lower and upper corners lie within the inclusive [-405,405] micrometer cube. The UInt8 mask represents an example-selected 810 micrometer interior region, not a measured pore phase or a representative elementary volume.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinateThresholdFilter",
+        "uuid": "04986173-dcfa-4d27-85ed-85af8b947a69"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "BentheimerVLR18um/CellData/ScaledIntensity",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "BentheimerVLR18um/InteriorIntensityStatistics",
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "BentheimerVLR18um/CellData/InteriorROI",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "HasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "UnusedFeatureIndices",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "UnusedStandardized",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "CellCount",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "UnusedMedian",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "UnusedMode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "UnusedStandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "UnusedSum",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "UnusedUniqueCount",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "selected_image_geom_path": {
+          "value": "BentheimerLR6um",
+          "version": 1
+        },
+        "coords_array_path": {
+          "value": "BentheimerLR6um/CellData/CoordinatesMicrometers",
+          "version": 1
+        },
+        "indices_array_path": {
+          "value": "BentheimerLR6um/CellData/UnusedIndices",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create three-component Float32 X,Y,Z cell-center coordinates after geometry placement: origin + (index + 0.5) * spacing. X varies fastest.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinatesImageGeomFilter",
+        "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "container_shape_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "invert_container": {
+          "value": false,
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            -405.0,
+            -405.0,
+            -405.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            405.0,
+            405.0,
+            405.0
+          ],
+          "version": 1
+        },
+        "sphere_info": {
+          "value": [
+            0.0,
+            0.0,
+            0.0,
+            405.0
+          ],
+          "version": 1
+        },
+        "selected_geometry_path": {
+          "value": "BentheimerLR6um",
+          "version": 1
+        },
+        "created_mask_path": {
+          "value": "BentheimerLR6um/CellData/InteriorROI",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Select cells whose complete lower and upper corners lie within the inclusive [-405,405] micrometer cube. The UInt8 mask represents an example-selected 810 micrometer interior region, not a measured pore phase or a representative elementary volume.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinateThresholdFilter",
+        "uuid": "04986173-dcfa-4d27-85ed-85af8b947a69"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "BentheimerLR6um/CellData/ScaledIntensity",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "BentheimerLR6um/InteriorIntensityStatistics",
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "BentheimerLR6um/CellData/InteriorROI",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "HasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "UnusedFeatureIndices",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "UnusedStandardized",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "CellCount",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "UnusedMedian",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "UnusedMode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "UnusedStandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "UnusedSum",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "UnusedUniqueCount",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "BentheimerLR6um/CellData/AbsoluteScaledIntensityDifference",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "BentheimerLR6um/InteriorDifferenceStatistics",
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "BentheimerLR6um/CellData/InteriorROI",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "HasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "UnusedFeatureIndices",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "UnusedStandardized",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "CellCount",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "UnusedMedian",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "UnusedMode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "UnusedStandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "UnusedSum",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "UnusedUniqueCount",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Compute count, minimum, maximum and mean inside the full-cell InteriorROI mask. These are intensity summaries, not porosity, permeability, or accuracy scores.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            15,
+            15,
+            15
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            59,
+            59,
+            59
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "BentheimerVLR18um",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerVLR_ROI18um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy inclusive XYZ indices 15..59 from BentheimerVLR18um into BentheimerVLR_ROI18um; this is the already declared physical ROI [-405,405] micrometers. Retain the full original geometry.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            45,
+            45,
+            45
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            179,
+            179,
+            179
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "BentheimerLR6um",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerLR_ROI6um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy inclusive XYZ indices 45..179 from BentheimerLR6um into BentheimerLR_ROI6um; this is the already declared physical ROI [-405,405] micrometers. Retain the full original geometry.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "BentheimerVLR_ROI18um/CellData/AuthorNormalizedIntensity",
+            "BentheimerVLR_ROI18um/CellData/CoordinatesMicrometers",
+            "BentheimerVLR_ROI18um/InteriorIntensityStatistics",
+            "BentheimerLR_ROI6um/CellData/AuthorNormalizedIntensity",
+            "BentheimerLR_ROI6um/CellData/CoordinatesMicrometers",
+            "BentheimerLR_ROI6um/CellData/AbsoluteScaledIntensityDifference",
+            "BentheimerLR_ROI6um/InteriorIntensityStatistics",
+            "BentheimerLR_ROI6um/InteriorDifferenceStatistics"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Keep only ScaledIntensity and the all-one InteriorROI support mask in each working crop. Remove copied coordinate arrays and non-cell statistics from these copies; all original full-volume outputs remain intact.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "BentheimerLR_ROI6um",
+          "version": 1
+        },
+        "attribute_matrix_path": {
+          "value": "BentheimerLR_ROI6um/CellData",
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "x_min_max": {
+          "value": [
+            6,
+            6
+          ],
+          "version": 1
+        },
+        "y_min_max": {
+          "value": [
+            6,
+            6
+          ],
+          "version": 1
+        },
+        "z_min_max": {
+          "value": [
+            6,
+            6
+          ],
+          "version": 1
+        },
+        "default_fill_value": {
+          "value": 0,
+          "version": 1
+        },
+        "update_origin": {
+          "value": true,
+          "version": 1
+        },
+        "perform_in_place": {
+          "value": false,
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerPaddedROI6um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Add six 6-micrometer cells on every side into a separate 147-cubed reference grid. Update the lower-corner origin from -405 to -441 to preserve the selected data placement. Zero-filled margin means outside the chosen ROI, not unmeasured scanner area.",
+      "filter": {
+        "name": "nx::core::PadImageGeometryFilter",
+        "uuid": "1a003f19-aa26-406c-bbef-061f508fc422"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "selected_image_geom_path": {
+          "value": "BentheimerPaddedROI6um",
+          "version": 1
+        },
+        "coords_array_path": {
+          "value": "BentheimerPaddedROI6um/CellData/CoordinatesMicrometers",
+          "version": 1
+        },
+        "indices_array_path": {
+          "value": "BentheimerPaddedROI6um/CellData/UnusedIndices",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Compute all reference cell centers after final padding and origin placement, including the added margin. Do not pad an old coordinate array with zero and treat it as valid reference coordinates.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinatesImageGeomFilter",
+        "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object_path": {
+          "value": "BentheimerPaddedROI6um/SampledVLR",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              147.0,
+              147.0,
+              147.0
+            ]
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create a separate 147 by 147 by 147 destination matrix for sampled coarse values; keep native fine values in CellData without name collisions.",
+      "filter": {
+        "name": "nx::core::CreateAttributeMatrixFilter",
+        "uuid": "a6a28355-ee69-4874-bcac-76ed427423ed"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_reference_image_geometry__path": {
+          "value": "BentheimerPaddedROI6um",
+          "version": 1
+        },
+        "input_sampling_image_geometry_path": {
+          "value": "BentheimerVLR_ROI18um",
+          "version": 1
+        },
+        "reference_cell_attribute_matrix_path": {
+          "value": "BentheimerPaddedROI6um/SampledVLR",
+          "version": 1
+        },
+        "sampling_cell_attribute_matrix_path": {
+          "value": "BentheimerVLR_ROI18um/CellData",
+          "version": 1
+        },
+        "use_fill": {
+          "value": true,
+          "version": 1
+        },
+        "fill_value": {
+          "value": 0.0,
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy coarse ScaledIntensity and InteriorROI onto the fixed padded fine grid. For these aligned 18-to-6 micrometer grids, each source voxel repeats 3 times per axis. Zero source-support mask marks fill outside the source ROI; no averaging, registration or super-resolution is performed.",
+      "filter": {
+        "name": "nx::core::NearestPointFuseRegularGridsFilter",
+        "uuid": "c8746bf8-fa5f-48b0-8a47-11023402e543"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "BentheimerPaddedROI6um/SampledVLR/ScaledIntensity",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "BentheimerPaddedROI6um/SampledVLRIntensityStatistics",
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "BentheimerPaddedROI6um/SampledVLR/InteriorROI",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "HasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "UnusedFeatureIndices",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "UnusedStandardized",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "CellCount",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "UnusedMedian",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "UnusedMode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "UnusedStandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "UnusedSum",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "UnusedUniqueCount",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Summarize copied coarse intensities only where sampled InteriorROI is nonzero. Exclude the zero-filled margin; repeated samples do not add independent measurements.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            0,
+            0,
+            0
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            134,
+            134,
+            66
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "BentheimerLR_ROI6um",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerLowerSlab6um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy inclusive Z indices 0..66 from the measured fine ROI, retaining all X/Y cells, intensity and support. These are contiguous pieces of one acquisition, not separate scans requiring registration. Preserve source coordinates and micrometer units.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            0,
+            0,
+            67
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            134,
+            134,
+            134
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "BentheimerLR_ROI6um",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerUpperSlab6um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy inclusive Z indices 67..134 from the measured fine ROI, retaining all X/Y cells, intensity and support. These are contiguous pieces of one acquisition, not separate scans requiring registration. Preserve source coordinates and micrometer units.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometries_paths": {
+          "value": [
+            "BentheimerUpperSlab6um"
+          ],
+          "version": 1
+        },
+        "destination_image_geometry_path": {
+          "value": "BentheimerLowerSlab6um",
+          "version": 1
+        },
+        "direction_index": {
+          "value": 2,
+          "version": 1
+        },
+        "mirror_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "check_resolution": {
+          "value": true,
+          "version": 1
+        },
+        "default_value": {
+          "value": "0",
+          "version": 1
+        },
+        "save_as_new_geometry": {
+          "value": true,
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "BentheimerReassembledROI6um",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Reassemble lower then upper slab along Z with matching spacing, retaining both pieces. Append concatenates tuple blocks; it does not register scans or check whether physical origins are contiguous. These crop bounds guarantee a shared interface at Z=-3 micrometers. The new geometry uses the lower slab origin and micrometer units; output cell matrix is named Cell Data.",
+      "filter": {
+        "name": "nx::core::AppendImageGeometryFilter",
+        "uuid": "c62c5c89-5ea8-4948-99ca-51cbc5b54b05"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "selected_image_geom_path": {
+          "value": "BentheimerReassembledROI6um",
+          "version": 1
+        },
+        "coords_array_path": {
+          "value": "BentheimerReassembledROI6um/Cell Data/CoordinatesMicrometers",
+          "version": 1
+        },
+        "indices_array_path": {
+          "value": "BentheimerReassembledROI6um/Cell Data/UnusedIndices",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Compute new cell centers from the final reassembled geometry. Reassembly must preserve the original ROI placement, not just its tuple count and values.",
+      "filter": {
+        "name": "nx::core::ComputeCoordinatesImageGeomFilter",
+        "uuid": "ff9c292f-eb3d-4c35-a80d-9c099aaa4714"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "BentheimerLR_ROI6um/CellData/ScaledIntensity"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "BentheimerReassembledROI6um/Cell Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "_Reference",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Retain the unmodified ROI intensity beside the assembled values for an explicit per-cell equality check. Copy an array, not an Image Geometry.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "calculator_parameter": {
+          "value": {
+            "equation": "abs(ScaledIntensity-ScaledIntensity_Reference)",
+            "selected_group": "BentheimerReassembledROI6um/Cell Data",
+            "units": 0
+          },
+          "version": 1
+        },
+        "scalar_type_index": {
+          "value": 8,
+          "version": 1
+        },
+        "calculated_array_path": {
+          "value": "BentheimerReassembledROI6um/Cell Data/AbsoluteReassemblyDifference",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Compare all assembled intensities against the same original ROI tuple positions. Every difference must be zero; this tests concatenation and order, not agreement between independent scans.",
+      "filter": {
+        "name": "nx::core::ArrayCalculatorFilter",
+        "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "selected_array_path": {
+          "value": "BentheimerReassembledROI6um/Cell Data/AbsoluteReassemblyDifference",
+          "version": 1
+        },
+        "destination_attribute_matrix_path": {
+          "value": "BentheimerReassembledROI6um/ReassemblyDifferenceStatistics",
+          "version": 1
+        },
+        "use_mask": {
+          "value": false,
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "",
+          "version": 1
+        },
+        "compute_by_index": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "feature_has_data_array_name": {
+          "value": "HasData",
+          "version": 1
+        },
+        "range_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "range": {
+          "value": [
+            0,
+            -1
+          ],
+          "version": 1
+        },
+        "feature_ids_indexing_name": {
+          "value": "UnusedFeatureIndices",
+          "version": 1
+        },
+        "standardize_data": {
+          "value": false,
+          "version": 1
+        },
+        "standardized_array_name": {
+          "value": "UnusedStandardized",
+          "version": 1
+        },
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "CellCount",
+          "version": 1
+        },
+        "find_min": {
+          "value": true,
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "Minimum",
+          "version": 1
+        },
+        "find_max": {
+          "value": true,
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "find_mean": {
+          "value": true,
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "UnusedMedian",
+          "version": 1
+        },
+        "find_mode": {
+          "value": false,
+          "version": 1
+        },
+        "mode_array_name": {
+          "value": "UnusedMode",
+          "version": 1
+        },
+        "find_std_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "std_deviation_array_name": {
+          "value": "UnusedStandardDeviation",
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "UnusedSum",
+          "version": 1
+        },
+        "find_unique_values": {
+          "value": false,
+          "version": 1
+        },
+        "number_unique_values_name": {
+          "value": "UnusedUniqueCount",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Summarize all 2,460,375 reconstruction differences. Count must match the original ROI and minimum, maximum and mean must all be zero. Retained support must also match; no default-filled data are expected.",
+      "filter": {
+        "name": "nx::core::ComputeArrayStatisticsFilter",
+        "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_file": {
+          "value": "Data/Output/Bentheimer_Resolution_Examples/Regions/BentheimerPaddedROI6um.vtk",
+          "version": 1
+        },
+        "write_binary_file": {
+          "value": true,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "BentheimerPaddedROI6um",
+          "version": 1
+        },
+        "input_data_array_paths": {
+          "value": [
+            "BentheimerPaddedROI6um/CellData/ScaledIntensity",
+            "BentheimerPaddedROI6um/CellData/InteriorROI"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Export selected cell intensity and support as binary legacy STRUCTURED_POINTS. Point dimensions are 148 cubed; cell values are 147 cubed. Coordinates retain micrometer numbers, but VTK does not store that unit.",
+      "filter": {
+        "name": "nx::core::WriteVtkStructuredPointsFilter",
+        "uuid": "68a4d758-c5ff-43d3-a394-1508ad00a0d2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": {
+          "value": "Data/Output/Bentheimer_Resolution_Examples/Regions/InteriorRegionComparison.dream3d",
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save a reusable checkpoint, retaining source arrays and explicitly named derived results.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}
