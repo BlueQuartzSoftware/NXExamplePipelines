@@ -134,6 +134,76 @@
     },
     {
       "args": {
+        "distance_metric_index": {
+          "value": 0,
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "selected_array_path": {
+          "value": "DataContainer/Cell Feature Data/EquivalentDiameters",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorFeatures",
+          "version": 1
+        },
+        "feature_ids_array_path": {
+          "value": "DataContainer/Cell Feature Data/KMeansSizeGroupIds",
+          "version": 1
+        },
+        "silhouette_array_path": {
+          "value": "DataContainer/Cell Feature Data/KMeansSizeSilhouette",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Measure K-means separation using the same selected diameters, InteriorFeatures mask, and Euclidean distance as K-medoids. Interpret selected positive-group rows only; excluded zero scores are not observations. The native own-group mean includes self-distance.",
+      "filter": {
+        "name": "nx::core::SilhouetteFilter",
+        "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "distance_metric_index": {
+          "value": 0,
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "selected_array_path": {
+          "value": "DataContainer/Cell Feature Data/EquivalentDiameters",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorFeatures",
+          "version": 1
+        },
+        "feature_ids_array_path": {
+          "value": "DataContainer/Cell Feature Data/KMedoidsSizeGroupIds",
+          "version": 1
+        },
+        "silhouette_array_path": {
+          "value": "DataContainer/Cell Feature Data/KMedoidsSizeSilhouette",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Measure K-medoids separation on the same cohort and metric for a comparable diagnostic. Require at least two nonempty positive groups. Scores do not establish physical phases or a globally best method; the native own-group mean includes self-distance.",
+      "filter": {
+        "name": "nx::core::SilhouetteFilter",
+        "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
         "cell_feature_attribute_matrix_path": {
           "value": "DataContainer/Cell Feature Data",
           "version": 1

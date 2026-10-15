@@ -40,7 +40,7 @@
       "doi": "",
       "url": "https://github.com/BlueQuartzSoftware/simplnx",
       "scope": "filter_algorithm",
-      "role": "Exact current clustering, mask, seed, group-row, and export behavior."
+      "role": "Exact current clustering, native silhouette self-distance convention, mask, seed, group-row, and export behavior."
     }
   ],
   "python_generation": {
@@ -57,7 +57,7 @@
     "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
     "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
     "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
-    "reference_visual": "Groeber and Jackson 3D microstructure and feature-statistics context; this bundle adds a native-output comparison of scalar size groups, not a reproduction of a paper figure.",
+    "reference_visual": "Groeber and Jackson 3D microstructure and feature-statistics context; this bundle adds native-output histograms, size-group agreement, and silhouette separation diagnostics, not a reproduction of a paper figure.",
     "target_traits": [
       "117 measured EBSD sections",
       "189 by 201 image cells per section",
@@ -66,12 +66,12 @@
     ],
     "known_differences": "Archive identity with the publisher's NiPoly data is unproven. The current NX preparation is not an exact historical reconstruction, and the pilot disables periodic segmentation.",
     "archive_provenance_file": "README.md",
-    "surface_selection_checkpoint_sha256": "59279f14e09078923b6a61d02e942b495eff4f7cdeef7896d5f75e5140c2e194"
+    "surface_selection_checkpoint_sha256": "fce6b9886290c484a3741d3b7aceb78867aeb49215682e183958654a5be97a4a"
   },
   "pipeline_file": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
   "markdown_file": "(08) Small IN100 Grain Size Groups and Representatives.md",
   "title": "Small IN100 Grain Size Groups and Representatives",
-  "summary": "Compare three arithmetic-mean size groups with three observed representative-size groups for the same selected grains without detected contact with the image box or background; preserve original feature IDs.",
+  "summary": "Compare three arithmetic-mean size groups with three observed representative-size groups, then score both partitions with native silhouettes using the same selected diameters, mask, and Euclidean metric; preserve original feature IDs.",
   "keywords": [
     "Small IN100",
     "EBSD",
@@ -79,12 +79,15 @@
     "K-means",
     "K-medoids",
     "inspection groups",
-    "representative size"
+    "representative size",
+    "silhouette",
+    "cluster separation"
   ],
   "use_cases": [
     "Create exploratory size strata for feature-table inspection",
     "Compare mean centers and observed representative diameters",
-    "Trace both assignments to original feature IDs"
+    "Trace both assignments to original feature IDs",
+    "Inspect separation and low-scoring grains under a common distance diagnostic"
   ],
   "inputs": [
     {
@@ -95,7 +98,7 @@
   "outputs": [
     {
       "path": "Data/Output/Small_IN100_Examples/GrainSizeGroups/SmallIN100_GrainSizeGroups.csv",
-      "role": "All 2334 positive original feature rows, both masks and both group IDs; excluded rows retain group ID zero."
+      "role": "All 2334 positive original feature rows, both masks, both group IDs, and both silhouette arrays; excluded rows retain group ID zero and placeholder score zero."
     },
     {
       "path": "Data/Output/Small_IN100_Examples/GrainSizeGroups/SmallIN100_KMeansSizeCenters.csv",
@@ -107,7 +110,7 @@
     },
     {
       "path": "Data/Output/Small_IN100_Examples/GrainSizeGroups/SmallIN100_GrainSizeGroups.dream3d",
-      "role": "All source objects plus both group assignments, both four-row center matrices and two stored seeds."
+      "role": "All source objects plus both group assignments, both float64 silhouette arrays, both four-row center matrices and two stored seeds."
     }
   ],
   "prerequisites": [
@@ -136,13 +139,17 @@
     "units": "A single diameter component in micrometers needs no relative component scaling.",
     "mask": "InteriorFeatures = NumElements > 0 AND SurfaceFeatures == 0. The selected cohort is not guaranteed complete or unbiased.",
     "seed_value": "Both use fixed seed 5489. Repeatability is checked within one environment; cross-platform random sampling can change partitions.",
-    "row_zero": "Group ID zero denotes excluded tuples. Ignore row zero in both center matrices; the K-means row includes excluded values and the K-medoids row is zero."
+    "row_zero": "Group ID zero denotes excluded tuples. Ignore row zero in both center matrices; the K-means row includes excluded values and the K-medoids row is zero.",
+    "silhouette_comparison": "Both steps use the identical scalar EquivalentDiameters, InteriorFeatures mask, and Euclidean metric, so differences in separation reflect the assignments rather than a changed input, cohort, or metric. This diagnostic is comparable even though K-means minimizes squared error and K-medoids minimizes absolute distance.",
+    "silhouette_convention": "Native a(i) sums distances to all selected members of the own positive group, including zero self-distance, and divides by group size n. b(i) is the smallest mean distance to a different nonempty positive group. The output is (b-a)/max(a,b). Canonical leave-one-out silhouette uses n-1 for a(i), so cross-library values need not match.",
+    "silhouette_selection": "Summarize only InteriorFeatures=true rows with positive group IDs. Excluded rows and reserved row zero contain placeholder zero scores. Require at least two nonempty positive groups and finite scores; a zero denominator produces NaN."
   },
   "mcp": {
     "user_intents": [
       "Compare scalar grain-size grouping methods",
       "Find observed representative sizes for inspection groups",
-      "Keep group assignments traceable to reconstructed grain IDs"
+      "Keep group assignments traceable to reconstructed grain IDs",
+      "Compare native silhouette diagnostics for the same selected grain diameters"
     ],
     "questions_to_ask": [
       "Is the surface-selection cohort suitable for the analysis?",
@@ -159,7 +166,13 @@
       "Do not interpret three groups as material phases, spatial segmentation, physical modes, or a globally optimal partition.",
       "Squared-error and absolute-error totals have different units and must not be compared as one score.",
       "Repeatability in one build does not imply identical partitions across platforms.",
-      "OOC, generated Python execution, and native GUI behavior need separate verification."
+      "OOC, generated Python execution, and native GUI behavior need separate verification.",
+      "Keep the silhouette input, mask, and Euclidean metric identical for both partitions.",
+      "Interpret only selected rows with positive group IDs; excluded zero scores are placeholders and must not enter summaries.",
+      "Require at least two nonempty positive groups and finite scores before interpreting silhouettes.",
+      "Explain the native own-group divisor n including self-distance; do not claim equality with canonical n-1 silhouette implementations.",
+      "Silhouette scores diagnose separation under the chosen metric, not physical phases or a globally best clustering method.",
+      "Do not pad scalar diameters with dummy components to meet a spatial clustering filter component requirement."
     ],
     "related_pipelines": [
       "(02) Small IN100 Feature Measurements.d3dpipeline",
@@ -276,6 +289,68 @@
     },
     {
       "index": 3,
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "role": "Measure K-means separation using the same selected diameters, InteriorFeatures mask, and Euclidean distance as K-medoids. Interpret selected positive-group rows only; excluded zero scores are not observations. The native own-group mean includes self-distance.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/EquivalentDiameters",
+        "DataContainer/Cell Feature Data/InteriorFeatures",
+        "DataContainer/Cell Feature Data/KMeansSizeGroupIds"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/KMeansSizeSilhouette"
+      ],
+      "key_parameters": {
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/EquivalentDiameters",
+        "mask_array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "feature_ids_array_path": "DataContainer/Cell Feature Data/KMeansSizeGroupIds",
+        "silhouette_array_path": "DataContainer/Cell Feature Data/KMeansSizeSilhouette"
+      },
+      "parameter_versions": {
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "mask_array_path": 1,
+        "feature_ids_array_path": 1,
+        "silhouette_array_path": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 4,
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "role": "Measure K-medoids separation on the same cohort and metric for a comparable diagnostic. Require at least two nonempty positive groups. Scores do not establish physical phases or a globally best method; the native own-group mean includes self-distance.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/EquivalentDiameters",
+        "DataContainer/Cell Feature Data/InteriorFeatures",
+        "DataContainer/Cell Feature Data/KMedoidsSizeGroupIds"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/KMedoidsSizeSilhouette"
+      ],
+      "key_parameters": {
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/EquivalentDiameters",
+        "mask_array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "feature_ids_array_path": "DataContainer/Cell Feature Data/KMedoidsSizeGroupIds",
+        "silhouette_array_path": "DataContainer/Cell Feature Data/KMedoidsSizeSilhouette"
+      },
+      "parameter_versions": {
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "mask_array_path": 1,
+        "feature_ids_array_path": 1,
+        "silhouette_array_path": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 5,
       "filter": "WriteFeatureDataCSVFilter",
       "uuid": "d734293f-3017-4699-b458-c05aca078b96",
       "role": "Export all positive original feature rows with both masks and group IDs; retain excluded and unused rows for traceability.",
@@ -302,7 +377,7 @@
       "parameters_version": 1
     },
     {
-      "index": 4,
+      "index": 6,
       "filter": "WriteFeatureDataCSVFilter",
       "uuid": "d734293f-3017-4699-b458-c05aca078b96",
       "role": "Export only group rows 1..3 with their arithmetic mean diameters in micrometers; Feature_ID identifies the K-means group.",
@@ -329,7 +404,7 @@
       "parameters_version": 1
     },
     {
-      "index": 5,
+      "index": 7,
       "filter": "WriteFeatureDataCSVFilter",
       "uuid": "d734293f-3017-4699-b458-c05aca078b96",
       "role": "Export only group rows 1..3 with observed representative diameters in micrometers; Feature_ID identifies the K-medoids group.",
@@ -356,7 +431,7 @@
       "parameters_version": 1
     },
     {
-      "index": 6,
+      "index": 8,
       "filter": "WriteDREAM3DFilter",
       "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
       "role": "Save all source data plus both group assignments, center tables, and stored seeds. Exclude row 0 from group interpretation.",
@@ -383,30 +458,34 @@
       "parameters_version": 2
     }
   ],
-  "last_verified": "2026-10-13",
-  "verification_status": "Windows in-core Release: native preflight and execution passed within the registered eight-example chain. Independent checks passed 34/34, including preservation of all 48 predecessor datasets, masks, assignments, stationary mean updates, member medoid minima, CSV precision, and a same-environment fixed-seed repeat. OOC, generated Python, native GUI, cross-platform partitions, and global optimality remain unverified.",
+  "last_verified": "2026-10-15",
+  "verification_status": "Windows in-core Release with simplnx fe6c4a15: native preflight and execution of the nine-step pipeline passed 2/2. Independent checks passed 80/80, including exact preservation of the original seven-step output datasets in the same runtime, both native self-inclusive silhouette formulas, selected-row score bounds, medoid membership/minima, arithmetic means, and CSV score precision. OOC, generated Python, native GUI, cross-platform partitions, and global optimality remain unverified.",
   "validation": {
-    "date": "2026-10-13",
+    "date": "2026-10-15",
     "configuration": "Windows in-core Release",
     "status": "passed_with_scope_limits",
-    "native_execution": "Registered PIPELINE::OrientationAnalysis::Small_IN100_Examples passed 1/1 with preflight and execution of archive and all eight examples.",
-    "independent_checks_passed": 34,
+    "source_revision": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native_execution": "SizeQuality_preflight and SizeQuality_execute passed 2/2 for the nine-step pipeline using the documented surface-selection checkpoint.",
+    "independent_checks_passed": 80,
     "independent_checks": [
-      "Recompute image-box and face-adjacent background contact independently from original cell labels.",
-      "Preserve all 48 predecessor datasets and image dimensions, spacing, origin, and units.",
-      "Selected group IDs are 1 through 3; excluded IDs are zero; all groups are populated.",
-      "Every selected feature is assigned to its nearest final center.",
-      "Each K-means center matches an independent mean within float32 error bounds and is stationary under another float32 update.",
-      "Each K-medoids representative is an observed member diameter and minimizes within-group absolute distance, checked with sorted prefix sums.",
-      "All CSV integer fields are exact and float fields agree within their eight-significant-digit printed precision.",
-      "A same-environment fixed-seed rerun preserves all checked output datasets."
+      "Preserve all 54 datasets from the unchanged seven-step pipeline executed in the same simplnx fe6c4a15 runtime.",
+      "Confirm 1349 selected positive finite diameters, positive selected group IDs, and zero excluded group IDs.",
+      "Match every selected native score to an independent all-pairs Euclidean formula using the own-group divisor n including zero self-distance.",
+      "Confirm excluded score placeholders are zero and selected scores are finite and within [-1, 1].",
+      "Match all K-means centers to arithmetic means using the current float64 center arrays.",
+      "Confirm every K-medoids representative is an observed member and minimizes within-group absolute distance.",
+      "Confirm the size-ranked agreement counts cover the selected cohort.",
+      "Retain all 2334 positive original feature rows in the CSV and match both new score columns at export precision.",
+      "Confirm the shared diameter histogram bins cover every selected grain.",
+      "Distinguish native self-inclusive scores from canonical leave-one-out scores."
     ],
-    "preserved_input_dataset_count": 48,
-    "pipeline_sha256": "ebe4bc35210dff24bbc103f15b1504f2367c23c32a33db003513a6b130dab475",
+    "preserved_native_baseline_dataset_count": 54,
+    "pipeline_sha256": "a0be7df9f0197b15d81a68318e05c22edc2111503270fe003d5792a5305258dc",
+    "input_sha256": "fce6b9886290c484a3741d3b7aceb78867aeb49215682e183958654a5be97a4a",
     "output_sha256": {
-      "SmallIN100_GrainSizeGroups.csv": "84ca55a4f5c7168bdc637143f461fe19b6be2fa4daddb44a1b579ed949b21d6a",
-      "SmallIN100_GrainSizeGroups.dream3d": "709180b87fc686e5d28ff7a3ed02b7ed08f0b69807bc67ef05f61acc7e88272e",
-      "SmallIN100_KMeansSizeCenters.csv": "ac9cb3466aef10ee0dd4df87cfc9a2a093af1d99b3743d8a75d9916410b12067",
+      "SmallIN100_GrainSizeGroups.csv": "bc6d2d1a495a85600482e4d3e3af0288cc9930ec9249e6dbfab13ab25e0cd5b2",
+      "SmallIN100_GrainSizeGroups.dream3d": "ba9eb1a918bd7ad6e58f72b862a61c2f4c5ed7a7328937bc12fc78e838a097c6",
+      "SmallIN100_KMeansSizeCenters.csv": "3cb34fceb737434101e2cdd67da15d1a1e643656d3824160d3bb509b10689a6c",
       "SmallIN100_KMedoidsSizeRepresentatives.csv": "5370e75d19ba343b93db901cd6772b118f4ecbc90c13778354cbe0ba6aa1979c"
     },
     "unverified": [
@@ -419,15 +498,25 @@
   },
   "result_visual": {
     "path": "SmallIN100GrainSizeGroups.png",
-    "role": "Histograms and agreement counts derived from the saved native output; displayed groups are ordered by increasing center.",
-    "source_output_sha256": "709180b87fc686e5d28ff7a3ed02b7ed08f0b69807bc67ef05f61acc7e88272e",
-    "sha256": "3b42c193ba5c07b2c120251508f7421cf50a807f114394ff6b83541f9fb2728a",
+    "role": "Four panels from the current native output: two size histograms, size-ranked agreement counts, and common-bin native silhouette distributions. Excluded score placeholders are omitted; group displays are ordered by increasing center without changing saved IDs.",
+    "source_output_sha256": "ba9eb1a918bd7ad6e58f72b862a61c2f4c5ed7a7328937bc12fc78e838a097c6",
+    "sha256": "a5edae31d3f8baf8eb401056abddd17b7d2d4d3b31e23f74830d47000363d333",
+    "size_pixels": [
+      1680,
+      1155
+    ],
     "histogram_bins_um": {
       "minimum": 0.0,
       "maximum": 10.0,
       "width": 0.25
     },
-    "native_group_ids_preserved": true
+    "silhouette_histogram_bins": {
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "width": 0.05
+    },
+    "native_group_ids_preserved": true,
+    "silhouette_convention": "Own-group mean includes zero self-distance with divisor n; not canonical leave-one-out silhouette."
   },
   "cli_usage": {
     "instructions": "See README.md#quick-start-117-section-3d-example; the minimal dependency order is archive -> 01 -> 02 -> 03 -> 08.",
@@ -441,64 +530,62 @@
     "unused_positive_rows": 17,
     "reserved_row": 0,
     "feature_csv_rows": 2334,
+    "rounding_note": "CSV floating-point values use eight significant digits; retain DREAM3D arrays for full stored precision.",
     "groups_ordered_by_center": {
       "KMeans": [
         {
-          "native_group_id": 1,
-          "count": 650,
-          "center_um": 1.5618945360183716,
-          "min_um": 0.4473501145839691,
-          "max_um": 2.3978450298309326
-        },
-        {
           "native_group_id": 3,
-          "count": 545,
-          "center_um": 3.2438526153564453,
-          "min_um": 2.40474534034729,
-          "max_um": 4.411508083343506
+          "count": 650,
+          "center_um": 1.561895209321609
         },
         {
           "native_group_id": 2,
+          "count": 545,
+          "center_um": 3.2438535069106917
+        },
+        {
+          "native_group_id": 1,
           "count": 154,
-          "center_um": 5.589391708374023,
-          "min_um": 4.432365417480469,
-          "max_um": 9.030715942382812
+          "center_um": 5.589391005503667
         }
       ],
       "KMedoids": [
         {
           "native_group_id": 3,
           "count": 519,
-          "center_um": 1.374401330947876,
-          "min_um": 0.4473501145839691,
-          "max_um": 2.041214942932129,
-          "matching_member_feature_ids": [
-            1256,
-            2002,
-            2190
-          ]
+          "center_um": 1.374401330947876
         },
         {
           "native_group_id": 2,
           "count": 490,
-          "center_um": 2.7100818157196045,
-          "min_um": 2.0435996055603027,
-          "max_um": 3.4953205585479736,
-          "matching_member_feature_ids": [
-            1572
-          ]
+          "center_um": 2.7100818157196045
         },
         {
           "native_group_id": 1,
           "count": 340,
-          "center_um": 4.287966728210449,
-          "min_um": 3.5066821575164795,
-          "max_um": 9.030715942382812,
-          "matching_member_feature_ids": [
-            898
-          ]
+          "center_um": 4.287966728210449
         }
       ]
+    },
+    "native_silhouette": {
+      "KMeans": {
+        "selected_count": 1349,
+        "mean": 0.5826069441954802,
+        "minimum": 0.004439655787590648,
+        "maximum": 0.7740564504114458,
+        "negative_scores": 0
+      },
+      "KMedoids": {
+        "selected_count": 1349,
+        "mean": 0.5429097545558756,
+        "minimum": -0.31976378282202017,
+        "maximum": 0.773284337702545,
+        "negative_scores": 57
+      }
+    },
+    "center_storage_type": {
+      "KMeans": "float64",
+      "KMedoids": "float32"
     },
     "ranked_agreement": {
       "rows": "K-means increasing center",
@@ -524,10 +611,9 @@
       "different_rank": 317
     },
     "csv_numeric_columns_including_feature_id": {
-      "SmallIN100_GrainSizeGroups.csv": 22,
+      "SmallIN100_GrainSizeGroups.csv": 24,
       "SmallIN100_KMeansSizeCenters.csv": 2,
       "SmallIN100_KMedoidsSizeRepresentatives.csv": 2
-    },
-    "rounding_note": "CSV floating-point values use eight significant digits; retain DREAM3D arrays for full stored precision."
+    }
   }
 }
