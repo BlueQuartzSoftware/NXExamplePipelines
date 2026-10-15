@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "smallin100-archive-python-generation-v1",
-  "title": "SmallIN100 archive companion to Python generation",
+  "title": "SmallIN100 archive and section-alignment companions to Python generation",
   "source_authority": ".d3dpipeline",
   "converter_api": "simplnx_utilities.generate_python_pipeline",
   "required_modules": [
@@ -10,7 +10,7 @@
     "imageprocessing",
     "simplnx_utilities"
   ],
-  "working_directory": "Chosen writable CLI working folder containing Data/Small_IN100/Slice_1.ang through Slice_117.ang and Data/Output",
+  "working_directory": "Chosen writable CLI working folder containing Data/Small_IN100/Slice_1.ang through Slice_117.ang, Data/Output, and the completed Feature Preparation checkpoint before alignment.",
   "output_lifetime": "temporary",
   "verification_status": "NOT VERIFIED: Python generation, imports, syntax, structure and execution have not been tested.",
   "failure_behavior": "Report a missing module, load error, generation error, or execution error. Do not silently substitute handwritten Python.",
@@ -18,8 +18,8 @@
   "path_rules": {
     "pipeline_reference_base": "pipeline_suite_root",
     "runtime_data_base": "chosen_cli_working_directory",
-    "input_paths": "Preserve all Data/Small_IN100 raw ANG paths and the generated file list spanning sections 1 through 117.",
-    "output_paths": "Preserve the separate inspection checkpoint under Data/Output/Small_IN100_Processing/Inspection and the established archive Data/Output/Reconstruction/Small_IN100.h5ebsd."
+    "input_paths": "Preserve all raw Data/Small_IN100 ANG paths and generated section list for Archive; preserve Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d for Section Alignment and Replay.",
+    "output_paths": "Preserve Inspection outputs, Data/Output/Reconstruction/Small_IN100.h5ebsd, and Alignment/SmallIN100_SectionAlignment.dream3d plus Alignment/SmallIN100_Shifts.csv under Data/Output/Small_IN100_Processing."
   },
   "generation": {
     "language": "Python",
@@ -29,7 +29,7 @@
       "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
       "Call simplnx_utilities.generate_python_pipeline(pipeline).",
       "Compile the returned program and write it to a temporary .py file.",
-      "Generate and execute only (01) Small IN100 Archive from the writable working folder with all 117 raw ANG files. Check both outputs. The eight later legacy pipelines are outside this companion generation specification. Discard temporary Python after validation."
+      "Generate each companion-backed pipeline independently. Execute Archive first, then the separately specified Feature Preparation predecessor, then Section Alignment and Replay. Do not run alignment directly after Archive without preparation. The eight legacy processing examples are outside this specification. Discard temporary Python after validation."
     ],
     "reference_code": [
       "import simplnx as nx",
@@ -45,14 +45,24 @@
     "syntax": "Compile the generated text with Python compile().",
     "structure": "Match generated filter calls and order to enabled pipeline steps.",
     "paths": "Check every relative input and output path against the source pipeline.",
-    "execution": "Run the generated archive pipeline from all 117 raw sections; inspect the saved single-scan mask, corrected/acquisition Euler arrays and IPF colors, then verify the raw H5EBSD sections and rotation metadata. NOT VERIFIED.",
+    "execution": "Run Archive from all 117 raw sections and verify its inspection and H5EBSD outputs. Run the Feature Preparation predecessor before Section Alignment and Replay; compare all five arrays across the three aligned geometries and verify eight CSV data rows including anchor row zero. NOT VERIFIED.",
     "storage": "Validate OOC separately before claiming OOC support."
   },
   "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified.",
   "pipeline_files": [
-    "(01) Small IN100 Archive.d3dpipeline"
+    "(01) Small IN100 Archive.d3dpipeline",
+    "(02) Small IN100 Section Alignment and Replay.d3dpipeline"
   ],
   "execution_order": [
-    "(01) Small IN100 Archive.d3dpipeline"
+    "(01) Small IN100 Archive.d3dpipeline",
+    "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline",
+    "(02) Small IN100 Section Alignment and Replay.d3dpipeline"
+  ],
+  "external_predecessors": [
+    {
+      "pipeline": "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline",
+      "specification": "../Small_IN100_Examples/PythonGeneration.yaml",
+      "role": "Required completed checkpoint between this suite's Archive and alignment pipelines."
+    }
   ]
 }

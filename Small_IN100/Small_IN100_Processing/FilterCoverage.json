@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Every step of the companion-backed (01) archive and scan inspection. The eight unchanged legacy pipelines in this category do not yet have companions and are outside this manifest. Step indices are zero-based.",
+  "scope": "Every step of companion-backed (01) archive and scan inspection and new (02) section alignment and replay. The eight legacy processing pipelines remain in simplnx and are outside this collection; new (02) is not the legacy Full Reconstruction. Step indices are zero-based.",
   "filters": [
     {
       "filter": "ReadAngDataFilter",
@@ -57,6 +57,125 @@
       "pipeline": "(01) Small IN100 Archive.d3dpipeline",
       "step": 7,
       "purpose": "Archive all 117 original ANG sections using the unchanged EDAX preset, high-to-low stack order and 0.25 micrometer section pitch; raw data and frame metadata are written independently of the inspection arrays."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 1,
+      "purpose": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 2,
+      "purpose": "Crop inclusive XYZ voxel bounds to 128 x 128 x 8 consecutive measured sections. Preserve source feature labels without renumbering; retain Quats, Phases, Mask, FeatureIds and IPFColors."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 3,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 4,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 5,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 6,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 7,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 8,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 9,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 10,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 11,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "AlignSectionsMutualInformationFilter",
+      "uuid": "3cf33ad9-8322-4d40-96de-14bbe40969cc",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 12,
+      "purpose": "Estimate adjacent-section translations using measured orientation patterns. The top local slice z=7 is fixed. These estimates are not independently measured physical ground truth."
+    },
+    {
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 13,
+      "purpose": "Replay the stored relative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders."
+    },
+    {
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 14,
+      "purpose": "Replay the stored cumulative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 15,
+      "purpose": "Save the original crop, MI result, both independent replay copies, and alignment arrays for verification."
+    },
+    {
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 16,
+      "purpose": "Export all eight shift rows, including the zero-initialized anchor row, with a zero-based row index and headers. Shifts are integer image cells in reverse-Z row order."
     }
   ]
 }

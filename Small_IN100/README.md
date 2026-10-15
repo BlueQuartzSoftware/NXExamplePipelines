@@ -1,6 +1,6 @@
 # Small IN100 examples
 
-Start with **Archive**, then **Feature Preparation**. Measurements, surfaces, neighbors and derived analyses use the checkpoints named in their guides. The boundary-distribution comparison is independent and needs its separate prepared-mesh archive. Only the companion-backed archive pipeline is copied from Small_IN100_Processing; its older 02-09 examples remain in simplnx.
+Start with **Archive**, then **Feature Preparation**. Measurements, surfaces, neighbors and derived analyses use the checkpoints named in their guides. The new **Section Alignment and Replay** example also consumes Feature Preparation and compares an alternative translation estimate on an already aligned and cleaned crop. The boundary-distribution comparison is independent and needs its separate prepared-mesh archive. Small_IN100_Processing contains the companion-backed archive and new alignment example; its older 02-09 examples remain in simplnx. New **02 Section Alignment and Replay** is distinct from legacy **02 Full Reconstruction**.
 
 Input datasets and generated results are stored separately. Keep the documented `Data/...` paths under a writable working folder; the pipeline file can remain here. Existing validation notes describe the original simplnx runs. This repository copy does not add a test harness or establish additional scientific validation.
 
@@ -8,6 +8,7 @@ Input datasets and generated results are stored separately. Keep the documented 
 | --- | --- |
 | [(01) Small IN100 Archive](Small_IN100_Processing/%2801%29%20Small%20IN100%20Archive.md) | `Small_IN100_Processing` |
 | [(01) Small IN100 Feature Preparation](Small_IN100_Examples/%2801%29%20Small%20IN100%20Feature%20Preparation.md) | `Small_IN100_Examples` |
+| [(02) Small IN100 Section Alignment and Replay](Small_IN100_Processing/%2802%29%20Small%20IN100%20Section%20Alignment%20and%20Replay.md) | `Small_IN100_Processing` |
 | [(02) Small IN100 Feature Measurements](Small_IN100_Examples/%2802%29%20Small%20IN100%20Feature%20Measurements.md) | `Small_IN100_Examples` |
 | [(03) Small IN100 Surface Selection Comparison](Small_IN100_Examples/%2803%29%20Small%20IN100%20Surface%20Selection%20Comparison.md) | `Small_IN100_Examples` |
 | [(04) Small IN100 Minimum Size Comparison](Small_IN100_Examples/%2804%29%20Small%20IN100%20Minimum%20Size%20Comparison.md) | `Small_IN100_Examples` |

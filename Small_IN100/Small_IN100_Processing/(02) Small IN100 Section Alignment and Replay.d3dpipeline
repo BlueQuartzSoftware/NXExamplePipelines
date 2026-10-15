@@ -1,0 +1,826 @@
+{
+  "isDisabled": false,
+  "name": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_data_object": {
+          "value": {
+            "data_paths": [],
+            "file_path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+            "path_import_policy": 0
+          },
+          "version": 2
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "DataContainer/Cell Feature Data",
+            "DataContainer/NewGrain Data",
+            "MergeTwins SeedValue",
+            "DataContainer/Cell Data/Confidence Index",
+            "DataContainer/Cell Data/EulerAngles",
+            "DataContainer/Cell Data/Fit",
+            "DataContainer/Cell Data/Image Quality",
+            "DataContainer/Cell Data/ParentIds",
+            "DataContainer/Cell Data/SEM Signal",
+            "DataContainer/Cell Data/X Position",
+            "DataContainer/Cell Data/Y Position",
+            "DataContainer/Cell Ensemble Data/LatticeConstants",
+            "DataContainer/Cell Ensemble Data/MaterialName"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            30,
+            36,
+            52
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            157,
+            163,
+            59
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": true,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "DataContainer/Cell Data/FeatureIds",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "DataContainer/Cell Feature Data",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Crop inclusive XYZ voxel bounds to 128 x 128 x 8 consecutive measured sections. Preserve source feature labels without renumbering; retain Quats, Phases, Mask, FeatureIds and IPFColors.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "DataContainer_Before",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": false,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            128,
+            128,
+            8
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            7.500003814697266,
+            9.0,
+            12.999996185302734
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            0.25,
+            0.25,
+            0.25
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_Before/Cell Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the five selected measured cell arrays before MI changes the input.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_Before",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the ensemble matrix containing only CrystalStructures.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "DataContainer_ReplayRelative",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": false,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            128,
+            128,
+            8
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            7.500003814697266,
+            9.0,
+            12.999996185302734
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            0.25,
+            0.25,
+            0.25
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_ReplayRelative/Cell Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the five selected measured cell arrays before MI changes the input.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_ReplayRelative",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the ensemble matrix containing only CrystalStructures.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "DataContainer_ReplayCumulative",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": false,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            128,
+            128,
+            8
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            7.500003814697266,
+            9.0,
+            12.999996185302734
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            0.25,
+            0.25,
+            0.25
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_ReplayCumulative/Cell Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the five selected measured cell arrays before MI changes the input.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "DataContainer_ReplayCumulative",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the ensemble matrix containing only CrystalStructures.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "misorientation_tolerance": {
+          "value": 5.0,
+          "version": 1
+        },
+        "use_mask": {
+          "value": true,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "quats_array_path": {
+          "value": "DataContainer/Cell Data/Quats",
+          "version": 1
+        },
+        "cell_phases_array_path": {
+          "value": "DataContainer/Cell Data/Phases",
+          "version": 1
+        },
+        "mask_array_path": {
+          "value": "DataContainer/Cell Data/Mask",
+          "version": 1
+        },
+        "crystal_structures_array_path": {
+          "value": "DataContainer/Cell Ensemble Data/CrystalStructures",
+          "version": 1
+        },
+        "store_alignment_shifts": {
+          "value": true,
+          "version": 1
+        },
+        "alignment_attribute_matrix_name": {
+          "value": "MI Alignment",
+          "version": 1
+        },
+        "slices_array_name": {
+          "value": "Slice Indices",
+          "version": 1
+        },
+        "relative_shifts_array_name": {
+          "value": "Relative Shifts",
+          "version": 1
+        },
+        "cumulative_shifts_array_name": {
+          "value": "Cumulative Shifts",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Estimate adjacent-section translations using measured orientation patterns. The top local slice z=7 is fixed. These estimates are not independently measured physical ground truth.",
+      "filter": {
+        "name": "nx::core::AlignSectionsMutualInformationFilter",
+        "uuid": "3cf33ad9-8322-4d40-96de-14bbe40969cc"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_array_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "DataContainer_ReplayRelative",
+          "version": 1
+        },
+        "shifts_array_path": {
+          "value": "DataContainer/MI Alignment/Relative Shifts",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Replay the stored relative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders.",
+      "filter": {
+        "name": "nx::core::AlignSectionsListFilter",
+        "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_array_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "DataContainer_ReplayCumulative",
+          "version": 1
+        },
+        "shifts_array_path": {
+          "value": "DataContainer/MI Alignment/Cumulative Shifts",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Replay the stored cumulative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders.",
+      "filter": {
+        "name": "nx::core::AlignSectionsListFilter",
+        "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "export_file_path": {
+          "value": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_SectionAlignment.dream3d",
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save the original crop, MI result, both independent replay copies, and alignment arrays for verification.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_style_index": {
+          "value": 1,
+          "version": 1
+        },
+        "output_path": {
+          "value": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_Shifts.csv",
+          "version": 1
+        },
+        "output_dir": {
+          "value": "",
+          "version": 1
+        },
+        "file_extension": {
+          "value": ".csv",
+          "version": 1
+        },
+        "max_val_per_line": {
+          "value": 1,
+          "version": 1
+        },
+        "delimiter_index": {
+          "value": 2,
+          "version": 1
+        },
+        "header_option_index": {
+          "value": 3,
+          "version": 1
+        },
+        "input_data_array_paths": {
+          "value": [
+            "DataContainer/MI Alignment/Slice Indices",
+            "DataContainer/MI Alignment/Relative Shifts",
+            "DataContainer/MI Alignment/Cumulative Shifts"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Export all eight shift rows, including the zero-initialized anchor row, with a zero-based row index and headers. Shifts are integer image cells in reverse-Z row order.",
+      "filter": {
+        "name": "nx::core::WriteASCIIDataFilter",
+        "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}
