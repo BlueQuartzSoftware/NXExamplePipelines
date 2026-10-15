@@ -18,7 +18,7 @@
   "path_rules": {
     "pipeline_reference_base": "pipeline_suite_root",
     "runtime_data_base": "chosen_cli_working_directory",
-    "input_paths": "Keep the raw HDF5 under Data/Gille_Aluminum_LabDCT_Examples. Keep generated predecessor DREAM3D and table files under Data/Output/Gille_Aluminum_LabDCT_Examples.",
+    "input_paths": "Keep the raw HDF5 and the README recipe-generated GilleAluminum_Phases.ini under Data/Gille_Aluminum_LabDCT_Examples. Keep generated predecessor DREAM3D and table files under Data/Output/Gille_Aluminum_LabDCT_Examples. Both the stage-02 table and INI must exist before stage-03 preflight.",
     "output_paths": "Retain Data/Output/Gille_Aluminum_LabDCT_Examples outputs."
   },
   "generation": {
@@ -29,7 +29,7 @@
       "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
       "Call simplnx_utilities.generate_python_pipeline(pipeline).",
       "Compile the returned program and write it to a temporary .py file.",
-      "Generate and execute stages 01, 02, and 03 in order. Each stage needs its predecessor output before preflight. Check the original preparation and both OnScale transfers; discard temporary Python after validation."
+      "Create the canonical 87-byte phase INI using README.md#create-the-phase-metadata-file. Generate and execute stages 01, 02, and 03 in order. Each successor needs its predecessor output before preflight; stage 03 also needs the INI. Check the preparation, both OnScale transfers and the two phase metadata tables; discard temporary Python after validation."
     ],
     "reference_code": [
       "import simplnx as nx",
@@ -45,7 +45,7 @@
     "syntax": "Compile the generated text with Python compile().",
     "structure": "Match generated filter calls and order to enabled pipeline steps.",
     "paths": "Check every relative input and output path against the source pipeline.",
-    "execution": "Check all1666 original grain IDs,1650000voxels,931boundary grains,grain 1049with 23 voxels,mm units,source fields and native orientation/color/quality/size outputs. Generated Python is NOT VERIFIED. Verify both 1.65M-row exports: FFT radians-to-degree conversion/rounding and one-based X-fastest voxel IDs; SPPARKS Values-only header/site-state contract. External solvers are not validated. For OnScale stages, verify 13824 original ROI labels,37 observed IDs,935 material-name slots with id-1 lookup,meter bounds and same-grid image recovery. The compact ROI must not retain the full-source Grain Data table. On RecoveredImage_m, compare all 13,824 Int32 PhaseId values to the original source ROI (all 1); verify the two-row Cell Ensemble Data table, CrystalStructures [999,1], PhaseTypes [999,0] (Unknown, declared Primary), and MaterialName row 1 Aluminum. The 935 imported names are grain-label slots, not physical phases.",
+    "execution": "Check all 1,666 original grain IDs, 1,650,000 voxels, 931 boundary grains, grain 1049 with 23 voxels, mm units, source fields and native orientation/color/quality/size outputs. Generated Python is NOT VERIFIED. Verify both 1.65M-row exports: FFT radians-to-degree conversion/rounding and one-based X-fastest voxel IDs; SPPARKS Values-only header/site-state contract. External solvers are not validated. For OnScale stages, verify 13,824 original ROI labels, 37 observed IDs, 935 material-name slots with id-1 lookup, meter bounds and same-grid image recovery. The compact ROI must not retain the full-source Grain Data table. On RecoveredImage_m, compare all 13,824 Int32 PhaseId values to the original source ROI (all 1); verify the two-row Cell Ensemble Data table, CrystalStructures [999,1], PhaseTypes [999,0] (Unknown, declared Primary), and MaterialName row 1 Aluminum. The 935 imported names are grain-label slots, not physical phases. Compare Imported Phase Metadata/CrystalStructures and PhaseTypes against the inline UInt32 [2,1] arrays exactly; require two rows and no MaterialName in the imported table. Both tables use PhaseId, never GrainId. The INI is locally authored; PrimaryPhase is a declared NX role. Saving the two tables does not automatically compare them.",
     "storage": "Validate OOC separately before claiming OOC support."
   },
   "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified.",
@@ -59,5 +59,5 @@
     "(02) Gille OnScale Export.d3dpipeline",
     "(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
   ],
-  "onscale_contract": "Run 02 after preparation. Run 03 only after the table exists, including for preflight. Preserve original grain IDs, local meter geometry, reader name row = id - 1 and same grid dimensions. Generated Python is unverified. Stage 03 restores PhaseId 1 and a two-row ensemble (reserved 0, cubic-high Aluminum 1); Primary is declared NX classification. Multiphase or unindexed inputs require their actual phase map rather than this constant."
+  "onscale_contract": "Run 02 after preparation. Run 03 only after the table exists, including for preflight. Preserve original grain IDs, local meter geometry, reader name row = id - 1 and same grid dimensions. Generated Python is unverified. Stage 03 restores PhaseId 1 and a two-row ensemble (reserved 0, cubic-high Aluminum 1); Primary is declared NX classification. Multiphase or unindexed inputs require their actual phase map rather than this constant. Create the exact README phase INI before stage-03 preflight. Number_Phases=1 yields one physical phase plus reserved row 0. Read Ensemble Info adds only CrystalStructures and PhaseTypes to Imported Phase Metadata; names remain in Cell Ensemble Data. Compare both numeric tables explicitly, and choose one authoritative table when adapting the example."
 }

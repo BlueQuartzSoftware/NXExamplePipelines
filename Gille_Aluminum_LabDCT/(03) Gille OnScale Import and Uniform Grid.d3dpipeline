@@ -218,6 +218,37 @@
     },
     {
       "args": {
+        "input_file": {
+          "value": "Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini",
+          "version": 1
+        },
+        "parent_group_path": {
+          "value": "RecoveredImage_m",
+          "version": 1
+        },
+        "cell_ensemble_attribute_matrix_name": {
+          "value": "Imported Phase Metadata",
+          "version": 1
+        },
+        "crystal_structures_array_name": {
+          "value": "CrystalStructures",
+          "version": 1
+        },
+        "phase_types_array_name": {
+          "value": "PhaseTypes",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the separately authored phase INI into an alternate two-row ensemble. Compare its CrystalStructures and PhaseTypes with Cell Ensemble Data on the same recovered grid. The INI transcribes source cubic-high symmetry and explicitly declares Primary; it is not a measurement or an author-supplied export. Read Ensemble Info does not import MaterialName: keep names in the inline Cell Ensemble Data. Both ensemble tables are indexed by PhaseId, never by GrainId.",
+      "filter": {
+        "name": "nx::core::ReadEnsembleInfoFilter",
+        "uuid": "ecf1ec45-bc27-4ddb-b2c0-3d465b8c182a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
         "export_file_path": {
           "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d",
           "version": 1

@@ -2,20 +2,21 @@
 
 - Executable pipeline: `(03) Gille OnScale Import and Uniform Grid.d3dpipeline`
 - Source Material: [Gille et al. (2024), *3D strain heterogeneity and fracture studied by X-ray tomography and crystal plasticity in an aluminium alloy*](https://doi.org/10.1016/j.ijplas.2024.104146) (source data and scientific context; this is an additional format-conversion illustration).
-- Input Data: `Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl`, created by [OnScale Export](%2802%29%20Gille%20OnScale%20Export.md) from the [public dataset](https://doi.org/10.18126/yc1m-nk41); keep datasets and generated results outside this repository.
+- Input Data: `Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl`, created by [OnScale Export](%2802%29%20Gille%20OnScale%20Export.md) from the [public dataset](https://doi.org/10.18126/yc1m-nk41), plus `Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini`, created with the [README recipe](README.md#create-the-phase-metadata-file). Keep both inputs and generated results outside this repository.
 
-> **Before adapting:** Do not treat this example as a validated acceptance procedure. Adapt and validate it for the scanner, material, resolution, and quality requirement. Run stage 02 before preflighting this pipeline. The reader assigns metres, and positive cell ID `k` refers to imported material-name row `k - 1`. Preserving labels on this unchanged grid does not establish accuracy for coarser or nonuniform resampling.
+> **Before adapting:** Do not treat this example as a validated acceptance procedure. Adapt and validate it for the scanner, material, resolution, and quality requirement. Run stage 02 and create the phase INI before preflighting this pipeline. The table reader assigns metres, and positive cell ID `k` refers to imported material-name row `k - 1`. Preserving labels on this unchanged grid does not establish accuracy for coarser or nonuniform resampling.
 
 ## At a glance
 
 | Item | What to expect |
 | --- | --- |
-| Question | Can I recover the exported grain map, convert it to a uniform NX image grid, and restore its known single-phase identity? |
-| Prerequisite | Stage 02 has written `GilleROI24.flxtbl`; see [setup and run](README.md). |
+| Question | Can I recover the exported grain map and its known phase, then supply the same numeric phase metadata inline or from a shared laboratory file? |
+| Prerequisites | Stage 02 has written `GilleROI24.flxtbl`, and the [README recipe](README.md#create-the-phase-metadata-file) has created the 87-byte `GilleAluminum_Phases.ini`. Both must exist before preflight. |
 | Imported grid | `ImportedOnScale_m`, a **24 × 24 × 24 Rectilinear Grid** with 25 bounds on each axis |
 | Recovered grid | `RecoveredImage_m`, a **24 × 24 × 24 Image Geometry**, approximately **0.000004 m** spacing and origin **[0,0,0]** |
 | Population | **13,824 cells**, **37 observed grain IDs**, range **623–935 with gaps** |
 | Physical phase | **PhaseId 1**, cubic-high **Aluminum** in every recovered cell; ensemble row 0 is reserved |
+| Metadata alternatives | Named inline `Cell Ensemble Data` and numeric-only `Imported Phase Metadata`, both indexed by `PhaseId` |
 | Result | `Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d` |
 | Scope | Coordinate and categorical-label round trip; no solver execution or new microstructure inference |
 
@@ -24,6 +25,8 @@
 Simulation and instrument formats often use explicit coordinate bounds. Many NX workflows consume an Image Geometry described by origin, uniform spacing and dimensions. This example shows that transition with a measured aluminium grain map whose expected labels and geometry are available from stage 02.
 
 The Gille LabDCT data provide the measured context. This additional conversion example does not reproduce the paper's deformation or fracture results. Reading an OnScale table does not demonstrate successful solver execution: the input contains labels and names, without orientations, calibrated material properties or loading history.
+
+A laboratory can maintain a phase metadata file shared by several label-only exports. This pipeline keeps the complete inline table as a named baseline and reads the external numeric metadata into a second table for comparison. The INI is a local, example-authored transcription of source symmetry with an explicitly chosen NX phase role; it is not an author-supplied export or a new measurement.
 
 ## Data flow and choices
 
@@ -34,9 +37,10 @@ The Gille LabDCT data provide the measured context. This additional conversion e
 | Resample Rectilinear Grid to Image Geom | Select `GrainId` and dimensions **[24,24,24]**. The filter derives origin and spacing from the imported bounds and copies the units. Matching the original grid isolates the representation conversion. |
 | Create Data Array (Advanced) | Create scalar Int32 `RecoveredImage_m/Cell Data/PhaseId`, inherit the cell tuple dimensions and fill with **1**. The original HDF5 ROI is uniformly phase 1, so this restores known source identity lost in the label-only table. |
 | Create Ensemble Info | Create `RecoveredImage_m/Cell Ensemble Data` from the row **[Cubic-High m-3m, Primary, Aluminum]**. The filter reserves row 0 and writes Aluminum at row 1. `Primary` is an explicit NX classification for this indexed aluminum phase, not a newly measured field. |
-| Save both geometries | Retain the rectilinear input, `RecoveredImage_m` and its phase metadata in one checkpoint so dimensions, bounds, labels and source phase identity can be compared. Use the separate export checkpoint to trace either result back to the measured ROI. |
+| Read Ensemble Info File | Read `GilleAluminum_Phases.ini` into `RecoveredImage_m/Imported Phase Metadata`. `Number_Phases=1` describes one physical phase; the reader adds reserved row 0. `Cubic_High` and `PrimaryPhase` populate two numeric arrays. Names are not read, so keep `MaterialName` in the inline table. |
+| Save both geometries | Retain the rectilinear input, `RecoveredImage_m` and both phase tables in one checkpoint for inspection. The pipeline saves the alternatives; it does not automatically assert that they agree. Use the separate export checkpoint to trace the grid back to the measured ROI. |
 
-Export and import are separate because the reader opens the table during preflight to determine dimensions and name count. A writer earlier in the same pipeline cannot supply that file during initial preflight. Follow the order **01 preparation → 02 export → 03 import**.
+Export and import are separate because the table reader opens its input during preflight to determine dimensions and name count. A writer earlier in the same pipeline cannot supply that file during initial preflight. The ensemble reader also opens its INI during preflight to determine the phase count. Follow **01 preparation → 02 export → 03 import**, creating the INI before stage 03.
 
 The reader derives dimensions from coordinate counts, ignores `divisions` and `keypoints`, and assigns metres. All three coordinate sections are present, so fallback settings for missing axes are unused. Stage 02 already converted the coordinate numbers to metres.
 
@@ -44,7 +48,7 @@ The reader derives dimensions from coordinate counts, ignores `divisions` and `k
 
 ![The same native grain-label slice before export, after table import and after uniform-grid recovery](GilleOnScaleRoundTrip.png)
 
-The preview uses matching categorical colours for matching grain IDs, independent of orientations or phases. A matching slice aids inspection; full-volume label equality is the stronger check.
+The preview is a grain-label plot: matching categorical colours represent matching grain IDs, independent of orientations or phases. A matching slice aids inspection; full-volume label equality is the stronger check.
 
 | Check | Expected result and meaning |
 | --- | --- |
@@ -54,10 +58,11 @@ The preview uses matching categorical colours for matching grain IDs, independen
 | Material names | **935 rows** represent file slots for IDs 1–935. Row **0** is `Aluminum`; row **622** is `Phase_623`; row **934** is `Phase_935`. Only 37 IDs occur in cells. |
 | Cell phase map | `RecoveredImage_m/Cell Data/PhaseId` has shape **[24,24,24,1]**, type **Int32**, and equals the original HDF5 ROI cell for cell: **13,824 values of 1**. |
 | Ensemble metadata | `RecoveredImage_m/Cell Ensemble Data` has **2 rows**. `CrystalStructures` is **[999,1]** (unknown, cubic-high); `PhaseTypes` is **[999,0]** (unknown, declared Primary); `MaterialName[1]` is **Aluminum**. Row 0 is reserved and its name remains the filter placeholder `_PHASE_NAME_`. |
+| Imported metadata | `RecoveredImage_m/Imported Phase Metadata` has **2 rows** and only `CrystalStructures` and `PhaseTypes`, each scalar **UInt32** with shape **[2,1]**. Check that they equal the corresponding inline arrays exactly: **[999,1]** and **[999,0]**. There is no `MaterialName` in this table. |
 
 To look up a name, use **`Material Names[GrainId - 1]`** for a positive ID. The original writer indexed its input names by `GrainId` and omitted tuple 0. Do not apply the original indexing convention to this imported array. The inactive `Aluminum` entry at row 0 does not imply that grain ID 0 is aluminium, and `Phase_623` does not indicate a newly discovered physical phase.
 
-Physical phase lookup uses **`Cell Ensemble Data/MaterialName[PhaseId]`** on `RecoveredImage_m`. The one indexed aluminum phase and its cubic-high symmetry come from the native preparation metadata. The table alone cannot supply them. The restored ensemble does not copy the preparation's lattice constants or Hermann–Mauguin string, and it does not recover orientations.
+Physical phase lookup uses **`Cell Ensemble Data/MaterialName[PhaseId]`** on `RecoveredImage_m`; both numeric tables also use `PhaseId`, never `GrainId`. The raw HDF5 records **Aluminum**, space group **225** and **F m -3 m**, supporting the cubic-high symmetry already retained by native preparation. Its ROI contains **13,824 phase-1 cells**. The OnScale table alone cannot supply that identity. The restored tables do not copy lattice constants or the Hermann–Mauguin string, and they do not recover orientations.
 
 Compare integer labels exactly. Compare floating-point spacing and bounds with a small tolerance. Both geometries remain in the local ROI frame; restore measured placement using the `MeasuredROI_mm` origin and mapping in the stage-02 companion.
 
@@ -68,5 +73,7 @@ The current resampler locates each destination voxel centre in the source rectil
 Keep positive target dimensions and inspect coordinate monotonicity, extents and units. Higher resolution adds samples of existing labels without new measured detail. Additional continuous fields may need an interpolation method appropriate to their meaning.
 
 The constant phase assignment is valid only because every original cell in this ROI is indexed as phase 1. For a multiphase or unindexed input, retain or transfer its actual phase map with the established cell correspondence; filling every cell with 1 would erase physical phase distinctions or unindexed regions. Populate the ensemble table from that input's known phase metadata and choose its NX phase classification explicitly.
+
+Use inline entry when the pipeline should carry its complete phase table and names. Use an external INI when the same numeric metadata is maintained separately or reused across exports. This example preserves both to make the choice visible; for an adapted workflow, choose one authoritative table and keep its names, symmetry and phase roles consistent. `Number_Phases` counts physical phases, not reserved rows, grains or material-name slots. Keep the INI's case-sensitive tokens exact, and update the real cell phase map when phase identities change.
 
 This table does not carry the original Euler angles, completeness or IPF arrays. Recover those from the native preparation or retained measured ROI only after establishing the cell or grain correspondence. Solver configuration, material-axis assignment, actual OnScale execution and Avizo runtime compatibility remain unverified. Retain the [CC BY 4.0 attribution](SourceDataLicense.md) with derived results.

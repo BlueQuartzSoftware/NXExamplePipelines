@@ -34,7 +34,7 @@
     }
   ],
   "catalogue_discrepancy": "The catalogue/tutorial state all grains have at least 27 voxels. The actual download contains grain 1049 with 23 voxels touching a crop face. The example preserves and flags it; historical cause is not established by the file.",
-  "packaging_status": "Not added to normal data installation. Track the original 567,693,056-byte file for later dataset/pipeline approval; a lossless smaller runtime derivative is a separate packaging decision.",
+  "packaging_status": "Manual external inputs: the original 567,693,056-byte HDF5 and one 87-byte recipe-generated phase INI. Neither is added to normal data installation; packaging remains pending. A future package must reproduce the exact INI bytes and retain source-data attribution. A lossless smaller HDF5 derivative is a separate packaging decision.",
   "onscale_dependents": [
     {
       "pipeline": "(02) Gille OnScale Export.d3dpipeline",
@@ -42,7 +42,67 @@
     },
     {
       "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
-      "input_type": "Predecessor output; no additional source dataset."
+      "input_type": "Stage-02 predecessor table plus the manually authored GilleAluminum_Phases.ini; both must exist before preflight. No additional raw dataset."
+    }
+  ],
+  "authored_metadata_files": [
+    {
+      "asset_key": "GilleAluminum_Phases.ini",
+      "filename": "GilleAluminum_Phases.ini",
+      "relative_path": "Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini",
+      "bytes": 87,
+      "sha256": "1761da5cfdb473bc069ba11540b999553830dd5c4f0aaec34e703f62bbb2bb4d",
+      "format": "ReadEnsembleInfo INI",
+      "encoding": "ASCII-compatible UTF-8 without BOM; LF endings including final LF",
+      "contents": "[EnsembleInfo]\nNumber_Phases=1\n\n[1]\nCrystalStructure=Cubic_High\nPhaseType=PrimaryPhase\n",
+      "recipe": "README.md#create-the-phase-metadata-file",
+      "availability": "Create locally in the external working folder before stage-03 preflight. The README recipe accepts an existing canonical file and preserves any different file with an error. No download or repository payload is supplied.",
+      "provenance": "Example-authored transcription of the published source phase identity, with an explicit NX phase-role declaration. This is companion metadata for the measured ROI, not an author-supplied export or a new measurement.",
+      "source_filename": "sample_S_undeformed_6_grain_center_slice.h5",
+      "source_phase_fields": {
+        "PhaseInfo/Phase01/Name": "Aluminum",
+        "PhaseInfo/Phase01/SpaceGroup": 225,
+        "PhaseInfo/Phase01/UniversalHermannMauguin": "F m -3 m"
+      },
+      "source_roi": {
+        "dataset": "LabDCT/Data/PhaseId",
+        "slices_zyx_half_open": [
+          [
+            113,
+            137
+          ],
+          [
+            18,
+            42
+          ],
+          [
+            43,
+            67
+          ]
+        ],
+        "shape_zyx": [
+          24,
+          24,
+          24
+        ],
+        "cell_count": 13824,
+        "unique_phase_ids": [
+          1
+        ]
+      },
+      "mapping": "Source space group 225 / F m -3 m supports Cubic_High. PrimaryPhase is the example's declared NX role; the source does not supply this classification.",
+      "phase_count": "Number_Phases=1 counts one physical phase. ReadEnsembleInfo adds reserved row 0, yielding two ensemble rows; grain IDs and the 935 imported name slots are unrelated to this count.",
+      "imported_arrays": [
+        "CrystalStructures",
+        "PhaseTypes"
+      ],
+      "limitations": "The reader imports no MaterialName, cell phase map, lattice constants, Hermann-Mauguin string or orientations. Existing inline names and the verified constant PhaseId=1 remain in the pipeline. Both numeric tables are indexed by PhaseId.",
+      "attribution": "Retain the existing Gille dataset attribution and SourceDataLicense.md with derived results.",
+      "included": false,
+      "consuming_pipelines": [
+        "(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
+      ],
+      "sha512": "5d5b65d497f3268b9accba122070d2b988277b4d7022b629e684349379941ae72af0e095d9b630d88a536bb461e0479d00d5c41a8284f8871c75970af7411655"
     }
   ]
 }
