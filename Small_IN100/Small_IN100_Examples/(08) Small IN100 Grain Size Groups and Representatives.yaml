@@ -530,7 +530,7 @@
     "unused_positive_rows": 17,
     "reserved_row": 0,
     "feature_csv_rows": 2334,
-    "rounding_note": "CSV floating-point values use eight significant digits; retain DREAM3D arrays for full stored precision.",
+    "rounding_note": "CSV export uses eight significant digits for float32 diameters and medoids, and sixteen significant digits for float64 K-means centers and silhouette scores. Retain DREAM3D arrays for full stored precision.",
     "groups_ordered_by_center": {
       "KMeans": [
         {
