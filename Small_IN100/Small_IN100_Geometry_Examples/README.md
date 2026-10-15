@@ -1,6 +1,6 @@
 # Small IN100 geometry examples
 
-These three examples turn a bounded, measured-derived EBSD label volume into a triangle interface mesh, compare constrained smoothing, attach boundary crystallography, compare alternative mesh methods, and demonstrate a rigid transform followed by STL export. They combine SimplnxCore geometry filters with OrientationAnalysis on the Small IN100 preparation output. The category is flat: each numbered `.d3dpipeline` has a matching Markdown companion and JSON-compatible YAML sidecar beside it.
+These four examples turn a bounded, measured-derived EBSD label volume into a triangle interface mesh, compare constrained smoothing, attach boundary crystallography, compare alternative mesh methods, demonstrate a rigid transform followed by STL export, and extract junction lines under different crop-boundary policies. They combine SimplnxCore geometry filters with OrientationAnalysis on the Small IN100 preparation output. The category is flat: each numbered `.d3dpipeline` has a matching Markdown companion and JSON-compatible YAML sidecar beside it.
 
 > **Validation warning:** Do not treat this example as a validated acceptance procedure. Adapt and validate it for the scanner, material, resolution, and quality requirement.
 
@@ -11,8 +11,9 @@ These three examples turn a bounded, measured-derived EBSD label volume into a t
 | `(01) Small IN100 Surface Mesh` | Crop to 24 cubed cells; connect unsmoothed interfaces to full-grain orientations, two-sided IPF colors, assumed-load slip metrics, and Sigma3 candidates; compare M3C and legacy QuickMesh geometry | Feature Preparation from `Small_IN100_Examples` |
 | `(02) Small IN100 Surface Smoothing` | Compare built-in relaxation with independent Laplacian smoothing that fixes junction/outer nodes; locate faces with triangle centroids | Geometry example 01 |
 | `(03) Small IN100 Surface Transform and Export` | Copy the baseline, rotate and translate it, then export STL | Geometry example 01 |
+| `(04) Small IN100 Triple Lines and Crop Boundaries` | Extract shared-edge grain junctions, count crop-exterior contributions, and compare deliberate boundary erosion | Geometry example 01 |
 
-Examples 02 and 03 are separate branches from 01. Transform/export does not use the smoothed mesh. After changing the preparation or crop, rerun 01 and regenerate both branches; after changing only smoothing, rerun 02. Each pipeline saves to its own output directory.
+Examples 02, 03, and 04 are separate branches from 01. Transform/export and junction extraction use the original unsmoothed mesh. After changing the preparation or crop, rerun 01 and regenerate the branches you use; after changing only smoothing, rerun 02. Each pipeline saves to its own output directory.
 
 ## Prepare data and run
 
@@ -22,13 +23,14 @@ Use one writable working folder throughout. Relative `Data/...` paths resolve fr
 2. Run `../Small_IN100_Processing/(01) Small IN100 Archive.d3dpipeline`. It writes `Data/Output/Reconstruction/Small_IN100.h5ebsd`.
 3. Run `../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline`. It writes `Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d`.
 4. Create the output directories below, then run geometry example 01.
-5. Run 02 for the smoothing comparison, 03 for transform/export, or both. Read the corresponding companion before changing parameters.
+5. Run 02 for smoothing, 03 for transform/export, or 04 for triple lines and crop boundaries. Read the corresponding companion before changing parameters. Stage 04 needs a recent matching build that registers `ExtractTripleLinesFilter` and the current internal-surface parameters.
 
 ```powershell
 New-Item -ItemType Directory -Force -Path `
   'Data/Output/Small_IN100_Geometry_Examples/Surface', `
   'Data/Output/Small_IN100_Geometry_Examples/Smoothing', `
-  'Data/Output/Small_IN100_Geometry_Examples/Transform'
+  'Data/Output/Small_IN100_Geometry_Examples/Transform', `
+  'Data/Output/Small_IN100_Geometry_Examples/Junctions'
 ```
 
 Set `$nxrunner` to the matching application executable and `$suite` to this installed or source category. From the chosen working folder, run the geometry chain after preparation succeeds:
@@ -39,7 +41,8 @@ $suite = 'C:\path\to\NXExamplePipelines\Small_IN100\Small_IN100_Geometry_Example
 foreach ($name in @(
   '(01) Small IN100 Surface Mesh.d3dpipeline',
   '(02) Small IN100 Surface Smoothing.d3dpipeline',
-  '(03) Small IN100 Surface Transform and Export.d3dpipeline'
+  '(03) Small IN100 Surface Transform and Export.d3dpipeline',
+  '(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline'
 )) {
   & $nxrunner --execute (Join-Path $suite $name)
   if ($LASTEXITCODE -ne 0) { throw "Pipeline failed: $name (exit $LASTEXITCODE)" }
@@ -58,6 +61,7 @@ All paths below begin with `Data/Output/Small_IN100_Geometry_Examples/`.
 | `Smoothing/SmallIN100_SurfaceSmoothing.dream3d` | Same crop and baseline plus `SmoothedSurfaceMesh`, `LaplacianSurfaceMesh`, and fresh triangle measurements/centroids |
 | `Transform/SmallIN100_SurfaceTransform.dream3d` | Same crop and baseline plus `SurfaceMesh_Transformed` and `SurfaceTransformMatrix` |
 | `Transform/SmallIN100_SurfaceTransformed.stl` | One binary STL of all transformed triangles; no label arrays or explicit unit declaration |
+| `Junctions/SmallIN100_TripleLines.dream3d` | Original `SurfaceMesh`, `InteriorTripleLines`, `ExteriorIncludedTripleLines`, `BoundaryErodedMesh`, and `BoundaryErodedTripleLines`; no image or alternative meshes imported |
 
 The crop uses inclusive XYZ `[82,88,46]` through `[105,111,69]`. It preserves original `FeatureIds`, crops every source cell array, and does not renumber features. Before cropping, it rebuilds phases and average orientations from the full cleaned grains under distinct `Boundary` names. These full-grain representatives remain keyed by the original labels; cropped shape statistics are not inferred. `ParentIds` are not interchangeable with `FeatureIds`.
 
@@ -75,6 +79,8 @@ Stage 02's Laplacian branch starts from the original unsmoothed mesh. Ten passes
 
 The transform is `x_new=10-y`, `y_new=x`, `z_new=z`, without centering. The newly constructed geometry has no copied areas or normals; after transforming, the pipeline creates `TransformedFaceAreas` and `TransformedFaceNormals`. No cell labels or crystallographic orientations are rotated.
 
+Stage 04 extracts edges using adjacent `FaceLabels`, independently of copied `NodeTypes`. Its exterior-off and exterior-on branches start from the same original mesh. The third branch retains a triangle only when all three node types lie in `[0,8]`, so it erodes internal faces touching crop walls as well as removing caps. The Face Labels criterion is not a substitute: it removes only `{-1,0}` faces and would retain every face in this no-zero crop. All new geometries use explicit Copy/Micrometer construction to avoid the unit-metadata loss reported in [simplnx#1813](https://github.com/BlueQuartzSoftware/simplnx/issues/1813). The guide explains the capped `NumFeatures` counts and the limits on adjacent-grain IDs, chains, TJLOD, and hardening interpretation.
+
 ## Scientific scope and provenance
 
 [Groeber and Jackson (2014)](https://doi.org/10.1186/2193-9772-3-5) supply the workflow context: geometric microstructure representation and the 117-section Ni-based-superalloy reconstruction-and-meshing case. Publisher supplements include processed examples; the public archive's exact identity with those outputs has not been established. The article is CC BY 2.0. Separate raw-archive redistribution terms were not established. This category includes no raw or processed volume files.
@@ -89,7 +95,7 @@ The public archive source SHA-512 recorded by the predecessor suite is:
 
 [Morawiec and Glowinski (2013)](https://doi.org/10.1016/j.actamat.2013.06.019) motivate examining Small IN100 boundary misorientation and Sigma3 relationships. Stage 01 uses a raw bounded mesh, not their QSLIM simplification, mixed-boundary classification, or distributions. Its two separate angle/axis tolerances are not the paper's distance-from-Sigma3 criterion. The companion explains these limits and what a closer reproduction requires.
 
-All three examples have `illustrative` reproduction status. The crop, modern mesher, smoothing values, rigid transform, and STL export differ from the 2014 case. Successful preflight or execution alone does not raise that status.
+All four examples have `illustrative` reproduction status. The crop, modern mesher, smoothing values, rigid transform, STL export, and junction comparison differ from the 2014 case. Stage 04 partly addresses [discussion #44](https://github.com/BlueQuartzSoftware/DREAM3DNX-Issues/discussions/44) by producing edge connectivity and region counts; it does not reproduce a named paper method or provide the requested adjacent-grain tuples. Successful preflight or execution alone does not raise that status.
 
 ## Companions, Python, and validation
 
@@ -99,6 +105,8 @@ The `.d3dpipeline` is executable authority. Markdown explains interpretation and
 
 The extended Geometry chain passed Windows in-memory Release CTest on October 13, 2026 (22.53 seconds), followed by the dependent grain-surface chain (24.92 seconds). All 58 mesh checks passed, including exact preservation of the prior Surface/Smoothing/Transform datasets. QuickMesh matches an independent voxel-face ownership oracle; M3C has checked triangle arithmetic and label/plane invariants, without independent case-table reproduction. Existing boundary crystallography remains on the unchanged original mesh. The stage02 Laplacian/centroid extension also passed the full Geometry CTest (22.53 seconds) and 34 independent checks, including graph-averaging agreement and exact prior-data preservation. Native GUI, OOC, generated Python, physical accuracy, global manifoldness and downstream suitability remain separate checks.
 
+Stage 04 passed Windows in-memory Release native preflight and execution on October 15, 2026, followed by 52 independent output checks. An exhaustive triangle-edge adjacency oracle agreed with all three line selections and capped region counts; checks also covered exact erosion selection, unchanged source datasets, selective import, copied attributes, native array types, and Micrometer units. This establishes the saved mesh operations, not physical network accuracy, native GUI behavior, OOC execution, generated Python, or ordered-chain analysis.
+
 | Result | Checked values for the supplied crop |
 | --- | --- |
 | Baseline | 23 original positive regions; 6,479 vertices; 14,052 triangles; area 439.125 µm² |
@@ -107,5 +115,6 @@ The extended Geometry chain passed Windows in-memory Release CTest on October 13
 | Transform/export | Exact prescribed coordinate mapping; unchanged area; STL 14,052 facets and 702,684 bytes |
 | Mesher alternatives | M3C: 7,931 vertices, 17,090 triangles, area 389.8829; legacy QuickMesh: 6,479 vertices, 14,052 triangles, area 439.125 (all areas in square micrometers) |
 | Boundary crystallography | 72 internal pairs; 6 Sigma3 candidate pairs occupying 2,602 faces and 81.3125 square micrometers; coherence disabled |
+| Triple lines | Grain-only: 465 vertices, 476 segments, 119 µm; exterior included: 1,055 vertices, 1,132 segments, 283 µm; eroded: 419 vertices, 431 segments, 107.75 µm |
 
-Area totals include internal interfaces and artificial caps. The smoothing result includes very small triangles, so smoother appearance is not a mesh-quality guarantee. All published mesh variants explicitly record Micrometer units. The mesh views display only the original-ID pair 533/1719 (1,138 triangles) for clarity; exported files retain the full mesh. The boundary figure also summarizes all internal faces and pairs. The source-image preview uses crop slice 12, centered at z = 14.625 µm. PNGs are data-derived scientific views, not screenshots of DREAM3D-NX or paper figures. Their source-output and image hashes are recorded in the YAML companions.
+Area totals include internal interfaces and artificial caps. Junction length sums are calculated from saved native edge endpoints; the extraction filter does not write length arrays, and these sums are not physical line-density measurements. The smoothing result includes very small triangles, so smoother appearance is not a mesh-quality guarantee. All published mesh variants explicitly record Micrometer units. The earlier mesh views display only the original-ID pair 533/1719 (1,138 triangles) for clarity; exported files retain the full mesh. The boundary figure also summarizes all internal faces and pairs. The junction figure displays the complete saved edge networks with added or removed segments highlighted. The source-image preview uses crop slice 12, centered at z = 14.625 µm. PNGs are data-derived scientific views, not screenshots of DREAM3D-NX or paper figures. Their source-output and image hashes are recorded in the YAML companions.

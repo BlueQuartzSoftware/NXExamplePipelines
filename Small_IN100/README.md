@@ -18,6 +18,7 @@ Input datasets and generated results are stored separately. Keep the documented 
 | [(01) Small IN100 Surface Mesh](Small_IN100_Geometry_Examples/%2801%29%20Small%20IN100%20Surface%20Mesh.md) | `Small_IN100_Geometry_Examples` |
 | [(02) Small IN100 Surface Smoothing](Small_IN100_Geometry_Examples/%2802%29%20Small%20IN100%20Surface%20Smoothing.md) | `Small_IN100_Geometry_Examples` |
 | [(03) Small IN100 Surface Transform and Export](Small_IN100_Geometry_Examples/%2803%29%20Small%20IN100%20Surface%20Transform%20and%20Export.md) | `Small_IN100_Geometry_Examples` |
+| [(04) Small IN100 Triple Lines and Crop Boundaries](Small_IN100_Geometry_Examples/%2804%29%20Small%20IN100%20Triple%20Lines%20and%20Crop%20Boundaries.md) | `Small_IN100_Geometry_Examples` |
 | [(01) Small IN100 Complete Grain Surface](Small_IN100_Grain_Surface_Examples/%2801%29%20Small%20IN100%20Complete%20Grain%20Surface.md) | `Small_IN100_Grain_Surface_Examples` |
 | [(02) Small IN100 Grain Surface Measurements](Small_IN100_Grain_Surface_Examples/%2802%29%20Small%20IN100%20Grain%20Surface%20Measurements.md) | `Small_IN100_Grain_Surface_Examples` |
 | [(03) Small IN100 Grain Point Cloud Registration](Small_IN100_Grain_Surface_Examples/%2803%29%20Small%20IN100%20Grain%20Point%20Cloud%20Registration.md) | `Small_IN100_Grain_Surface_Examples` |

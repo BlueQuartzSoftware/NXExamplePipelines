@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Selected geometry and boundary-crystallography examples only; occurrence coverage is not scientific validation or a complete filter inventory.",
+  "scope": "Selected geometry, boundary-crystallography, and junction examples only; occurrence coverage is not scientific validation or a complete filter inventory.",
   "filters": [
     {
       "filter": "ReadDREAM3DFilter",
@@ -400,6 +400,160 @@
       "pipeline": "(03) Small IN100 Surface Transform and Export.d3dpipeline",
       "step": 8,
       "purpose": "Save the cropped image, mesh geometry, labels, and explicitly named measurements as the reusable checkpoint."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 0,
+      "purpose": "Import only SurfaceMesh and its child arrays from stage 01 using the include-list policy; preserve the shared triangle connectivity and original labels."
+    },
+    {
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 1,
+      "purpose": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 2,
+      "purpose": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 3,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 4,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 5,
+      "purpose": "Remove temporary geometry after publishing copied arrays with explicit micrometer units."
+    },
+    {
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 6,
+      "purpose": "Count the artificial crop exterior as one region. Added segments are crop-boundary effects, not measured free-surface junctions."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 7,
+      "purpose": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 8,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 9,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 10,
+      "purpose": "Remove temporary geometry after publishing copied arrays with explicit micrometer units."
+    },
+    {
+      "filter": "ExtractInternalSurfacesFromTriangleGeometryFilter",
+      "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 11,
+      "purpose": "Keep a triangle only when all three NodeTypes lie in 0..8. This discards crop caps and erodes internal sheets that touch crop-wall vertices; it is a sensitivity control."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 12,
+      "purpose": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 13,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 14,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 15,
+      "purpose": "Remove temporary geometry after publishing copied arrays with explicit micrometer units."
+    },
+    {
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 16,
+      "purpose": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 17,
+      "purpose": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 18,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 19,
+      "purpose": "Copy the matching attribute array without changing its tuple values."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 20,
+      "purpose": "Remove temporary geometry after publishing copied arrays with explicit micrometer units."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+      "step": 21,
+      "purpose": "Save the original mesh, boundary-eroded mesh, and three explicitly calibrated edge geometries together."
     }
   ]
 }

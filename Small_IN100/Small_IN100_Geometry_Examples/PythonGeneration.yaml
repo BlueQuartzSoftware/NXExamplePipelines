@@ -51,5 +51,6 @@
   },
   "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified.",
   "mesh_comparison_contract": "Regenerate the 30-step surface pipeline. Keep the original 16 filter configurations, add separate M3C and explicitly legacy QuickMesh geometry branches with Micrometer reconstruction, and never copy original face crystallography onto new triangle indices.",
-  "smoothing_comparison_contract": "Stage02 has18 steps. Preserve all9 prior filter configurations and the independent original-mesh Laplacian branch with zero junction/outer lambdas. Generate native TriangleCentroid calls; do not replace them with plotting calculations."
+  "smoothing_comparison_contract": "Stage02 has18 steps. Preserve all9 prior filter configurations and the independent original-mesh Laplacian branch with zero junction/outer lambdas. Generate native TriangleCentroid calls; do not replace them with plotting calculations.",
+  "junction_comparison_contract": "Stage 04 has 22 steps. Preserve include-list policy 1 for SurfaceMesh, the original shared connectivity, exterior false/true alternatives, the all-three-node [0,8] erosion branch, copied NodeTypes, capped NumFeatures, and explicit Edge/Triangle Copy Micrometer construction. Keep the Junctions output path and do not replace native extraction with handwritten Python."
 }
