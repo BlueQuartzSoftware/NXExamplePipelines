@@ -1,0 +1,250 @@
+{
+  "isDisabled": false,
+  "name": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_data_object": {
+          "value": {
+            "data_paths": [
+              "Grain2205"
+            ],
+            "file_path": "Data/Output/Small_IN100_Grain_Surface_Examples/Measurements/SmallIN100_Grain2205_Measurements.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read only the calibrated complete grain envelope and its provenance from the completed measurement stage. Original physical neighbors remain available for inspection.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_triangle_geometry_path": {
+          "value": "Grain2205",
+          "version": 1
+        },
+        "centroids_array_name": {
+          "value": "CurvatureFaceCentroids",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Compute geometric triangle centers for the native local surface fits. These are face centers, not a grain volume centroid.",
+      "filter": {
+        "name": "nx::core::TriangleCentroidFilter",
+        "uuid": "5d7156ae-3e0a-4db0-a792-552f492e8911"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_triangle_geometry_path": {
+          "value": "Grain2205",
+          "version": 1
+        },
+        "neighborhood_ring": {
+          "value": 1,
+          "version": 1
+        },
+        "compute_principal_direction": {
+          "value": true,
+          "version": 1
+        },
+        "compute_gaussian_curvature": {
+          "value": true,
+          "version": 1
+        },
+        "compute_mean_curvature_path": {
+          "value": true,
+          "version": 1
+        },
+        "compute_weingarten_matrix": {
+          "value": false,
+          "version": 1
+        },
+        "use_normals": {
+          "value": false,
+          "version": 1
+        },
+        "face_attribute_matrix_path": {
+          "value": "Grain2205/Face Data",
+          "version": 1
+        },
+        "face_labels_path": {
+          "value": "Grain2205/Face Data/LocalSurfaceLabels",
+          "version": 1
+        },
+        "feature_face_ids_path": {
+          "value": "Grain2205/Face Data/SurfaceRegionIds",
+          "version": 1
+        },
+        "face_normals_path": {
+          "value": "Grain2205/Face Data/FaceNormals",
+          "version": 1
+        },
+        "face_centroids_path": {
+          "value": "Grain2205/Face Data/CurvatureFaceCentroids",
+          "version": 1
+        },
+        "principal_curvature_1_path": {
+          "value": "Grain2205/Face Data/QuadraticK1",
+          "version": 1
+        },
+        "principal_curvature_2_path": {
+          "value": "Grain2205/Face Data/QuadraticK2",
+          "version": 1
+        },
+        "principal_direction_1_path": {
+          "value": "Grain2205/Face Data/QuadraticDirection1",
+          "version": 1
+        },
+        "principal_direction_2_path": {
+          "value": "Grain2205/Face Data/QuadraticDirection2",
+          "version": 1
+        },
+        "gaussian_curvature_path": {
+          "value": "Grain2205/Face Data/QuadraticGaussian",
+          "version": 1
+        },
+        "mean_curvature_path": {
+          "value": "Grain2205/Face Data/QuadraticMean",
+          "version": 1
+        },
+        "weingarten_matrix_path": {
+          "value": "Grain2205/Face Data/QuadraticWeingarten",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Fit the same binary grain envelope with ring 1 and quadratic centroid terms. Seed normals define the local frame in both modes. Neighbor normals do not enter the current fit. Original physical neighbor labels remain provenance, not the grouping input.",
+      "filter": {
+        "name": "nx::core::FeatureFaceCurvatureFilter",
+        "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_triangle_geometry_path": {
+          "value": "Grain2205",
+          "version": 1
+        },
+        "neighborhood_ring": {
+          "value": 1,
+          "version": 1
+        },
+        "compute_principal_direction": {
+          "value": true,
+          "version": 1
+        },
+        "compute_gaussian_curvature": {
+          "value": true,
+          "version": 1
+        },
+        "compute_mean_curvature_path": {
+          "value": true,
+          "version": 1
+        },
+        "compute_weingarten_matrix": {
+          "value": false,
+          "version": 1
+        },
+        "use_normals": {
+          "value": true,
+          "version": 1
+        },
+        "face_attribute_matrix_path": {
+          "value": "Grain2205/Face Data",
+          "version": 1
+        },
+        "face_labels_path": {
+          "value": "Grain2205/Face Data/LocalSurfaceLabels",
+          "version": 1
+        },
+        "feature_face_ids_path": {
+          "value": "Grain2205/Face Data/SurfaceRegionIds",
+          "version": 1
+        },
+        "face_normals_path": {
+          "value": "Grain2205/Face Data/FaceNormals",
+          "version": 1
+        },
+        "face_centroids_path": {
+          "value": "Grain2205/Face Data/CurvatureFaceCentroids",
+          "version": 1
+        },
+        "principal_curvature_1_path": {
+          "value": "Grain2205/Face Data/CubicK1",
+          "version": 1
+        },
+        "principal_curvature_2_path": {
+          "value": "Grain2205/Face Data/CubicK2",
+          "version": 1
+        },
+        "principal_direction_1_path": {
+          "value": "Grain2205/Face Data/CubicDirection1",
+          "version": 1
+        },
+        "principal_direction_2_path": {
+          "value": "Grain2205/Face Data/CubicDirection2",
+          "version": 1
+        },
+        "gaussian_curvature_path": {
+          "value": "Grain2205/Face Data/CubicGaussian",
+          "version": 1
+        },
+        "mean_curvature_path": {
+          "value": "Grain2205/Face Data/CubicMean",
+          "version": 1
+        },
+        "weingarten_matrix_path": {
+          "value": "Grain2205/Face Data/CubicWeingarten",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Fit the same binary grain envelope with ring 1 and cubic centroid terms. Seed normals define the local frame in both modes. Neighbor normals do not enter the current fit. Original physical neighbor labels remain provenance, not the grouping input.",
+      "filter": {
+        "name": "nx::core::FeatureFaceCurvatureFilter",
+        "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": {
+          "value": "Data/Output/Small_IN100_Grain_Surface_Examples/Curvature/SmallIN100_Grain2205_Curvature.dream3d",
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Preserve the unchanged shell and source identity alongside both native curvature fits. These fields diagnose the faceted reconstruction; they do not establish physical smooth-boundary curvature.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}
