@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Selected Small IN100 preparation, measurement, selection, neighbor, voxel-mesh, scalar grain-size grouping, and native silhouette example filters; not a full plugin coverage inventory.",
+  "scope": "Selected Small IN100 preparation, measurement, selection, neighbor, voxel-mesh, scalar grain-size grouping, centroid-neighborhood grouping, and native silhouette example filters; not a full plugin coverage inventory.",
   "filters": [
     {
       "filter": "EBSDSegmentFeaturesFilter",
@@ -281,6 +281,76 @@
       "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
       "step": 8,
       "purpose": "Save all source data plus both group assignments, center tables, and stored seeds. Exclude row 0 from group interpretation."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the surface-selection checkpoint. Preserve source geometry, FeatureIds, measurements, and masks."
+    },
+    {
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Cluster measured interior-feature centroids in micrometers with epsilon 2.5 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 3,
+      "purpose": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette."
+    },
+    {
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 4,
+      "purpose": "Cluster measured interior-feature centroids in micrometers with epsilon 3.0 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 5,
+      "purpose": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 6,
+      "purpose": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette."
+    },
+    {
+      "filter": "CopyFeatureArrayToElementArrayFilter",
+      "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 7,
+      "purpose": "Map both group IDs and the original cohort to cells for categorical visualization. Preserve the original FeatureIds segmentation; InteriorFeatures_Map distinguishes excluded cells from selected but unassigned grains."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 8,
+      "purpose": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 9,
+      "purpose": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays."
     }
   ]
 }

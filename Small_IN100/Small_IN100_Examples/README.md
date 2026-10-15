@@ -17,12 +17,13 @@ if (@($sections | Where-Object { -not (Test-Path $_ -PathType Leaf) }).Count -gt
 }
 if (@($sections | Where-Object { -not (Test-Path $_ -PathType Leaf) }).Count -gt 0) { throw 'One or more of the 117 ANG sections are missing.' }
 Set-Location $work
-foreach ($name in @('Preparation', 'Measurements', 'SurfaceSelection', 'MinimumSize', 'CombinedSelection', 'NeighborRelationships', 'VoxelMesh', 'GrainSizeGroups')) {
+foreach ($name in @('Preparation', 'Measurements', 'SurfaceSelection', 'MinimumSize', 'CombinedSelection', 'NeighborRelationships', 'VoxelMesh', 'GrainSizeGroups', 'CentroidNeighborhoods')) {
     New-Item -ItemType Directory -Force -Path (Join-Path $work "Data\Output\Small_IN100_Examples\$name") | Out-Null
 }
 # Run every example: branches 03–06 each read the measurement checkpoint independently; 07 reads preparation.
 # Running 03 then 04 does not combine their rules; 05 supplies the explicit intersection.
 # The grain-size comparison 08 reads the surface-selection output from 03.
+# The centroid-neighborhood comparison 09 also reads 03 independently; it does not need 08.
 
 foreach ($relative in @(
     'Small_IN100_Processing\(01) Small IN100 Archive.d3dpipeline',
@@ -33,7 +34,8 @@ foreach ($relative in @(
     'Small_IN100_Examples\(05) Small IN100 Combined Selection.d3dpipeline',
     'Small_IN100_Examples\(06) Small IN100 Neighbor Relationships.d3dpipeline',
     'Small_IN100_Examples\(07) Small IN100 Bounded Voxel Mesh.d3dpipeline',
-    'Small_IN100_Examples\(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline'
+    'Small_IN100_Examples\(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline',
+    'Small_IN100_Examples\(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline'
 )) {
     $pipeline = Join-Path $examples $relative
     & $runner --execute $pipeline
@@ -59,6 +61,19 @@ The [(07) bounded voxel mesh](%2807%29%20Small%20IN100%20Bounded%20Voxel%20Mesh.
 
 The [(08) grain-size groups and representatives](%2808%29%20Small%20IN100%20Grain%20Size%20Groups%20and%20Representatives.md) comparison reads the surface-selection checkpoint from 03. Its minimal dependency chain is archive → 01 → 02 → 03 → 08. It compares three K-means arithmetic centers with three K-medoids observed representative diameters for the same 1,349 selected grains, then calculates both native silhouette arrays with the same diameters, selection mask, and Euclidean metric. This common diagnostic measures separation while the clustering methods optimize different objectives. Original feature rows and cell labels stay intact. Three CSVs and a DREAM3D checkpoint are written under `GrainSizeGroups/`; the feature table includes both score arrays. The group count is illustrative; group IDs are unordered, and excluded rows have ID 0. Ignore center-table row 0 and exclude masked-out score placeholders from summaries. The native own-group distance average includes zero self-distance and divides by group size, so it differs from the canonical leave-one-out convention. See the companion for interpretation and native-output previews.
 
+## Centroid-neighborhood comparison branch
+
+The [(09) centroid-neighborhood comparison](%2809%29%20Small%20IN100%20Centroid%20Neighborhood%20Comparison.md) independently reads the same surface-selection checkpoint as 08. Its minimal dependency chain is archive → 01 → 02 → 03 → 09; no additional dataset is needed. It groups the 1,349 selected physical XYZ centroids at 2.5 and 3.0 µm proximity scales. DBSCAN accepts two or three coordinate components; this example uses three, with the same physical units on every axis. Its modified grid algorithm uses Minimum Points 2 as a per-grid-cell occupancy threshold, which differs from conventional DBSCAN's point-neighborhood count.
+
+| Radius | Groups | Assigned of 1,349 | Unassigned selected grains | Mean native silhouette over assigned grains |
+|---|---:|---:|---:|---:|
+| 2.5 µm | 23 | 711 | 638 | 0.012827 |
+| 3.0 µm | 10 | 1,214 | 135 | -0.434083 |
+
+The branch writes `SmallIN100_CentroidNeighborhoods.csv` and `SmallIN100_CentroidNeighborhoods.dream3d` under `CentroidNeighborhoods/`. It preserves original `FeatureIds` and measurements, adding two group-ID arrays, two assignment masks, two score arrays, and three cell maps. Group ID 0 includes both excluded and unassigned selected grains; retain `InteriorFeatures` to distinguish them. Each silhouette mask selects only original-cohort rows with positive group IDs. The means compare different assigned cohorts and must not be used to optimize radius; extended connected networks can have negative scores. See the companion for the native self-inclusive score convention, categorical cell-map display, and verified output preview.
+
 ## Reference results and execution scope
 
 The reference results were checked using the Windows command-line runner with in-memory storage. Treat them as comparison values for this input, and verify adaptations in your chosen environment. Out-of-core storage, generated Python execution, and running through the GUI have not been checked for this suite. `PythonGeneration.yaml` describes intended generation, not a tested Python workflow. `FilterCoverage.json` covers the selected example filters.
+
+For example 09, native preflight and execution passed with simplnx `fe6c4a15` on 2026-10-15. All 79 independent checks passed: 77 data/numerical checks and two palette checks. Both complete partitions match independently reconstructed distance-graph components containing occupied core cells; every assigned score matches the native self-inclusive formula, and all cell maps and CSV values agree with their source arrays. This evidence covers the stated Euclidean, Minimum Points 2 case and input, not general equivalence to canonical DBSCAN.

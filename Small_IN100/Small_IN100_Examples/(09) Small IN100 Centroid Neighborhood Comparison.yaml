@@ -1,0 +1,699 @@
+{
+  "schema_version": 1,
+  "primary_industries": [
+    "Materials characterization"
+  ],
+  "secondary_industries": [
+    "Additive manufacturing",
+    "Metallurgy"
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "orientationanalysis-smallin100-python-generation-v1"
+  },
+  "input_data_strategy": {
+    "strategy": "measured-public-example",
+    "asset_keys": [
+      "Small_IN100.tar.gz"
+    ],
+    "paper_doi": "10.1186/2193-9772-3-5",
+    "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
+    "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+    "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
+    "reference_visual": "Groeber and Jackson supplies 3D reconstruction and feature-analysis context. The centroid comparison preview comes from native output and is not a reproduction of a paper figure.",
+    "target_traits": [
+      "117 measured EBSD sections",
+      "189 by 201 image cells per section",
+      "0.25 spacing on each axis",
+      "traceable final feature IDs"
+    ],
+    "known_differences": "Archive identity with the publisher's NiPoly data is unproven. The current NX preparation is not an exact historical reconstruction, and the pilot disables periodic segmentation.",
+    "archive_provenance_file": "README.md",
+    "surface_selection_checkpoint_sha256": "fce6b9886290c484a3741d3b7aceb78867aeb49215682e183958654a5be97a4a"
+  },
+  "prerequisites": [
+    {
+      "pipeline": "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "produces": "Data/Output/Small_IN100_Examples/SurfaceSelection/SmallIN100_SurfaceSelection.dream3d"
+    }
+  ],
+  "pipeline_file": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+  "markdown_file": "(09) Small IN100 Centroid Neighborhood Comparison.md",
+  "title": "Small IN100 Centroid Neighborhood Comparison",
+  "summary": "Compare modified grid-based DBSCAN groups of selected physical grain centroids at 2.5 and 3.0 micrometers, report assignment coverage and native silhouette diagnostics, and preserve original grain IDs with cell maps for inspection.",
+  "keywords": [
+    "Small IN100",
+    "EBSD",
+    "centroids",
+    "spatial proximity",
+    "DBSCAN",
+    "grid occupancy",
+    "silhouette",
+    "radius sensitivity"
+  ],
+  "use_cases": [
+    "Inspect how physical proximity scale joins grain-centroid networks",
+    "Compare assigned and unassigned grains without changing segmentation",
+    "Trace spatial groups and score diagnostics to original grain IDs"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Small_IN100_Examples/SurfaceSelection/SmallIN100_SurfaceSelection.dream3d",
+      "role": "Example 03 checkpoint with physical Centroids in micrometers and the InteriorFeatures cohort."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.csv",
+      "role": "All 2334 positive feature rows with original measurements, cohort, both spatial group IDs, both assignment masks, and both silhouette arrays."
+    },
+    {
+      "path": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.dream3d",
+      "role": "Complete predecessor plus two group-ID arrays, two assignment masks, two float64 score arrays, two cluster attribute matrices, and three cell maps."
+    }
+  ],
+  "dependency_chain": [
+    "../Small_IN100_Processing/(01) Small IN100 Archive.d3dpipeline",
+    "(01) Small IN100 Feature Preparation.d3dpipeline",
+    "(02) Small IN100 Feature Measurements.d3dpipeline",
+    "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+    "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline"
+  ],
+  "measurement_labels": {
+    "cell_feature_ids": "DataContainer/Cell Data/FeatureIds",
+    "feature_matrix": "DataContainer/Cell Feature Data",
+    "coordinate_array": "DataContainer/Cell Feature Data/Centroids",
+    "selected_mask": "DataContainer/Cell Feature Data/InteriorFeatures",
+    "not_used": "DataContainer/Cell Data/ParentIds"
+  },
+  "parameter_rationale": {
+    "epsilon": "Compare 2.5 and 3.0 micrometers: 10 and 12 voxels at the source spacing of 0.25 micrometers, near the selected-centroid median nearest-neighbor distance of about 1.78964 micrometers. These are illustrative scales, not optimized radii or an inferred material length.",
+    "min_points": "Two centroids within a grid cell seed a core grid. In 3D cell side is epsilon/sqrt(3); this threshold is not the conventional point-neighborhood MinPts rule.",
+    "distance_metric_index": "Zero selects Euclidean distance between three centroid coordinates. Inter-grid connections require distance strictly below epsilon.",
+    "units": "All three coordinates are in micrometers. Separate axis standardization would alter the physical distance being studied.",
+    "parse_order_index": "Zero is deterministic Low Density First. The serialized seed value 5489 and seed-array name are inactive in this mode; no seed array is created.",
+    "mask": "Both DBSCAN runs use InteriorFeatures = NumElements > 0 AND SurfaceFeatures == 0. This selection does not prove complete grains or an unbiased spatial population.",
+    "assignment_masks": "For each radius, Assigned = InteriorFeatures AND group IDs > 0. Zero IDs combine excluded rows with selected-but-unassigned noise; preserve the original mask.",
+    "silhouette_convention": "Native a(i) includes zero self-distance and divides the own-group distance sum by n. b(i) is the smallest mean distance to another nonempty positive group. Score=(b-a)/max(a,b); conventional silhouette uses n-1 for a(i).",
+    "silhouette_interpretation": "Only assigned rows enter each score. The radii have different scored cohorts, and compact separated groups are favored over long connected networks. Mean scores are not a radius-optimization criterion.",
+    "cell_maps": "Copy both IDs and InteriorFeatures using original FeatureIds with suffix _Map. This supports categorical inspection while preserving segmentation.",
+    "csv": "Comma delimiter, no feature-count line, and no packed neighbor lists retain a rectangular table. Row zero is omitted; unused positive rows remain. CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores."
+  },
+  "mcp": {
+    "user_intents": [
+      "Compare grain-centroid proximity at two physical scales",
+      "Inspect the tradeoff between assignment coverage and larger connected groups",
+      "Keep both spatial partitions traceable to the original grains"
+    ],
+    "questions_to_ask": [
+      "Is the interior-grain cohort suitable for the spatial question?",
+      "Are centroid coordinates finite and all expressed in the same physical units?",
+      "What physical length scale motivates a change to epsilon?"
+    ],
+    "constraints": [
+      "Run archive, 01, 02, and 03 before 09. Example 08 is an independent branch.",
+      "Preserve source geometry, FeatureIds, feature rows, measurements, and InteriorFeatures.",
+      "Do not replace physical centroid coordinates with scalar diameters or dummy components.",
+      "Explain the modified grid occupancy rule; do not treat another library DBSCAN as a direct numerical oracle.",
+      "Grid origin and axis alignment can affect grouping; do not claim rotation invariance.",
+      "Zero IDs mix excluded rows and selected-but-unassigned grains. Preserve both the original cohort and the radius-specific masks.",
+      "Summarize only each radius-specific Assigned mask; masked score zeros are placeholders.",
+      "Require at least two populated positive groups and finite scores before interpreting silhouette. A zero denominator produces NaN.",
+      "Explain native self-inclusive divisor n and the difference from canonical n-1 silhouette.",
+      "Do not rank the radii by mean score because assigned cohorts differ and connected networks can have negative scores.",
+      "Numeric group IDs have no ordering or correspondence between radii.",
+      "Spatial centroid groups are not phases, shared-boundary neighbors, new segmentation, or evidence of statistically significant clustering.",
+      "No radial distribution function or material-hardening inference is made.",
+      "Rerun predecessors after changing spacing, labels, or selection.",
+      "OOC, generated Python execution, native GUI execution, and cross-platform reproducibility require separate checks."
+    ],
+    "related_pipelines": [
+      "(02) Small IN100 Feature Measurements.d3dpipeline",
+      "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline"
+    ]
+  },
+  "last_verified": "2026-10-15",
+  "verification_status": "The ten-step pipeline passed native preflight and execution in Windows in-core Release at simplnx fe6c4a15e5a5bffef2523f52cec01be33b1e62a9. All 79 independent checks passed: 77 data and numerical checks plus two distinct-palette checks. This verifies the chosen Euclidean, minimum-grid-occupancy-2 case on this input; it does not establish general equivalence to canonical DBSCAN or physical clustering significance. OOC, generated Python, native GUI execution, and cross-platform reproducibility remain unverified.",
+  "validation": {
+    "date": "2026-10-15",
+    "configuration": "Windows in-core Release",
+    "status": "passed",
+    "source_revision": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native_tests": {
+      "passed": 2,
+      "total": 2,
+      "names": [
+        "CentroidNeighborhoods_preflight",
+        "CentroidNeighborhoods_execute"
+      ]
+    },
+    "independent_checks": {
+      "passed": 79,
+      "total": 79,
+      "data_and_numeric": 77,
+      "distinct_group_palettes": 2
+    },
+    "checks": [
+      "All predecessor datasets, including original FeatureIds, measurements, and InteriorFeatures, are unchanged.",
+      "All 1349 selected centroids are finite and unique.",
+      "Each complete native partition matches independently reconstructed strict-epsilon graph components containing grid cells with at least two centroids.",
+      "No selected pair lies exactly on either epsilon boundary.",
+      "Each score mask equals InteriorFeatures AND positive group IDs; excluded and unassigned score placeholders are zero.",
+      "Every assigned native silhouette matches independent pair distances with the self-inclusive own-group divisor; scores are finite and bounded.",
+      "All three cell maps match exact feature-index lookup through original FeatureIds.",
+      "CSV retains all 2334 positive rows and matches IDs exactly and scores at export precision.",
+      "Each radius uses a distinct display color for every positive group."
+    ],
+    "input_sha256": "fce6b9886290c484a3741d3b7aceb78867aeb49215682e183958654a5be97a4a",
+    "output_sha256": "8a76f85f61a5ce21a3ceeac5f503b5cb2ba5965803dd40b165808a4ce3924df1",
+    "csv_sha256": "43abb0124e34720c51cdcc6d5d930de4631dfca1ee1f3b1ac6ea05f0fb0ca9df",
+    "oracle": "Complete strict-epsilon point graph; retain components containing cells with at least two points. Compare memberships as sets, not numeric cluster IDs. Independently compute each masked self-inclusive silhouette.",
+    "scope_limit": "This oracle checks the chosen Euclidean/minimum-2 native variant on this input; not a general GDCF/canonical DBSCAN equivalence claim or physical clustering validation.",
+    "unverified": [
+      "OOC",
+      "generated Python",
+      "native GUI execution",
+      "cross-platform reproducibility",
+      "statistical clustering significance"
+    ]
+  },
+  "reference_results": {
+    "status": "verified_ten_step_native_output",
+    "selected_features": 1349,
+    "occupied_positive_features": 2317,
+    "unused_positive_rows": 17,
+    "reserved_row": 0,
+    "feature_csv_rows": 2334,
+    "radii": [
+      {
+        "epsilon_um": 2.5,
+        "minimum_grid_occupancy": 2,
+        "core_grid_count": 52,
+        "positive_groups": 23,
+        "assigned": 711,
+        "unassigned_selected": 638,
+        "excluded_feature_rows": 986,
+        "mean_assigned_native_silhouette": 0.012826523336469912,
+        "negative_assigned_scores": 348,
+        "cluster_sizes_by_native_id": {
+          "1": 33,
+          "2": 3,
+          "3": 192,
+          "4": 4,
+          "5": 57,
+          "6": 9,
+          "7": 5,
+          "8": 234,
+          "9": 16,
+          "10": 6,
+          "11": 27,
+          "12": 4,
+          "13": 44,
+          "14": 5,
+          "15": 7,
+          "16": 3,
+          "17": 3,
+          "18": 2,
+          "19": 2,
+          "20": 2,
+          "21": 44,
+          "22": 4,
+          "23": 5
+        }
+      },
+      {
+        "epsilon_um": 3.0,
+        "minimum_grid_occupancy": 2,
+        "core_grid_count": 81,
+        "positive_groups": 10,
+        "assigned": 1214,
+        "unassigned_selected": 135,
+        "excluded_feature_rows": 986,
+        "mean_assigned_native_silhouette": -0.4340829262979924,
+        "negative_assigned_scores": 1136,
+        "cluster_sizes_by_native_id": {
+          "1": 1050,
+          "2": 4,
+          "3": 2,
+          "4": 10,
+          "5": 4,
+          "6": 7,
+          "7": 3,
+          "8": 130,
+          "9": 2,
+          "10": 2
+        }
+      }
+    ],
+    "score_convention": "Own-group mean includes self-distance and divides by n. Only each radius-specific assignment mask enters its summary.",
+    "rounding_note": "CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores; DREAM3D arrays retain full stored precision."
+  },
+  "result_visual": {
+    "path": "SmallIN100CentroidNeighborhoods.png",
+    "role": "Native centroid group geometry and radius sensitivity; matching colors do not imply corresponding groups.",
+    "status": "generated_from_verified_native_output",
+    "source_output_sha256": "8a76f85f61a5ce21a3ceeac5f503b5cb2ba5965803dd40b165808a4ce3924df1",
+    "sha256": "bd34a44cbeb4936edbc4d22bf6ca9a23a5bc2c7a186641a5559d976687485b60",
+    "pixel_dimensions": [
+      1890,
+      825
+    ],
+    "distinct_colors_for_all_positive_groups": true,
+    "native_group_ids_preserved": true,
+    "visual_review": "Native-derived figure inspected: labels are readable without overlap."
+  },
+  "cli_usage": {
+    "instructions": "See README.md#quick-start-117-section-3d-example. Minimal order is archive -> 01 -> 02 -> 03 -> 09.",
+    "working_directory": "A chosen writable folder containing the predecessor checkpoint under Data/Output/Small_IN100_Examples/SurfaceSelection/.",
+    "relative_path_base": "The CLI resolves relative Data/... paths from its working directory.",
+    "gui_note": "Open the saved DREAM3D output and inspect the categorical group cell maps together with InteriorFeatures_Map. Native GUI execution is unverified."
+  },
+  "citations": [
+    {
+      "title": "DREAM.3D: A Digital Representation Environment for the Analysis of Microstructure in 3D",
+      "authors": [
+        "Michael Groeber",
+        "Michael Jackson"
+      ],
+      "year": 2014,
+      "journal": "Integrating Materials and Manufacturing Innovation",
+      "doi": "10.1186/2193-9772-3-5",
+      "url": "https://doi.org/10.1186/2193-9772-3-5",
+      "scope": "pipeline_workflow",
+      "role": "Scientific context for Small IN100 reconstruction and feature-level analysis; the centroid proximity comparison is an illustrative extension.",
+      "dataset": {
+        "availability": "The public Small_IN100 archive contains 117 measured ANG sections. The publisher supplements contain processed outputs; raw-source identity with the archive is not proven.",
+        "url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+        "doi": "",
+        "license": "The article is CC BY 2.0; separate archive redistribution terms were not established. This bundle includes no raw or processed volume files; its preview PNG is derived from the checked output.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Measured-derived centroid coordinates illustrate two proximity scales and native separation diagnostics. The radii and cohort are example choices, not paper findings or a reproduction of published results."
+      }
+    },
+    {
+      "title": "DBSCAN - DREAM3D-NX filter documentation",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "DREAM3D-NX documentation and simplnx source",
+      "doi": "",
+      "url": "https://www.dream3d.io/nx_reference_manual/html/SimplnxCore/DBSCANFilter.html",
+      "scope": "filter_algorithm",
+      "role": "Modified grid-based DBSCAN, per-cell Minimum Points, parse order, and physical distance parameters."
+    },
+    {
+      "title": "Silhouette - DREAM3D-NX filter documentation",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "DREAM3D-NX documentation and simplnx source",
+      "doi": "",
+      "url": "https://www.dream3d.io/nx_reference_manual/html/SimplnxCore/SilhouetteFilter.html",
+      "scope": "filter_algorithm",
+      "role": "Filter inputs and separation diagnostic; the pinned source defines the native self-inclusive mean."
+    },
+    {
+      "title": "simplnx DBSCAN and Silhouette implementations at fe6c4a15",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "DREAM3D-NX documentation and simplnx source",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/tree/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/Filters/Algorithms",
+      "scope": "filter_algorithm",
+      "role": "Pinned grid, mask, strict-distance, cluster-zero, and self-inclusive silhouette behavior."
+    }
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "role": "Read the surface-selection checkpoint. Preserve source geometry, FeatureIds, measurements, and masks.",
+      "input_paths": [
+        "Data/Output/Small_IN100_Examples/SurfaceSelection/SmallIN100_SurfaceSelection.dream3d"
+      ],
+      "output_paths": [
+        "DataContainer"
+      ],
+      "key_parameters": {
+        "import_data_object": {
+          "data_paths": [],
+          "file_path": "Data/Output/Small_IN100_Examples/SurfaceSelection/SmallIN100_SurfaceSelection.dream3d",
+          "path_import_policy": 0
+        }
+      },
+      "parameter_versions": {
+        "import_data_object": 2
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 1,
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "role": "Cluster measured interior-feature centroids in micrometers with epsilon 2.5 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/Centroids",
+        "DataContainer/Cell Feature Data/InteriorFeatures"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+        "DataContainer/CentroidDBSCAN2p5umGroups"
+      ],
+      "key_parameters": {
+        "parse_order_index": 0,
+        "seed_value": 5489,
+        "seed_array_name": "CentroidDBSCAN2p5umSeed",
+        "epsilon": 2.5,
+        "min_points": 2,
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/Centroids",
+        "mask_array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "feature_ids_array_name": "CentroidDBSCAN2p5umIds",
+        "feature_attribute_matrix_path": "DataContainer/CentroidDBSCAN2p5umGroups"
+      },
+      "parameter_versions": {
+        "parse_order_index": 1,
+        "seed_value": 1,
+        "seed_array_name": 1,
+        "epsilon": 1,
+        "min_points": 1,
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "mask_array_path": 1,
+        "feature_ids_array_name": 1,
+        "feature_attribute_matrix_path": 1
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 2,
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "role": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/InteriorFeatures",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umAssigned"
+      ],
+      "key_parameters": {
+        "array_thresholds_object": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+              "comparison": 0,
+              "component_index": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.0
+            },
+            {
+              "array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+              "comparison": 0,
+              "component_index": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "output_data_array_name": "CentroidDBSCAN2p5umAssigned",
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "parameter_versions": {
+        "array_thresholds_object": 2,
+        "created_mask_type": 1,
+        "custom_false_value": 1,
+        "custom_true_value": 1,
+        "output_data_array_name": 1,
+        "use_custom_false_value": 1,
+        "use_custom_true_value": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 3,
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "role": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/Centroids",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umAssigned"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umSilhouette"
+      ],
+      "key_parameters": {
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/Centroids",
+        "feature_ids_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+        "mask_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umAssigned",
+        "silhouette_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umSilhouette"
+      },
+      "parameter_versions": {
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "feature_ids_array_path": 1,
+        "mask_array_path": 1,
+        "silhouette_array_path": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 4,
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "role": "Cluster measured interior-feature centroids in micrometers with epsilon 3.0 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/Centroids",
+        "DataContainer/Cell Feature Data/InteriorFeatures"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+        "DataContainer/CentroidDBSCAN3umGroups"
+      ],
+      "key_parameters": {
+        "parse_order_index": 0,
+        "seed_value": 5489,
+        "seed_array_name": "CentroidDBSCAN3umSeed",
+        "epsilon": 3.0,
+        "min_points": 2,
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/Centroids",
+        "mask_array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "feature_ids_array_name": "CentroidDBSCAN3umIds",
+        "feature_attribute_matrix_path": "DataContainer/CentroidDBSCAN3umGroups"
+      },
+      "parameter_versions": {
+        "parse_order_index": 1,
+        "seed_value": 1,
+        "seed_array_name": 1,
+        "epsilon": 1,
+        "min_points": 1,
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "mask_array_path": 1,
+        "feature_ids_array_name": 1,
+        "feature_attribute_matrix_path": 1
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 5,
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "role": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/InteriorFeatures",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umAssigned"
+      ],
+      "key_parameters": {
+        "array_thresholds_object": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+              "comparison": 0,
+              "component_index": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.0
+            },
+            {
+              "array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+              "comparison": 0,
+              "component_index": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.0
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "output_data_array_name": "CentroidDBSCAN3umAssigned",
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "parameter_versions": {
+        "array_thresholds_object": 2,
+        "created_mask_type": 1,
+        "custom_false_value": 1,
+        "custom_true_value": 1,
+        "output_data_array_name": 1,
+        "use_custom_false_value": 1,
+        "use_custom_true_value": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 6,
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "role": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/Centroids",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umAssigned"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umSilhouette"
+      ],
+      "key_parameters": {
+        "distance_metric_index": 0,
+        "use_mask": true,
+        "selected_array_path": "DataContainer/Cell Feature Data/Centroids",
+        "feature_ids_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+        "mask_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN3umAssigned",
+        "silhouette_array_path": "DataContainer/Cell Feature Data/CentroidDBSCAN3umSilhouette"
+      },
+      "parameter_versions": {
+        "distance_metric_index": 1,
+        "use_mask": 1,
+        "selected_array_path": 1,
+        "feature_ids_array_path": 1,
+        "mask_array_path": 1,
+        "silhouette_array_path": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 7,
+      "filter": "CopyFeatureArrayToElementArrayFilter",
+      "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1",
+      "role": "Map both group IDs and the original cohort to cells for categorical visualization. Preserve the original FeatureIds segmentation; InteriorFeatures_Map distinguishes excluded cells from selected but unassigned grains.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+        "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+        "DataContainer/Cell Feature Data/InteriorFeatures",
+        "DataContainer/Cell Data/FeatureIds"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Data/CentroidDBSCAN2p5umIds_Map",
+        "DataContainer/Cell Data/CentroidDBSCAN3umIds_Map",
+        "DataContainer/Cell Data/InteriorFeatures_Map"
+      ],
+      "key_parameters": {
+        "selected_feature_array_paths": [
+          "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
+          "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
+          "DataContainer/Cell Feature Data/InteriorFeatures"
+        ],
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "created_array_suffix": "_Map"
+      },
+      "parameter_versions": {
+        "selected_feature_array_paths": 1,
+        "feature_ids_path": 1,
+        "created_array_suffix": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 8,
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "role": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data"
+      ],
+      "output_paths": [
+        "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.csv"
+      ],
+      "key_parameters": {
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "delimiter_index": 2,
+        "feature_data_file": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.csv",
+        "write_neighborlist_data": false,
+        "write_num_features_line": false
+      },
+      "parameter_versions": {
+        "cell_feature_attribute_matrix_path": 1,
+        "delimiter_index": 1,
+        "feature_data_file": 1,
+        "write_neighborlist_data": 1,
+        "write_num_features_line": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 9,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays.",
+      "input_paths": [
+        "DataContainer"
+      ],
+      "output_paths": [
+        "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.dream3d"
+      ],
+      "key_parameters": {
+        "compression_level": 5,
+        "export_file_path": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.dream3d",
+        "use_compression": true,
+        "write_xdmf_file": false
+      },
+      "parameter_versions": {
+        "compression_level": 1,
+        "export_file_path": 1,
+        "use_compression": 1,
+        "write_xdmf_file": 1
+      },
+      "parameters_version": 2
+    }
+  ]
+}
