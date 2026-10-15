@@ -18,8 +18,8 @@
   "path_rules": {
     "pipeline_reference_base": "pipeline_suite_root",
     "runtime_data_base": "chosen_cli_working_directory",
-    "input_paths": "Preserve the exact Geometry mesh, stage 01 grain-shell, stage 02 measurement and stage 03 registration checkpoint paths.",
-    "output_paths": "Preserve the exact Small_IN100_Grain_Surface_Examples/Extraction, Measurements, Registration, Interchange and Curvature paths."
+    "input_paths": "Preserve the exact Geometry mesh, stage 01 grain-shell and stage 03 registration checkpoint paths.",
+    "output_paths": "Preserve the exact Small_IN100_Grain_Surface_Examples/Extraction, Measurements, Registration and Interchange paths. Stage 02 stores curvature on the existing Measurements checkpoint."
   },
   "generation": {
     "language": "Python",
@@ -29,7 +29,7 @@
       "Load the .d3dpipeline using simplnx.Pipeline.from_file(pipeline_path).",
       "Call simplnx_utilities.generate_python_pipeline(pipeline).",
       "Compile and write the result to a temporary .py file.",
-      "Run stage 01 after the Geometry predecessor. Stages 02 and 03 independently read stage 01; stage 04 requires the saved stage 03 HDF5 file even for preflight. Stage 05 reads stage 02 and does not require stages 03 or 04. Use the documented writable working folder."
+      "Run stage 01 after the Geometry predecessor. Stages 02 and 03 independently read stage 01; stage 04 requires the saved stage 03 HDF5 file even for preflight. Stage 02 includes the local curvature-fit comparison in the same checkpoint. Use the documented writable working folder."
     ],
     "reference_code": [
       "import simplnx as nx",
@@ -51,8 +51,8 @@
   },
   "gui_note": "GUI working folders vary; use absolute file parameters when relative paths do not resolve.",
   "sampling_contract": "Regenerate all 47 steps of stage 03: sample geometry only (no face attribute transfer), recompute nearest-triangle association, retain fixed seed 2205 and explicit Micrometer copies, compare hull pitches 0.25/0.5, and partition DataContainer image cells rather than the vertex geometry. Preserve source grain IDs.",
-  "grid_sampling_contract": "Regenerate all 28 measurement-stage steps. Retain measurement labels [-1,1] and original mapping; sampling labels are [0,1]. Use existing source geometry for regular sampling, fixed seed 2205 and physical uncertainty bounds 0.05/0.20, rebuild associated cubic image outputs for issue 1800, and preserve nominal storage positions. No triangle-shape calculation is delivered.",
+  "grid_sampling_contract": "Regenerate all 31 measurement-stage steps. Retain measurement labels [-1,1] and original mapping; sampling labels are [0,1]. Use existing source geometry for regular sampling, fixed seed 2205 and physical uncertainty bounds 0.05/0.20, rebuild associated cubic image outputs for issue 1800, and preserve nominal storage positions. No triangle-shape calculation is delivered.",
   "matrix_composition_contract": "Regenerate all 47 stage 03 steps. Save native scalar-entry rotation/translation matrices from SequentialChallenge; list R then T to obtain T*R, apply that once to MovingChallenge, and retain R*T only as an alternate-order matrix. Preserve KnownTransform and original registration results.",
   "node_table_contract": "Regenerate all 16 extraction-stage steps and preserve both numbered/headered space-delimited text outputs. Node/element numbering starts at zero; triangle connectivity refers to compact Grain2205 vertices; coordinates are rounded to four decimal places in micrometers. Retain native ownership and units in DREAM3D.",
-  "curvature_contract": "Regenerate all five stage 05 steps. Preserve import of Grain2205 only, native face centroids, ring 1, both use_normals settings, all-one SurfaceRegionIds paired with uniform LocalSurfaceLabels [-1,1], original provenance and Micrometer geometry. Keep all scalar and direction fields enabled and experimental Weingarten output disabled. Both fits use seed normals; true adds cubic centroid terms without adjacent-normal equations or row weighting. Do not reinterpret this faceted-envelope diagnostic as the complete published method or physical smooth-boundary curvature."
+  "curvature_contract": "Regenerate all 31 stage 02 steps, including the three curvature computations immediately before its final writer. Preserve the stage 01 input, existing measurements and scalar CSV, native face centroids, ring 1, both use_normals settings, all-one SurfaceRegionIds paired with uniform LocalSurfaceLabels [-1,1], original provenance and Micrometer geometry. Keep all scalar and direction fields enabled and experimental Weingarten output disabled. Both fits use seed normals; true adds cubic centroid terms without adjacent-normal equations or row weighting. Do not reinterpret this faceted-envelope diagnostic as the complete published method or physical smooth-boundary curvature."
 }

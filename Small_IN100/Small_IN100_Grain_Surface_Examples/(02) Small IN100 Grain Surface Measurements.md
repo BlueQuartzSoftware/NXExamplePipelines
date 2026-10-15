@@ -1,16 +1,16 @@
 # Small IN100 grain surface measurements
 
 - Executable pipeline: `(02) Small IN100 Grain Surface Measurements.d3dpipeline`
-- Source Material: [Groeber and Jackson (2014), DREAM.3D](https://doi.org/10.1186/2193-9772-3-5) (reconstruction and feature-analysis context; illustrative example).
+- Source Material: [Groeber and Jackson (2014), DREAM.3D](https://doi.org/10.1186/2193-9772-3-5) (reconstruction context); [Goldfeather and Interrante (2004), A Novel Cubic-Order Algorithm for Approximating Principal Direction Vectors](https://doi.org/10.1145/966131.966134) ([author PDF](https://www-users.cse.umn.edu/~interran/papers/tog04.pdf), local-fit methods and limitations). Both are illustrative references, not numerical reproduction targets.
 - Input Data: [Small_IN100.tar.gz](https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz): extract all 117 ANG sections to `Data/Small_IN100/` (also supplied in the normal example-data package). Run the documented predecessors to create `Data/Output/Small_IN100_Grain_Surface_Examples/Extraction/SmallIN100_Grain2205_Surface.dream3d`.
 
-> **Before adapting:** Verify a complete closed shell, its local label mapping and grid calibration. The perturbation bounds are illustrative positioning scenarios, not measured instrument uncertainty.
+> **Before adapting:** Verify a complete closed shell, its local label mapping and grid calibration. Positioning bounds are illustrative, not measured instrument uncertainty. Local fits describe an unsmoothed faceted envelope; they do not establish physical smooth-boundary curvature, stress, boundary energy, or growth rate.
 
 ## At a glance
 
 - **Input:** The complete, winding-repaired [grain 2205 shell](%2801%29%20Small%20IN100%20Complete%20Grain%20Surface.md).
-- **Question:** Does sampling recover the original grain, how do vertex and volume centers differ, and how do positioning offsets change apparent membership?
-- **Output:** `SmallIN100_Grain2205_Measurements.dream3d` and a scalar feature CSV with the explicit local-to-original ID map.
+- **Question:** Does sampling recover the original grain, how do vertex and volume centers differ, how do positioning offsets change apparent membership, and how sensitive are local curvature fields to the fit model?
+- **Output:** `SmallIN100_Grain2205_Measurements.dream3d` with scalar measurements, grid comparisons and both face-level curvature fits, plus the unchanged scalar feature CSV and local-to-original ID map.
 - **Run order:** Archive → Feature Preparation → Surface Mesh → Complete Grain Surface → this pipeline. See [README](README.md) for paths and commands.
 
 ## Purpose and real-world setting
@@ -57,8 +57,40 @@ Regular sampling recovers all 170 source grain cells. `Grain2205/Grain Measureme
 
 Inspect each jitter geometry's `Cell Data/{GrainIds,ChangedFromNominal}` and row 1 of `Grain Measurements`. The mesh is unchanged: the apparent volume difference comes from counting sampled labels on nominal cells. One seeded realization is a sensitivity illustration, not a confidence interval. For another mesh, even small perturbations may change membership when nominal centers lie close to its surface.
 
+## Local curvature-fit comparison
+
+After the scalar CSV export, three steps compute `CurvatureFaceCentroids` and quadratic/cubic fits on the same 508-face, 256-vertex `Grain2205` shell. The final writer saves these face arrays in the existing `SmallIN100_Grain2205_Measurements.dream3d`; no additional input checkpoint or output folder is needed. Area and volume summarize the whole grain, while curvature describes local changes in this faceted representation. Neither a larger magnitude nor a smoother-looking field establishes better accuracy.
+
+All-one `SurfaceRegionIds` must stay paired with uniform `LocalSurfaceLabels = [-1,1]` for the complete grain-versus-complement envelope. `OriginalFaceLabels` retains six original neighboring-grain pairs as provenance. **Never pair the all-one region IDs with those mixed original pairs.** Separate physical interfaces need consistent pair-based grouping and treatment of interface edges and triple lines.
+
+Ring 1 includes the seed and qualifying triangles sharing a vertex: 9–19 triangles per patch here. It is a topological neighborhood, not a distance in micrometers; no physical-radius parameter exists. The known [local-frame defect (#1819)](https://github.com/BlueQuartzSoftware/simplnx/issues/1819) can produce nonfinite directions without an error, including on a closed cube with ring 2. This ring-1 result is specific to this shell; larger rings and other meshes require separate checks.
+
+Both fits use the same seed face normals to define their local tangent frames and fit neighboring **face centroids**, not mesh vertices:
+
+| Output prefix | `use_normals` | Terms in the current implementation |
+|---|---|---|
+| `Quadratic` | `false` | x²/2, xy, y²/2. |
+| `Cubic` | `true` | The same terms plus x³, x²y, xy², y³. |
+
+The GUI calls this toggle **Use Face Normals for Curve Fitting**. Normals are required in both modes; the toggle adds cubic centroid terms without adjacent-normal equations or row weighting. Goldfeather and Interrante section 4.3 instead combines vertex positions with two constraints per adjacent vertex normal and scales the equations. Its full method and reported accuracy advantage are not reproduced here. Experimental Weingarten matrix output stays disabled.
+
+Under `Grain2205/Face Data`, each prefix has `K1`, `K2`, `Mean`, `Gaussian`, `Direction1` and `Direction2`. K1 ≥ K2, Mean = (K1 + K2)/2 and Gaussian = K1 × K2. K1, K2 and Mean use µm⁻¹; Gaussian uses µm⁻². `CurvatureFaceCentroids` contains XYZ micrometer coordinates. Directions are dimensionless unit tangent vectors in the geometry frame.
+
+![Both native mean-curvature fits on the unchanged grain shell and their face-by-face comparison](SmallIN100CurvatureFits.png)
+
+The surface panels share a −24 to +24 µm⁻¹ scale; the scatter includes every face and the equality line. Reference-run Mean values are:
+
+| Fit | Minimum (µm⁻¹) | Median (µm⁻¹) | Maximum (µm⁻¹) |
+|---|---:|---:|---:|
+| Quadratic | −3.5829 | 0.4584 | 10.0773 |
+| Cubic | −23.9783 | 2.8615 | 23.9784 |
+
+These values show fit sensitivity, not physical acceptance limits or superiority. Signed curvature depends on winding and normal orientation. Principal directions are axes with arbitrary vector sign, nonunique at equal curvature and unstable near equality; direction flips need not indicate a physical discontinuity.
+
 ## Adapting and checking the workflow
 
 If the source contains multiple disconnected shells, cavities, or open surfaces, decide how each local region should map to original features before reusing `[-1,1]`; this fixed pair is designed for one outward-oriented closed grain. Update the `OriginalFeatureIds` mapping and the row count together. Recheck shell edge incidence, connectedness, winding, nonzero face areas, and signed volume independently. The volume filter stores the absolute result, so a positive value alone does not certify outward winding. Compare its output to a separately computed source-voxel volume only when the original feature is completely retained and the meshing method is known to preserve that volume.
+
+Before fitting another grain, also check finite centroids, normals, outputs and tangent directions, especially at sharp joins. Compare neighborhoods against a suitable geometric reference. No smoothing or remeshing is performed; any such study must assess changes in geometry, scale and curvature separately.
 
 Alternative measurements serve different questions. A source-voxel centroid integrates the segmented volume; an area centroid weights triangle areas; `SurfaceVertexMeans` averages unique vertices. Triangle-shape calculations remain deferred because rigid rotation changes their current Omega3 and axis-length results ([#1801](https://github.com/BlueQuartzSoftware/simplnx/issues/1801), [#1802](https://github.com/BlueQuartzSoftware/simplnx/issues/1802)); no such shape outputs are included here. The public [Small IN100 archive](https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz) supplies measured sections; the article is CC BY 2.0, while separate archive redistribution terms have not been established. No volume file is packaged here. Use the `.d3dpipeline` for exact paths, local-ID conventions and arguments.

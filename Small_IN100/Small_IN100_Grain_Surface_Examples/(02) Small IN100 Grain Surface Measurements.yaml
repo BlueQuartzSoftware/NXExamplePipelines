@@ -3,16 +3,20 @@
   "pipeline_file": "(02) Small IN100 Grain Surface Measurements.d3dpipeline",
   "markdown_file": "(02) Small IN100 Grain Surface Measurements.md",
   "title": "Small IN100 Grain Surface Measurements",
-  "summary": "Measure the complete grain shell, recover its source-grid membership and volume centroid, and compare apparent membership under two bounded correlated positioning scenarios.",
+  "summary": "Measure the complete grain shell, recover source-grid membership and volume centroid, compare bounded positioning scenarios, and inspect quadratic/cubic local curvature-fit sensitivity on the same envelope.",
   "primary_industries": [
     "Materials characterization"
   ],
   "secondary_industries": [
     "Metallurgy",
-    "Computational geometry"
+    "Computational geometry",
+    "Surface geometry analysis"
   ],
   "use_cases": [
-    "Measure the enclosed volume and mean unique surface-vertex position of a closed Small IN100 grain shell while mapping local region 1 to original FeatureId 2205."
+    "Measure the enclosed volume and mean unique surface-vertex position of a closed Small IN100 grain shell while mapping local region 1 to original FeatureId 2205.",
+    "Inspect local curvature-fit sensitivity on a measured-derived faceted grain envelope.",
+    "Compare polynomial terms while holding geometry, face centroids, seed normals and ring neighborhood fixed.",
+    "Retain original neighboring-grain identity while grouping a binary grain-versus-complement surface."
   ],
   "keywords": [
     "Small IN100",
@@ -20,7 +24,19 @@
     "grain volume",
     "surface vertex mean",
     "local region labels",
-    "identity map"
+    "identity map",
+    "grain envelope",
+    "surface curvature",
+    "quadratic fit",
+    "cubic fit",
+    "face centroid",
+    "principal curvature",
+    "mean curvature",
+    "Gaussian curvature",
+    "principal directions",
+    "neighborhood ring",
+    "normal orientation",
+    "faceted surface"
   ],
   "inputs": [
     {
@@ -31,12 +47,14 @@
   "outputs": [
     {
       "path": "Data/Output/Small_IN100_Grain_Surface_Examples/Measurements/SmallIN100_Grain2205_Measurements.dream3d",
-      "role": "Full shell and local-to-original identity map with enclosed volume and unique-vertex mean. Includes MeshSampledGrainIds, voxel volume centroids, Jitter005/Jitter020 calibrated grids, local counts/volumes and ChangedFromNominal flags.",
-      "sha256": "7ec1e44f1259bf91211e209ac75ab01ac6f73e1168ce128c9d4116394539a2b0"
+      "role": "Full shell and local-to-original identity map with enclosed volume and unique-vertex mean. Includes MeshSampledGrainIds, voxel volume centroids, Jitter005/Jitter020 calibrated grids, local counts/volumes and ChangedFromNominal flags. Also retains CurvatureFaceCentroids and both Quadratic/Cubic K1, K2, Mean, Gaussian, Direction1 and Direction2 fields under Grain2205/Face Data; geometry is unchanged.",
+      "verified_sha256": "22bcbc565834147588e0ffc4c0235bfe85f928631a39ac79e621a1475160c5d7",
+      "checksum_scope": "Observed 2026-10-15 consolidated run; upstream HDF5 file bytes may vary between chain runs."
     },
     {
       "path": "Data/Output/Small_IN100_Grain_Surface_Examples/Measurements/SmallIN100_Grain2205_Measurements.csv",
-      "role": "Scalar feature CSV with count/header and one occupied data row: local Feature_ID 1 maps to original 2205. The DREAM3D matrix retains rows 0 and 1. Original named fields retained; nominal voxel count, volume, equivalent diameter and volume-centroid columns added."
+      "role": "Scalar feature CSV with count/header and one occupied data row: local Feature_ID 1 maps to original 2205. The DREAM3D matrix retains rows 0 and 1. Original named fields retained; nominal voxel count, volume, equivalent diameter and volume-centroid columns added.",
+      "verified_sha256": "4c397fdf195de13a09e6e488d49c66b818dbc0a7f58ea3a0ce81ef94fd50e64c"
     }
   ],
   "input_data_strategy": {
@@ -48,14 +66,18 @@
     "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
     "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
     "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
-    "reference_visual": "Groeber and Jackson (2014) for reconstructed 3D EBSD geometry context; no paper figure is a numerical target for grain 2205.",
+    "reference_visual": "Groeber and Jackson (2014), Figure 5, supplies the 3D EBSD reconstruction setting. Goldfeather and Interrante (2004), sections 4.2-4.3, describe local polynomial fits; no paper figure or numerical result is reproduced.",
     "target_traits": [
       "117 measured ANG sections in the source archive",
       "24 by 24 by 24 interior measured-derived crop",
       "original FeatureId 2205 occupies all 170 source voxels inside the crop",
-      "unsmoothed shared-interface surface, 0.25 micrometer source spacing"
+      "unsmoothed shared-interface surface, 0.25 micrometer source spacing",
+      "Complete unsmoothed grain 2205 envelope with 508 faces and 256 vertices",
+      "All-one SurfaceRegionIds paired with uniform local labels [-1,1]; six original neighboring-grain pairs retained separately",
+      "Ring-1 vertex-connected neighborhoods contain 9 to 19 triangles including the seed face",
+      "Both fits use the same native face centroids, seed normals, geometry, and source identity"
     ],
-    "known_differences": "This chosen grain, ROI, modern SurfaceNets reconstruction, extraction, and measurement are illustrative. Exact identity with the publisher supplement or a numerical paper result is not established. Seeded 0.05 and 0.20 micrometer position offsets are illustrative sensitivity scenarios, not measured instrument uncertainty. X changes per point, Y per row and Z per slice; output labels stay on nominal grid positions. Triangle-shape outputs are deferred for rotation-dependence issues 1801/1802.",
+    "known_differences": "This chosen grain, ROI, modern SurfaceNets reconstruction, extraction, and measurement are illustrative. Exact identity with the publisher supplement or a numerical paper result is not established. Seeded 0.05 and 0.20 micrometer position offsets are illustrative sensitivity scenarios, not measured instrument uncertainty. X changes per point, Y per row and Z per slice; output labels stay on nominal grid positions. Triangle-shape outputs are deferred for rotation-dependence issues 1801/1802. The selected grain, modern reconstruction and faceted binary envelope are illustrative. They are not a known smooth grain boundary. Both fits use face centroids and seed normals; use_normals=true adds cubic centroid monomials without neighboring-normal constraints or row weighting. This differs from Goldfeather and Interrante section 4.3, which uses mesh vertices, adjacent-normal constraints, and scaled equations. No published accuracy claim is transferred. No smoothing, physical curvature validation, stress, boundary-energy, or growth-rate inference is supplied.",
     "archive_provenance_file": "README.md"
   },
   "prerequisites": [
@@ -769,6 +791,187 @@
     },
     {
       "index": 27,
+      "filter": "TriangleCentroidFilter",
+      "uuid": "5d7156ae-3e0a-4db0-a792-552f492e8911",
+      "role": "Compute native face-centroid XYZ coordinates in micrometers for both fits; these are not the volume centroid.",
+      "paths": [
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "Grain2205"
+        }
+      ],
+      "key_parameters": {
+        "input_triangle_geometry_path": "Grain2205",
+        "centroids_array_name": "CurvatureFaceCentroids"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 28,
+      "filter": "FeatureFaceCurvatureFilter",
+      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
+      "role": "Fit three quadratic centroid terms in the seed-normal frame on each ring-1 patch. Preserve the complete grain-versus-complement grouping and all original identities.",
+      "paths": [
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "Grain2205"
+        },
+        {
+          "parameter": "face_attribute_matrix_path",
+          "value": "Grain2205/Face Data"
+        },
+        {
+          "parameter": "face_labels_path",
+          "value": "Grain2205/Face Data/LocalSurfaceLabels"
+        },
+        {
+          "parameter": "feature_face_ids_path",
+          "value": "Grain2205/Face Data/SurfaceRegionIds"
+        },
+        {
+          "parameter": "face_normals_path",
+          "value": "Grain2205/Face Data/FaceNormals"
+        },
+        {
+          "parameter": "face_centroids_path",
+          "value": "Grain2205/Face Data/CurvatureFaceCentroids"
+        },
+        {
+          "parameter": "principal_curvature_1_path",
+          "value": "Grain2205/Face Data/QuadraticK1"
+        },
+        {
+          "parameter": "principal_curvature_2_path",
+          "value": "Grain2205/Face Data/QuadraticK2"
+        },
+        {
+          "parameter": "principal_direction_1_path",
+          "value": "Grain2205/Face Data/QuadraticDirection1"
+        },
+        {
+          "parameter": "principal_direction_2_path",
+          "value": "Grain2205/Face Data/QuadraticDirection2"
+        },
+        {
+          "parameter": "gaussian_curvature_path",
+          "value": "Grain2205/Face Data/QuadraticGaussian"
+        },
+        {
+          "parameter": "mean_curvature_path",
+          "value": "Grain2205/Face Data/QuadraticMean"
+        },
+        {
+          "parameter": "weingarten_matrix_path",
+          "value": "Grain2205/Face Data/QuadraticWeingarten"
+        }
+      ],
+      "key_parameters": {
+        "input_triangle_geometry_path": "Grain2205",
+        "neighborhood_ring": 1,
+        "compute_principal_direction": true,
+        "compute_gaussian_curvature": true,
+        "compute_mean_curvature_path": true,
+        "compute_weingarten_matrix": false,
+        "use_normals": false,
+        "face_attribute_matrix_path": "Grain2205/Face Data",
+        "face_labels_path": "Grain2205/Face Data/LocalSurfaceLabels",
+        "feature_face_ids_path": "Grain2205/Face Data/SurfaceRegionIds",
+        "face_normals_path": "Grain2205/Face Data/FaceNormals",
+        "face_centroids_path": "Grain2205/Face Data/CurvatureFaceCentroids",
+        "principal_curvature_1_path": "Grain2205/Face Data/QuadraticK1",
+        "principal_curvature_2_path": "Grain2205/Face Data/QuadraticK2",
+        "principal_direction_1_path": "Grain2205/Face Data/QuadraticDirection1",
+        "principal_direction_2_path": "Grain2205/Face Data/QuadraticDirection2",
+        "gaussian_curvature_path": "Grain2205/Face Data/QuadraticGaussian",
+        "mean_curvature_path": "Grain2205/Face Data/QuadraticMean",
+        "weingarten_matrix_path": "Grain2205/Face Data/QuadraticWeingarten"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 29,
+      "filter": "FeatureFaceCurvatureFilter",
+      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
+      "role": "Fit the same patches and seed-normal frames with four additional cubic centroid monomials. The toggle does not add neighboring-normal constraints or row weighting.",
+      "paths": [
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "Grain2205"
+        },
+        {
+          "parameter": "face_attribute_matrix_path",
+          "value": "Grain2205/Face Data"
+        },
+        {
+          "parameter": "face_labels_path",
+          "value": "Grain2205/Face Data/LocalSurfaceLabels"
+        },
+        {
+          "parameter": "feature_face_ids_path",
+          "value": "Grain2205/Face Data/SurfaceRegionIds"
+        },
+        {
+          "parameter": "face_normals_path",
+          "value": "Grain2205/Face Data/FaceNormals"
+        },
+        {
+          "parameter": "face_centroids_path",
+          "value": "Grain2205/Face Data/CurvatureFaceCentroids"
+        },
+        {
+          "parameter": "principal_curvature_1_path",
+          "value": "Grain2205/Face Data/CubicK1"
+        },
+        {
+          "parameter": "principal_curvature_2_path",
+          "value": "Grain2205/Face Data/CubicK2"
+        },
+        {
+          "parameter": "principal_direction_1_path",
+          "value": "Grain2205/Face Data/CubicDirection1"
+        },
+        {
+          "parameter": "principal_direction_2_path",
+          "value": "Grain2205/Face Data/CubicDirection2"
+        },
+        {
+          "parameter": "gaussian_curvature_path",
+          "value": "Grain2205/Face Data/CubicGaussian"
+        },
+        {
+          "parameter": "mean_curvature_path",
+          "value": "Grain2205/Face Data/CubicMean"
+        },
+        {
+          "parameter": "weingarten_matrix_path",
+          "value": "Grain2205/Face Data/CubicWeingarten"
+        }
+      ],
+      "key_parameters": {
+        "input_triangle_geometry_path": "Grain2205",
+        "neighborhood_ring": 1,
+        "compute_principal_direction": true,
+        "compute_gaussian_curvature": true,
+        "compute_mean_curvature_path": true,
+        "compute_weingarten_matrix": false,
+        "use_normals": true,
+        "face_attribute_matrix_path": "Grain2205/Face Data",
+        "face_labels_path": "Grain2205/Face Data/LocalSurfaceLabels",
+        "feature_face_ids_path": "Grain2205/Face Data/SurfaceRegionIds",
+        "face_normals_path": "Grain2205/Face Data/FaceNormals",
+        "face_centroids_path": "Grain2205/Face Data/CurvatureFaceCentroids",
+        "principal_curvature_1_path": "Grain2205/Face Data/CubicK1",
+        "principal_curvature_2_path": "Grain2205/Face Data/CubicK2",
+        "principal_direction_1_path": "Grain2205/Face Data/CubicDirection1",
+        "principal_direction_2_path": "Grain2205/Face Data/CubicDirection2",
+        "gaussian_curvature_path": "Grain2205/Face Data/CubicGaussian",
+        "mean_curvature_path": "Grain2205/Face Data/CubicMean",
+        "weingarten_matrix_path": "Grain2205/Face Data/CubicWeingarten"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 30,
       "filter": "WriteDREAM3DFilter",
       "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
       "role": "Save the calibrated shell with original identity, local labels, and audited measurements.",
@@ -809,25 +1012,62 @@
         "reproduction_status": "illustrative",
         "reproduction_notes": "Selected interior grain 2205 from a current measured-derived Small IN100 reconstruction; no exact published numerical output is reproduced."
       }
+    },
+    {
+      "title": "A Novel Cubic-Order Algorithm for Approximating Principal Direction Vectors",
+      "authors": [
+        "Jack Goldfeather",
+        "Victoria Interrante"
+      ],
+      "year": 2004,
+      "journal": "ACM Transactions on Graphics",
+      "volume": 23,
+      "issue": 1,
+      "pages": "45-63",
+      "doi": "10.1145/966131.966134",
+      "url": "https://doi.org/10.1145/966131.966134",
+      "author_url": "https://www-users.cse.umn.edu/~interran/papers/tog04.pdf",
+      "scope": "filter_algorithm",
+      "role": "Sections 4.2 and 4.3 explain quadratic and adjacent-normal cubic local surface fitting, and the paper examines mesh and normal sensitivity. The current native filter uses face centroids and omits the section 4.3 adjacent-normal constraints and row scaling; this example does not reproduce that full method or claim its accuracy advantage."
     }
   ],
-  "last_verified": "2026-10-14",
-  "verification_status": "Native Windows in-memory Release with independent source-voxel membership and seeded-position checks. Materials interpretation, OOC, generated Python, GUI and full installation remain separate checks.",
+  "last_verified": "2026-10-15",
+  "verification_status": "Combined 31-step pipeline passed native preflight and execution on the matching Windows in-memory Release runtime. All 67 baseline datasets and the scalar CSV are unchanged; the 13 new face arrays match the verified standalone output exactly. Historical grid and analytic curvature checks retain their original scope. Materials interpretation, OOC, generated Python, GUI and full installation remain separate checks.",
   "mcp": {
     "user_intents": [
-      "Measure the enclosed volume and mean unique surface-vertex position of a closed Small IN100 grain shell while mapping local region 1 to original FeatureId 2205."
+      "Measure the enclosed volume and mean unique surface-vertex position of a closed Small IN100 grain shell while mapping local region 1 to original FeatureId 2205.",
+      "Compare the response of local polynomial curvature fits to the same faceted grain surface.",
+      "Inspect principal and derived curvature fields without altering mesh geometry or original neighboring-grain provenance."
     ],
     "questions_to_ask": [
       "Is the source shell independently closed and outward oriented?",
       "Does the user need a volume centroid or unique-surface-vertex mean?",
-      "How should local region IDs map to original reconstructed labels?"
+      "How should local region IDs map to original reconstructed labels?",
+      "Is the intended result a reconstruction diagnostic or a physical smooth-boundary measurement?",
+      "Are geometry, normals, winding, units and face identities consistent?",
+      "Does grouping describe the full grain-versus-complement envelope or separate physical neighboring interfaces?",
+      "What independent geometric reference and neighborhood scale will support an adapted interpretation?"
     ],
     "constraints": [
       "Read the stage 01 checkpoint; do not reinterpret original neighbor FaceLabels as local closed regions.",
       "LocalSurfaceLabels is [-1,1] for the single outward shell.",
       "OriginalFeatureIds maps local row 1 to source FeatureId 2205; row 0 is unused.",
       "SurfaceVertexMeans averages distinct surface vertices, not enclosed volume.",
-      "Positive output volume alone does not certify closure or outward winding."
+      "Positive output volume alone does not certify closure or outward winding.",
+      "Compute both local curvature fits in this measurement stage before the final writer. Keep the existing measurement checkpoint and scalar CSV; curvature fields are face arrays in the native checkpoint.",
+      "Preserve the 508-face, 256-vertex unsmoothed shell, Micrometer units and original identities; the source spacing is 0.25 micrometers.",
+      "Pair all-one SurfaceRegionIds only with uniform LocalSurfaceLabels [-1,1]. OriginalFaceLabels has six neighboring-grain pairs and remains provenance; never pair it with all-one IDs.",
+      "Ring 1 includes the seed and matching-label triangles sharing vertices, giving 9 to 19 triangles per patch here. It is not a physical-distance radius. Issue 1819 (https://github.com/BlueQuartzSoftware/simplnx/issues/1819) records nonfinite directions without a reported error from a singular local frame, including a ring-2 closed cube. This ring-1 result is specific to this shell; larger rings are not automatically better, and other meshes require separate checks.",
+      "Both modes use the seed face normal to define the local frame and use face centroids, not vertices, as fitting locations.",
+      "use_normals=false fits x^2/2, x*y and y^2/2; true adds x^3, x^2*y, x*y^2 and y^3. It does not add neighboring-normal equations or row weighting in the current implementation.",
+      "Do not claim reproduction of Goldfeather and Interrante section 4.3 or transfer its reported accuracy advantage to this implementation.",
+      "Enable principal directions, mean and Gaussian curvature for both fits. Keep experimental Weingarten output disabled.",
+      "K1>=K2, Mean=(K1+K2)/2 and Gaussian=K1*K2. K1, K2 and Mean have units micrometer^-1; Gaussian has units micrometer^-2.",
+      "CurvatureFaceCentroids contains XYZ micrometer coordinates; principal directions are dimensionless unit tangent vectors in the geometry coordinate system.",
+      "Signed curvature depends on winding and normals. Principal directions are axes with arbitrary vector sign, nonunique at equal curvature and unstable near equality.",
+      "Compare both Mean fields with a shared display range. Larger magnitudes or a smoother appearance do not establish better accuracy.",
+      "Do not infer physical smooth grain-boundary curvature, stress, boundary energy or growth rate from these faceted-envelope diagnostic outputs.",
+      "No smoothing or remeshing is performed. Adaptation must separately assess geometry, scale, topology and local fit behavior against a suitable reference."
     ],
     "related_pipelines": [
       "(01) Small IN100 Complete Grain Surface.d3dpipeline"
@@ -941,6 +1181,86 @@
       "data_rows": 1,
       "local_feature_id": 1,
       "original_feature_id": 2205
+    },
+    "scope": "Historical grid-sampling checks for the original 28-step measurement pipeline. Consolidation preserves those dataset values and CSV exactly."
+  },
+  "pipeline_sha256": "155f269e17e8f7f606bdd62be1947286e4d2ae67080e7906a9eff520792c1ae5",
+  "curvature_visual": {
+    "file": "SmallIN100CurvatureFits.png",
+    "source_arrays": [
+      "Grain2205/Face Data/QuadraticMean",
+      "Grain2205/Face Data/CubicMean"
+    ],
+    "color_map": "Matplotlib coolwarm",
+    "shared_range_um_inverse": [
+      -24,
+      24
+    ],
+    "clipped_values": 0,
+    "scientific_recalculation": false
+  },
+  "prior_curvature_validation": {
+    "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "configuration": "Windows x64 Release, in-memory, SimplnxCore and OrientationAnalysis enabled",
+    "pipeline_checks": "Final repository pipeline preflight and execution passed. The rerun emitted only the expected existing-output overwrite warning (-6).",
+    "independent_output_checks": 77,
+    "scope": "Historical standalone-stage verification before consolidation. All 19 imported datasets unchanged, closed-shell geometry, local labeling, finite outputs, curvature identities, unit/tangent/orthogonal directions, and zero estimates on eight entirely planar one-ring patches.",
+    "analytic_controls": "Separate compiled native plane, sphere-refinement and transformation controls: 3 CTest cases, 82507 assertions passed for both fit modes; scaling, rotation/translation and winding reversal included.",
+    "known_issue": "https://github.com/BlueQuartzSoftware/simplnx/issues/1819",
+    "unverified": [
+      "Scientific interpretation and materials approval",
+      "GUI behavior",
+      "OOC execution",
+      "Generated Python execution",
+      "Full application installation"
+    ],
+    "figure": {
+      "file": "SmallIN100CurvatureFits.png",
+      "source_arrays": [
+        "Grain2205/Face Data/QuadraticMean",
+        "Grain2205/Face Data/CubicMean"
+      ],
+      "color_map": "Matplotlib coolwarm",
+      "shared_range_um_inverse": [
+        -24,
+        24
+      ],
+      "clipped_values": 0,
+      "scientific_recalculation": false
     }
+  },
+  "consolidation_validation": {
+    "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "configuration": "Windows x64 Release, in-memory; simplnx fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native_tests": "Original 28-step baseline preflight/execution and combined 31-step preflight/execution passed serially through CTest.",
+    "independent_output_checks": 616,
+    "preserved_baseline_datasets": 67,
+    "preserved_csv_bytes": true,
+    "new_face_arrays": [
+      "Grain2205/Face Data/CurvatureFaceCentroids",
+      "Grain2205/Face Data/QuadraticK1",
+      "Grain2205/Face Data/QuadraticK2",
+      "Grain2205/Face Data/QuadraticMean",
+      "Grain2205/Face Data/QuadraticGaussian",
+      "Grain2205/Face Data/QuadraticDirection1",
+      "Grain2205/Face Data/QuadraticDirection2",
+      "Grain2205/Face Data/CubicK1",
+      "Grain2205/Face Data/CubicK2",
+      "Grain2205/Face Data/CubicMean",
+      "Grain2205/Face Data/CubicGaussian",
+      "Grain2205/Face Data/CubicDirection1",
+      "Grain2205/Face Data/CubicDirection2"
+    ],
+    "curvature_comparison": "All 13 arrays match prior standalone dtype, shape and value bytes, including both principal-direction fields. Existing curvature figure remains valid.",
+    "baseline_pipeline_sha256": "b92b532e996fed067a598e4d83842f7da174c6fc284619e1d34668c8665c0d7a",
+    "baseline_output_sha256": "b8ab9c319b07602d9b6b40c28c92063082afae902ab7deb30e93b0f50fb75f89",
+    "prior_curvature_output_sha256": "192cb9f14eafc1a62e41604e9b50c48b8a13c094c7183cbdff58ba3605b4c3b9",
+    "pipeline_sha256": "155f269e17e8f7f606bdd62be1947286e4d2ae67080e7906a9eff520792c1ae5",
+    "runtime_identity": {
+      "simplnx.dll": "2c07969daea5453185405e868a0cb075409b9db55bdca5a87fdfc976001727c4",
+      "SimplnxCore.simplnx": "0855effa91816dbb99dcdc6450ae175243b1160b9d2d98ba2fd5178171edf6ad",
+      "OrientationAnalysis.simplnx": "cf4e330b929434c4006e3ed44bafb178daa5e1c6d9cd23b7fb1d905a69c6086f"
+    },
+    "scope": "Checks establish dataset preservation and equality with prior local fits, not physical curvature truth or improved precision. GUI, OOC, generated Python, installation and materials acceptance remain unverified."
   }
 }

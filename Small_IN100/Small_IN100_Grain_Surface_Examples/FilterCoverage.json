@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Five illustrative measured-derived Small IN100 grain-surface, point-cloud, numeric interchange, point-to-grid and local curvature-fit pipelines; occurrences are not independent filter verification. Stages 03 and 04 use complementary tiles and do not claim duplicate-removal coverage. Stage 05 compares fits on a faceted binary envelope, not physical smooth-boundary curvature or the complete published adjacent-normal method.",
+  "scope": "Four illustrative measured-derived Small IN100 grain-surface, point-cloud, numeric interchange, point-to-grid and local curvature-fit pipelines; occurrences are not independent filter verification. Stages 03 and 04 use complementary tiles and do not claim duplicate-removal coverage. Stage 02 compares fits on a faceted binary envelope, not physical smooth-boundary curvature or the complete published adjacent-normal method.",
   "filters": [
     {
       "filter": "ReadDREAM3DFilter",
@@ -304,10 +304,31 @@
       "purpose": "Export local row IDs, original FeatureId mapping, enclosed volume, and surface vertex mean for inspection."
     },
     {
+      "filter": "TriangleCentroidFilter",
+      "uuid": "5d7156ae-3e0a-4db0-a792-552f492e8911",
+      "pipeline": "(02) Small IN100 Grain Surface Measurements.d3dpipeline",
+      "step": 27,
+      "purpose": "Compute native face-centroid XYZ coordinates in micrometers for both fits; these are not the volume centroid."
+    },
+    {
+      "filter": "FeatureFaceCurvatureFilter",
+      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
+      "pipeline": "(02) Small IN100 Grain Surface Measurements.d3dpipeline",
+      "step": 28,
+      "purpose": "Fit three quadratic centroid terms in the seed-normal frame on each ring-1 patch. Preserve the complete grain-versus-complement grouping and all original identities."
+    },
+    {
+      "filter": "FeatureFaceCurvatureFilter",
+      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
+      "pipeline": "(02) Small IN100 Grain Surface Measurements.d3dpipeline",
+      "step": 29,
+      "purpose": "Fit the same patches and seed-normal frames with four additional cubic centroid monomials. The toggle does not add neighboring-normal constraints or row weighting."
+    },
+    {
       "filter": "WriteDREAM3DFilter",
       "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
       "pipeline": "(02) Small IN100 Grain Surface Measurements.d3dpipeline",
-      "step": 27,
+      "step": 30,
       "purpose": "Save the calibrated shell with original identity, local labels, and audited measurements."
     },
     {
@@ -729,41 +750,6 @@
       "pipeline": "(04) Small IN100 Point Cloud Interchange.d3dpipeline",
       "step": 22,
       "purpose": "Spread ImageQuality64 into a 3 by 3 by 3 grid-cell neighborhood using Gaussian sigma 1 in each axis (one cell offset, or 0.5 micrometers here). Kernel weights use integer cell offsets, not exact point-to-center distances. Positive counts outside observed cells are estimates, not new measurements."
-    },
-    {
-      "filter": "ReadDREAM3DFilter",
-      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
-      "pipeline": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
-      "step": 0,
-      "purpose": "Import only Grain2205 from stage 02, retaining calibrated geometry, local labels and original neighboring-grain provenance."
-    },
-    {
-      "filter": "TriangleCentroidFilter",
-      "uuid": "5d7156ae-3e0a-4db0-a792-552f492e8911",
-      "pipeline": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
-      "step": 1,
-      "purpose": "Compute native face-centroid XYZ coordinates in micrometers for both fits; these are not the volume centroid."
-    },
-    {
-      "filter": "FeatureFaceCurvatureFilter",
-      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
-      "pipeline": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
-      "step": 2,
-      "purpose": "Fit three quadratic centroid terms in the seed-normal frame on each ring-1 patch. Preserve the complete grain-versus-complement grouping and all original identities."
-    },
-    {
-      "filter": "FeatureFaceCurvatureFilter",
-      "uuid": "56165fa5-dd80-4f9e-9e13-1c516f65060f",
-      "pipeline": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
-      "step": 3,
-      "purpose": "Fit the same patches and seed-normal frames with four additional cubic centroid monomials. The toggle does not add neighboring-normal constraints or row weighting."
-    },
-    {
-      "filter": "WriteDREAM3DFilter",
-      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
-      "pipeline": "(05) Small IN100 Grain Curvature Fit Comparison.d3dpipeline",
-      "step": 4,
-      "purpose": "Save unchanged geometry and source identity with both fit fields. Interpret them as a faceted-envelope diagnostic, not physical smooth-boundary curvature."
     }
   ]
 }
