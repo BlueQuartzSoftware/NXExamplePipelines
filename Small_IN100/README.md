@@ -15,6 +15,7 @@ Input datasets and generated results are stored separately. Keep the documented 
 | [(06) Small IN100 Neighbor Relationships](Small_IN100_Examples/%2806%29%20Small%20IN100%20Neighbor%20Relationships.md) | `Small_IN100_Examples` |
 | [(07) Small IN100 Bounded Voxel Mesh](Small_IN100_Examples/%2807%29%20Small%20IN100%20Bounded%20Voxel%20Mesh.md) | `Small_IN100_Examples` |
 | [(08) Small IN100 Grain Size Groups and Representatives](Small_IN100_Examples/%2808%29%20Small%20IN100%20Grain%20Size%20Groups%20and%20Representatives.md) | `Small_IN100_Examples` |
+| [(09) Small IN100 Centroid Neighborhood Comparison](Small_IN100_Examples/%2809%29%20Small%20IN100%20Centroid%20Neighborhood%20Comparison.md) | `Small_IN100_Examples` |
 | [(01) Small IN100 Surface Mesh](Small_IN100_Geometry_Examples/%2801%29%20Small%20IN100%20Surface%20Mesh.md) | `Small_IN100_Geometry_Examples` |
 | [(02) Small IN100 Surface Smoothing](Small_IN100_Geometry_Examples/%2802%29%20Small%20IN100%20Surface%20Smoothing.md) | `Small_IN100_Geometry_Examples` |
 | [(03) Small IN100 Surface Transform and Export](Small_IN100_Geometry_Examples/%2803%29%20Small%20IN100%20Surface%20Transform%20and%20Export.md) | `Small_IN100_Geometry_Examples` |
