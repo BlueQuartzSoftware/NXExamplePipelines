@@ -1,0 +1,331 @@
+{
+  "isDisabled": false,
+  "name": "(02) Gille OnScale Export.d3dpipeline",
+  "pinnedParams": [],
+  "workflowParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "import_data_object": {
+          "value": {
+            "file_path": "Data/Output/Gille_Aluminum_LabDCT_Examples/GilleAluminum.dream3d",
+            "data_paths": [],
+            "path_import_policy": 0
+          },
+          "version": 2
+        },
+        "parameters_version": 1
+      },
+      "comments": "Read the existing measured LabDCT preparation checkpoint. Preserve grain identities and millimeter geometry; this stage does not reconstruct or segment grains.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_physical_bounds": {
+          "value": false,
+          "version": 1
+        },
+        "crop_x_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_y_dim": {
+          "value": true,
+          "version": 1
+        },
+        "crop_z_dim": {
+          "value": true,
+          "version": 1
+        },
+        "min_voxel": {
+          "value": [
+            43,
+            18,
+            113
+          ],
+          "version": 1
+        },
+        "max_voxel": {
+          "value": [
+            66,
+            41,
+            136
+          ],
+          "version": 1
+        },
+        "min_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "max_coord": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "remove_original_geometry": {
+          "value": false,
+          "version": 1
+        },
+        "input_image_geometry_path": {
+          "value": "AluminumLabDCT",
+          "version": 1
+        },
+        "renumber_features": {
+          "value": false,
+          "version": 1
+        },
+        "feature_ids_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_feature_attribute_matrix_path": {
+          "value": "",
+          "version": 1
+        },
+        "output_image_geometry_path": {
+          "value": "MeasuredROI_mm",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the inclusive central 24x24x24 region with all its cell arrays. Retain original GrainId values and measured millimeter placement. This bounded region is for interchange checks, not a representative-volume claim.",
+      "filter": {
+        "name": "nx::core::CropImageGeometryFilter",
+        "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 10,
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": false,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 1,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            24,
+            24,
+            24
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            4e-06,
+            4e-06,
+            4e-06
+          ],
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "OnScaleROI_m",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create a separate local ROI in meters: the source 0.004 mm cell size becomes 4e-6 m. Local origin zero deliberately removes the global placement, retained in MeasuredROI_mm. Equal dimensions avoid the OnScale writer axis-reorder path.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "OnScaleROI_m/Cell Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "existing_data_path": {
+          "value": [
+            "MeasuredROI_mm/Cell Data/GrainId"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy every grain label without interpolation or renumbering into the meter geometry. Coordinates change units and origin; the grain-label array does not change.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "output_path": {
+          "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export",
+          "version": 1
+        },
+        "file_prefix": {
+          "value": "GilleROI24",
+          "version": 1
+        },
+        "num_keypoints": {
+          "value": [
+            2,
+            2,
+            2
+          ],
+          "version": 1
+        },
+        "input_geometry_path": {
+          "value": "OnScaleROI_m",
+          "version": 1
+        },
+        "feature_ids_array_path": {
+          "value": "OnScaleROI_m/Cell Data/GrainId",
+          "version": 1
+        },
+        "phase_names_array_path": {
+          "value": "AluminumLabDCT/Cell Ensemble Data/MaterialName",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Export grid bounds in meters and original grain IDs. The ROI has 37 observed grain IDs with gaps up to 935. Names Phase_<id> are generated format labels for these grains, not 935 observed grains or physical phases. This file has no constitutive model or orientation-to-material-axis assignment.",
+      "filter": {
+        "name": "nx::core::WriteOnScaleTableFileFilter",
+        "uuid": "494a4c6d-01c9-4f55-a0d4-32ee6e67c329"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "AluminumLabDCT",
+            "MeasuredROI_mm/Grain Data"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove the temporary full input and the inherited Grain Data table after export. Its sizes and boundary flags describe the full predecessor, not this ROI. Retain cropped cell arrays, phase metadata, measured millimeter placement, and the local meter grid. The predecessor file is unchanged.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": {
+          "value": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24_Export.dream3d",
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save the measured ROI and the meter-grid export source for coordinate, unit and label checks.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1
+}
