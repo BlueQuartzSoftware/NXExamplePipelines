@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "nomad-silver-nanoparticle-python-v1",
+  "title": "NOMAD silver coordinate interchange to Python generation",
+  "source_authority": ".d3dpipeline",
+  "converter_api": "simplnx_utilities.generate_python_pipeline",
+  "required_modules": [
+    "simplnx",
+    "orientationanalysis",
+    "imageprocessing",
+    "simplnx_utilities"
+  ],
+  "working_directory": "Use the matching application Python environment. Execute from a writable CLI working folder containing Data/NOMAD_Silver_Nanoparticle and Data/Output; if using the application binary folder as working directory, stage those paths there.",
+  "output_lifetime": "temporary",
+  "verification_status": "Not verified: simplnx, orientationanalysis, imageprocessing and simplnx_utilities are unavailable in the selected validation Python environment. Native execution does not establish generated Python correctness.",
+  "failure_behavior": "Report missing modules and load, generation, syntax or execution errors. Do not silently substitute handwritten Python.",
+  "regeneration_rule": "Regenerate temporary Python from the authoritative .d3dpipeline after any filter, argument, comment or path change.",
+  "path_rules": {
+    "pipeline_reference_base": "pipeline_suite_root",
+    "runtime_data_base": "chosen_cli_working_directory",
+    "input_paths": "Data/NOMAD_Silver_Nanoparticle/Ag1415ico.CONTCAR",
+    "output_paths": "Preserve Data/Output/NOMAD_Silver_Nanoparticle/ paths."
+  },
+  "generation": {
+    "language": "Python",
+    "steps": [
+      "Use the Python environment supplied with the matching DREAM3D-NX application.",
+      "Import simplnx, orientationanalysis, imageprocessing and simplnx_utilities. The current converter imports imageprocessing even for pipelines with no ImageProcessing steps.",
+      "Load the authoritative pipeline with simplnx.Pipeline.from_file(pipeline_path).",
+      "Call simplnx_utilities.generate_python_pipeline(pipeline), compile the returned text, and save only to a temporary file.",
+      "Execute from the documented writable working folder after checking the original CONTCAR checksum. Check all outputs; discard the temporary program."
+    ],
+    "reference_code": [
+      "import simplnx as nx",
+      "import orientationanalysis",
+      "import imageprocessing",
+      "import simplnx_utilities",
+      "pipeline = nx.Pipeline.from_file(pipeline_path)",
+      "code = simplnx_utilities.generate_python_pipeline(pipeline)",
+      "compile(code, str(pipeline_path), 'exec')"
+    ]
+  },
+  "validation": {
+    "syntax": "Compile the generated text with Python compile().",
+    "structure": "Match all ten filter calls, their order, exact arguments and wrapper versions with the authoritative pipeline. Preserve CSV count/start row/false consecutive delimiters, three-component Float64 multiplication, Float32 copy and Angstrom units.",
+    "paths": "Preserve all relative input/output paths and all DataPaths.",
+    "execution": "Independently compare all 1415 fractional coordinates, flags, Float64 and Float32 positions, AtomType values, source rows, LAMMPS coordinates/bounds/images and unchanged source hash. Generated Python is not verified.",
+    "storage": "Validate OOC with a runtime storage witness separately."
+  },
+  "gui_note": "GUI working folders vary. Use absolute file parameters when needed; native GUI execution is unverified.",
+  "pipeline_files": [
+    "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline"
+  ],
+  "execution_order": [
+    "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline"
+  ]
+}

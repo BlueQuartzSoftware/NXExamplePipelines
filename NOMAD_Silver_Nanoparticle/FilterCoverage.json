@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "filters": [
+    {
+      "filter": "CreateDataGroupFilter",
+      "uuid": "e7d2f9b8-4131-4b28-a843-ea3c6950f101",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 0,
+      "purpose": "Create a source checkpoint group for the original fractional coordinates and selective-dynamics flags."
+    },
+    {
+      "filter": "ReadCSVFileFilter",
+      "uuid": "373be1f8-31cf-49f6-aa5d-e356f4f3f261",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 1,
+      "purpose": "Read exactly 1415 atom records from original CONTCAR lines 10-1424. This explicit whitespace-table schema preserves six columns and stops before the trailing zero-velocity block; it is not a general VASP reader."
+    },
+    {
+      "filter": "CombineAttributeArraysFilter",
+      "uuid": "2436b614-e96d-47f0-9f6f-41d6fe97acd4",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 2,
+      "purpose": "Combine FractionalX, FractionalY, FractionalZ in that order. Preserve their values and source columns: normalization and removal are disabled."
+    },
+    {
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 3,
+      "purpose": "Convert Direct fractional coordinates to Cartesian angstroms in Float64. Multiplication by 50 is valid only for this verified scale-1 diagonal 50 angstrom cell; it is not a general lattice transform."
+    },
+    {
+      "filter": "ConvertDataFilter",
+      "uuid": "6dc586cc-59fb-4ee8-90ff-2d3587da12f5",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 4,
+      "purpose": "Make the explicit Float32 coordinate copy required by VertexGeom. Retain CartesianAngstrom64 as the precision reference."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 5,
+      "purpose": "Copy all 1415 coordinates into the Ag1415 vertex geometry with Angstrom units (index 21) and AtomData rows. No crop, translation, duplication, padding, relaxation, or bond construction is performed."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 6,
+      "purpose": "Assign Int32 atom type 1 to all rows because the source header contains only Ag. This LAMMPS type is neither a grain ID nor a phase measurement; no Masses or potential are supplied."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 7,
+      "purpose": "Retain source atom-record identity as Int32 values 1 through 1415. Source line = SourceRow1Based + 9; exported LAMMPS atom ID follows the same row order. These are not bonds or feature IDs."
+    },
+    {
+      "filter": "WriteLAMMPSFileFilter",
+      "uuid": "dea1a683-320a-4a08-a21b-cc359d737700",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 8,
+      "purpose": "Export coordinate/type interchange: 1415 atoms, type 1, six decimal places, zero image flags, and coordinate-extrema box bounds. The original 50 angstrom vacuum cell and simulation settings are not exported. For read-only LAMMPS import use units metal, atom_style atomic and boundary s s s."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+      "step": 9,
+      "purpose": "Save original fractional coordinates, selective flags, Float64 Cartesian coordinates, Float32 geometry, AtomType and source-row identity for inspection. This checkpoint records interchange, not a DFT or MD calculation."
+    }
+  ]
+}
