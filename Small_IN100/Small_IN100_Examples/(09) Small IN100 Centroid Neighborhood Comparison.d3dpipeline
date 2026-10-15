@@ -332,11 +332,218 @@
     },
     {
       "args": {
+        "scalar_type_index": {
+          "value": 4,
+          "version": 1
+        },
+        "array_to_convert_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorFeatures",
+          "version": 1
+        },
+        "converted_array_name": {
+          "value": "InteriorCentroidCohort",
+          "version": 1
+        },
+        "delete_original_array": {
+          "value": false,
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy InteriorFeatures to an int32 analysis cohort: 0 excluded, 1 selected. This is not a material phase array; preserve every physical phase and original feature row.",
+      "filter": {
+        "name": "nx::core::ConvertDataFilter",
+        "uuid": "6dc586cc-59fb-4ee8-90ff-2d3587da12f5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object_path": {
+          "value": "DataContainer/TemporaryCentroidDistanceReference",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              2.0
+            ]
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create two temporary ensemble rows for the required RDF outputs. These rows represent excluded/selected analysis cohorts, not physical phases; delete this group before saving.",
+      "filter": {
+        "name": "nx::core::CreateAttributeMatrixFilter",
+        "uuid": "a6a28355-ee69-4874-bcac-76ed427423ed"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_image_geometry_path": {
+          "value": "DataContainer",
+          "version": 1
+        },
+        "number_of_bins": {
+          "value": 1,
+          "version": 1
+        },
+        "phase_number": {
+          "value": 1,
+          "version": 1
+        },
+        "remove_biased_features": {
+          "value": false,
+          "version": 1
+        },
+        "set_random_seed": {
+          "value": true,
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "seed_array_name": {
+          "value": "InteriorCentroidDistancesSeed",
+          "version": 1
+        },
+        "feature_phases_array_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorCentroidCohort",
+          "version": 1
+        },
+        "centroids_array_path": {
+          "value": "DataContainer/Cell Feature Data/Centroids",
+          "version": 1
+        },
+        "biased_features_array_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorFeatures",
+          "version": 1
+        },
+        "cell_ensemble_attribute_matrix_path": {
+          "value": "DataContainer/TemporaryCentroidDistanceReference",
+          "version": 1
+        },
+        "clustering_list_array_name": {
+          "value": "InteriorCentroidDistances",
+          "version": 1
+        },
+        "rdf_array_name": {
+          "value": "UnusedRDF",
+          "version": 1
+        },
+        "max_min_array_name": {
+          "value": "UnusedRDFMaxMinDistances",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Retain only each selected centroid's distances to all other selected centroids. Cohort selection excludes both endpoints before pair construction; Remove Biased Features is false. One RDF bin and seed 5489 serve only the discarded random reference; pair distances do not depend on the seed. RDF normalization is not used or corrected.",
+      "filter": {
+        "name": "nx::core::ComputeFeatureClusteringFilter",
+        "uuid": "d6e01678-3a03-433f-89ad-4e9adf1f9a45"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "find_length": {
+          "value": true,
+          "version": 1
+        },
+        "find_minimum": {
+          "value": true,
+          "version": 1
+        },
+        "find_maximum": {
+          "value": false,
+          "version": 1
+        },
+        "find_mean": {
+          "value": false,
+          "version": 1
+        },
+        "find_median": {
+          "value": false,
+          "version": 1
+        },
+        "find_standard_deviation": {
+          "value": false,
+          "version": 1
+        },
+        "find_summation": {
+          "value": false,
+          "version": 1
+        },
+        "input_neighbor_list_path": {
+          "value": "DataContainer/Cell Feature Data/InteriorCentroidDistances",
+          "version": 1
+        },
+        "length_array_name": {
+          "value": "InteriorCentroidDistanceCount",
+          "version": 1
+        },
+        "minimum_array_name": {
+          "value": "NearestInteriorCentroidDistance",
+          "version": 1
+        },
+        "maximum_array_name": {
+          "value": "Maximum",
+          "version": 1
+        },
+        "mean_array_name": {
+          "value": "Mean",
+          "version": 1
+        },
+        "median_array_name": {
+          "value": "Median",
+          "version": 1
+        },
+        "standard_deviation_array_name": {
+          "value": "StandardDeviation",
+          "version": 1
+        },
+        "summation_array_name": {
+          "value": "Summation",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Compute distance-list length and minimum only. Each selected row has 1348 distances for this input. Excluded empty lists have count and minimum zero; interpret the minimum only with InteriorFeatures and positive count.",
+      "filter": {
+        "name": "nx::core::ComputeNeighborListStatisticsFilter",
+        "uuid": "270a824e-414b-455e-bb7e-b38a0848990d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "DataContainer/TemporaryCentroidDistanceReference",
+            "InteriorCentroidDistancesSeed"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove all temporary RDF outputs and their stored seed. The final checkpoint retains only the selected-cohort pair distances and scalar summaries; no RDF or statistical-significance claim is made.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
         "selected_feature_array_paths": {
           "value": [
             "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
             "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
-            "DataContainer/Cell Feature Data/InteriorFeatures"
+            "DataContainer/Cell Feature Data/InteriorFeatures",
+            "DataContainer/Cell Feature Data/NearestInteriorCentroidDistance"
           ],
           "version": 1
         },
@@ -350,7 +557,7 @@
         },
         "parameters_version": 1
       },
-      "comments": "Map both group IDs and the original cohort to cells for categorical visualization. Preserve the original FeatureIds segmentation; InteriorFeatures_Map distinguishes excluded cells from selected but unassigned grains.",
+      "comments": "Map both group IDs, InteriorFeatures, and nearest selected-centroid distance to cells through original FeatureIds. Keep group maps categorical; distance is continuous and valid only where InteriorFeatures_Map is true. Preserve segmentation.",
       "filter": {
         "name": "nx::core::CopyFeatureArrayToElementArrayFilter",
         "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1"
@@ -381,7 +588,7 @@
         },
         "parameters_version": 1
       },
-      "comments": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion.",
+      "comments": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion. Add the integer cohort, distance count, and minimum; keep pair lists out of the rectangular CSV.",
       "filter": {
         "name": "nx::core::WriteFeatureDataCSVFilter",
         "uuid": "d734293f-3017-4699-b458-c05aca078b96"
@@ -408,7 +615,7 @@
         },
         "parameters_version": 2
       },
-      "comments": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays.",
+      "comments": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays. Retain the cohort, pair-distance lists, counts, minima, and mapped minimum after deleting temporary RDF outputs and seed.",
       "filter": {
         "name": "nx::core::WriteDREAM3DFilter",
         "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"

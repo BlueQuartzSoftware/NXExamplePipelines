@@ -41,7 +41,7 @@
   "pipeline_file": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
   "markdown_file": "(09) Small IN100 Centroid Neighborhood Comparison.md",
   "title": "Small IN100 Centroid Neighborhood Comparison",
-  "summary": "Compare modified grid-based DBSCAN groups of selected physical grain centroids at 2.5 and 3.0 micrometers, report assignment coverage and native silhouette diagnostics, and preserve original grain IDs with cell maps for inspection.",
+  "summary": "Compare modified grid-based DBSCAN groups at 2.5 and 3.0 micrometers, retain native silhouette diagnostics, and add all selected-centroid pair distances and each grain's nearest selected-centroid spacing without changing original grain IDs.",
   "keywords": [
     "Small IN100",
     "EBSD",
@@ -50,12 +50,16 @@
     "DBSCAN",
     "grid occupancy",
     "silhouette",
-    "radius sensitivity"
+    "radius sensitivity",
+    "centroid separation",
+    "nearest centroid",
+    "pair distances"
   ],
   "use_cases": [
     "Inspect how physical proximity scale joins grain-centroid networks",
     "Compare assigned and unassigned grains without changing segmentation",
-    "Trace spatial groups and score diagnostics to original grain IDs"
+    "Trace spatial groups and score diagnostics to original grain IDs",
+    "Relate illustrative grouping radii to nearest center-to-center spacing within the same selected cohort"
   ],
   "inputs": [
     {
@@ -66,11 +70,11 @@
   "outputs": [
     {
       "path": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.csv",
-      "role": "All 2334 positive feature rows with original measurements, cohort, both spatial group IDs, both assignment masks, and both silhouette arrays."
+      "role": "All 2334 positive feature rows with original measurements, cohort, both spatial group IDs, both assignment masks, and both silhouette arrays. Adds InteriorCentroidCohort, InteriorCentroidDistanceCount, and NearestInteriorCentroidDistance; distance lists remain in DREAM3D only."
     },
     {
       "path": "Data/Output/Small_IN100_Examples/CentroidNeighborhoods/SmallIN100_CentroidNeighborhoods.dream3d",
-      "role": "Complete predecessor plus two group-ID arrays, two assignment masks, two float64 score arrays, two cluster attribute matrices, and three cell maps."
+      "role": "Complete predecessor plus both unchanged DBSCAN/silhouette results, four cell maps, the 0/1 int32 analysis cohort, float32 pair-distance lists, uint64 list counts, and float32 nearest distances. Temporary RDF outputs and stored seed are deleted."
     }
   ],
   "dependency_chain": [
@@ -85,7 +89,8 @@
     "feature_matrix": "DataContainer/Cell Feature Data",
     "coordinate_array": "DataContainer/Cell Feature Data/Centroids",
     "selected_mask": "DataContainer/Cell Feature Data/InteriorFeatures",
-    "not_used": "DataContainer/Cell Data/ParentIds"
+    "not_used": "DataContainer/Cell Data/ParentIds",
+    "distance_cohort": "DataContainer/Cell Feature Data/InteriorCentroidCohort"
   },
   "parameter_rationale": {
     "epsilon": "Compare 2.5 and 3.0 micrometers: 10 and 12 voxels at the source spacing of 0.25 micrometers, near the selected-centroid median nearest-neighbor distance of about 1.78964 micrometers. These are illustrative scales, not optimized radii or an inferred material length.",
@@ -97,8 +102,14 @@
     "assignment_masks": "For each radius, Assigned = InteriorFeatures AND group IDs > 0. Zero IDs combine excluded rows with selected-but-unassigned noise; preserve the original mask.",
     "silhouette_convention": "Native a(i) includes zero self-distance and divides the own-group distance sum by n. b(i) is the smallest mean distance to another nonempty positive group. Score=(b-a)/max(a,b); conventional silhouette uses n-1 for a(i).",
     "silhouette_interpretation": "Only assigned rows enter each score. The radii have different scored cohorts, and compact separated groups are favored over long connected networks. Mean scores are not a radius-optimization criterion.",
-    "cell_maps": "Copy both IDs and InteriorFeatures using original FeatureIds with suffix _Map. This supports categorical inspection while preserving segmentation.",
-    "csv": "Comma delimiter, no feature-count line, and no packed neighbor lists retain a rectangular table. Row zero is omitted; unused positive rows remain. CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores."
+    "cell_maps": "Copy both IDs, InteriorFeatures, and NearestInteriorCentroidDistance using original FeatureIds with suffix _Map. Group IDs are categorical; nearest distance is continuous and valid only where InteriorFeatures_Map is true.",
+    "csv": "Comma delimiter, no feature-count line, and no packed neighbor lists retain a rectangular table. Row zero is omitted; unused positive rows remain. CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores.",
+    "distance_cohort": "Convert InteriorFeatures to int32 (scalar_type_index 4), preserve the original mask, and use 0 excluded / 1 selected as an analysis ensemble. This is not material phase data; physical phase arrays remain unchanged.",
+    "distance_selection": "ComputeFeatureClustering uses phase_number 1 on InteriorCentroidCohort and remove_biased_features false. Both endpoints must be in the selected cohort before pairs are constructed; each of 1349 selected original feature rows receives 1348 distances to other selected rows, with self excluded.",
+    "temporary_reference": "The native filter requires RDF outputs. A separate two-row temporary attribute matrix receives one RDF bin and min/max. One bin minimizes unused histogram output; fixed seed 5489 makes only this discarded reference reproducible and has no effect on pair distances. Delete the whole temporary group and stored seed; no RDF correction or interpretation is applied. The compiled normalization defect is recorded at https://github.com/BlueQuartzSoftware/simplnx/issues/1820.",
+    "distance_statistics": "Compute only neighbor-list length and minimum, with all five other statistics false. An excluded row has an empty list, count zero, and minimum zero; minimum zero is an invalid placeholder requiring InteriorFeatures and a positive count. On other inputs, distinct selected features can have coincident centroids and a valid zero minimum: validity depends on cohort and positive list count, not minimum > 0.",
+    "distance_meaning": "NearestInteriorCentroidDistance is center-to-center spacing in micrometers within the selected cohort. It is not a surface gap, a shared-boundary neighbor distance, or a nearest-feature ID. Original feature row IDs, not DBSCAN group IDs, index the lists.",
+    "distance_scale": "1349*1348 = 1818452 directed float32 entries, approximately 7.3 MB of values plus list/storage overhead and the fixed 1000-point temporary reference. Work and retained distances scale quadratically with selected feature count; do not apply this as voxel all-pairs analysis."
   },
   "mcp": {
     "user_intents": [
@@ -126,7 +137,13 @@
       "Spatial centroid groups are not phases, shared-boundary neighbors, new segmentation, or evidence of statistically significant clustering.",
       "No radial distribution function or material-hardening inference is made.",
       "Rerun predecessors after changing spacing, labels, or selection.",
-      "OOC, generated Python execution, native GUI execution, and cross-platform reproducibility require separate checks."
+      "OOC, generated Python execution, native GUI execution, and cross-platform reproducibility require separate checks.",
+      "Use a separate int32 0/1 cohort as the ensemble selector; do not overwrite or reinterpret physical phase arrays.",
+      "Exclude both pair endpoints using the cohort; Remove Biased Features is false. Do not use radius-specific assignment masks for the distance list.",
+      "Retain original feature-row association, exclude self, and interpret nearest distance only on selected rows with positive distance count.",
+      "Distance is center-to-center, not a boundary gap, adjacency relation, or nearest-feature ID.",
+      "Delete TemporaryCentroidDistanceReference and InteriorCentroidDistancesSeed before saving. The RDF normalization issue does not justify a hidden correction.",
+      "For adaptation, require at least two selected feature rows with finite coordinates and a nonzero pair-distance range for the required temporary reference calculation. Review quadratic memory cost before increasing cohort size."
     ],
     "related_pipelines": [
       "(02) Small IN100 Feature Measurements.d3dpipeline",
@@ -136,52 +153,69 @@
     ]
   },
   "last_verified": "2026-10-15",
-  "verification_status": "The ten-step pipeline passed native preflight and execution in Windows in-core Release at simplnx fe6c4a15e5a5bffef2523f52cec01be33b1e62a9. All 79 independent checks passed: 77 data and numerical checks plus two distinct-palette checks. This verifies the chosen Euclidean, minimum-grid-occupancy-2 case on this input; it does not establish general equivalence to canonical DBSCAN or physical clustering significance. OOC, generated Python, native GUI execution, and cross-platform reproducibility remain unverified.",
+  "verification_status": "The fifteen-step pipeline passed native preflight and execution in Windows in-core Release at simplnx fe6c4a15e5a5bffef2523f52cec01be33b1e62a9. The unmodified ten-step baseline also passed again. All 101 independent extension checks passed: all 1818452 directed distances agree with Euclidean geometry at float32 tolerance, all 57 baseline datasets and prior CSV columns are unchanged, and counts, minima, cell mapping and new CSV columns agree. The earlier 79-check DBSCAN/silhouette proof applies to the preserved comparison; these totals are not additive. No RDF validity or physical clustering significance is claimed. OOC, generated Python, native GUI execution, and cross-platform reproducibility remain unverified.",
   "validation": {
     "date": "2026-10-15",
     "configuration": "Windows in-core Release",
     "status": "passed",
     "source_revision": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
     "native_tests": {
-      "passed": 2,
-      "total": 2,
+      "passed": 4,
+      "total": 4,
       "names": [
-        "CentroidNeighborhoods_preflight",
-        "CentroidNeighborhoods_execute"
+        "CentroidDistances_Baseline_preflight",
+        "CentroidDistances_Baseline_execute",
+        "CentroidDistances_Extended_preflight",
+        "CentroidDistances_Extended_execute"
       ]
     },
-    "independent_checks": {
-      "passed": 79,
-      "total": 79,
-      "data_and_numeric": 77,
-      "distinct_group_palettes": 2
-    },
     "checks": [
-      "All predecessor datasets, including original FeatureIds, measurements, and InteriorFeatures, are unchanged.",
-      "All 1349 selected centroids are finite and unique.",
-      "Each complete native partition matches independently reconstructed strict-epsilon graph components containing grid cells with at least two centroids.",
-      "No selected pair lies exactly on either epsilon boundary.",
-      "Each score mask equals InteriorFeatures AND positive group IDs; excluded and unassigned score placeholders are zero.",
-      "Every assigned native silhouette matches independent pair distances with the self-inclusive own-group divisor; scores are finite and bounded.",
-      "All three cell maps match exact feature-index lookup through original FeatureIds.",
-      "CSV retains all 2334 positive rows and matches IDs exactly and scores at export precision.",
-      "Each radius uses a distinct display color for every positive group."
+      "All 57 baseline datasets, including physical phases, original FeatureIds, both DBSCAN/mask/silhouette results and original three cell maps, are exactly unchanged.",
+      "InteriorCentroidCohort is int32 and exactly matches the original boolean InteriorFeatures mask as 0/1.",
+      "All 1349 selected feature rows have 1348 float32 distances, ordered by the other selected original feature IDs with self excluded; all 986 excluded rows have empty lists.",
+      "All 1818452 directed distances agree with independent double-precision Euclidean distances between stored centroids at float32 tolerance.",
+      "Native uint64 lengths and float32 minima match the lists and independent geometry; excluded zero minima are invalid placeholders.",
+      "The nearest-distance cell map equals exact original FeatureIds indexing and the existing cohort map supplies its validity mask.",
+      "All 2334 positive feature rows and every prior CSV column are unchanged; only the cohort, count and nearest-distance scalar columns are added.",
+      "No temporary RDF ensemble group, RDF arrays, or stored distance-reference seed remains.",
+      "Existing group preview and its input arrays remain unchanged."
     ],
     "input_sha256": "fce6b9886290c484a3741d3b7aceb78867aeb49215682e183958654a5be97a4a",
-    "output_sha256": "8a76f85f61a5ce21a3ceeac5f503b5cb2ba5965803dd40b165808a4ce3924df1",
-    "csv_sha256": "43abb0124e34720c51cdcc6d5d930de4631dfca1ee1f3b1ac6ea05f0fb0ca9df",
-    "oracle": "Complete strict-epsilon point graph; retain components containing cells with at least two points. Compare memberships as sets, not numeric cluster IDs. Independently compute each masked self-inclusive silhouette.",
-    "scope_limit": "This oracle checks the chosen Euclidean/minimum-2 native variant on this input; not a general GDCF/canonical DBSCAN equivalence claim or physical clustering validation.",
+    "output_sha256": "82c57caa0aa93d7700c1556fdccfc6568bdb2ee37751aa85b02b3e19f5eaa76c",
+    "csv_sha256": "1b126775aa44922a3965d91ef59fd98942b3a6921326613026e6644fbce56dbf",
+    "oracle": "Direct double-precision Euclidean distances between all selected stored centroids, excluding self and excluded rows; no random-reference algorithm translated. Native minimum is independently checked against each list and geometry.",
+    "scope_limit": "No RDF validity, boundary-gap, physical-neighbor identity, statistically significant clustering or materials acceptance claim.",
     "unverified": [
       "OOC",
       "generated Python",
       "native GUI execution",
       "cross-platform reproducibility",
       "statistical clustering significance"
-    ]
+    ],
+    "prior_comparison": {
+      "passed": 79,
+      "total": 79,
+      "data_and_numeric": 77,
+      "distinct_group_palettes": 2
+    },
+    "independent_checks": {
+      "passed": 101,
+      "total": 101,
+      "baseline_datasets_preserved": 57,
+      "directed_pairs_compared": 1818452
+    },
+    "baseline_sha256": "60c46c48500d08eb6df34ba7df605e05453bc5802d615ba5b1bc989d11df91ed",
+    "maximum_pair_error_um": 6.790245301147024e-06,
+    "maximum_nearest_error_um": 2.1303450115084388e-07,
+    "excluded_output_issue": {
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/issues/1820",
+      "title": "ComputeFeatureClustering random-reference normalization",
+      "reproducer": "One full-range RDF bin returns 1.002004027 where normalized output should be 1; a separate compiled distance-list test passes 32 assertions.",
+      "example_policy": "Retain verified pair-distance lists only; delete the complete temporary RDF ensemble and seed. No hidden numerical correction."
+    }
   },
   "reference_results": {
-    "status": "verified_ten_step_native_output",
+    "status": "verified_fifteen_step_native_output",
     "selected_features": 1349,
     "occupied_positive_features": 2317,
     "unused_positive_rows": 17,
@@ -249,7 +283,30 @@
       }
     ],
     "score_convention": "Own-group mean includes self-distance and divides by n. Only each radius-specific assignment mask enters its summary.",
-    "rounding_note": "CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores; DREAM3D arrays retain full stored precision."
+    "rounding_note": "CSV uses eight significant digits for float32 measurements and sixteen for float64 silhouette scores; DREAM3D arrays retain full stored precision.",
+    "distance_list": {
+      "cohort": "InteriorFeatures copied to int32 InteriorCentroidCohort (0 excluded, 1 selected)",
+      "selected_rows": 1349,
+      "distances_per_selected_row": 1348,
+      "directed_entries": 1818452,
+      "excluded_rows": 986,
+      "empty_list_minimum": 0,
+      "empty_list_minimum_valid": false,
+      "retained_rdf": false,
+      "pair_distance_units": "micrometers",
+      "list_row_id": "original feature ID",
+      "nearest_distance_um": {
+        "min": 0.23260287940502167,
+        "p25": 1.367354393005371,
+        "median": 1.7896416187286377,
+        "p75": 2.266098976135254,
+        "max": 4.144012928009033
+      },
+      "distance_payload_bytes": 7273808,
+      "count_type": "uint64",
+      "distance_type": "float32",
+      "order": "Ascending other selected original feature ID, excluding self"
+    }
   },
   "result_visual": {
     "path": "SmallIN100CentroidNeighborhoods.png",
@@ -263,7 +320,8 @@
     ],
     "distinct_colors_for_all_positive_groups": true,
     "native_group_ids_preserved": true,
-    "visual_review": "Native-derived figure inspected: labels are readable without overlap."
+    "visual_review": "Native-derived figure inspected: labels are readable without overlap.",
+    "preservation_in_extended_output": "Preview bytes unchanged; all baseline grouping and centroid datasets preserved exactly in the extended checkpoint."
   },
   "cli_usage": {
     "instructions": "See README.md#quick-start-117-section-3d-example. Minimal order is archive -> 01 -> 02 -> 03 -> 09.",
@@ -319,7 +377,7 @@
       "role": "Filter inputs and separation diagnostic; the pinned source defines the native self-inclusive mean."
     },
     {
-      "title": "simplnx DBSCAN and Silhouette implementations at fe6c4a15",
+      "title": "simplnx DBSCAN, Silhouette, and feature-clustering implementations at fe6c4a15",
       "authors": [
         "BlueQuartz Software"
       ],
@@ -328,7 +386,7 @@
       "doi": "",
       "url": "https://github.com/BlueQuartzSoftware/simplnx/tree/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/Filters/Algorithms",
       "scope": "filter_algorithm",
-      "role": "Pinned grid, mask, strict-distance, cluster-zero, and self-inclusive silhouette behavior."
+      "role": "Pinned grid, mask, strict-distance, cluster-zero, and self-inclusive silhouette behavior. Also defines selected-cohort pair construction, float32 distance lists, required temporary RDF outputs, and seed independence of pair distances."
     }
   ],
   "steps": [
@@ -613,25 +671,198 @@
     },
     {
       "index": 7,
+      "filter": "ConvertDataFilter",
+      "uuid": "6dc586cc-59fb-4ee8-90ff-2d3587da12f5",
+      "role": "Copy InteriorFeatures to an int32 analysis cohort: 0 excluded, 1 selected. This is not a material phase array; preserve every physical phase and original feature row.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/InteriorFeatures"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/InteriorCentroidCohort"
+      ],
+      "key_parameters": {
+        "scalar_type_index": 4,
+        "array_to_convert_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "converted_array_name": "InteriorCentroidCohort",
+        "delete_original_array": false
+      },
+      "parameter_versions": {
+        "scalar_type_index": 1,
+        "array_to_convert_path": 1,
+        "converted_array_name": 1,
+        "delete_original_array": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 8,
+      "filter": "CreateAttributeMatrixFilter",
+      "uuid": "a6a28355-ee69-4874-bcac-76ed427423ed",
+      "role": "Create two temporary ensemble rows for the required RDF outputs. These rows represent excluded/selected analysis cohorts, not physical phases; delete this group before saving.",
+      "input_paths": [
+        "DataContainer"
+      ],
+      "output_paths": [
+        "DataContainer/TemporaryCentroidDistanceReference"
+      ],
+      "key_parameters": {
+        "data_object_path": "DataContainer/TemporaryCentroidDistanceReference",
+        "tuple_dimensions": [
+          [
+            2.0
+          ]
+        ]
+      },
+      "parameter_versions": {
+        "data_object_path": 1,
+        "tuple_dimensions": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 9,
+      "filter": "ComputeFeatureClusteringFilter",
+      "uuid": "d6e01678-3a03-433f-89ad-4e9adf1f9a45",
+      "role": "Retain only each selected centroid's distances to all other selected centroids. Cohort selection excludes both endpoints before pair construction; Remove Biased Features is false. One RDF bin and seed 5489 serve only the discarded random reference; pair distances do not depend on the seed. RDF normalization is not used or corrected.",
+      "input_paths": [
+        "DataContainer",
+        "DataContainer/Cell Feature Data/InteriorCentroidCohort",
+        "DataContainer/Cell Feature Data/Centroids",
+        "DataContainer/TemporaryCentroidDistanceReference"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/InteriorCentroidDistances",
+        "DataContainer/TemporaryCentroidDistanceReference/UnusedRDF",
+        "DataContainer/TemporaryCentroidDistanceReference/UnusedRDFMaxMinDistances",
+        "InteriorCentroidDistancesSeed"
+      ],
+      "key_parameters": {
+        "input_image_geometry_path": "DataContainer",
+        "number_of_bins": 1,
+        "phase_number": 1,
+        "remove_biased_features": false,
+        "set_random_seed": true,
+        "seed_value": 5489,
+        "seed_array_name": "InteriorCentroidDistancesSeed",
+        "feature_phases_array_path": "DataContainer/Cell Feature Data/InteriorCentroidCohort",
+        "centroids_array_path": "DataContainer/Cell Feature Data/Centroids",
+        "biased_features_array_path": "DataContainer/Cell Feature Data/InteriorFeatures",
+        "cell_ensemble_attribute_matrix_path": "DataContainer/TemporaryCentroidDistanceReference",
+        "clustering_list_array_name": "InteriorCentroidDistances",
+        "rdf_array_name": "UnusedRDF",
+        "max_min_array_name": "UnusedRDFMaxMinDistances"
+      },
+      "parameter_versions": {
+        "input_image_geometry_path": 1,
+        "number_of_bins": 1,
+        "phase_number": 1,
+        "remove_biased_features": 1,
+        "set_random_seed": 1,
+        "seed_value": 1,
+        "seed_array_name": 1,
+        "feature_phases_array_path": 1,
+        "centroids_array_path": 1,
+        "biased_features_array_path": 1,
+        "cell_ensemble_attribute_matrix_path": 1,
+        "clustering_list_array_name": 1,
+        "rdf_array_name": 1,
+        "max_min_array_name": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 10,
+      "filter": "ComputeNeighborListStatisticsFilter",
+      "uuid": "270a824e-414b-455e-bb7e-b38a0848990d",
+      "role": "Compute distance-list length and minimum only. Each selected row has 1348 distances for this input. Excluded empty lists have count and minimum zero; interpret the minimum only with InteriorFeatures and positive count.",
+      "input_paths": [
+        "DataContainer/Cell Feature Data/InteriorCentroidDistances"
+      ],
+      "output_paths": [
+        "DataContainer/Cell Feature Data/InteriorCentroidDistanceCount",
+        "DataContainer/Cell Feature Data/NearestInteriorCentroidDistance"
+      ],
+      "key_parameters": {
+        "find_length": true,
+        "find_minimum": true,
+        "find_maximum": false,
+        "find_mean": false,
+        "find_median": false,
+        "find_standard_deviation": false,
+        "find_summation": false,
+        "input_neighbor_list_path": "DataContainer/Cell Feature Data/InteriorCentroidDistances",
+        "length_array_name": "InteriorCentroidDistanceCount",
+        "minimum_array_name": "NearestInteriorCentroidDistance",
+        "maximum_array_name": "Maximum",
+        "mean_array_name": "Mean",
+        "median_array_name": "Median",
+        "standard_deviation_array_name": "StandardDeviation",
+        "summation_array_name": "Summation"
+      },
+      "parameter_versions": {
+        "find_length": 1,
+        "find_minimum": 1,
+        "find_maximum": 1,
+        "find_mean": 1,
+        "find_median": 1,
+        "find_standard_deviation": 1,
+        "find_summation": 1,
+        "input_neighbor_list_path": 1,
+        "length_array_name": 1,
+        "minimum_array_name": 1,
+        "maximum_array_name": 1,
+        "mean_array_name": 1,
+        "median_array_name": 1,
+        "standard_deviation_array_name": 1,
+        "summation_array_name": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 11,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove all temporary RDF outputs and their stored seed. The final checkpoint retains only the selected-cohort pair distances and scalar summaries; no RDF or statistical-significance claim is made.",
+      "input_paths": [
+        "DataContainer/TemporaryCentroidDistanceReference",
+        "InteriorCentroidDistancesSeed"
+      ],
+      "output_paths": [],
+      "key_parameters": {
+        "removed_data_path": [
+          "DataContainer/TemporaryCentroidDistanceReference",
+          "InteriorCentroidDistancesSeed"
+        ]
+      },
+      "parameter_versions": {
+        "removed_data_path": 1
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 12,
       "filter": "CopyFeatureArrayToElementArrayFilter",
       "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1",
-      "role": "Map both group IDs and the original cohort to cells for categorical visualization. Preserve the original FeatureIds segmentation; InteriorFeatures_Map distinguishes excluded cells from selected but unassigned grains.",
+      "role": "Map both group IDs, InteriorFeatures, and nearest selected-centroid distance to cells through original FeatureIds. Keep group maps categorical; distance is continuous and valid only where InteriorFeatures_Map is true. Preserve segmentation.",
       "input_paths": [
         "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
         "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
         "DataContainer/Cell Feature Data/InteriorFeatures",
-        "DataContainer/Cell Data/FeatureIds"
+        "DataContainer/Cell Data/FeatureIds",
+        "DataContainer/Cell Feature Data/NearestInteriorCentroidDistance"
       ],
       "output_paths": [
         "DataContainer/Cell Data/CentroidDBSCAN2p5umIds_Map",
         "DataContainer/Cell Data/CentroidDBSCAN3umIds_Map",
-        "DataContainer/Cell Data/InteriorFeatures_Map"
+        "DataContainer/Cell Data/InteriorFeatures_Map",
+        "DataContainer/Cell Data/NearestInteriorCentroidDistance_Map"
       ],
       "key_parameters": {
         "selected_feature_array_paths": [
           "DataContainer/Cell Feature Data/CentroidDBSCAN2p5umIds",
           "DataContainer/Cell Feature Data/CentroidDBSCAN3umIds",
-          "DataContainer/Cell Feature Data/InteriorFeatures"
+          "DataContainer/Cell Feature Data/InteriorFeatures",
+          "DataContainer/Cell Feature Data/NearestInteriorCentroidDistance"
         ],
         "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
         "created_array_suffix": "_Map"
@@ -644,10 +875,10 @@
       "parameters_version": 1
     },
     {
-      "index": 8,
+      "index": 13,
       "filter": "WriteFeatureDataCSVFilter",
       "uuid": "d734293f-3017-4699-b458-c05aca078b96",
-      "role": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion.",
+      "role": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion. Add the integer cohort, distance count, and minimum; keep pair lists out of the rectangular CSV.",
       "input_paths": [
         "DataContainer/Cell Feature Data"
       ],
@@ -671,10 +902,10 @@
       "parameters_version": 1
     },
     {
-      "index": 9,
+      "index": 14,
       "filter": "WriteDREAM3DFilter",
       "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
-      "role": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays.",
+      "role": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays. Retain the cohort, pair-distance lists, counts, minima, and mapped minimum after deleting temporary RDF outputs and seed.",
       "input_paths": [
         "DataContainer"
       ],
