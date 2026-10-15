@@ -1,0 +1,673 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(01) Silver Nanoparticle Coordinate Interchange.d3dpipeline",
+  "markdown_file": "(01) Silver Nanoparticle Coordinate Interchange.md",
+  "title": "Silver Nanoparticle Coordinate Interchange",
+  "summary": "Import the original 1415-atom Ag1415ico CONTCAR, preserve fractional coordinates and source row identity, construct an angstrom-calibrated vertex geometry, and export LAMMPS coordinates/types plus a native checkpoint.",
+  "industries": {
+    "primary": [
+      "Atomistic materials research"
+    ],
+    "secondary": [
+      "Nanomaterials",
+      "Simulation data preparation"
+    ]
+  },
+  "use_cases": [
+    "Inspect published nanoparticle atom coordinates",
+    "Check atom identity and units across formats",
+    "Separate geometric interchange from simulation setup"
+  ],
+  "keywords": [
+    "NOMAD",
+    "silver",
+    "Ag1415ico",
+    "Mackay icosahedron",
+    "DFT-relaxed",
+    "VASP",
+    "CONTCAR",
+    "fractional coordinates",
+    "angstrom",
+    "LAMMPS",
+    "atom types",
+    "coordinate precision"
+  ],
+  "inputs": [
+    {
+      "path": "Data/NOMAD_Silver_Nanoparticle/Ag1415ico.CONTCAR",
+      "role": "Unmodified original NOMAD CONTCAR; local filename only is changed. Obtain and verify with README.md before preflight.",
+      "sha256": "3b43097bdb568ba31f4d8de1a98bd40f45512c80f3f9897d79826cd9924dd9fd",
+      "bytes": 182857
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico.lammps",
+      "role": "1415 coordinate/type records, one Ag atom type, coordinate-extrema bounds, six decimals and zero image flags."
+    },
+    {
+      "path": "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico_Interchange.dream3d",
+      "role": "Source fractional coordinates and selective flags, Float64 Cartesian reference, Float32 vertex geometry, AtomType and SourceRow1Based."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "original-paper-linked",
+    "asset_keys": [
+      "Ag1415ico.CONTCAR"
+    ],
+    "archive_provenance_file": "README.md",
+    "archive_status": "Original source is external; user-managed packaging is pending. README records exact source, attribution, license, hash and transformation.",
+    "paper_doi": "10.1002/smll.75018",
+    "dataset_doi": "10.17172/NOMAD/2026.03.23-1",
+    "source_url": "https://nomad-lab.eu/prod/v1/api/v1/uploads/zwh0pQTnT3ek9K4HVAED3Q/raw/SILVER_NANOPARTICLES_DATABASE/ICOSAHEDRA/MACKAY/Ag1415ico/CONTCAR",
+    "source_sha256": "3b43097bdb568ba31f4d8de1a98bd40f45512c80f3f9897d79826cd9924dd9fd",
+    "source_sha512": "4f9bbe08353b6aad9d3f014e76c4a5707b37684ede78b39856a898a79d8c1e6678b4f07bf1c4c01106f5a562231084040bb4793a344ae660548095c99ee1af62",
+    "reference_visual": "Ag1415Interchange.png: original visualization of the native output, source 50 angstrom cell versus writer coordinate-extrema bounds, and coordinate precision. Paper Table 3 and Section 3.1 identify the Mackay Ag1415ico model; no article figure is copied.",
+    "target_traits": {
+      "atom_count": 1415,
+      "species": [
+        "Ag"
+      ],
+      "classification": "published DFT-relaxed atomistic simulation coordinates",
+      "source_scale": 1.0,
+      "source_cell_angstrom": [
+        [
+          50.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          50.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          50.0
+        ]
+      ],
+      "source_coordinate_mode": "Direct",
+      "coordinate_start_row_one_based": 10,
+      "coordinate_end_row_one_based": 1424,
+      "source_coordinate_columns": [
+        "FractionalX",
+        "FractionalY",
+        "FractionalZ",
+        "SelectiveX",
+        "SelectiveY",
+        "SelectiveZ"
+      ],
+      "selective_flags": [
+        "T",
+        "T",
+        "T"
+      ],
+      "trailing_velocity_rows": 1415,
+      "trailing_velocities": "all zero; outside imported table",
+      "geometry": "VertexGeom",
+      "geometry_units": "Angstrom",
+      "length_unit_index": 21,
+      "atom_type": 1,
+      "source_row_range_inclusive": [
+        1,
+        1415
+      ],
+      "vertex_dtype": "float32",
+      "reference_dtype": "float64",
+      "lammps_text_decimal_places": 6,
+      "lammps_image_flags": [
+        0,
+        0,
+        0
+      ],
+      "lammps_boundary_for_readback": "s s s"
+    },
+    "known_differences": [
+      "Original published DFT-relaxed atom positions are simulation-derived, not measured.",
+      "Illustrative coordinate/type interchange only. No DFT, relaxation, energy, stability ranking, morphological competition, or molecular dynamics is performed.",
+      "The generic CSV reader uses this exact CONTCAR layout; it is not a general VASP parser. No derived XYZ input or preprocessing is used.",
+      "Fractional coordinates are multiplied by 50 only because the selected source has scale 1 and diagonal 50 angstrom lattice vectors.",
+      "Float64 source and Cartesian coordinates are retained; the vertex geometry uses Float32 and the LAMMPS writer emits six decimal places.",
+      "The exported box uses atom-coordinate extrema, not the original 50 angstrom vacuum cell. Image flags are zero.",
+      "The export omits masses, force fields, velocities, constraints, DFT settings and energies. It is not a simulation restart.",
+      "AtomType 1 means Ag for this single-species source; SourceRow1Based records atom row identity, not bonds, grains or physical phase measurements.",
+      "The source main paper and data availability were read; the supplementary PDF was inaccessible and is not used as evidence.",
+      "No atoms are cropped, padded, duplicated, wrapped, reordered or relaxed."
+    ],
+    "attribution": "Loffreda, David (2026). NOMAD dataset: VASP_CLEAN_SILVER_NANOPARTICLES_DATABASE. NOMAD Repository. https://doi.org/10.17172/NOMAD/2026.03.23-1",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "changes": "Local filename changed; native pipeline converts fractional coordinates to Cartesian angstrom, copies to Float32, assigns type 1 and row identifiers, and exports six-decimal coordinates."
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "CreateDataGroupFilter",
+      "uuid": "e7d2f9b8-4131-4b28-a843-ea3c6950f101",
+      "role": "Create a source checkpoint group for the original fractional coordinates and selective-dynamics flags.",
+      "input_paths": [],
+      "output_paths": [
+        "Source"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "data_object_path": 1
+      },
+      "key_parameters": {
+        "data_object_path": "Source"
+      }
+    },
+    {
+      "index": 1,
+      "filter": "ReadCSVFileFilter",
+      "uuid": "373be1f8-31cf-49f6-aa5d-e356f4f3f261",
+      "role": "Read exactly 1415 atom records from original CONTCAR lines 10-1424. This explicit whitespace-table schema preserves six columns and stops before the trailing zero-velocity block; it is not a general VASP reader.",
+      "input_paths": [
+        "Data/NOMAD_Silver_Nanoparticle/Ag1415ico.CONTCAR"
+      ],
+      "output_paths": [
+        "Source/Atoms"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "read_csv_data_object": 1,
+        "use_existing_group": 1,
+        "selected_attribute_matrix_path": 1,
+        "created_data_group_path": 1
+      },
+      "key_parameters": {
+        "read_csv_data_object": {
+          "Custom Headers": [
+            "FractionalX",
+            "FractionalY",
+            "FractionalZ",
+            "SelectiveX",
+            "SelectiveY",
+            "SelectiveZ"
+          ],
+          "Data Types": [
+            9,
+            9,
+            9,
+            11,
+            11,
+            11
+          ],
+          "Skipped Array Mask": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "Tuple Dimensions": [
+            1415
+          ],
+          "Input File Path": "Data/NOMAD_Silver_Nanoparticle/Ag1415ico.CONTCAR",
+          "Start Import Row": 10,
+          "Header Line": 1,
+          "Header Mode": 1,
+          "Delimiters": [
+            " ",
+            "\t"
+          ],
+          "Consecutive Delimiters": false
+        },
+        "use_existing_group": false,
+        "selected_attribute_matrix_path": "",
+        "created_data_group_path": "Source/Atoms"
+      }
+    },
+    {
+      "index": 2,
+      "filter": "CombineAttributeArraysFilter",
+      "uuid": "2436b614-e96d-47f0-9f6f-41d6fe97acd4",
+      "role": "Combine FractionalX, FractionalY, FractionalZ in that order. Preserve their values and source columns: normalization and removal are disabled.",
+      "input_paths": [
+        "Source/Atoms/FractionalX",
+        "Source/Atoms/FractionalY",
+        "Source/Atoms/FractionalZ"
+      ],
+      "output_paths": [
+        "Source/Atoms/FractionalXYZ"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "input_data_array_paths": 1,
+        "output_data_array_name": 1,
+        "normalize_data": 1,
+        "move_values": 1
+      },
+      "key_parameters": {
+        "input_data_array_paths": [
+          "Source/Atoms/FractionalX",
+          "Source/Atoms/FractionalY",
+          "Source/Atoms/FractionalZ"
+        ],
+        "output_data_array_name": "FractionalXYZ",
+        "normalize_data": false,
+        "move_values": false
+      }
+    },
+    {
+      "index": 3,
+      "filter": "ArrayCalculatorFilter",
+      "uuid": "eea49b17-0db2-5bbc-80ef-f44249cc8d55",
+      "role": "Convert Direct fractional coordinates to Cartesian angstroms in Float64. Multiplication by 50 is valid only for this verified scale-1 diagonal 50 angstrom cell; it is not a general lattice transform.",
+      "input_paths": [
+        "Source/Atoms/FractionalXYZ"
+      ],
+      "output_paths": [
+        "Source/Atoms/CartesianAngstrom64"
+      ],
+      "parameters_version": 2,
+      "parameter_versions": {
+        "calculator_parameter": 1,
+        "scalar_type_index": 1,
+        "calculated_array_path": 1
+      },
+      "key_parameters": {
+        "calculator_parameter": {
+          "equation": "FractionalXYZ * 50",
+          "units": 0,
+          "selected_group": "Source/Atoms"
+        },
+        "scalar_type_index": 9,
+        "calculated_array_path": "Source/Atoms/CartesianAngstrom64"
+      }
+    },
+    {
+      "index": 4,
+      "filter": "ConvertDataFilter",
+      "uuid": "6dc586cc-59fb-4ee8-90ff-2d3587da12f5",
+      "role": "Make the explicit Float32 coordinate copy required by VertexGeom. Retain CartesianAngstrom64 as the precision reference.",
+      "input_paths": [
+        "Source/Atoms/CartesianAngstrom64"
+      ],
+      "output_paths": [
+        "Source/Atoms/CartesianAngstrom32"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "scalar_type_index": 1,
+        "array_to_convert_path": 1,
+        "converted_array_name": 1,
+        "delete_original_array": 1
+      },
+      "key_parameters": {
+        "scalar_type_index": 8,
+        "array_to_convert_path": "Source/Atoms/CartesianAngstrom64",
+        "converted_array_name": "CartesianAngstrom32",
+        "delete_original_array": false
+      }
+    },
+    {
+      "index": 5,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Copy all 1415 coordinates into the Ag1415 vertex geometry with Angstrom units (index 21) and AtomData rows. No crop, translation, duplication, padding, relaxation, or bond construction is performed.",
+      "input_paths": [
+        "Source/Atoms/CartesianAngstrom32"
+      ],
+      "output_paths": [
+        "Ag1415",
+        "Ag1415/AtomData"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "geometry_type_index": 1,
+        "length_unit_index": 1,
+        "output_geometry_path": 1,
+        "warnings_as_errors": 1,
+        "array_handling_index": 1,
+        "dimensions": 1,
+        "origin": 1,
+        "spacing": 1,
+        "x_bounds_path": 1,
+        "y_bounds_path": 1,
+        "z_bounds_path": 1,
+        "vertex_list_path": 1,
+        "vertex_attribute_matrix_name": 1,
+        "edge_list_path": 1,
+        "edge_attribute_matrix_name": 1,
+        "triangle_list_path": 1,
+        "quadrilateral_list_path": 1,
+        "face_attribute_matrix_name": 1,
+        "tetrahedral_list_path": 1,
+        "hexahedral_list_path": 1,
+        "cell_attribute_matrix_name": 1
+      },
+      "key_parameters": {
+        "geometry_type_index": 2,
+        "length_unit_index": 21,
+        "output_geometry_path": "Ag1415",
+        "warnings_as_errors": true,
+        "array_handling_index": 0,
+        "dimensions": [
+          1,
+          1,
+          1
+        ],
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "Source/Atoms/CartesianAngstrom32",
+        "vertex_attribute_matrix_name": "AtomData",
+        "edge_list_path": "",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      }
+    },
+    {
+      "index": 6,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "Assign Int32 atom type 1 to all rows because the source header contains only Ag. This LAMMPS type is neither a grain ID nor a phase measurement; no Masses or potential are supplied.",
+      "input_paths": [
+        "Ag1415/AtomData"
+      ],
+      "output_paths": [
+        "Ag1415/AtomData/AtomType"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "output_array_path": 1,
+        "numeric_type_index": 1,
+        "data_format": 1,
+        "set_tuple_dimensions": 1,
+        "tuple_dimensions": 1,
+        "component_dimensions": 1,
+        "init_type_index": 1,
+        "init_value": 1,
+        "starting_fill_value": 1,
+        "step_operation_index": 1,
+        "step_value": 1,
+        "use_seed": 1,
+        "seed_value": 1,
+        "seed_array_name": 1,
+        "standardize_seed": 1,
+        "init_start_range": 1,
+        "init_end_range": 1
+      },
+      "key_parameters": {
+        "output_array_path": "Ag1415/AtomData/AtomType",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1415.0
+          ]
+        ],
+        "component_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "init_type_index": 0,
+        "init_value": "1",
+        "starting_fill_value": "1",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "InitializeDataFilter SeedValue",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      }
+    },
+    {
+      "index": 7,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "Retain source atom-record identity as Int32 values 1 through 1415. Source line = SourceRow1Based + 9; exported LAMMPS atom ID follows the same row order. These are not bonds or feature IDs.",
+      "input_paths": [
+        "Ag1415/AtomData"
+      ],
+      "output_paths": [
+        "Ag1415/AtomData/SourceRow1Based"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "output_array_path": 1,
+        "numeric_type_index": 1,
+        "data_format": 1,
+        "set_tuple_dimensions": 1,
+        "tuple_dimensions": 1,
+        "component_dimensions": 1,
+        "init_type_index": 1,
+        "init_value": 1,
+        "starting_fill_value": 1,
+        "step_operation_index": 1,
+        "step_value": 1,
+        "use_seed": 1,
+        "seed_value": 1,
+        "seed_array_name": 1,
+        "standardize_seed": 1,
+        "init_start_range": 1,
+        "init_end_range": 1
+      },
+      "key_parameters": {
+        "output_array_path": "Ag1415/AtomData/SourceRow1Based",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1415.0
+          ]
+        ],
+        "component_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "init_type_index": 1,
+        "init_value": "1",
+        "starting_fill_value": "1",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "InitializeDataFilter SeedValue",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      }
+    },
+    {
+      "index": 8,
+      "filter": "WriteLAMMPSFileFilter",
+      "uuid": "dea1a683-320a-4a08-a21b-cc359d737700",
+      "role": "Export coordinate/type interchange: 1415 atoms, type 1, six decimal places, zero image flags, and coordinate-extrema box bounds. The original 50 angstrom vacuum cell and simulation settings are not exported. For read-only LAMMPS import use units metal, atom_style atomic and boundary s s s.",
+      "input_paths": [
+        "Ag1415",
+        "Ag1415/AtomData/AtomType"
+      ],
+      "output_paths": [
+        "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico.lammps"
+      ],
+      "parameters_version": 1,
+      "parameter_versions": {
+        "output_file": 1,
+        "vertex_geom_path": 1,
+        "atom_labels_path": 1
+      },
+      "key_parameters": {
+        "output_file": "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico.lammps",
+        "vertex_geom_path": "Ag1415",
+        "atom_labels_path": "Ag1415/AtomData/AtomType"
+      }
+    },
+    {
+      "index": 9,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save original fractional coordinates, selective flags, Float64 Cartesian coordinates, Float32 geometry, AtomType and source-row identity for inspection. This checkpoint records interchange, not a DFT or MD calculation.",
+      "input_paths": [
+        "Source",
+        "Ag1415"
+      ],
+      "output_paths": [
+        "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico_Interchange.dream3d"
+      ],
+      "parameters_version": 2,
+      "parameter_versions": {
+        "export_file_path": 1,
+        "write_xdmf_file": 1,
+        "use_compression": 1,
+        "compression_level": 1
+      },
+      "key_parameters": {
+        "export_file_path": "Data/Output/NOMAD_Silver_Nanoparticle/Ag1415ico_Interchange.dream3d",
+        "write_xdmf_file": false,
+        "use_compression": true,
+        "compression_level": 5
+      }
+    }
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "nomad-silver-nanoparticle-python-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Inspect the published Ag1415ico geometry",
+      "Export a finite atom cloud to LAMMPS",
+      "Check source row identity and coordinate precision"
+    ],
+    "questions_to_ask": [
+      "Does the source match the documented checksum and CONTCAR schema?",
+      "What cell, coordinate mode, units and species order does a replacement input use?",
+      "Is the downstream objective coordinate inspection or a separately validated physical simulation?"
+    ],
+    "constraints": [
+      "Original published DFT-relaxed atom positions are simulation-derived, not measured.",
+      "Illustrative coordinate/type interchange only. No DFT, relaxation, energy, stability ranking, morphological competition, or molecular dynamics is performed.",
+      "The generic CSV reader uses this exact CONTCAR layout; it is not a general VASP parser. No derived XYZ input or preprocessing is used.",
+      "Fractional coordinates are multiplied by 50 only because the selected source has scale 1 and diagonal 50 angstrom lattice vectors.",
+      "Float64 source and Cartesian coordinates are retained; the vertex geometry uses Float32 and the LAMMPS writer emits six decimal places.",
+      "The exported box uses atom-coordinate extrema, not the original 50 angstrom vacuum cell. Image flags are zero.",
+      "The export omits masses, force fields, velocities, constraints, DFT settings and energies. It is not a simulation restart.",
+      "AtomType 1 means Ag for this single-species source; SourceRow1Based records atom row identity, not bonds, grains or physical phase measurements.",
+      "The source main paper and data availability were read; the supplementary PDF was inaccessible and is not used as evidence.",
+      "No atoms are cropped, padded, duplicated, wrapped, reordered or relaxed.",
+      "Consecutive Delimiters=false ignores empty tokens from repeated whitespace in the pinned runtime.",
+      "The current writer crashes with fewer than 1000 atoms (simplnx issue 1818); do not pad or duplicate a smaller model.",
+      "Use units metal, atom_style atomic and boundary s s s for read-only LAMMPS coordinate comparison.",
+      "Never treat native execution as proof of generated Python, OOC, GUI, installer, energies or physical simulation correctness."
+    ],
+    "related_pipelines": []
+  },
+  "citations": [
+    {
+      "scope": "pipeline_workflow",
+      "title": "The Fierce Morphological Battle of Silver Nanoparticles: How Irregularities, Vacancies and Defects Tip the Crossing Sizes",
+      "authors": [
+        "Nathalie Tarrat",
+        "David Loffreda"
+      ],
+      "year": 2026,
+      "journal": "Small 22(56), e75018",
+      "doi": "10.1002/smll.75018",
+      "url": "https://doi.org/10.1002/smll.75018",
+      "role": "Published source model and scientific context; the example imports the existing relaxed configuration and does not reproduce the paper calculations.",
+      "dataset": {
+        "availability": "Original CONTCAR from the paper-linked public NOMAD dataset, selected entry nlCDj9UZ1jDDb1L_X35QnJNJ-yRd.",
+        "url": "https://nomad-lab.eu/prod/v1/api/v1/uploads/zwh0pQTnT3ek9K4HVAED3Q/raw/SILVER_NANOPARTICLES_DATABASE/ICOSAHEDRA/MACKAY/Ag1415ico/CONTCAR",
+        "doi": "10.17172/NOMAD/2026.03.23-1",
+        "license": "CC BY 4.0; paper license is separate CC BY-NC-ND 4.0.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Original complete 1415-atom model; coordinate/type interchange only, without DFT relaxation, energetics, morphology ranking, or dynamics."
+      }
+    },
+    {
+      "scope": "filter_algorithm",
+      "title": "POSCAR",
+      "url": "https://vasp.at/wiki/index.php/POSCAR",
+      "role": "Source format: fractional coordinate conversion, lattice scaling, angstrom units and selective-dynamics flags."
+    },
+    {
+      "scope": "filter_algorithm",
+      "title": "read_data command",
+      "url": "https://docs.lammps.org/read_data.html",
+      "role": "Atomic coordinate record interpretation."
+    },
+    {
+      "scope": "filter_algorithm",
+      "title": "boundary command",
+      "url": "https://docs.lammps.org/boundary.html",
+      "role": "Read-only nonperiodic shrink-wrap boundary interpretation."
+    },
+    {
+      "scope": "filter_algorithm",
+      "title": "units command",
+      "url": "https://docs.lammps.org/units.html",
+      "role": "Metal unit style uses angstrom lengths."
+    }
+  ],
+  "last_verified": "2026-10-15",
+  "verification": {
+    "simplnx_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native": "2/2 sequential Windows in-memory Release CTest checks passed: native preflight and full execution of all ten steps.",
+    "independent_outputs": "41 independent checks passed: all 1415 source records, fractional columns, flags, Float64 matrix conversion, Float32 copy, geometry units/association, types, row identities, text fields/precision/extrema and unchanged source hash.",
+    "figure": "Ag1415Interchange.png generated from native coordinates and exported text, with source-cell context; visually inspected. No article image copied.",
+    "pipeline_sha256": "d53befd552dd92d687749c1b20fe7e33778d2e7d327308775aeacc36aa5f0f71",
+    "input_sha256": "3b43097bdb568ba31f4d8de1a98bd40f45512c80f3f9897d79826cd9924dd9fd",
+    "lammps_sha256": "7f8d1fee1d22f720249536e1e9b238b5a6122be36501dcbc74eb01bd22342ae4",
+    "dream3d_sha256": "54750c25ff033f461f984b61e491008831e9e4b4c2d91c3eadc2e3c32c5e48dc",
+    "not_verified": [
+      "Generated Python",
+      "OOC storage",
+      "Native GUI",
+      "Installer/bookmarks",
+      "Physical simulation or paper-result reproduction"
+    ],
+    "external_reader": "LAMMPS (22 Jul 2025 - Update 4) read_data with units metal, atom_style atomic and boundary s s s preserved all 1415 exported IDs, types, coordinates and image flags. The data-file hash was unchanged. No dynamics, energy evaluation or full-system initialization was performed.",
+    "external_reader_warning": "The verification-only write_dump warned that it was called before full system initialization; this read-only check deliberately performs no simulation initialization.",
+    "figure_sha256": "e8b3189dbeefe13c6efc9c823b8b5314e082ceda4cd71fe18fb911ae5464c40e",
+    "coordinate_errors_angstrom": {
+      "max_native64_error_angstrom": 0.0,
+      "max_float32_error_angstrom": 1.9050315032131948e-06,
+      "max_text_rounding_error_angstrom": 4.996337885643243e-07,
+      "max_export_vs_source_error_angstrom": 2.328263548179166e-06
+    },
+    "export_bounds_angstrom": [
+      [
+        7.615476,
+        43.212006
+      ],
+      [
+        5.110205,
+        43.514324
+      ],
+      [
+        6.95658,
+        42.70908
+      ]
+    ],
+    "static_content": "73 source/schema/parity/link/style/evidence checks passed. Canonical validator non-style gates pass through a private flat-layout adapter; its sole warning/purpose-heading check is an explicit user-style exception.",
+    "style_exception": "The user-approved source-first companion and focused Before adapting warning replace the generic scanner warning and mandated purpose-heading order. Build/test and platform verification details remain in README/YAML.",
+    "native_log_sha256": "393af1de51babd48846f719af010bb6bb6d1966c755ca07b7f4beccab7ed79c6"
+  }
+}
