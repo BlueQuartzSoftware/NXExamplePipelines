@@ -1,0 +1,356 @@
+{
+  "version": 1,
+  "scope": "Selected Small IN100 preparation, measurement, selection, neighbor, voxel-mesh, scalar grain-size grouping, centroid-neighborhood grouping, and native silhouette example filters; not a full plugin coverage inventory.",
+  "filters": [
+    {
+      "filter": "EBSDSegmentFeaturesFilter",
+      "uuid": "1810c2c7-63e3-41db-b204-a5821e6271c0",
+      "pipeline": "(01) Small IN100 Feature Preparation.d3dpipeline",
+      "step": 8,
+      "purpose": "Segment finite-sample EBSD features without periodic face wrapping."
+    },
+    {
+      "filter": "ComputeFeatureCentroidsFilter",
+      "uuid": "c6875ac7-8bdd-4f69-b6ce-82ac09bd3421",
+      "pipeline": "(02) Small IN100 Feature Measurements.d3dpipeline",
+      "step": 1,
+      "purpose": "Locate final reconstructed features from observed voxel centers."
+    },
+    {
+      "filter": "ComputeFeatureSizesFilter",
+      "uuid": "c666ee17-ca58-4969-80d0-819986c72485",
+      "pipeline": "(02) Small IN100 Feature Measurements.d3dpipeline",
+      "step": 2,
+      "purpose": "Measure voxel counts, physical volumes, and equivalent diameters."
+    },
+    {
+      "filter": "ComputeShapesFilter",
+      "uuid": "036b17d5-23bb-4a24-9187-c4a8dd918792",
+      "pipeline": "(02) Small IN100 Feature Measurements.d3dpipeline",
+      "step": 3,
+      "purpose": "Measure fitted shape descriptors using final IDs and centroids."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(02) Small IN100 Feature Measurements.d3dpipeline",
+      "step": 4,
+      "purpose": "Export direct feature arrays with traceable Feature_ID rows."
+    },
+    {
+      "filter": "ComputeSurfaceFeaturesFilter",
+      "uuid": "0893e490-5d24-4c21-95e7-e8372baa8948",
+      "pipeline": "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Mark image-box and face-adjacent background contact."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Create occupied-feature and interior-feature masks."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "step": 4,
+      "purpose": "Compare masked diameter counts and descriptive statistics."
+    },
+    {
+      "filter": "ComputeArrayHistogramFilter",
+      "uuid": "c6b6d9e5-301d-4767-abf7-530f5ef5007d",
+      "pipeline": "(03) Small IN100 Surface Selection Comparison.d3dpipeline",
+      "step": 6,
+      "purpose": "Compare masked diameters on common bins."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(04) Small IN100 Minimum Size Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Create occupied-feature and inclusive minimum-size masks."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(04) Small IN100 Minimum Size Comparison.d3dpipeline",
+      "step": 3,
+      "purpose": "Compare masked diameter counts and descriptive statistics."
+    },
+    {
+      "filter": "ComputeArrayHistogramFilter",
+      "uuid": "c6b6d9e5-301d-4767-abf7-530f5ef5007d",
+      "pipeline": "(04) Small IN100 Minimum Size Comparison.d3dpipeline",
+      "step": 5,
+      "purpose": "Compare masked diameters on common bins."
+    },
+    {
+      "filter": "ComputeSurfaceFeaturesFilter",
+      "uuid": "0893e490-5d24-4c21-95e7-e8372baa8948",
+      "pipeline": "(05) Small IN100 Combined Selection.d3dpipeline",
+      "step": 1,
+      "purpose": "Mark image-box and face-adjacent background contact for the combined rule."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(05) Small IN100 Combined Selection.d3dpipeline",
+      "step": 3,
+      "purpose": "Intersect occupied, interior, and inclusive minimum-size conditions."
+    },
+    {
+      "filter": "ComputeArrayStatisticsFilter",
+      "uuid": "645ecae2-cb30-4b53-8165-c9857dfa754f",
+      "pipeline": "(05) Small IN100 Combined Selection.d3dpipeline",
+      "step": 5,
+      "purpose": "Compare valid and combined diameter statistics."
+    },
+    {
+      "filter": "ComputeArrayHistogramFilter",
+      "uuid": "c6b6d9e5-301d-4767-abf7-530f5ef5007d",
+      "pipeline": "(05) Small IN100 Combined Selection.d3dpipeline",
+      "step": 7,
+      "purpose": "Compare valid and combined diameter counts on common bins."
+    },
+    {
+      "filter": "ComputeFeatureNeighborsFilter",
+      "uuid": "7177e88c-c3ab-4169-abe9-1fdaff20e598",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 1,
+      "purpose": "Build direct face-sharing final-FeatureIds contacts, physical shared-area lists, and image-box flags."
+    },
+    {
+      "filter": "ComputeNeighborListStatisticsFilter",
+      "uuid": "270a824e-414b-455e-bb7e-b38a0848990d",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 2,
+      "purpose": "Reduce each shared-area list to count, mean, largest contact, and total area."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 4,
+      "purpose": "Copy measured centroids into a temporary micrometer vertex geometry so unused feature rows can be removed together with their measurements."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 5,
+      "purpose": "Copy the measured positions, diameters, and occupancy counts into the temporary vertex attribute matrix; preserve the original feature table."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 6,
+      "purpose": "Record each original feature-row ID as a scalar int32 sequence beginning at zero; inherit the temporary feature tuple count."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 7,
+      "purpose": "Flag unused positive rows with NumElements equal to zero AND OriginalFeatureId greater than zero; retain reserved row zero."
+    },
+    {
+      "filter": "RemoveFlaggedVerticesFilter",
+      "uuid": "46099b4c-ef90-4fb3-b5e9-6c8c543c5be1",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 8,
+      "purpose": "Remove flagged vertices and the same tuples from all temporary feature arrays, keeping the original-ID mapping aligned."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 9,
+      "purpose": "Keep the compact SpatialFeatures table under the original micrometer image geometry."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 10,
+      "purpose": "Discard both temporary vertex geometries after preserving the compact table; the final spatial context is the original image geometry."
+    },
+    {
+      "filter": "ComputeNeighborhoodsFilter",
+      "uuid": "924c10e3-2f39-4c08-9d7a-7fe029f74f6d",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 11,
+      "purpose": "Find other occupied feature centroids within an illustrative fixed 5 micrometer radius; returned IDs index SpatialFeatures."
+    },
+    {
+      "filter": "ComputeNeighborhoodsFilter",
+      "uuid": "924c10e3-2f39-4c08-9d7a-7fe029f74f6d",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 12,
+      "purpose": "Find other occupied feature centroids within a radius equal to each target feature's own equivalent sphere diameter; these directed neighborhoods can be asymmetric."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(06) Small IN100 Neighbor Relationships.d3dpipeline",
+      "step": 13,
+      "purpose": "Export occupied compact rows, original feature IDs, measured centroids and diameters, and both neighborhood counts; omit reserved row zero and packed lists."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(07) Small IN100 Bounded Voxel Mesh.d3dpipeline",
+      "step": 1,
+      "purpose": "Preserve each original FeatureIds value before local relabeling."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(07) Small IN100 Bounded Voxel Mesh.d3dpipeline",
+      "step": 2,
+      "purpose": "Crop inclusive XYZ voxel bounds and compact the selected FeatureIds."
+    },
+    {
+      "filter": "WriteAbaqusHexahedronFilter",
+      "uuid": "4bc81b8c-1594-409a-89eb-3ea8d8f061b0",
+      "pipeline": "(07) Small IN100 Bounded Voxel Mesh.d3dpipeline",
+      "step": 3,
+      "purpose": "Export connected C3D8 voxel nodes, elements, and compact grain sets."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the surface-selection checkpoint. Preserve source geometry, FeatureIds, measurements, and masks."
+    },
+    {
+      "filter": "ComputeKMeansFilter",
+      "uuid": "b8682b04-ccc0-49a2-9ced-32d5f5c512f3",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 1,
+      "purpose": "Partition selected scalar diameters in micrometers into three illustrative groups using arithmetic means. Group IDs 1..3 are unordered; excluded rows have ID 0. Ignore reserved center row 0."
+    },
+    {
+      "filter": "ComputeKMedoidsFilter",
+      "uuid": "7643cb64-bcb9-4867-b85a-bf158cd0f54a",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 2,
+      "purpose": "Compare three groups from the same selected diameters using observed representative sizes and scalar Euclidean distance. Representatives are diameter values, not unique grain IDs; ignore reserved row 0."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 3,
+      "purpose": "Measure K-means separation using the same selected diameters, InteriorFeatures mask, and Euclidean distance as K-medoids. Interpret selected positive-group rows only; excluded zero scores are not observations. The native own-group mean includes self-distance."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 4,
+      "purpose": "Measure K-medoids separation on the same cohort and metric for a comparable diagnostic. Require at least two nonempty positive groups. Scores do not establish physical phases or a globally best method; the native own-group mean includes self-distance."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 5,
+      "purpose": "Export all positive original feature rows with both masks and group IDs; retain excluded and unused rows for traceability."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 6,
+      "purpose": "Export only group rows 1..3 with their arithmetic mean diameters in micrometers; Feature_ID identifies the K-means group."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 7,
+      "purpose": "Export only group rows 1..3 with observed representative diameters in micrometers; Feature_ID identifies the K-medoids group."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(08) Small IN100 Grain Size Groups and Representatives.d3dpipeline",
+      "step": 8,
+      "purpose": "Save all source data plus both group assignments, center tables, and stored seeds. Exclude row 0 from group interpretation."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the surface-selection checkpoint. Preserve source geometry, FeatureIds, measurements, and masks."
+    },
+    {
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 1,
+      "purpose": "Cluster measured interior-feature centroids in micrometers with epsilon 2.5 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 2,
+      "purpose": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 3,
+      "purpose": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette."
+    },
+    {
+      "filter": "DBSCANFilter",
+      "uuid": "763dad44-fad7-4606-808f-617867257b98",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 4,
+      "purpose": "Cluster measured interior-feature centroids in micrometers with epsilon 3.0 um and minimum grid occupancy 2. GDCF uses cell side epsilon/sqrt(3), strict inter-grid distance < epsilon, and low-density-first parse order. IDs are unordered; zero combines excluded and unassigned rows."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 5,
+      "purpose": "Score only original-cohort rows with positive cluster IDs. Preserve InteriorFeatures to distinguish excluded rows from selected but unassigned rows."
+    },
+    {
+      "filter": "SilhouetteFilter",
+      "uuid": "520de667-5ff0-4e8d-bb70-a3b6122cf4ba",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 6,
+      "purpose": "Compute the implemented self-inclusive silhouette on the stated cohort. Excluded rows are zero; zero is not a quality assessment. This differs from the conventional self-exclusive silhouette."
+    },
+    {
+      "filter": "CopyFeatureArrayToElementArrayFilter",
+      "uuid": "4c8c976a-993d-438b-bd8e-99f71114b9a1",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 7,
+      "purpose": "Map both group IDs and the original cohort to cells for categorical visualization. Preserve the original FeatureIds segmentation; InteriorFeatures_Map distinguishes excluded cells from selected but unassigned grains."
+    },
+    {
+      "filter": "WriteFeatureDataCSVFilter",
+      "uuid": "d734293f-3017-4699-b458-c05aca078b96",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 8,
+      "purpose": "Retain every positive original feature row and both assignment masks. Scores from different radii use different assigned cohorts and are not a radius optimization criterion."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(09) Small IN100 Centroid Neighborhood Comparison.d3dpipeline",
+      "step": 9,
+      "purpose": "Preserve the measured predecessor, original FeatureIds, selection mask, both cluster assignments, and both masked score arrays."
+    }
+  ]
+}

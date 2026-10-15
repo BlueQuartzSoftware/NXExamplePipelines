@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "orientationanalysis-smallin100-python-generation-v1",
+  "title": "Small IN100 pilot pipeline to Python generation",
+  "source_authority": ".d3dpipeline",
+  "converter_api": "simplnx_utilities.generate_python_pipeline",
+  "required_modules": [
+    "simplnx",
+    "orientationanalysis",
+    "imageprocessing",
+    "simplnx_utilities"
+  ],
+  "working_directory": "Chosen writable CLI working folder containing Data/Small_IN100 and Data/Output",
+  "output_lifetime": "temporary",
+  "verification_status": "NOT VERIFIED: generation, imports, syntax, structure, and execution have not been tested for these bundles.",
+  "failure_behavior": "Report a missing module, load error, generation error, or execution error. Do not silently substitute handwritten Python.",
+  "regeneration_rule": "Regenerate temporary Python from the authoritative .d3dpipeline after any filter, argument, comment, or path change.",
+  "path_rules": {
+    "pipeline_reference_base": "pipeline_suite_root",
+    "runtime_data_base": "chosen_cli_working_directory",
+    "input_paths": "Preserve Data/Small_IN100, Data/Output/Reconstruction, and Data/Output/Small_IN100_Examples input paths relative to the chosen CLI working folder.",
+    "output_paths": "Preserve Data/Output/Small_IN100_Examples output paths relative to the chosen CLI working folder."
+  },
+  "generation": {
+    "language": "Python",
+    "steps": [
+      "Use the Python environment supplied with the matching DREAM3D-NX application.",
+      "Import simplnx, orientationanalysis, imageprocessing, and simplnx_utilities before loading the pipeline. The current converter imports imageprocessing even when these pipelines use no ImageProcessing filters.",
+      "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
+      "Call simplnx_utilities.generate_python_pipeline(pipeline).",
+      "Compile the returned program and write it to a temporary .py file.",
+      "Execute from the same chosen writable CLI working folder after predecessor outputs exist; discard the temporary file after validation."
+    ],
+    "reference_code": [
+      "import simplnx as nx",
+      "import orientationanalysis",
+      "import imageprocessing",
+      "import simplnx_utilities",
+      "pipeline = nx.Pipeline.from_file(pipeline_path)",
+      "code = simplnx_utilities.generate_python_pipeline(pipeline)",
+      "compile(code, str(pipeline_path), 'exec')"
+    ]
+  },
+  "validation": {
+    "syntax": "Compile the generated text with Python compile().",
+    "structure": "Match generated filter calls and order to enabled pipeline steps.",
+    "paths": "Check every relative input and output path against the source pipeline.",
+    "execution": "Run each generated program with its documented predecessors and inspect outputs. NOT VERIFIED.",
+    "storage": "Validate OOC separately before claiming OOC support.",
+    "grain_size_grouping": "For example 08, preserve all nine enabled steps: read, K-means, K-medoids, two Silhouette calls, three feature-table exports, and DREAM3D export. Both Silhouette calls must keep EquivalentDiameters, InteriorFeatures, Euclidean metric 0, and their corresponding group IDs/output paths. Validate only selected positive-group score rows against the native self-inclusive divisor n. Generation and execution remain unverified.",
+    "centroid_neighborhood_comparison": "For example 09, preserve all ten enabled steps: read, DBSCAN at 2.5 micrometers, assignment mask, Silhouette, DBSCAN at 3.0 micrometers, assignment mask, Silhouette, feature-to-cell mapping, feature CSV export, and DREAM3D export. Read the existing SurfaceSelection checkpoint; no additional dataset is needed. DBSCAN uses three physical Centroids components, Euclidean metric 0, InteriorFeatures, minimum grid occupancy 2, and Low Density First 0. Preserve each Assigned mask as InteriorFeatures AND its corresponding positive cluster IDs, both radius-specific score inputs and output paths, and the three _Map arrays indexed through original FeatureIds. Verify native self-inclusive silhouettes only on each assigned cohort, the exact cell maps, and unchanged source arrays. Mean scores use different assigned cohorts and are not a radius-optimization criterion. Generation and execution remain unverified."
+  },
+  "gui_note": "GUI working folders vary by launch and installation layout. Set absolute file input/output parameters if relative Data paths do not resolve; native GUI execution is unverified."
+}

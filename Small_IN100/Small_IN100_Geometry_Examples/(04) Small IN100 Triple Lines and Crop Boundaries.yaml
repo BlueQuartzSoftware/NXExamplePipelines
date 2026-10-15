@@ -1,0 +1,1266 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+  "markdown_file": "(04) Small IN100 Triple Lines and Crop Boundaries.md",
+  "title": "Small IN100 Triple Lines and Crop Boundaries",
+  "summary": "Extract shared-edge grain junctions from the original Small IN100 mesh, compare exterior counting, and show how removing faces at crop-wall nodes changes the remaining line network.",
+  "primary_industries": [
+    "Materials characterization"
+  ],
+  "secondary_industries": [
+    "Metallurgy",
+    "Computational geometry"
+  ],
+  "use_cases": [
+    "Inspect connected grain-boundary junction segments",
+    "Separate grain-only junction counting from artificial crop-exterior contributions",
+    "Assess sensitivity to deliberate crop-boundary erosion"
+  ],
+  "keywords": [
+    "Small IN100",
+    "EBSD",
+    "triple lines",
+    "junctions",
+    "Edge Geometry",
+    "FaceLabels",
+    "NodeTypes",
+    "NumFeatures",
+    "crop boundaries"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Small_IN100_Geometry_Examples/Surface/SmallIN100_SurfaceMesh.dream3d",
+      "role": "Stage 01 checkpoint; selectively import SurfaceMesh and its descendants with include-list policy 1.",
+      "sha256": "dfd3dc2e402d4b4ec41d17fcb50cacd49817b0061e08eccec718e917108b101e"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d",
+      "role": "Original SurfaceMesh plus three Edge Geometries and BoundaryErodedMesh; all five explicitly in Micrometer units.",
+      "sha256": "29e4b1ff738df974c487a5d0508859b2c67f1847cbd862fbc5324313d4c55cdb"
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "measured-public-example",
+    "asset_keys": [
+      "Small_IN100.tar.gz"
+    ],
+    "paper_doi": "10.1186/2193-9772-3-5",
+    "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
+    "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+    "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
+    "reference_visual": "Groeber and Jackson Figure 5 supplies inherited measured reconstruction context; no named paper junction figure or numerical target is reproduced.",
+    "target_traits": [
+      "24 by 24 by 24 measured-derived cells at 0.25 micrometer spacing",
+      "Original unsmoothed SurfaceMesh with shared vertex connectivity",
+      "23 positive original grain IDs plus exterior -1; no zero label in this crop",
+      "A 6 micrometer region with artificial bounding-box caps"
+    ],
+    "known_differences": "The bounded crop, modern SurfaceNets, and junction extraction are illustrative adaptations. This is a partial response to a connected-line request, not a TJLOD or hardening method reproduction. Public archive identity with publisher outputs is unproven.",
+    "archive_provenance_file": "README.md"
+  },
+  "prerequisites": [
+    {
+      "pipeline": "(01) Small IN100 Surface Mesh.d3dpipeline",
+      "produces": "Data/Output/Small_IN100_Geometry_Examples/Surface/SmallIN100_SurfaceMesh.dream3d"
+    }
+  ],
+  "software_requirement": "Use a recent matching build registering ExtractTripleLinesFilter and the current ExtractInternalSurfacesFromTriangleGeometryFilter parameters. No product release floor is established.",
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "smallin100-geometry-python-generation-v1"
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "role": "Import only SurfaceMesh and its child arrays from stage 01 using the include-list policy; preserve the shared triangle connectivity and original labels.",
+      "input_paths": [
+        "Data/Output/Small_IN100_Geometry_Examples/Surface/SmallIN100_SurfaceMesh.dream3d"
+      ],
+      "output_paths": [
+        "SurfaceMesh"
+      ],
+      "paths": [],
+      "key_parameters": {
+        "import_data_object": {
+          "data_paths": [
+            "SurfaceMesh"
+          ],
+          "file_path": "Data/Output/Small_IN100_Geometry_Examples/Surface/SmallIN100_SurfaceMesh.dream3d",
+          "path_import_policy": 1
+        }
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 1,
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "role": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines.",
+      "input_paths": [
+        "SurfaceMesh",
+        "SurfaceMesh/Face Data/FaceLabels",
+        "SurfaceMesh/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "InteriorTripleLines_Raw"
+      ],
+      "paths": [
+        {
+          "parameter": "face_labels_array_path",
+          "value": "SurfaceMesh/Face Data/FaceLabels"
+        },
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "SurfaceMesh"
+        },
+        {
+          "parameter": "node_types_array_path",
+          "value": "SurfaceMesh/Vertex Data/NodeTypes"
+        },
+        {
+          "parameter": "output_triple_line_geometry_path",
+          "value": "InteriorTripleLines_Raw"
+        }
+      ],
+      "key_parameters": {
+        "copy_node_types": true,
+        "edge_data_group_name": "Edge Data",
+        "face_labels_array_path": "SurfaceMesh/Face Data/FaceLabels",
+        "include_exterior_triple_lines": false,
+        "input_triangle_geometry_path": "SurfaceMesh",
+        "node_types_array_name": "NodeTypes",
+        "node_types_array_path": "SurfaceMesh/Vertex Data/NodeTypes",
+        "num_features_array_name": "NumFeatures",
+        "output_triple_line_geometry_path": "InteriorTripleLines_Raw",
+        "vertex_data_group_name": "Vertex Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 2,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "input_paths": [
+        "InteriorTripleLines_Raw/Shared Vertex List",
+        "InteriorTripleLines_Raw/Shared Edge List"
+      ],
+      "output_paths": [
+        "InteriorTripleLines"
+      ],
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "InteriorTripleLines"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": "InteriorTripleLines_Raw/Shared Vertex List"
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": "InteriorTripleLines_Raw/Shared Edge List"
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 3,
+        "length_unit_index": 6,
+        "output_geometry_path": "InteriorTripleLines",
+        "warnings_as_errors": true,
+        "array_handling_index": 0,
+        "dimensions": [
+          1,
+          1,
+          1
+        ],
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "spacing": [
+          1,
+          1,
+          1
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "InteriorTripleLines_Raw/Shared Vertex List",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "InteriorTripleLines_Raw/Shared Edge List",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 3,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "InteriorTripleLines_Raw/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "InteriorTripleLines/Vertex Data/NodeTypes"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "InteriorTripleLines_Raw/Vertex Data/NodeTypes"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "InteriorTripleLines/Vertex Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "InteriorTripleLines_Raw/Vertex Data/NodeTypes"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "InteriorTripleLines/Vertex Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 4,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "InteriorTripleLines_Raw/Edge Data/NumFeatures"
+      ],
+      "output_paths": [
+        "InteriorTripleLines/Edge Data/NumFeatures"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "InteriorTripleLines_Raw/Edge Data/NumFeatures"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "InteriorTripleLines/Edge Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "InteriorTripleLines_Raw/Edge Data/NumFeatures"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "InteriorTripleLines/Edge Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 5,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "input_paths": [
+        "InteriorTripleLines_Raw"
+      ],
+      "output_paths": [],
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "InteriorTripleLines_Raw"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "InteriorTripleLines_Raw"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 6,
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "role": "Count the artificial crop exterior as one region. Added segments are crop-boundary effects, not measured free-surface junctions.",
+      "input_paths": [
+        "SurfaceMesh",
+        "SurfaceMesh/Face Data/FaceLabels",
+        "SurfaceMesh/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "ExteriorIncludedTripleLines_Raw"
+      ],
+      "paths": [
+        {
+          "parameter": "face_labels_array_path",
+          "value": "SurfaceMesh/Face Data/FaceLabels"
+        },
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "SurfaceMesh"
+        },
+        {
+          "parameter": "node_types_array_path",
+          "value": "SurfaceMesh/Vertex Data/NodeTypes"
+        },
+        {
+          "parameter": "output_triple_line_geometry_path",
+          "value": "ExteriorIncludedTripleLines_Raw"
+        }
+      ],
+      "key_parameters": {
+        "copy_node_types": true,
+        "edge_data_group_name": "Edge Data",
+        "face_labels_array_path": "SurfaceMesh/Face Data/FaceLabels",
+        "include_exterior_triple_lines": true,
+        "input_triangle_geometry_path": "SurfaceMesh",
+        "node_types_array_name": "NodeTypes",
+        "node_types_array_path": "SurfaceMesh/Vertex Data/NodeTypes",
+        "num_features_array_name": "NumFeatures",
+        "output_triple_line_geometry_path": "ExteriorIncludedTripleLines_Raw",
+        "vertex_data_group_name": "Vertex Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 7,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "input_paths": [
+        "ExteriorIncludedTripleLines_Raw/Shared Vertex List",
+        "ExteriorIncludedTripleLines_Raw/Shared Edge List"
+      ],
+      "output_paths": [
+        "ExteriorIncludedTripleLines"
+      ],
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "ExteriorIncludedTripleLines"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": "ExteriorIncludedTripleLines_Raw/Shared Vertex List"
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": "ExteriorIncludedTripleLines_Raw/Shared Edge List"
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 3,
+        "length_unit_index": 6,
+        "output_geometry_path": "ExteriorIncludedTripleLines",
+        "warnings_as_errors": true,
+        "array_handling_index": 0,
+        "dimensions": [
+          1,
+          1,
+          1
+        ],
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "spacing": [
+          1,
+          1,
+          1
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "ExteriorIncludedTripleLines_Raw/Shared Vertex List",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "ExteriorIncludedTripleLines_Raw/Shared Edge List",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 8,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "ExteriorIncludedTripleLines_Raw/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "ExteriorIncludedTripleLines/Vertex Data/NodeTypes"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "ExteriorIncludedTripleLines_Raw/Vertex Data/NodeTypes"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "ExteriorIncludedTripleLines/Vertex Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "ExteriorIncludedTripleLines_Raw/Vertex Data/NodeTypes"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "ExteriorIncludedTripleLines/Vertex Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 9,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "ExteriorIncludedTripleLines_Raw/Edge Data/NumFeatures"
+      ],
+      "output_paths": [
+        "ExteriorIncludedTripleLines/Edge Data/NumFeatures"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "ExteriorIncludedTripleLines_Raw/Edge Data/NumFeatures"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "ExteriorIncludedTripleLines/Edge Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "ExteriorIncludedTripleLines_Raw/Edge Data/NumFeatures"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "ExteriorIncludedTripleLines/Edge Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 10,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "input_paths": [
+        "ExteriorIncludedTripleLines_Raw"
+      ],
+      "output_paths": [],
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "ExteriorIncludedTripleLines_Raw"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "ExteriorIncludedTripleLines_Raw"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 11,
+      "filter": "ExtractInternalSurfacesFromTriangleGeometryFilter",
+      "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a",
+      "role": "Keep a triangle only when all three NodeTypes lie in 0..8. This discards crop caps and erodes internal sheets that touch crop-wall vertices; it is a sensitivity control.",
+      "input_paths": [
+        "SurfaceMesh",
+        "SurfaceMesh/Vertex Data/NodeTypes",
+        "SurfaceMesh/Face Data/FaceLabels"
+      ],
+      "output_paths": [
+        "BoundaryErodedMesh_Raw"
+      ],
+      "paths": [
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "SurfaceMesh"
+        },
+        {
+          "parameter": "output_triangle_geometry_path",
+          "value": "BoundaryErodedMesh_Raw"
+        },
+        {
+          "parameter": "node_types_path",
+          "value": "SurfaceMesh/Vertex Data/NodeTypes"
+        },
+        {
+          "parameter": "face_labels_path",
+          "value": ""
+        },
+        {
+          "parameter": "copy_vertex_array_paths",
+          "value": [
+            "SurfaceMesh/Vertex Data/NodeTypes"
+          ]
+        },
+        {
+          "parameter": "copy_triangle_array_paths",
+          "value": [
+            "SurfaceMesh/Face Data/FaceLabels"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "input_triangle_geometry_path": "SurfaceMesh",
+        "output_triangle_geometry_path": "BoundaryErodedMesh_Raw",
+        "node_types_path": "SurfaceMesh/Vertex Data/NodeTypes",
+        "node_type_range": [
+          0,
+          8
+        ],
+        "internal_surface_criterion_index": 0,
+        "face_labels_path": "",
+        "copy_vertex_array_paths": [
+          "SurfaceMesh/Vertex Data/NodeTypes"
+        ],
+        "copy_triangle_array_paths": [
+          "SurfaceMesh/Face Data/FaceLabels"
+        ],
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "triangle_attribute_matrix_name": "Face Data"
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 12,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "input_paths": [
+        "BoundaryErodedMesh_Raw/Shared Vertex List",
+        "BoundaryErodedMesh_Raw/Shared Faces List"
+      ],
+      "output_paths": [
+        "BoundaryErodedMesh"
+      ],
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "BoundaryErodedMesh"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": "BoundaryErodedMesh_Raw/Shared Vertex List"
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": "BoundaryErodedMesh_Raw/Shared Faces List"
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 4,
+        "length_unit_index": 6,
+        "output_geometry_path": "BoundaryErodedMesh",
+        "warnings_as_errors": true,
+        "array_handling_index": 0,
+        "dimensions": [
+          1,
+          1,
+          1
+        ],
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "spacing": [
+          1,
+          1,
+          1
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "BoundaryErodedMesh_Raw/Shared Vertex List",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "BoundaryErodedMesh_Raw/Shared Faces List",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 13,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "BoundaryErodedMesh_Raw/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "BoundaryErodedMesh/Vertex Data/NodeTypes"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "BoundaryErodedMesh_Raw/Vertex Data/NodeTypes"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "BoundaryErodedMesh/Vertex Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "BoundaryErodedMesh_Raw/Vertex Data/NodeTypes"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "BoundaryErodedMesh/Vertex Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 14,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "BoundaryErodedMesh_Raw/Face Data/FaceLabels"
+      ],
+      "output_paths": [
+        "BoundaryErodedMesh/Face Data/FaceLabels"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "BoundaryErodedMesh_Raw/Face Data/FaceLabels"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "BoundaryErodedMesh/Face Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "BoundaryErodedMesh_Raw/Face Data/FaceLabels"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "BoundaryErodedMesh/Face Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 15,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "input_paths": [
+        "BoundaryErodedMesh_Raw"
+      ],
+      "output_paths": [],
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "BoundaryErodedMesh_Raw"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "BoundaryErodedMesh_Raw"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 16,
+      "filter": "ExtractTripleLinesFilter",
+      "uuid": "1abc8078-6997-4455-b908-e1cdb890da77",
+      "role": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines.",
+      "input_paths": [
+        "BoundaryErodedMesh",
+        "BoundaryErodedMesh/Face Data/FaceLabels",
+        "BoundaryErodedMesh/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "BoundaryErodedTripleLines_Raw"
+      ],
+      "paths": [
+        {
+          "parameter": "face_labels_array_path",
+          "value": "BoundaryErodedMesh/Face Data/FaceLabels"
+        },
+        {
+          "parameter": "input_triangle_geometry_path",
+          "value": "BoundaryErodedMesh"
+        },
+        {
+          "parameter": "node_types_array_path",
+          "value": "BoundaryErodedMesh/Vertex Data/NodeTypes"
+        },
+        {
+          "parameter": "output_triple_line_geometry_path",
+          "value": "BoundaryErodedTripleLines_Raw"
+        }
+      ],
+      "key_parameters": {
+        "copy_node_types": true,
+        "edge_data_group_name": "Edge Data",
+        "face_labels_array_path": "BoundaryErodedMesh/Face Data/FaceLabels",
+        "include_exterior_triple_lines": false,
+        "input_triangle_geometry_path": "BoundaryErodedMesh",
+        "node_types_array_name": "NodeTypes",
+        "node_types_array_path": "BoundaryErodedMesh/Vertex Data/NodeTypes",
+        "num_features_array_name": "NumFeatures",
+        "output_triple_line_geometry_path": "BoundaryErodedTripleLines_Raw",
+        "vertex_data_group_name": "Vertex Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 17,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "input_paths": [
+        "BoundaryErodedTripleLines_Raw/Shared Vertex List",
+        "BoundaryErodedTripleLines_Raw/Shared Edge List"
+      ],
+      "output_paths": [
+        "BoundaryErodedTripleLines"
+      ],
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "BoundaryErodedTripleLines"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": "BoundaryErodedTripleLines_Raw/Shared Vertex List"
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": "BoundaryErodedTripleLines_Raw/Shared Edge List"
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 3,
+        "length_unit_index": 6,
+        "output_geometry_path": "BoundaryErodedTripleLines",
+        "warnings_as_errors": true,
+        "array_handling_index": 0,
+        "dimensions": [
+          1,
+          1,
+          1
+        ],
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "spacing": [
+          1,
+          1,
+          1
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "BoundaryErodedTripleLines_Raw/Shared Vertex List",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "BoundaryErodedTripleLines_Raw/Shared Edge List",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 18,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "BoundaryErodedTripleLines_Raw/Vertex Data/NodeTypes"
+      ],
+      "output_paths": [
+        "BoundaryErodedTripleLines/Vertex Data/NodeTypes"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "BoundaryErodedTripleLines_Raw/Vertex Data/NodeTypes"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "BoundaryErodedTripleLines/Vertex Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "BoundaryErodedTripleLines_Raw/Vertex Data/NodeTypes"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "BoundaryErodedTripleLines/Vertex Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 19,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the matching attribute array without changing its tuple values.",
+      "input_paths": [
+        "BoundaryErodedTripleLines_Raw/Edge Data/NumFeatures"
+      ],
+      "output_paths": [
+        "BoundaryErodedTripleLines/Edge Data/NumFeatures"
+      ],
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "BoundaryErodedTripleLines_Raw/Edge Data/NumFeatures"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "BoundaryErodedTripleLines/Edge Data"
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "BoundaryErodedTripleLines_Raw/Edge Data/NumFeatures"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "BoundaryErodedTripleLines/Edge Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 20,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "input_paths": [
+        "BoundaryErodedTripleLines_Raw"
+      ],
+      "output_paths": [],
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "BoundaryErodedTripleLines_Raw"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "BoundaryErodedTripleLines_Raw"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 21,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save the original mesh, boundary-eroded mesh, and three explicitly calibrated edge geometries together.",
+      "input_paths": [
+        "SurfaceMesh",
+        "InteriorTripleLines",
+        "ExteriorIncludedTripleLines",
+        "BoundaryErodedMesh",
+        "BoundaryErodedTripleLines"
+      ],
+      "output_paths": [
+        "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d"
+      ],
+      "paths": [
+        {
+          "parameter": "export_file_path",
+          "value": "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d"
+        }
+      ],
+      "key_parameters": {
+        "compression_level": 5,
+        "export_file_path": "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d",
+        "use_compression": true,
+        "write_xdmf_file": true
+      },
+      "parameters_version": 2
+    }
+  ],
+  "citations": [
+    {
+      "title": "DREAM.3D: A Digital Representation Environment for the Analysis of Microstructure in 3D",
+      "authors": [
+        "Michael Groeber",
+        "Michael Jackson"
+      ],
+      "year": 2014,
+      "journal": "Integrating Materials and Manufacturing Innovation",
+      "doi": "10.1186/2193-9772-3-5",
+      "url": "https://doi.org/10.1186/2193-9772-3-5",
+      "scope": "pipeline_workflow",
+      "role": "Inherited reconstruction and geometric microstructure context. The triple-line and crop-boundary comparisons are illustrative adaptations, not a newly claimed paper method.",
+      "dataset": {
+        "availability": "The public Small_IN100 archive contains 117 measured ANG sections. The publisher supplements contain processed outputs; raw-source identity with the archive is not proven.",
+        "url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+        "doi": "",
+        "license": "The article is CC BY 2.0; separate archive redistribution terms were not established. This bundle includes no raw or processed volume files; its preview PNG is derived from the checked output.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "The bounded crop, modern SurfaceNets, and junction extraction are illustrative adaptations. This is a partial response to a connected-line request, not a TJLOD or hardening method reproduction. Public archive identity with publisher outputs is unproven."
+      }
+    },
+    {
+      "title": "How to extract connected grain-boundary triple lines as an Edge Geometry?",
+      "authors": [
+        "DREAM3D-NX community"
+      ],
+      "year": 2026,
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/DREAM3DNX-Issues/discussions/44",
+      "scope": "filter_algorithm",
+      "role": "Use-case request for connected line geometry and adjacent-grain identities. This example supplies edge connectivity and capped region counts only; it does not supply grain tuples, ordered chains, TJLOD, crystal-frame directions, or hardening prediction. Historical node classifications are not used."
+    },
+    {
+      "title": "Extract Triple Lines",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/ExtractTripleLinesFilter.md",
+      "scope": "filter_algorithm",
+      "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+      "role": "Shared-edge label incidence, negative-label normalization, zero-label participation, optional NodeTypes copy, and NumFeatures saturation at four."
+    },
+    {
+      "title": "Extract Internal Surfaces From Triangle Geometry",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/ExtractInternalSurfacesFromTriangleGeometryFilter.md",
+      "scope": "filter_algorithm",
+      "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+      "role": "All-three-node range selection erodes faces touching the crop wall. Face Labels mode removes only {-1,0} faces and is a no-op for the present no-zero input. The criterion section and implementation govern over the broader introductory wording."
+    },
+    {
+      "title": "Create Surface Mesh (Surface Nets)",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/SurfaceNetsFilter.md#node-types",
+      "scope": "filter_algorithm",
+      "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+      "role": "Current shared node convention: internal 2, 3, 4 and crop-wall 12, 13, 14; exterior participates in the wall classification."
+    }
+  ],
+  "last_verified": "2026-10-15",
+  "verification_status": "Final repository pipeline passed Windows in-memory Release native preflight and execution plus 52 independent output checks. Native GUI, OOC, generated Python, and physical line-network accuracy remain unverified.",
+  "mcp": {
+    "user_intents": [
+      "Extract shared-edge grain junctions from the original Small IN100 mesh, compare exterior counting, and show how removing faces at crop-wall nodes changes the remaining line network."
+    ],
+    "questions_to_ask": [
+      "Does zero represent a grain, background, or bad data?",
+      "Is the exterior a physical specimen surface or an artificial crop?",
+      "Are original shared mesh indices and the current NodeTypes convention available?"
+    ],
+    "constraints": [
+      "Keep original FeatureIds, not ParentIds, and preserve the shared unsmoothed SurfaceMesh.",
+      "Negative labels are excluded or normalized to one outside region; zero always participates.",
+      "NodeTypes are copied attributes, never the triple-edge selection criterion.",
+      "Node range [0,8] retains only triangles with all three nodes in range; describe the result as boundary erosion.",
+      "Face Labels mode removes only {-1,0} and would retain every triangle in this input.",
+      "NumFeatures is int8 and saturates at four; it does not contain adjacent grain identities.",
+      "Copied NodeTypes retain the original mesh classification after erosion.",
+      "Explicit Micrometer metadata does not rescale numerical coordinates.",
+      "Do not infer ordered chains, TJLOD, crystal-frame directions, physical four-grain lines, or hardening response."
+    ],
+    "related_pipelines": [
+      "(01) Small IN100 Surface Mesh.d3dpipeline",
+      "(02) Small IN100 Surface Smoothing.d3dpipeline"
+    ]
+  },
+  "result_visual": {
+    "path": "SmallIN100TripleLines.png",
+    "role": "Matched views of three extracted line networks in the same bounded 6 micrometer region, with segment counts and the added or removed edge sets highlighted.",
+    "sha256": "ed89a6b49f276bc3df1a991ae0194dae3f20a2e99e47fd76b561292030ffa31e",
+    "source_outputs": [
+      {
+        "path": "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d",
+        "sha256": "29e4b1ff738df974c487a5d0508859b2c67f1847cbd862fbc5324313d4c55cdb"
+      }
+    ],
+    "method": "Data-derived scientific rendering of saved native Edge Geometry coordinates and connectivity; no rescaling, paper figure, or GUI screenshot.",
+    "visual_review": "2026-10-15: matched views, micrometer axes, segment counts, color legend, margins, and bounded-region interpretation inspected."
+  },
+  "dimensional_scope": "A 6 by 6 by 6 micrometer region from 24-cubed cells at 0.25 micrometer spacing. The mesh length sums are not validated physical line lengths or bulk line densities.",
+  "cli_usage": {
+    "instructions": "See README.md for the exact chain and command pattern. Create the documented output folders before preflight.",
+    "working_directory": "One chosen writable folder containing the predecessor Data/Output tree.",
+    "relative_path_base": "Current CLI working directory",
+    "gui_note": "Open the pipeline through File > Open; set absolute file paths when relative Data paths do not resolve."
+  },
+  "geometry_units": {
+    "input_length_unit_index": 6,
+    "published_length_unit_index": 6,
+    "unit": "Micrometer",
+    "coordinates_rescaled": false,
+    "method": "CreateGeometryFilter Copy index 0 constructs Edge index 3 or Triangle index 4 with length unit index 6; relevant attributes are copied, then temporary geometries are removed.",
+    "reason": "Explicit unit construction avoids the extraction filters' metadata loss reported in https://github.com/BlueQuartzSoftware/simplnx/issues/1813."
+  },
+  "validation": {
+    "date": "2026-10-15",
+    "configuration": "Windows in-memory Release",
+    "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native": {
+      "preflight": "passed",
+      "execution": "passed",
+      "pipeline_steps": 22
+    },
+    "independent_checks": {
+      "passed": 52,
+      "total": 52,
+      "oracle": "Exhaustive triangle-edge adjacency and unbounded label sets; no vertex candidate optimization or packed edge keys.",
+      "scope": "Exact full-edge label incidence in all three branches, erosion selection, source-array preservation, selective import, copied attributes, native types and Micrometer metadata."
+    },
+    "pipeline_sha256": "0455b995f90f11d7de288f2e4a9b08aebb9357d5b415cae4fcb574ac30a74ecd",
+    "expected_current_fixture": {
+      "InteriorTripleLines": {
+        "vertices": 465,
+        "edges": 476,
+        "total_segment_length_um": 119.0,
+        "num_features_counts": {
+          "3": 467,
+          "4": 9
+        },
+        "components": 5,
+        "vertex_degree_counts": {
+          "1": 45,
+          "2": 378,
+          "3": 17,
+          "4": 25
+        }
+      },
+      "ExteriorIncludedTripleLines": {
+        "vertices": 1055,
+        "edges": 1132,
+        "total_segment_length_um": 283.0,
+        "num_features_counts": {
+          "3": 1123,
+          "4": 9
+        },
+        "components": 3,
+        "vertex_degree_counts": {
+          "2": 968,
+          "4": 65,
+          "3": 17,
+          "5": 3,
+          "1": 2
+        }
+      },
+      "BoundaryErodedTripleLines": {
+        "vertices": 419,
+        "edges": 431,
+        "total_segment_length_um": 107.75,
+        "num_features_counts": {
+          "3": 424,
+          "4": 7
+        },
+        "components": 4,
+        "vertex_degree_counts": {
+          "1": 36,
+          "2": 344,
+          "3": 18,
+          "4": 21
+        }
+      },
+      "BoundaryErodedMesh": {
+        "vertices": 3011,
+        "triangles": 5880,
+        "removed_triangles": 8172
+      },
+      "comparison": {
+        "exterior_added_edges": 656,
+        "erosion_removed_edges": 45
+      }
+    },
+    "length_arithmetic": "Sum the Euclidean distances between each saved native edge endpoint pair. The extraction filters do not write length arrays. These mesh length sums are not physical line-density measurements.",
+    "unverified": [
+      "Native GUI",
+      "OOC",
+      "Generated Python execution",
+      "Physical line-network accuracy",
+      "Ordered chains and adjacent-grain tuples",
+      "TJLOD and crystal-frame directions",
+      "Hardening predictions",
+      "Exact paper-result reproduction"
+    ]
+  }
+}
