@@ -1,0 +1,44 @@
+{
+  "isDisabled": false,
+  "name": "(01) Start a Microstructure Check Plugin.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "use_existing_plugin": {
+          "value": false,
+          "version": 1
+        },
+        "plugin_name": {
+          "value": "MicrostructureChecks",
+          "version": 1
+        },
+        "plugin_human_name": {
+          "value": "MicrostructureChecks",
+          "version": 1
+        },
+        "plugin_input_directory": {
+          "value": "",
+          "version": 1
+        },
+        "plugin_output_directory": {
+          "value": "Data/Output/Python_Plugin_Development",
+          "version": 1
+        },
+        "filter_names": {
+          "value": "CheckFeatureTable,CheckPhaseMetadata",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Create one Python plugin starter with two named filter classes. Both classes contain the same generic float32-array/progress template; neither implements feature-table or phase-metadata checks. Use a fresh output directory: execution overwrites files and regenerates plugin/filter UUIDs.",
+      "filter": {
+        "name": "nx::core::CreatePythonSkeletonFilter",
+        "uuid": "1a35f50d-a9f5-9ea2-af70-5b9cf894e45f"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}

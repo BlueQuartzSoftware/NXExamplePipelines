@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "python-plugin-development-python-v1",
+  "title": "Optional Python translation of the plugin-generation pipeline",
+  "source_authority": ".d3dpipeline",
+  "converter_api": "simplnx_utilities.generate_python_pipeline",
+  "required_modules": [
+    "simplnx",
+    "orientationanalysis",
+    "imageprocessing",
+    "simplnx_utilities"
+  ],
+  "working_directory": "A writable working folder outside the example repository with a fresh Data/Output/Python_Plugin_Development/MicrostructureChecks destination.",
+  "output_lifetime": "temporary",
+  "verification_status": "Not verified: the configured validation Python environment has no simplnx bindings. Native source generation is validated separately.",
+  "failure_behavior": "Report missing modules, load, generation or execution errors. Do not install packages or silently substitute handwritten pipeline Python.",
+  "regeneration_rule": "Regenerate temporary pipeline Python after any authoritative pipeline change. Do not rerun either native or translated generation over an adopted plugin.",
+  "distinction": "The four generated plugin .py files are durable starter outputs. This optional specification concerns a temporary Python translation of the one-step .d3dpipeline, not those output files.",
+  "path_rules": {
+    "pipeline_reference_base": "pipeline_suite_root",
+    "runtime_data_base": "chosen_cli_working_directory",
+    "input_paths": "None. The generator consumes no DataStructure objects.",
+    "output_paths": "Data/Output/Python_Plugin_Development/MicrostructureChecks"
+  },
+  "generation": {
+    "language": "Python",
+    "steps": [
+      "Use a Python environment matching the target DREAM3D-NX/simplnx build.",
+      "Import all required modules before loading the pipeline. The pinned converter imports orientationanalysis and imageprocessing even though this pipeline only needs SimplnxCore natively.",
+      "Load the authoritative .d3dpipeline with simplnx.Pipeline.from_file(pipeline_path).",
+      "Call simplnx_utilities.generate_python_pipeline(pipeline); compile the returned text and save only a temporary pipeline .py file.",
+      "Before any execution, require that the plugin destination does not exist. Review paths and overwrite behavior; verify the nine generated output files separately."
+    ],
+    "reference_code": [
+      "import simplnx as nx",
+      "import orientationanalysis",
+      "import imageprocessing",
+      "import simplnx_utilities",
+      "pipeline = nx.Pipeline.from_file(pipeline_path)",
+      "code = simplnx_utilities.generate_python_pipeline(pipeline)",
+      "compile(code, str(pipeline_path), 'exec')"
+    ]
+  },
+  "validation": {
+    "syntax": "Compile temporary pipeline Python before execution; separately parse and compile the four generated plugin Python files without importing them.",
+    "structure": "Match the one generator call and its arguments to the authoritative pipeline.",
+    "paths": "Require all nine generated files beneath the selected fresh plugin destination.",
+    "execution": "Generated pipeline Python execution and generated plugin loading are unverified. Native generation does not establish either.",
+    "storage": "No input DataStructure or numerical dataset is involved in source generation."
+  },
+  "gui_note": "Set an absolute output directory if the GUI working folder differs. GUI execution is unverified.",
+  "pipeline_files": [
+    "(01) Start a Microstructure Check Plugin.d3dpipeline"
+  ],
+  "execution_order": [
+    "(01) Start a Microstructure Check Plugin.d3dpipeline"
+  ]
+}
