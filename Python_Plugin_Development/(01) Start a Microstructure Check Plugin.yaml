@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(01) Start a Microstructure Check Plugin.d3dpipeline",
+  "markdown_file": "(01) Start a Microstructure Check Plugin.md",
+  "title": "Start a Microstructure Check Plugin",
+  "summary": "Create one Python plugin starter with two named filter classes. Both classes contain the same generic float32-array/progress template; neither implements feature-table or phase-metadata checks.",
+  "primary_industries": [
+    "Scientific software development"
+  ],
+  "secondary_industries": [
+    "Materials characterization"
+  ],
+  "pipeline_sha256": "76746b4ddef294e066af76df61b0e5f6b0746efee0ee979f015d8d1403980a21",
+  "use_cases": [
+    "Start laboratory-specific feature-table and phase-metadata checks",
+    "Inspect Python plugin structure before implementing filters"
+  ],
+  "keywords": [
+    "Python",
+    "plugin",
+    "source generation",
+    "preflight",
+    "feature table",
+    "phase metadata",
+    "UUID"
+  ],
+  "inputs": [],
+  "outputs": [
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/src/MicrostructureChecks/Plugin.py",
+      "role": "Plugin identity and registration of both filter classes."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/src/MicrostructureChecks/__init__.py",
+      "role": "Package imports, exports and get_plugin() entry point."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/src/MicrostructureChecks/CheckFeatureTable.py",
+      "role": "Generic filter starter; implement the feature-table contract here."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/src/MicrostructureChecks/CheckPhaseMetadata.py",
+      "role": "Generic filter starter; implement the phase-metadata contract here."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/docs/CheckFeatureTable.md",
+      "role": "Documentation stub to replace with the implemented behavior and tests."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/docs/CheckPhaseMetadata.md",
+      "role": "Documentation stub to replace with the implemented behavior and tests."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/pyproject.toml",
+      "role": "Hatchling project and simplnx.plugins entry-point starter."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/environment.yml",
+      "role": "Conda environment starter; not an installed or verified environment."
+    },
+    {
+      "path": "Data/Output/Python_Plugin_Development/MicrostructureChecks/conda/meta.yaml",
+      "role": "Conda recipe starter; not a tested package."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "parameter-driven-source-generation",
+    "asset_keys": [
+      "simplnx-python-plugin-templates"
+    ],
+    "source_url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/CreatePythonSkeletonFilter.md",
+    "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "source_files": [
+      "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/CreatePythonSkeletonFilter.md",
+      "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/utils/PythonPluginTemplateFile.hpp",
+      "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/utils/PythonFilterTemplate.py"
+    ],
+    "reference_visual": "The companion output tree shows the nine generated starter files. No scientific image or paper figure is reproduced.",
+    "target_traits": [
+      "No input dataset or DataStructure objects",
+      "One native source-generation step",
+      "Nine output files in one fresh plugin directory",
+      "Two generic filter classes with proposed custom-check responsibilities",
+      "Four Python modules, two documentation stubs and three package/environment files"
+    ],
+    "archive_provenance_file": "README.md",
+    "archive_provenance_note": "No archive or dataset is used; README.md records the source-generation scope and pinned source revision.",
+    "dataset_required": false,
+    "reason": "The native generator consumes parameters and writes source files; it does not consume DataStructure objects.",
+    "reproduction_status": "illustrative",
+    "known_differences": [
+      "This is a developer starter, not an experimental reproduction or an implemented scientific validation workflow."
+    ]
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "CreatePythonSkeletonFilter",
+      "uuid": "1a35f50d-a9f5-9ea2-af70-5b9cf894e45f",
+      "role": "Create one Python plugin starter with two named filter classes. Both classes contain the same generic float32-array/progress template; neither implements feature-table or phase-metadata checks.",
+      "parameters_version": 1,
+      "parameter_versions": {
+        "use_existing_plugin": 1,
+        "plugin_name": 1,
+        "plugin_human_name": 1,
+        "plugin_input_directory": 1,
+        "plugin_output_directory": 1,
+        "filter_names": 1
+      },
+      "key_parameters": {
+        "use_existing_plugin": false,
+        "plugin_name": "MicrostructureChecks",
+        "plugin_human_name": "MicrostructureChecks",
+        "plugin_input_directory": "",
+        "plugin_output_directory": "Data/Output/Python_Plugin_Development",
+        "filter_names": "CheckFeatureTable,CheckPhaseMetadata"
+      },
+      "input_paths": [],
+      "output_paths": [
+        "Data/Output/Python_Plugin_Development/MicrostructureChecks"
+      ]
+    }
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "python-plugin-development-python-v1"
+  },
+  "known_limitations": [
+    {
+      "parameter": "plugin_human_name",
+      "scope": "New-plugin mode at the pinned simplnx commit.",
+      "behavior": "The generator uses plugin_name where the human name should be forwarded. This example uses matching values; edit the generated plugin description when adapting it.",
+      "issue": "https://github.com/BlueQuartzSoftware/simplnx/issues/1822"
+    }
+  ],
+  "mcp": {
+    "user_intents": [
+      "Generate an editable Python plugin starter",
+      "Plan custom feature-table or phase-metadata checks"
+    ],
+    "questions_to_ask": [
+      "What arrays, shapes, units and background conventions must the custom checks accept?",
+      "Which matching simplnx Python environment will load and test the adapted plugin?"
+    ],
+    "constraints": [
+      "Use a fresh plugin output directory. New-plugin execution can overwrite edited files and regenerates UUIDs.",
+      "Keep generated Python source out of this example repository and preserve UUIDs after adopting the starter.",
+      "Generated class names describe intended work; the generic template does not implement either named check.",
+      "Source generation and Python syntax checks do not establish plugin loading, package installation or scientific correctness.",
+      "Do not add an input dataset, empty DREAM3D checkpoint or unrelated filter steps to this source-generation workflow."
+    ],
+    "related_pipelines": []
+  },
+  "citations": [
+    {
+      "title": "Create Python Plugin and/or Filters: official documentation and templates",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/CreatePythonSkeletonFilter.md",
+      "scope": "pipeline_workflow",
+      "role": "Pinned official source defines the native generator, its parameters and the generic filter template.",
+      "dataset": {
+        "availability": "No dataset is required.",
+        "license": "Not applicable to input data: no dataset or archive is used. Consult the official simplnx source license for template reuse.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Parameter-driven developer workflow; not an experimental reproduction."
+      }
+    }
+  ],
+  "last_verified": "2026-10-15",
+  "verification": {
+    "date": "2026-10-15",
+    "source_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native": "Windows in-memory Release preflight and execution passed through CTest (2/2). Preflight created no files; execution created exactly the nine expected files.",
+    "independent_outputs": "63 independent checks passed: four Python modules parsed and syntax-compiled with Python 3.13.13 without importing simplnx; paths, UTF-8, template substitution, TOML, registrations, unique version-4 UUIDs and generic behavior checked.",
+    "not_verified": [
+      "Loading the generated plugin with simplnx Python bindings",
+      "Generated filter execution",
+      "Custom scientific checks",
+      "Package build or installation",
+      "Native GUI use",
+      "Existing-plugin extension mode",
+      "Generated pipeline Python execution"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "scope": "The single native source-generation step. Generated starter classes are outputs, not additional covered filters.",
+  "filters": [
+    {
+      "filter": "CreatePythonSkeletonFilter",
+      "uuid": "1a35f50d-a9f5-9ea2-af70-5b9cf894e45f",
+      "pipeline": "(01) Start a Microstructure Check Plugin.d3dpipeline",
+      "step": 0,
+      "purpose": "Create one Python plugin starter with two named filter classes. Both classes contain the same generic float32-array/progress template; neither implements feature-table or phase-metadata checks."
+    }
+  ]
+}
