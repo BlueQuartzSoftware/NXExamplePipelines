@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "relative_directory": "Data/Gille_Aluminum_LabDCT_Examples",
+  "dataset_doi": "10.18126/yc1m-nk41",
+  "dataset_url": "https://doi.org/10.18126/yc1m-nk41",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_evidence": "https://acdc.alcf.anl.gov/mdf/detail/0989ee07-e015-494d-8805-8e2703e76763-1.0/",
+  "attribution": "Gille, Maryse; Proudhon, Henry; Oddershede, Jette; Quey, Romain; Morgeneyer, Thilo F. (2025), LabDCT data for investigation of 3D strain heterogeneity and fracture studied by X-ray tomography and crystal plasticity in an aluminium alloy, Materials Data Facility, DOI 10.18126/yc1m-nk41.",
+  "provenance": "Original published 2025 crop from the measured AA6016 T4 study; no source arrays modified. This is not the entire experimental volume or loading series.",
+  "files": [
+    {
+      "filename": "sample_S_undeformed_6_grain_center_slice.h5",
+      "url": "https://data.materialsdatafacility.org/mdf_open/0989ee07-e015-494d-8805-8e2703e76763/1.0/sample_S_undeformed_6_grain_center_slice.h5",
+      "bytes": 567693056,
+      "sha256": "8802bbe5413f766330ac394c150a8d75818dd458d9e47123b05b7c8dc53cb522",
+      "sha512": "ef9a48a6f1e090035f27d621b4d891555da59290f7b30dc178e6bdb61b5560673cb882f032ae864d673662932ee8ff8c55a2fb77ada474313105a5f1dadd8410",
+      "format": "GrainMapper3D result HDF5 version 5",
+      "map_dimensions_xyz": [
+        110,
+        60,
+        250
+      ],
+      "spacing_mm": [
+        0.004,
+        0.004,
+        0.004
+      ],
+      "original_grain_ids": "1 through 1666, all occupied",
+      "processing": "Author-published crop retained unchanged; example imports LabDCT only and leaves AbsorptionCT unread.",
+      "consuming_pipelines": [
+        "(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
+      ]
+    }
+  ],
+  "catalogue_discrepancy": "The catalogue/tutorial state all grains have at least 27 voxels. The actual download contains grain 1049 with 23 voxels touching a crop face. The example preserves and flags it; historical cause is not established by the file.",
+  "packaging_status": "Manual external inputs: the original 567,693,056-byte HDF5 and one 87-byte recipe-generated phase INI. Neither is added to normal data installation; packaging remains pending. A future package must reproduce the exact INI bytes and retain source-data attribution. A lossless smaller HDF5 derivative is a separate packaging decision.",
+  "onscale_dependents": [
+    {
+      "pipeline": "(02) Gille OnScale Export.d3dpipeline",
+      "input_type": "Predecessor output; no additional source dataset."
+    },
+    {
+      "pipeline": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+      "input_type": "Stage-02 predecessor table plus the manually authored GilleAluminum_Phases.ini; both must exist before preflight. No additional raw dataset."
+    }
+  ],
+  "authored_metadata_files": [
+    {
+      "asset_key": "GilleAluminum_Phases.ini",
+      "filename": "GilleAluminum_Phases.ini",
+      "relative_path": "Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini",
+      "bytes": 87,
+      "sha256": "1761da5cfdb473bc069ba11540b999553830dd5c4f0aaec34e703f62bbb2bb4d",
+      "format": "ReadEnsembleInfo INI",
+      "encoding": "ASCII-compatible UTF-8 without BOM; LF endings including final LF",
+      "contents": "[EnsembleInfo]\nNumber_Phases=1\n\n[1]\nCrystalStructure=Cubic_High\nPhaseType=PrimaryPhase\n",
+      "recipe": "README.md#create-the-phase-metadata-file",
+      "availability": "Create locally in the external working folder before stage-03 preflight. The README recipe accepts an existing canonical file and preserves any different file with an error. No download or repository payload is supplied.",
+      "provenance": "Example-authored transcription of the published source phase identity, with an explicit NX phase-role declaration. This is companion metadata for the measured ROI, not an author-supplied export or a new measurement.",
+      "source_filename": "sample_S_undeformed_6_grain_center_slice.h5",
+      "source_phase_fields": {
+        "PhaseInfo/Phase01/Name": "Aluminum",
+        "PhaseInfo/Phase01/SpaceGroup": 225,
+        "PhaseInfo/Phase01/UniversalHermannMauguin": "F m -3 m"
+      },
+      "source_roi": {
+        "dataset": "LabDCT/Data/PhaseId",
+        "slices_zyx_half_open": [
+          [
+            113,
+            137
+          ],
+          [
+            18,
+            42
+          ],
+          [
+            43,
+            67
+          ]
+        ],
+        "shape_zyx": [
+          24,
+          24,
+          24
+        ],
+        "cell_count": 13824,
+        "unique_phase_ids": [
+          1
+        ]
+      },
+      "mapping": "Source space group 225 / F m -3 m supports Cubic_High. PrimaryPhase is the example's declared NX role; the source does not supply this classification.",
+      "phase_count": "Number_Phases=1 counts one physical phase. ReadEnsembleInfo adds reserved row 0, yielding two ensemble rows; grain IDs and the 935 imported name slots are unrelated to this count.",
+      "imported_arrays": [
+        "CrystalStructures",
+        "PhaseTypes"
+      ],
+      "limitations": "The reader imports no MaterialName, cell phase map, lattice constants, Hermann-Mauguin string or orientations. Existing inline names and the verified constant PhaseId=1 remain in the pipeline. Both numeric tables are indexed by PhaseId.",
+      "attribution": "Retain the existing Gille dataset attribution and SourceDataLicense.md with derived results.",
+      "included": false,
+      "consuming_pipelines": [
+        "(03) Gille OnScale Import and Uniform Grid.d3dpipeline"
+      ],
+      "sha512": "5d5b65d497f3268b9accba122070d2b988277b4d7022b629e684349379941ae72af0e095d9b630d88a536bb461e0479d00d5c41a8284f8871c75970af7411655"
+    }
+  ]
+}

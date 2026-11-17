@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(02) Gille OnScale Export.d3dpipeline",
+  "markdown_file": "(02) Gille OnScale Export.md",
+  "title": "Gille OnScale Export",
+  "summary": "Export a measured grain-label ROI in a local meter coordinate system.",
+  "industries": {
+    "primary": [
+      "Materials characterization"
+    ],
+    "secondary": [
+      "Simulation data preparation"
+    ]
+  },
+  "use_cases": [
+    "Preserve grain identity while transferring grid geometry",
+    "Distinguish region labels from physical phases"
+  ],
+  "keywords": [
+    "LabDCT",
+    "AA6016",
+    "OnScale",
+    "PZFLEX",
+    "rectilinear grid",
+    "uniform image",
+    "units",
+    "grain labels"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Gille_Aluminum_LabDCT_Examples/GilleAluminum.dream3d",
+      "role": "Generated predecessor output; run the required earlier stage."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl",
+      "role": "Grid interchange output with original grain IDs."
+    },
+    {
+      "path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24_Export.dream3d",
+      "role": "Grid interchange output with original grain IDs."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "derived-pipeline-checkpoint",
+    "asset_keys": [
+      "sample_S_undeformed_6_grain_center_slice.h5"
+    ],
+    "archive_provenance_file": "DataSources.json",
+    "source_url": "https://doi.org/10.18126/yc1m-nk41",
+    "paper_doi": "10.1016/j.ijplas.2024.104146",
+    "reference_visual": "Same measured ROI grain-label slice before and after the native table conversion.",
+    "target_traits": {
+      "dimensions": [
+        24,
+        24,
+        24
+      ],
+      "spacing_meters": [
+        4e-06,
+        4e-06,
+        4e-06
+      ],
+      "observed_grains": 37,
+      "maximum_grain_id": 935
+    },
+    "known_differences": [
+      "Bounded region is an example choice, not a representative-volume claim.",
+      "The exported ROI origin is local zero.",
+      "No external solver execution or paper simulation is reproduced."
+    ]
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "role": "Read the existing measured LabDCT preparation checkpoint. Preserve grain identities and millimeter geometry; this stage does not reconstruct or segment grains.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "import_data_object": {
+          "file_path": "Data/Output/Gille_Aluminum_LabDCT_Examples/GilleAluminum.dream3d",
+          "data_paths": [],
+          "path_import_policy": 0
+        }
+      }
+    },
+    {
+      "index": 1,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Copy the inclusive central 24x24x24 region with all its cell arrays. Retain original GrainId values and measured millimeter placement. This bounded region is for interchange checks, not a representative-volume claim.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          43,
+          18,
+          113
+        ],
+        "max_voxel": [
+          66,
+          41,
+          136
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "AluminumLabDCT",
+        "renumber_features": false,
+        "feature_ids_path": "",
+        "cell_feature_attribute_matrix_path": "",
+        "output_image_geometry_path": "MeasuredROI_mm"
+      }
+    },
+    {
+      "index": 2,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Create a separate local ROI in meters: the source 0.004 mm cell size becomes 4e-6 m. Local origin zero deliberately removes the global placement, retained in MeasuredROI_mm. Equal dimensions avoid the OnScale writer axis-reorder path.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "geometry_type_index": 0,
+        "length_unit_index": 10,
+        "warnings_as_errors": false,
+        "array_handling_index": 1,
+        "dimensions": [
+          24,
+          24,
+          24
+        ],
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "spacing": [
+          4e-06,
+          4e-06,
+          4e-06
+        ],
+        "output_geometry_path": "OnScaleROI_m",
+        "cell_attribute_matrix_name": "Cell Data",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_attribute_matrix_name": "Edge Data",
+        "face_attribute_matrix_name": "Face Data",
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "",
+        "edge_list_path": "",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": ""
+      }
+    },
+    {
+      "index": 3,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy every grain label without interpolation or renumbering into the meter geometry. Coordinates change units and origin; the grain-label array does not change.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "use_new_parent": true,
+        "new_data_path": "OnScaleROI_m/Cell Data",
+        "new_path_suffix": "",
+        "existing_data_path": [
+          "MeasuredROI_mm/Cell Data/GrainId"
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "filter": "WriteOnScaleTableFileFilter",
+      "uuid": "494a4c6d-01c9-4f55-a0d4-32ee6e67c329",
+      "role": "Export grid bounds in meters and original grain IDs. The ROI has 37 observed grain IDs with gaps up to 935. Names Phase_<id> are generated format labels for these grains, not 935 observed grains or physical phases. This file has no constitutive model or orientation-to-material-axis assignment.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "output_path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export",
+        "file_prefix": "GilleROI24",
+        "num_keypoints": [
+          2,
+          2,
+          2
+        ],
+        "input_geometry_path": "OnScaleROI_m",
+        "feature_ids_array_path": "OnScaleROI_m/Cell Data/GrainId",
+        "phase_names_array_path": "AluminumLabDCT/Cell Ensemble Data/MaterialName"
+      }
+    },
+    {
+      "index": 5,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove the temporary full input and the inherited Grain Data table after export. Its sizes and boundary flags describe the full predecessor, not this ROI. Retain cropped cell arrays, phase metadata, measured millimeter placement, and the local meter grid. The predecessor file is unchanged.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "removed_data_path": [
+          "AluminumLabDCT",
+          "MeasuredROI_mm/Grain Data"
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save the measured ROI and the meter-grid export source for coordinate, unit and label checks.",
+      "parameters_version": 2,
+      "key_parameters": {
+        "export_file_path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24_Export.dream3d",
+        "write_xdmf_file": false,
+        "use_compression": true,
+        "compression_level": 5
+      }
+    }
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "gille-aluminum-labdct-python-generation-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Transfer a measured grain-label grid into a table file",
+      "Return a table grid to Image Geometry"
+    ],
+    "questions_to_ask": [
+      "Are material indices grain IDs or physical phase IDs?",
+      "What coordinate units does the consumer require?"
+    ],
+    "constraints": [
+      "Generated Phase_<id> names do not imply distinct material phases.",
+      "Preserve source ID gaps and the reader name-row offset.",
+      "Do not generalize this same-grid comparison to coarsening or nonuniform data."
+    ],
+    "related_pipelines": [
+      "(01) Gille Aluminum LabDCT Preparation.d3dpipeline"
+    ]
+  },
+  "citations": [
+    {
+      "title": "3D strain heterogeneity and fracture studied by X-ray tomography and crystal plasticity in an aluminium alloy",
+      "authors": [
+        "Maryse Gille",
+        "Henry Proudhon",
+        "Jette Oddershede",
+        "Romain Quey",
+        "Thilo F. Morgeneyer"
+      ],
+      "year": 2024,
+      "journal": "International Journal of Plasticity 183, 104146",
+      "doi": "10.1016/j.ijplas.2024.104146",
+      "url": "https://doi.org/10.1016/j.ijplas.2024.104146",
+      "scope": "pipeline_workflow",
+      "role": "Measured microstructure context only; the OnScale grid-transfer illustration is an additional workflow, not reproduction of the paper solver or results.",
+      "dataset": {
+        "availability": "Original public HDF5 download linked from the authors/vendor tutorial and MDF record.",
+        "url": "https://data.materialsdatafacility.org/mdf_open/0989ee07-e015-494d-8805-8e2703e76763/1.0/sample_S_undeformed_6_grain_center_slice.h5",
+        "doi": "10.18126/yc1m-nk41",
+        "license": "CC BY 4.0",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "The same measured crop supports a bounded region and file/geometry interchange. No Neper mesh, CP-FE simulation, constitutive calibration or fracture result is reproduced."
+      }
+    },
+    {
+      "title": "LabDCT data for investigation of 3D strain heterogeneity and fracture in an aluminium alloy",
+      "authors": [
+        "Maryse Gille",
+        "Henry Proudhon",
+        "Jette Oddershede",
+        "Romain Quey",
+        "Thilo F. Morgeneyer"
+      ],
+      "year": 2025,
+      "doi": "10.18126/yc1m-nk41",
+      "url": "https://acdc.alcf.anl.gov/mdf/detail/0989ee07-e015-494d-8805-8e2703e76763-1.0/",
+      "scope": "pipeline_workflow",
+      "role": "Public measured crop, axis/spacing/population description and explicit CC BY 4.0 license; catalogue minimum-grain discrepancy is reported separately.",
+      "dataset": {
+        "availability": "Original public HDF5 download linked from the authors/vendor tutorial and MDF record.",
+        "url": "https://data.materialsdatafacility.org/mdf_open/0989ee07-e015-494d-8805-8e2703e76763/1.0/sample_S_undeformed_6_grain_center_slice.h5",
+        "doi": "10.18126/yc1m-nk41",
+        "license": "CC BY 4.0",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Preparation of a released undeformed crop only. No Neper tessellation/meshing, multimodal registration, projection-DIC, constitutive calibration, CP-FE simulation or fracture result is reproduced."
+      }
+    }
+  ],
+  "last_verified": {
+    "date": "2026-10-14",
+    "native": "New stages 02 and 03 passed sequential Windows in-memory Release preflight/execution through CTest.",
+    "outputs": "43 independent checks passed against the original measured HDF5 ROI and parsed table.",
+    "not_verified": [
+      "OnScale solver import/execution",
+      "Scientific interpretation approval",
+      "Generated Python execution",
+      "OOC execution",
+      "Native GUI use",
+      "Installer inclusion"
+    ]
+  }
+}
