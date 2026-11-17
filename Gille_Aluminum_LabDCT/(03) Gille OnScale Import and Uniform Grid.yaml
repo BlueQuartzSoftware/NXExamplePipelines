@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(03) Gille OnScale Import and Uniform Grid.d3dpipeline",
+  "markdown_file": "(03) Gille OnScale Import and Uniform Grid.md",
+  "title": "Gille OnScale Import and Uniform Grid",
+  "summary": "Read the generated material table, recover an equivalent uniform grain-label image, restore the known single aluminum phase, and retain inline and externally supplied numeric phase metadata for comparison.",
+  "industries": {
+    "primary": [
+      "Materials characterization"
+    ],
+    "secondary": [
+      "Simulation data preparation"
+    ]
+  },
+  "use_cases": [
+    "Preserve grain identity while transferring grid geometry",
+    "Distinguish region labels from physical phases",
+    "Compare inline phase metadata with a shared laboratory metadata file"
+  ],
+  "keywords": [
+    "LabDCT",
+    "AA6016",
+    "OnScale",
+    "PZFLEX",
+    "rectilinear grid",
+    "uniform image",
+    "units",
+    "grain labels",
+    "phase metadata",
+    "ensemble",
+    "cubic-high aluminum",
+    "external phase metadata",
+    "INI",
+    "Read Ensemble Info"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl",
+      "role": "Generated predecessor table; execute stage 02 before stage-03 preflight."
+    },
+    {
+      "path": "Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini",
+      "role": "Example-authored external phase metadata. Create the canonical 87-byte INI with README.md#create-the-phase-metadata-file before stage-03 preflight; it is not an author-supplied export or an additional measured dataset."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d",
+      "role": "Grid interchange output with original grain IDs, restored single-phase identity, the named inline Cell Ensemble Data table and a numeric-only Imported Phase Metadata table. The pipeline saves both tables without automatically checking equality."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "derived-pipeline-checkpoint",
+    "asset_keys": [
+      "sample_S_undeformed_6_grain_center_slice.h5",
+      "GilleAluminum_Phases.ini"
+    ],
+    "archive_provenance_file": "DataSources.json",
+    "source_url": "https://doi.org/10.18126/yc1m-nk41",
+    "paper_doi": "10.1016/j.ijplas.2024.104146",
+    "reference_visual": "Same measured ROI grain-label slice before and after the native table conversion.",
+    "target_traits": {
+      "dimensions": [
+        24,
+        24,
+        24
+      ],
+      "spacing_meters": [
+        4e-06,
+        4e-06,
+        4e-06
+      ],
+      "observed_grains": 37,
+      "maximum_grain_id": 935,
+      "physical_phase_count": 1,
+      "phase_id": 1,
+      "phase_name": "Aluminum",
+      "crystal_structure": "Cubic-High m-3m",
+      "declared_nx_phase_type": "Primary",
+      "phase_metadata_tables": {
+        "inline": "RecoveredImage_m/Cell Ensemble Data",
+        "external": "RecoveredImage_m/Imported Phase Metadata",
+        "tuple_count": 2,
+        "crystal_structures": [
+          999,
+          1
+        ],
+        "phase_types": [
+          999,
+          0
+        ],
+        "numeric_dtype": "uint32",
+        "numeric_shape": [
+          2,
+          1
+        ],
+        "names": "Only Cell Ensemble Data contains MaterialName; row 0 is _PHASE_NAME_ and row 1 is Aluminum."
+      }
+    },
+    "known_differences": [
+      "Bounded region is an example choice, not a representative-volume claim.",
+      "The exported ROI origin is local zero.",
+      "No external solver execution or paper simulation is reproduced.",
+      "The label-only table omits the phase map. Stage 03 restores the verified single-phase source identity; Primary is an explicit NX classification, not a measured source field.",
+      "The external INI is a local example-authored transcription of source Aluminum / SpaceGroup 225 / F m -3 m symmetry. PrimaryPhase is an explicit NX role declaration, not a measured source field.",
+      "Read Ensemble Info imports only numeric CrystalStructures and PhaseTypes. Names remain in the inline table; the INI does not restore a cell phase map, orientations, lattice constants or other source fields.",
+      "Both tables are retained for inspection. A separate output check must establish equality; the pipeline itself does not compare them."
+    ]
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadOnScaleTableFileFilter",
+      "uuid": "232dc909-d77f-4e62-8fd9-1ff0442b5709",
+      "role": "Read the table written by stage 02. All three axes are present, so fallback settings are unused. The reader assigns meters and stores the name for positive material ID k at row k-1; the cell IDs themselves remain unchanged.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "input_file": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Export/GilleROI24.flxtbl",
+        "fallback_origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fallback_spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "output_rect_grid_geometry_path": "ImportedOnScale_m",
+        "cell_attribute_matrix_name": "Cell Data",
+        "feature_ids_array_name": "GrainId",
+        "phase_attribute_matrix_name": "Material Data",
+        "material_names_array_name": "Material Names"
+      }
+    },
+    {
+      "index": 1,
+      "filter": "ResampleRectGridToImageGeomFilter",
+      "uuid": "28ed3258-41b2-45a0-8f37-6574264650f9",
+      "role": "Recover an equivalent uniform image from the imported uniformly spaced rectilinear bounds. Keeping 24x24x24 tests the representation change without intentional coarsening. This is not evidence about nonuniform-grid or lower-resolution label accuracy.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "rectilinear_grid_path": "ImportedOnScale_m",
+        "input_data_array_paths": [
+          "ImportedOnScale_m/Cell Data/GrainId"
+        ],
+        "dimensions": [
+          24,
+          24,
+          24
+        ],
+        "input_image_geometry_path": "RecoveredImage_m",
+        "image_geom_cell_attribute_matrix_name": "Cell Data"
+      }
+    },
+    {
+      "index": 2,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "Restore the known PhaseId 1 as a scalar Int32 cell array, inheriting the recovered grid dimensions. Every original measured ROI cell is phase 1. This restores source phase identity lost by the label-only table; a multiphase or unindexed input requires its actual phase map, not a constant.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "output_array_path": "RecoveredImage_m/Cell Data/PhaseId",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "component_dimensions": [
+          [
+            1.0
+          ]
+        ],
+        "init_type_index": 0,
+        "init_value": "1",
+        "starting_fill_value": "0",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "InitializeDataFilter SeedValue",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      }
+    },
+    {
+      "index": 3,
+      "filter": "CreateEnsembleInfoFilter",
+      "uuid": "8ce3d70c-49fe-4812-a1eb-7ce4c962a59d",
+      "role": "Restore Aluminum and cubic-high symmetry at ensemble row 1, with reserved row 0 created by the filter. Primary is the declared NX classification for the one indexed aluminum phase, not a new measurement. The 935 imported material-name slots identify grain labels, not physical phases.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "ensemble": [
+          [
+            "Cubic-High m-3m",
+            "Primary",
+            "Aluminum"
+          ]
+        ],
+        "cell_ensemble_attribute_matrix_path": "RecoveredImage_m/Cell Ensemble Data",
+        "crystal_structures_array_name": "CrystalStructures",
+        "phase_types_array_name": "PhaseTypes",
+        "phase_names_array_name": "MaterialName"
+      }
+    },
+    {
+      "index": 4,
+      "filter": "ReadEnsembleInfoFilter",
+      "uuid": "ecf1ec45-bc27-4ddb-b2c0-3d465b8c182a",
+      "role": "Read the separately authored phase INI into an alternate two-row ensemble. Compare its CrystalStructures and PhaseTypes with Cell Ensemble Data on the same recovered grid. The INI transcribes source cubic-high symmetry and explicitly declares Primary; it is not a measurement or an author-supplied export. Read Ensemble Info does not import MaterialName: keep names in the inline Cell Ensemble Data. Both ensemble tables are indexed by PhaseId, never by GrainId.",
+      "parameters_version": 1,
+      "key_parameters": {
+        "input_file": "Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini",
+        "parent_group_path": "RecoveredImage_m",
+        "cell_ensemble_attribute_matrix_name": "Imported Phase Metadata",
+        "crystal_structures_array_name": "CrystalStructures",
+        "phase_types_array_name": "PhaseTypes"
+      }
+    },
+    {
+      "index": 5,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save the imported rectilinear bounds, material-name table, uniform image and restored phase identity for comparison with the stage 02 export source and native preparation.",
+      "parameters_version": 2,
+      "key_parameters": {
+        "export_file_path": "Data/Output/Gille_Aluminum_LabDCT_Examples/OnScale/Import/GilleROI24_RoundTrip.dream3d",
+        "write_xdmf_file": false,
+        "use_compression": true,
+        "compression_level": 5
+      }
+    }
+  ],
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "gille-aluminum-labdct-python-generation-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Transfer a measured grain-label grid into a table file",
+      "Return a table grid to Image Geometry",
+      "Supply phase symmetry and NX phase roles from a shared external metadata file"
+    ],
+    "questions_to_ask": [
+      "Are material indices grain IDs or physical phase IDs?",
+      "What coordinate units does the consumer require?",
+      "Will inline entries or an external metadata file be authoritative for the adapted workflow?"
+    ],
+    "constraints": [
+      "Generated Phase_<id> names do not imply distinct material phases.",
+      "Preserve source ID gaps and the reader name-row offset.",
+      "Do not generalize this same-grid comparison to coarsening or nonuniform data.",
+      "Restore constant PhaseId 1 only for this verified uniformly indexed aluminum ROI. A multiphase or unindexed input requires its actual phase map.",
+      "RecoveredImage_m/Cell Ensemble Data has two rows: reserved 0 and Aluminum 1. Do not use the 935-row imported Material Data table as an ensemble table.",
+      "Primary is the declared NX phase classification. No orientations or additional crystallographic fields are recovered from the OnScale table.",
+      "Create Data/Gille_Aluminum_LabDCT_Examples/GilleAluminum_Phases.ini with the README recipe before preflight; the reader opens it to determine the ensemble dimensions.",
+      "Number_Phases=1 counts one physical phase. The reader adds reserved row 0, so both phase tables have two rows. Do not use the grain count or material-name slot count.",
+      "Imported Phase Metadata contains only UInt32 CrystalStructures and PhaseTypes with shape [2,1]; it has no MaterialName. Continue using Cell Ensemble Data/MaterialName[PhaseId].",
+      "Both numeric tables use PhaseId as the row index, never GrainId. Inspect exact array equality separately; saving both is not an automatic validation step.",
+      "Keep PrimaryPhase labeled as an example-authored NX role. The source SpaceGroup 225 / F m -3 m establishes cubic-high symmetry, not this role.",
+      "For adaptation, choose one authoritative metadata table and keep names and numeric metadata consistent with the actual cell phase map."
+    ],
+    "related_pipelines": [
+      "(02) Gille OnScale Export.d3dpipeline"
+    ]
+  },
+  "citations": [
+    {
+      "title": "3D strain heterogeneity and fracture studied by X-ray tomography and crystal plasticity in an aluminium alloy",
+      "authors": [
+        "Maryse Gille",
+        "Henry Proudhon",
+        "Jette Oddershede",
+        "Romain Quey",
+        "Thilo F. Morgeneyer"
+      ],
+      "year": 2024,
+      "journal": "International Journal of Plasticity 183, 104146",
+      "doi": "10.1016/j.ijplas.2024.104146",
+      "url": "https://doi.org/10.1016/j.ijplas.2024.104146",
+      "scope": "pipeline_workflow",
+      "role": "Measured microstructure context only; the OnScale grid-transfer illustration is an additional workflow, not reproduction of the paper solver or results.",
+      "dataset": {
+        "availability": "Original public HDF5 download linked from the authors/vendor tutorial and MDF record.",
+        "url": "https://data.materialsdatafacility.org/mdf_open/0989ee07-e015-494d-8805-8e2703e76763/1.0/sample_S_undeformed_6_grain_center_slice.h5",
+        "doi": "10.18126/yc1m-nk41",
+        "license": "CC BY 4.0",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "The same measured crop supports a bounded region and file/geometry interchange. No Neper mesh, CP-FE simulation, constitutive calibration or fracture result is reproduced."
+      }
+    },
+    {
+      "title": "LabDCT data for investigation of 3D strain heterogeneity and fracture in an aluminium alloy",
+      "authors": [
+        "Maryse Gille",
+        "Henry Proudhon",
+        "Jette Oddershede",
+        "Romain Quey",
+        "Thilo F. Morgeneyer"
+      ],
+      "year": 2025,
+      "doi": "10.18126/yc1m-nk41",
+      "url": "https://acdc.alcf.anl.gov/mdf/detail/0989ee07-e015-494d-8805-8e2703e76763-1.0/",
+      "scope": "pipeline_workflow",
+      "role": "Public measured crop, axis/spacing/population description and explicit CC BY 4.0 license; catalogue minimum-grain discrepancy is reported separately.",
+      "dataset": {
+        "availability": "Original public HDF5 download linked from the authors/vendor tutorial and MDF record.",
+        "url": "https://data.materialsdatafacility.org/mdf_open/0989ee07-e015-494d-8805-8e2703e76763/1.0/sample_S_undeformed_6_grain_center_slice.h5",
+        "doi": "10.18126/yc1m-nk41",
+        "license": "CC BY 4.0",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Preparation of a released undeformed crop only. No Neper tessellation/meshing, multimodal registration, projection-DIC, constitutive calibration, CP-FE simulation or fracture result is reproduced."
+      }
+    }
+  ],
+  "last_verified": {
+    "date": "2026-10-15",
+    "native": "The revised six-step stage 03 passed 2/2 sequential Windows in-memory Release preflight/execution checks through CTest. The unchanged five-step baseline also passed 2/2 checks with the same SimplnxCore + OrientationAnalysis runtime.",
+    "outputs": "40 independent checks passed against the original HDF5 ROI and the five-step baseline output. All 10 original DataStructure datasets and the geometry units, bounds, dimensions, origin and spacing are unchanged. The only added datasets are the two UInt32 [2,1] arrays, equal to the inline values [999,1] and [999,0]; the imported table has no names. The grain-label figure is unchanged.",
+    "not_verified": [
+      "OnScale solver import/execution",
+      "Scientific interpretation approval",
+      "Generated Python execution",
+      "OOC execution",
+      "Native GUI use",
+      "Installer inclusion"
+    ],
+    "simplnx_commit": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "pipeline_sha256": "85cba9240f0d35e8b37d5938750910fa277d1d76ad9acb68b921d7f3bc57de31",
+    "predecessor_table_sha256": "da058be223e256c76a4f591ec82dba2ace435d3fe20f5f3d18cf29cd8c4e185c",
+    "input_ini_sha256": "1761da5cfdb473bc069ba11540b999553830dd5c4f0aaec34e703f62bbb2bb4d",
+    "output_sha256": "745b4527868abc16fc8df026ecefe76b1624ecd83dc038f44b8f9636717786ed",
+    "figure_sha256": "0d44af2a74b8430dfbe472fcc036b044a6ebded0b0ce80f123bd0d4452cacf2b",
+    "scope": "Native metadata import and exact preservation on this verified single-phase ROI; no new phase measurement, full paper workflow, GUI, OOC, Python or solver claim."
+  }
+}
