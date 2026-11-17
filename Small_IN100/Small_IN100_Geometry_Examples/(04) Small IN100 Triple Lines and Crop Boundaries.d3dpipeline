@@ -1,0 +1,996 @@
+{
+  "isDisabled": false,
+  "name": "(04) Small IN100 Triple Lines and Crop Boundaries.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "parameters_version": 1,
+        "import_data_object": {
+          "value": {
+            "data_paths": [
+              "SurfaceMesh"
+            ],
+            "file_path": "Data/Output/Small_IN100_Geometry_Examples/Surface/SmallIN100_SurfaceMesh.dream3d",
+            "path_import_policy": 1
+          },
+          "version": 2
+        }
+      },
+      "comments": "Import only SurfaceMesh and its child arrays from stage 01 using the include-list policy; preserve the shared triangle connectivity and original labels.",
+      "filter": {
+        "name": "nx::core::ReadDREAM3DFilter",
+        "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "copy_node_types": {
+          "value": true,
+          "version": 1
+        },
+        "edge_data_group_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "face_labels_array_path": {
+          "value": "SurfaceMesh/Face Data/FaceLabels",
+          "version": 1
+        },
+        "include_exterior_triple_lines": {
+          "value": false,
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "SurfaceMesh",
+          "version": 1
+        },
+        "node_types_array_name": {
+          "value": "NodeTypes",
+          "version": 1
+        },
+        "node_types_array_path": {
+          "value": "SurfaceMesh/Vertex Data/NodeTypes",
+          "version": 1
+        },
+        "num_features_array_name": {
+          "value": "NumFeatures",
+          "version": 1
+        },
+        "output_triple_line_geometry_path": {
+          "value": "InteriorTripleLines_Raw",
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines.",
+      "filter": {
+        "name": "nx::core::ExtractTripleLinesFilter",
+        "uuid": "1abc8078-6997-4455-b908-e1cdb890da77"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 3,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "InteriorTripleLines",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": true,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0,
+            0,
+            0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "InteriorTripleLines_Raw/Shared Vertex List",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "InteriorTripleLines_Raw/Shared Edge List",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "InteriorTripleLines_Raw/Vertex Data/NodeTypes"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "InteriorTripleLines/Vertex Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "InteriorTripleLines_Raw/Edge Data/NumFeatures"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "InteriorTripleLines/Edge Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "InteriorTripleLines_Raw"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "copy_node_types": {
+          "value": true,
+          "version": 1
+        },
+        "edge_data_group_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "face_labels_array_path": {
+          "value": "SurfaceMesh/Face Data/FaceLabels",
+          "version": 1
+        },
+        "include_exterior_triple_lines": {
+          "value": true,
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "SurfaceMesh",
+          "version": 1
+        },
+        "node_types_array_name": {
+          "value": "NodeTypes",
+          "version": 1
+        },
+        "node_types_array_path": {
+          "value": "SurfaceMesh/Vertex Data/NodeTypes",
+          "version": 1
+        },
+        "num_features_array_name": {
+          "value": "NumFeatures",
+          "version": 1
+        },
+        "output_triple_line_geometry_path": {
+          "value": "ExteriorIncludedTripleLines_Raw",
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Count the artificial crop exterior as one region. Added segments are crop-boundary effects, not measured free-surface junctions.",
+      "filter": {
+        "name": "nx::core::ExtractTripleLinesFilter",
+        "uuid": "1abc8078-6997-4455-b908-e1cdb890da77"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 3,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "ExteriorIncludedTripleLines",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": true,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0,
+            0,
+            0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "ExteriorIncludedTripleLines_Raw/Shared Vertex List",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "ExteriorIncludedTripleLines_Raw/Shared Edge List",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "ExteriorIncludedTripleLines_Raw/Vertex Data/NodeTypes"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "ExteriorIncludedTripleLines/Vertex Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "ExteriorIncludedTripleLines_Raw/Edge Data/NumFeatures"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "ExteriorIncludedTripleLines/Edge Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "ExteriorIncludedTripleLines_Raw"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "input_triangle_geometry_path": {
+          "value": "SurfaceMesh",
+          "version": 1
+        },
+        "output_triangle_geometry_path": {
+          "value": "BoundaryErodedMesh_Raw",
+          "version": 1
+        },
+        "node_types_path": {
+          "value": "SurfaceMesh/Vertex Data/NodeTypes",
+          "version": 1
+        },
+        "node_type_range": {
+          "value": [
+            0,
+            8
+          ],
+          "version": 1
+        },
+        "internal_surface_criterion_index": {
+          "value": 0,
+          "version": 1
+        },
+        "face_labels_path": {
+          "value": "",
+          "version": 1
+        },
+        "copy_vertex_array_paths": {
+          "value": [
+            "SurfaceMesh/Vertex Data/NodeTypes"
+          ],
+          "version": 1
+        },
+        "copy_triangle_array_paths": {
+          "value": [
+            "SurfaceMesh/Face Data/FaceLabels"
+          ],
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "triangle_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Keep a triangle only when all three NodeTypes lie in 0..8. This discards crop caps and erodes internal sheets that touch crop-wall vertices; it is a sensitivity control.",
+      "filter": {
+        "name": "nx::core::ExtractInternalSurfacesFromTriangleGeometryFilter",
+        "uuid": "e020f76f-a77f-4999-8bf1-9b7529f06d0a"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 4,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "BoundaryErodedMesh",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": true,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0,
+            0,
+            0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "BoundaryErodedMesh_Raw/Shared Vertex List",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "BoundaryErodedMesh_Raw/Shared Faces List",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "BoundaryErodedMesh_Raw/Vertex Data/NodeTypes"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "BoundaryErodedMesh/Vertex Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "BoundaryErodedMesh_Raw/Face Data/FaceLabels"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "BoundaryErodedMesh/Face Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "BoundaryErodedMesh_Raw"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "copy_node_types": {
+          "value": true,
+          "version": 1
+        },
+        "edge_data_group_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "face_labels_array_path": {
+          "value": "BoundaryErodedMesh/Face Data/FaceLabels",
+          "version": 1
+        },
+        "include_exterior_triple_lines": {
+          "value": false,
+          "version": 1
+        },
+        "input_triangle_geometry_path": {
+          "value": "BoundaryErodedMesh",
+          "version": 1
+        },
+        "node_types_array_name": {
+          "value": "NodeTypes",
+          "version": 1
+        },
+        "node_types_array_path": {
+          "value": "BoundaryErodedMesh/Vertex Data/NodeTypes",
+          "version": 1
+        },
+        "num_features_array_name": {
+          "value": "NumFeatures",
+          "version": 1
+        },
+        "output_triple_line_geometry_path": {
+          "value": "BoundaryErodedTripleLines_Raw",
+          "version": 1
+        },
+        "vertex_data_group_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Count only nonnegative labels at each shared edge. NodeTypes are copied, not used to select triple lines.",
+      "filter": {
+        "name": "nx::core::ExtractTripleLinesFilter",
+        "uuid": "1abc8078-6997-4455-b908-e1cdb890da77"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "geometry_type_index": {
+          "value": 3,
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 6,
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "BoundaryErodedTripleLines",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": true,
+          "version": 1
+        },
+        "array_handling_index": {
+          "value": 0,
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0,
+            0,
+            0
+          ],
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1,
+            1,
+            1
+          ],
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "BoundaryErodedTripleLines_Raw/Shared Vertex List",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "BoundaryErodedTripleLines_Raw/Shared Edge List",
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Publish copied coordinates and connectivity with explicit Micrometer metadata (index 6); do not rescale coordinates.",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "BoundaryErodedTripleLines_Raw/Vertex Data/NodeTypes"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "BoundaryErodedTripleLines/Vertex Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "existing_data_path": {
+          "value": [
+            "BoundaryErodedTripleLines_Raw/Edge Data/NumFeatures"
+          ],
+          "version": 1
+        },
+        "use_new_parent": {
+          "value": true,
+          "version": 1
+        },
+        "new_data_path": {
+          "value": "BoundaryErodedTripleLines/Edge Data",
+          "version": 1
+        },
+        "new_path_suffix": {
+          "value": "",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Copy the matching attribute array without changing its tuple values.",
+      "filter": {
+        "name": "nx::core::CopyDataObjectFilter",
+        "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "removed_data_path": {
+          "value": [
+            "BoundaryErodedTripleLines_Raw"
+          ],
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "Remove temporary geometry after publishing copied arrays with explicit micrometer units.",
+      "filter": {
+        "name": "nx::core::DeleteDataFilter",
+        "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "compression_level": {
+          "value": 5,
+          "version": 1
+        },
+        "export_file_path": {
+          "value": "Data/Output/Small_IN100_Geometry_Examples/Junctions/SmallIN100_TripleLines.dream3d",
+          "version": 1
+        },
+        "use_compression": {
+          "value": true,
+          "version": 1
+        },
+        "write_xdmf_file": {
+          "value": true,
+          "version": 1
+        },
+        "parameters_version": 2
+      },
+      "comments": "Save the original mesh, boundary-eroded mesh, and three explicitly calibrated edge geometries together.",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}

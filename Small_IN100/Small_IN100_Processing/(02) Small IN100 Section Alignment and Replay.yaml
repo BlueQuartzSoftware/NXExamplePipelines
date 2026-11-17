@@ -1,0 +1,1191 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+  "markdown_file": "(02) Small IN100 Section Alignment and Replay.md",
+  "title": "Small IN100 section alignment and replay",
+  "summary": "Estimate mutual-information translations on eight consecutive processed measured EBSD sections, replay relative and cumulative shifts on independent copies, and export all shift rows.",
+  "primary_industries": [
+    "Materials characterization"
+  ],
+  "secondary_industries": [
+    "Aerospace",
+    "Metallurgy"
+  ],
+  "use_cases": [
+    "Inspect an alternative section-pattern alignment estimate",
+    "Apply identical recorded section shifts to matching cell attributes",
+    "Compare relative and cumulative replay while preserving an untouched reference"
+  ],
+  "keywords": [
+    "SmallIN100",
+    "EBSD",
+    "serial sections",
+    "mutual information",
+    "section alignment",
+    "relative shifts",
+    "cumulative shifts",
+    "replay",
+    "quaternions",
+    "IPF"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+      "role": "Measured-derived Feature Preparation checkpoint, already aligned, repaired, segmented and cleaned. Run Archive, then Feature Preparation first."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_SectionAlignment.dream3d",
+      "role": "Untouched crop, MI-aligned result, relative replay, cumulative replay, crystal symmetry and all three shift arrays."
+    },
+    {
+      "path": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_Shifts.csv",
+      "role": "Eight indexed rows plus header; Slice Indices, Relative Shifts and Cumulative Shifts retain row 0 anchor placeholder."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "measured-public-example-derived",
+    "asset_keys": [
+      "Small_IN100.tar.gz"
+    ],
+    "paper_doi": "10.1186/2193-9772-3-5",
+    "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
+    "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+    "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
+    "reference_visual": "SmallIN100SectionAlignment.png: native IPF before/after local z=0 on common axes and cumulative shifts by local Z; gray invalid-border display overlay, saved RGB zero. Not a paper figure.",
+    "target_traits": [
+      "Eight consecutive measured-derived sections, prepared-volume indices 52 through 59, not repeated or synthetically translated copies.",
+      "Inclusive crop XYZ [30,36,52] to [157,163,59], dimensions [128,128,8], spacing [0.25,0.25,0.25] Micrometer.",
+      "Input Phases=1 and Mask=1 everywhere; finite unit float32 quaternions with cubic-high CrystalStructures[1]=1.",
+      "Only Quats, Phases, Mask, FeatureIds and IPFColors remain in each cell matrix; no whole-volume feature or parent statistics survive.",
+      "Highest local Z=7 remains fixed; both int64 two-component replay arrays have exactly eight tuples.",
+      "Preserve all five cell arrays exactly under the same integer transfer, including zero-filled invalid borders."
+    ],
+    "known_differences": "Illustrative alternative pattern estimate and exact replay on an already aligned and cleaned preparation checkpoint. No raw-acquisition translation ground truth, known-translation synthetic challenge, irregular-Z measurement, or paper-result reproduction is included. The five-degree tolerance is an example setting, not an optimum or acceptance rule. The all-valid crop does not establish arbitrary-mask correctness. A new alignment can overcorrect real section-to-section changes in grain morphology; no independent MI-optimality oracle is supplied.",
+    "archive_provenance_file": "README.md",
+    "new_external_input": false,
+    "predecessors": [
+      "(01) Small IN100 Archive.d3dpipeline",
+      "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline"
+    ]
+  },
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "smallin100-archive-python-generation-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Estimate section-pattern translations and inspect their sign and ordering",
+      "Replay saved section shifts consistently across matching cell attributes"
+    ],
+    "questions_to_ask": [
+      "Has the input already been aligned or repaired?",
+      "What are the physical section order, voxel spacing and orientation conventions?",
+      "Which phase symmetries and mask meanings apply?",
+      "What independent evidence can assess physical alignment accuracy?"
+    ],
+    "constraints": [
+      "The .d3dpipeline is executable authority. Run Archive -> Feature Preparation -> this pipeline. The legacy (02) Full Reconstruction is a different pipeline and is not included in this repository collection.",
+      "The input already underwent section alignment and cleanup. Describe these results as a new estimate on that processed cohort, not recovered acquisition motion.",
+      "Use exactly N shift tuples for N Z sections. Row r targets local z=N-1-r. Row 0 is the fixed highest-Z anchor; Slice Indices row 0 [0,0] is a placeholder, not an actual slice pair.",
+      "For r>=1 Slice Indices are [N-1-r,N-r]. Cumulative[0]=[0,0] and Cumulative[r]=sum(Relative[1:r+1]). Components are X,Y in integer image cells.",
+      "The transfer is output[z,y,x]=before[z,y+sy,x+sx] within bounds, zero elsewhere. Negative shifts move visible features toward positive X/Y.",
+      "Align Sections moves every numeric array in the geometry cell matrix. Keep Quats, Phases, Mask, FeatureIds and IPFColors synchronized; CrystalStructures stays outside the cell matrix.",
+      "Input crop masks are all true and phases all one. MI masking gates seeds but does not exclude every masked neighbor from flood fill in this source; do not claim arbitrary-mask validation.",
+      "Zero-filled borders have phase zero, false mask and zero quaternions. Exclude invalid tuples from orientation-norm or physical-orientation interpretation.",
+      "FeatureIds are sparse transported source labels. Renumbering is disabled and stale feature/parent matrices are removed. Recompute any later statistics from final data using an explicit feature definition.",
+      "Explicit CreateGeometry copies preserve dimensions, cropped origin, spacing and Micrometer units. No geometry origin reset or global frame adjustment is performed.",
+      "The five-degree MI tolerance controls temporary section grouping, not the retained FeatureIds; it is illustrative and not independently optimized.",
+      "Use WriteASCIIDataFilter to retain anchor tuple zero. WriteFeatureDataCSV is not interchangeable because its feature-table convention skips tuple zero.",
+      "No OOC, Python, GUI or installed-bookmark validation claim follows from native in-core replay."
+    ],
+    "related_pipelines": [
+      "(01) Small IN100 Archive.d3dpipeline",
+      "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline"
+    ]
+  },
+  "citations": [
+    {
+      "title": "DREAM.3D: A Digital Representation Environment for the Analysis of Microstructure in 3D",
+      "authors": [
+        "Michael Groeber",
+        "Michael Jackson"
+      ],
+      "year": 2014,
+      "journal": "Integrating Materials and Manufacturing Innovation",
+      "doi": "10.1186/2193-9772-3-5",
+      "url": "https://doi.org/10.1186/2193-9772-3-5",
+      "scope": "pipeline_workflow",
+      "role": "Serial-section EBSD and modular microstructure-processing context; this example demonstrates an alternative estimate and replay on a prepared public-data crop.",
+      "dataset": {
+        "availability": "The public Small_IN100 archive contains 117 measured ANG sections. The publisher supplements contain processed outputs; raw-source identity with the archive is not proven.",
+        "url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+        "doi": "",
+        "license": "The article is CC BY 2.0; separate archive redistribution terms were not established. This bundle includes no raw or processed volume files; its preview PNG is derived from the checked output.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Public measured SmallIN100 source transformed by the documented Feature Preparation pipeline, then cropped. This illustrative workflow reproduces no paper figure or numerical result and has no independently measured acquisition-translation target."
+      }
+    },
+    {
+      "title": "Align Sections (Mutual Information)",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter documentation and implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/OrientationAnalysis/docs/AlignSectionsMutualInformationFilter.md",
+      "scope": "filter_algorithm",
+      "role": "Temporary orientation-based section grouping and mutual-information translation estimation. Implementation is authoritative for seed-only masking and reverse-Z shift ordering."
+    },
+    {
+      "title": "Align Sections (List)",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter documentation and implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/AlignSectionsListFilter.md",
+      "scope": "filter_algorithm",
+      "role": "Relative and cumulative int64 two-component shift inputs. The implementation uses reverse-Z rows; the documentation bottom-to-top phrase is not the operative row contract."
+    },
+    {
+      "title": "Write ASCII Data",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter documentation and implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/docs/WriteASCIIDataFilter.md",
+      "scope": "filter_algorithm",
+      "role": "Single-file comma-delimited export with headers, row indices and all tuples including tuple zero."
+    }
+  ],
+  "last_verified": "2026-10-15",
+  "verification": {
+    "source_revision": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "native_pipeline": "PASS: final 17-step native Release CTest preflight and execution, 2/2 checks on 2026-10-15, matching SimplnxCore and OrientationAnalysis runtime.",
+    "independent_output": "PASS: 76 independent output checks; exact source-coordinate integer transfer for all five arrays and all three results, geometry, anchor, shift relationships, invalid borders, quaternion validity and all CSV rows/columns.",
+    "preview": "PASS: native-output IPF before/after local z=0 and cumulative shifts by local Z; 1980 x 720 pixels, visually inspected. Gray invalid borders are a display overlay; stored IPF values are zero.",
+    "static_content": "PASS: canonical artifact validator for new example via private nested adapter and 114 focused schema, metadata, coverage, link, image-hash and UTF-8 checks.",
+    "python_generation": "NOT VERIFIED",
+    "ooc": "NOT VERIFIED",
+    "gui": "NOT VERIFIED",
+    "install_bookmarks": "NOT VERIFIED",
+    "scientific_status": "Native estimator execution, recorded shifts and exact independent array-transfer/replay checks. Not an independent oracle for the MI optimum, experimental stage motion, or physical alignment accuracy. A second alignment on an already processed cohort can overcorrect real changes in 3D grain morphology; five degrees is illustrative and not optimized.",
+    "implementation_cautions": [
+      "Current List cumulative mode omits the same tuple-count preflight branch used for relative input; the bundle explicitly requires eight tuples in both modes.",
+      "MI seed-only mask behavior is not exercised by rejected cells here because the entire input crop has phase=1 and mask=1.",
+      "Explicit geometry creation avoids the known whole-image deep-copy length-unit loss.",
+      "Full checkpoint is read before deletion and cropping; small retained ROI memory does not imply bounded-memory full input loading."
+    ],
+    "artifacts": {
+      "input_sha256": "a3da8f8ccb9f2df3334ecfbaa659070f6f81a37cc027cf3259070f3fa7ecd8be",
+      "output_sha256": "12ec852b5d3597d9f736fe9e76cd97b808d3f7afb8a4dd4e2048493e312be707",
+      "csv_sha256": "aca756af7a5d053c6f69053e44d099d29f0c7f05b4f4ac40e7448880faa31e9f",
+      "figure_sha256": "128a8e2ce914879111654c6fba104ecd15c333b8f1fb83f64d0b9d49caece8e0",
+      "figure_size_pixels": [
+        1980,
+        720
+      ]
+    },
+    "output_statistics": {
+      "relative_shifts": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "cumulative_shifts": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          -3,
+          -1
+        ],
+        [
+          -4,
+          -1
+        ],
+        [
+          -5,
+          -1
+        ]
+      ],
+      "slice_indices": [
+        [
+          0,
+          0
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "source_roi_xyz": [
+        128,
+        128,
+        8
+      ],
+      "source_roi_cells": 131072,
+      "retained_cells": 128399,
+      "zero_filled_cells": 2673,
+      "zero_filled_by_local_z": [
+        763,
+        636,
+        509,
+        382,
+        255,
+        128,
+        0,
+        0
+      ],
+      "max_absolute_shift_cells": [
+        5,
+        1
+      ],
+      "max_absolute_shift_um": [
+        1.25,
+        0.25
+      ],
+      "origin_um": [
+        7.500003814697266,
+        9.0,
+        12.999996185302734
+      ],
+      "physical_size_um": [
+        32,
+        32,
+        2
+      ],
+      "aligned_fields": [
+        "Quats",
+        "Phases",
+        "Mask",
+        "FeatureIds",
+        "IPFColors"
+      ],
+      "replay_relative_equal": true,
+      "replay_cumulative_equal": true
+    }
+  },
+  "shift_contract": {
+    "units": "integer image cells",
+    "components": [
+      "X",
+      "Y"
+    ],
+    "row_to_local_z": "z=7-row",
+    "anchor": "local z=7, row 0",
+    "row_zero_slice_indices": "placeholder [0,0]",
+    "sampling": "output[z,y,x]=before[z,y+sy,x+sx] when in bounds; zero otherwise",
+    "relative_to_cumulative": "C[0]=[0,0]; C[r]=sum(R[1:r+1])",
+    "reference_cumulative_xy": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -3,
+        -1
+      ],
+      [
+        -4,
+        -1
+      ],
+      [
+        -5,
+        -1
+      ]
+    ],
+    "reference_relative_xy": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "reference_slice_indices": [
+      [
+        0,
+        0
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "role": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup.",
+      "paths": [
+        {
+          "parameter": "import_data_object",
+          "value": {
+            "data_paths": [],
+            "file_path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+            "path_import_policy": 0
+          }
+        }
+      ],
+      "key_parameters": {
+        "import_data_object": {
+          "data_paths": [],
+          "file_path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+          "path_import_policy": 0
+        }
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 1,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping.",
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "DataContainer/Cell Feature Data",
+            "DataContainer/NewGrain Data",
+            "MergeTwins SeedValue",
+            "DataContainer/Cell Data/Confidence Index",
+            "DataContainer/Cell Data/EulerAngles",
+            "DataContainer/Cell Data/Fit",
+            "DataContainer/Cell Data/Image Quality",
+            "DataContainer/Cell Data/ParentIds",
+            "DataContainer/Cell Data/SEM Signal",
+            "DataContainer/Cell Data/X Position",
+            "DataContainer/Cell Data/Y Position",
+            "DataContainer/Cell Ensemble Data/LatticeConstants",
+            "DataContainer/Cell Ensemble Data/MaterialName"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "DataContainer/Cell Feature Data",
+          "DataContainer/NewGrain Data",
+          "MergeTwins SeedValue",
+          "DataContainer/Cell Data/Confidence Index",
+          "DataContainer/Cell Data/EulerAngles",
+          "DataContainer/Cell Data/Fit",
+          "DataContainer/Cell Data/Image Quality",
+          "DataContainer/Cell Data/ParentIds",
+          "DataContainer/Cell Data/SEM Signal",
+          "DataContainer/Cell Data/X Position",
+          "DataContainer/Cell Data/Y Position",
+          "DataContainer/Cell Ensemble Data/LatticeConstants",
+          "DataContainer/Cell Ensemble Data/MaterialName"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 2,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Crop inclusive XYZ voxel bounds to 128 x 128 x 8 consecutive measured sections. Preserve source feature labels without renumbering; retain Quats, Phases, Mask, FeatureIds and IPFColors.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          30,
+          36,
+          52
+        ],
+        "max_voxel": [
+          157,
+          163,
+          59
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": true,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 3,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "DataContainer_Before"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 0,
+        "length_unit_index": 6,
+        "output_geometry_path": "DataContainer_Before",
+        "warnings_as_errors": false,
+        "array_handling_index": 0,
+        "dimensions": [
+          128,
+          128,
+          8
+        ],
+        "origin": [
+          7.500003814697266,
+          9.0,
+          12.999996185302734
+        ],
+        "spacing": [
+          0.25,
+          0.25,
+          0.25
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 4,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the five selected measured cell arrays before MI changes the input.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_Before/Cell Data"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Data/Quats",
+          "DataContainer/Cell Data/Phases",
+          "DataContainer/Cell Data/Mask",
+          "DataContainer/Cell Data/FeatureIds",
+          "DataContainer/Cell Data/IPFColors"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_Before/Cell Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 5,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the ensemble matrix containing only CrystalStructures.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_Before"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Ensemble Data"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_Before",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 6,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "DataContainer_ReplayRelative"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 0,
+        "length_unit_index": 6,
+        "output_geometry_path": "DataContainer_ReplayRelative",
+        "warnings_as_errors": false,
+        "array_handling_index": 0,
+        "dimensions": [
+          128,
+          128,
+          8
+        ],
+        "origin": [
+          7.500003814697266,
+          9.0,
+          12.999996185302734
+        ],
+        "spacing": [
+          0.25,
+          0.25,
+          0.25
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 7,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the five selected measured cell arrays before MI changes the input.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_ReplayRelative/Cell Data"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Data/Quats",
+          "DataContainer/Cell Data/Phases",
+          "DataContainer/Cell Data/Mask",
+          "DataContainer/Cell Data/FeatureIds",
+          "DataContainer/Cell Data/IPFColors"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_ReplayRelative/Cell Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 8,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the ensemble matrix containing only CrystalStructures.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_ReplayRelative"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Ensemble Data"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_ReplayRelative",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 9,
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "role": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison.",
+      "paths": [
+        {
+          "parameter": "output_geometry_path",
+          "value": "DataContainer_ReplayCumulative"
+        },
+        {
+          "parameter": "x_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "y_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "z_bounds_path",
+          "value": ""
+        },
+        {
+          "parameter": "vertex_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "edge_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "triangle_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "quadrilateral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "tetrahedral_list_path",
+          "value": ""
+        },
+        {
+          "parameter": "hexahedral_list_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "geometry_type_index": 0,
+        "length_unit_index": 6,
+        "output_geometry_path": "DataContainer_ReplayCumulative",
+        "warnings_as_errors": false,
+        "array_handling_index": 0,
+        "dimensions": [
+          128,
+          128,
+          8
+        ],
+        "origin": [
+          7.500003814697266,
+          9.0,
+          12.999996185302734
+        ],
+        "spacing": [
+          0.25,
+          0.25,
+          0.25
+        ],
+        "x_bounds_path": "",
+        "y_bounds_path": "",
+        "z_bounds_path": "",
+        "vertex_list_path": "",
+        "vertex_attribute_matrix_name": "Vertex Data",
+        "edge_list_path": "",
+        "edge_attribute_matrix_name": "Edge Data",
+        "triangle_list_path": "",
+        "quadrilateral_list_path": "",
+        "face_attribute_matrix_name": "Face Data",
+        "tetrahedral_list_path": "",
+        "hexahedral_list_path": "",
+        "cell_attribute_matrix_name": "Cell Data"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 10,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the five selected measured cell arrays before MI changes the input.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Data/Quats",
+            "DataContainer/Cell Data/Phases",
+            "DataContainer/Cell Data/Mask",
+            "DataContainer/Cell Data/FeatureIds",
+            "DataContainer/Cell Data/IPFColors"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_ReplayCumulative/Cell Data"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Data/Quats",
+          "DataContainer/Cell Data/Phases",
+          "DataContainer/Cell Data/Mask",
+          "DataContainer/Cell Data/FeatureIds",
+          "DataContainer/Cell Data/IPFColors"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_ReplayCumulative/Cell Data",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 11,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Copy the ensemble matrix containing only CrystalStructures.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "DataContainer_ReplayCumulative"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Ensemble Data"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "DataContainer_ReplayCumulative",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 12,
+      "filter": "AlignSectionsMutualInformationFilter",
+      "uuid": "3cf33ad9-8322-4d40-96de-14bbe40969cc",
+      "role": "Estimate adjacent-section translations using measured orientation patterns. The top local slice z=7 is fixed. These estimates are not independently measured physical ground truth.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "quats_array_path",
+          "value": "DataContainer/Cell Data/Quats"
+        },
+        {
+          "parameter": "cell_phases_array_path",
+          "value": "DataContainer/Cell Data/Phases"
+        },
+        {
+          "parameter": "mask_array_path",
+          "value": "DataContainer/Cell Data/Mask"
+        },
+        {
+          "parameter": "crystal_structures_array_path",
+          "value": "DataContainer/Cell Ensemble Data/CrystalStructures"
+        }
+      ],
+      "key_parameters": {
+        "misorientation_tolerance": 5.0,
+        "use_mask": true,
+        "input_image_geometry_path": "DataContainer",
+        "quats_array_path": "DataContainer/Cell Data/Quats",
+        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+        "mask_array_path": "DataContainer/Cell Data/Mask",
+        "crystal_structures_array_path": "DataContainer/Cell Ensemble Data/CrystalStructures",
+        "store_alignment_shifts": true,
+        "alignment_attribute_matrix_name": "MI Alignment",
+        "slices_array_name": "Slice Indices",
+        "relative_shifts_array_name": "Relative Shifts",
+        "cumulative_shifts_array_name": "Cumulative Shifts"
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 13,
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "role": "Replay the stored relative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer_ReplayRelative"
+        },
+        {
+          "parameter": "shifts_array_path",
+          "value": "DataContainer/MI Alignment/Relative Shifts"
+        }
+      ],
+      "key_parameters": {
+        "input_array_type_index": 0,
+        "input_image_geometry_path": "DataContainer_ReplayRelative",
+        "shifts_array_path": "DataContainer/MI Alignment/Relative Shifts"
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 14,
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "role": "Replay the stored cumulative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer_ReplayCumulative"
+        },
+        {
+          "parameter": "shifts_array_path",
+          "value": "DataContainer/MI Alignment/Cumulative Shifts"
+        }
+      ],
+      "key_parameters": {
+        "input_array_type_index": 1,
+        "input_image_geometry_path": "DataContainer_ReplayCumulative",
+        "shifts_array_path": "DataContainer/MI Alignment/Cumulative Shifts"
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 15,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save the original crop, MI result, both independent replay copies, and alignment arrays for verification.",
+      "paths": [
+        {
+          "parameter": "export_file_path",
+          "value": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_SectionAlignment.dream3d"
+        }
+      ],
+      "key_parameters": {
+        "compression_level": 5,
+        "export_file_path": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_SectionAlignment.dream3d",
+        "use_compression": true,
+        "write_xdmf_file": false
+      },
+      "parameters_version": 2
+    },
+    {
+      "index": 16,
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "role": "Export all eight shift rows, including the zero-initialized anchor row, with a zero-based row index and headers. Shifts are integer image cells in reverse-Z row order.",
+      "paths": [
+        {
+          "parameter": "output_path",
+          "value": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_Shifts.csv"
+        },
+        {
+          "parameter": "input_data_array_paths",
+          "value": [
+            "DataContainer/MI Alignment/Slice Indices",
+            "DataContainer/MI Alignment/Relative Shifts",
+            "DataContainer/MI Alignment/Cumulative Shifts"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "output_style_index": 1,
+        "output_path": "Data/Output/Small_IN100_Processing/Alignment/SmallIN100_Shifts.csv",
+        "output_dir": "",
+        "file_extension": ".csv",
+        "max_val_per_line": 1,
+        "delimiter_index": 2,
+        "header_option_index": 3,
+        "input_data_array_paths": [
+          "DataContainer/MI Alignment/Slice Indices",
+          "DataContainer/MI Alignment/Relative Shifts",
+          "DataContainer/MI Alignment/Cumulative Shifts"
+        ]
+      },
+      "parameters_version": 1
+    }
+  ]
+}

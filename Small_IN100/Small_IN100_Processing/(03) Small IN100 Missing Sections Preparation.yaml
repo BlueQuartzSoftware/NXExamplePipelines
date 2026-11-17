@@ -1,0 +1,1160 @@
+{
+  "schema_version": 1,
+  "pipeline_file": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+  "markdown_file": "(03) Small IN100 Missing Sections Preparation.md",
+  "title": "Small IN100 missing sections preparation",
+  "summary": "Keep a complete eight-section measured-derived reference, deliberately retain five sections, and generate source-section provenance and midpoint decisions for a nearest-section fill comparison.",
+  "primary_industries": [
+    "Materials characterization"
+  ],
+  "secondary_industries": [
+    "Aerospace",
+    "Metallurgy"
+  ],
+  "use_cases": [
+    "Quantify information lost when selected serial sections are unavailable",
+    "Track the measured source of each repeated output section",
+    "Compare nearest-section copying with a complete held-out reference"
+  ],
+  "keywords": [
+    "SmallIN100",
+    "EBSD",
+    "serial sections",
+    "controlled omission",
+    "missing sections",
+    "nearest retained section",
+    "Z spacing",
+    "source provenance",
+    "quaternions",
+    "feature labels"
+  ],
+  "inputs": [
+    {
+      "path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+      "role": "Completed Feature Preparation checkpoint, already aligned, repaired, segmented and cleaned; run Archive then Feature Preparation first."
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_MissingSections.dream3d",
+      "role": "Complete 128 x 128 x 8 reference, controlled five-section ordinal stack with per-cell SourceGlobalZIndex, CrystalStructures and three metadata arrays."
+    },
+    {
+      "path": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_ZDecisionBounds.txt",
+      "role": "Exactly 0 0.125 0.375 0.75 1.375 2 followed by a newline; sentinel, nearest-retained midpoint decisions and final sizing extent in micrometers relative to the first observation."
+    }
+  ],
+  "input_data_strategy": {
+    "strategy": "measured-public-example-derived-controlled-omission",
+    "asset_keys": [
+      "Small_IN100.tar.gz"
+    ],
+    "paper_doi": "10.1186/2193-9772-3-5",
+    "paper_url": "https://doi.org/10.1186/2193-9772-3-5",
+    "source_url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+    "source_sha512": "79e9f6948d4e8e06187e11216a67596fa786ffd2700e51f594ad014090383eb8bcc003e14de2e88082aa9ae512cc4fc9cee22c80066fc54f38c3ebc75267eb5b",
+    "reference_visual": "SmallIN100MissingSections.png: native IPF reference at local Z 3, nearest-section fill copied from local Z 2, and native boolean FeatureIdMismatch on common XY axes. False means the same source feature label only, not equal orientations. This is a computed preview, not a paper figure.",
+    "target_traits": [
+      "Inclusive prepared-volume XYZ crop [30,36,52] to [157,163,59]: 128 x 128 x 8 cells at [0.25,0.25,0.25] Micrometer.",
+      "Reference local Z 0..7 corresponds to prepared-volume Z 52..59. Retain local [0,1,2,4,7], deliberately omit [3,5,6]. These indices are not raw ANG filename identifiers.",
+      "Keep exact Quats float32[4], Phases int32[1], Mask uint8[1], FeatureIds int32[1] and IPFColors uint8[3], plus ensemble CrystalStructures. Remove stale whole-volume feature and parent matrices; do not renumber source labels.",
+      "Retained observation offsets from the first section are [0,0.25,0.5,1,1.75] micrometers. Five-layer ImageGeom stores ordinal order only; its 0.25 Z spacing does not calibrate the packed stack physically.",
+      "Store SourceGlobalZIndex int32[1] on retained and filled cells, plus root metadata RetainedSourceGlobalZIndices, RetainedPlaneOffsetsFromFirstUm and ZDecisionBounds.",
+      "Exactly six decision-file values [0,0.125,0.375,0.75,1.375,2] and output spacing 0.25 give eight output sections and prepared-source mapping [52,53,54,54,56,56,59,59].",
+      "At an exact interior midpoint, choose the lower retained section. Keep original geometry origin so output cell centers coincide with the original eight-section reference.",
+      "Input Mask=1 and Phases=1 throughout the selected crop; copied true masks do not identify missing or synthesized sections."
+    ],
+    "known_differences": "Controlled omission from an already aligned and cleaned public measured-data checkpoint. There is no actual acquisition gap, measured removed thickness, real irregular physical-spacing calibration or recovery of missing 3D morphology. Interior input values are nearest-observation midpoint decisions, not physical cell faces. Whole planes are copied without quaternion, feature-ID, phase or color interpolation. All-true masks do not identify the repeated sections. No paper figure or numerical result is reproduced.",
+    "archive_provenance_file": "README.md",
+    "new_external_input": false,
+    "predecessors": [
+      "(01) Small IN100 Archive.d3dpipeline",
+      "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline"
+    ]
+  },
+  "python_generation": {
+    "specification_file": "PythonGeneration.yaml",
+    "resolve_from": "pipeline_suite_root",
+    "specification_id": "smallin100-archive-python-generation-v1"
+  },
+  "mcp": {
+    "user_intents": [
+      "Prepare a missing-section comparison with known withheld data",
+      "Fill a uniform stack by copying the nearest retained observation",
+      "Identify duplicated section data and assess lost feature detail"
+    ],
+    "questions_to_ask": [
+      "Are sections actually missing, or is this a controlled omission?",
+      "What are the observation positions, units, section order and target grid?",
+      "Which data are valid measured observations and which output sections repeat them?",
+      "What independent evidence can evaluate a fill when withheld ground truth is unavailable?"
+    ],
+    "constraints": [
+      "The .d3dpipeline is executable authority. Run Archive -> Feature Preparation -> (03) Missing Sections Preparation -> (04) Nearest Section Fill. Section Alignment and Replay is an independent branch and is not a prerequisite.",
+      "Stage 03 must execute completely before stage 04 preflight because RegularizeZSpacingFilter reads its text file during both preflight and execution. No new raw dataset or package input is required.",
+      "The selected sections come from an already aligned, repaired and cleaned checkpoint. The omitted local Z [3,5,6] are a deliberate teaching choice, not observed acquisition gaps.",
+      "MissingSections_OrdinalStack is ordinal storage only. Use retained indices and offsets for observation positions; do not display its five-layer Z extent as a physically calibrated specimen.",
+      "The six input values are first sentinel 0, nearest-retained interior midpoint decisions [0.125,0.375,0.75,1.375], and final sizing extent 2. They are not measured removal thicknesses or physical image cell-face locations.",
+      "Target query i*0.25 is relative to the first observation. The original cell center is O_z+(i+0.5)*0.25; subtracting the common first center produces the query. Keeping origin retains the original target-cell centers.",
+      "Require exactly six finite, increasing, whitespace-separated values with no header, index column, commas, comments or BOM. The native reader ignores trailing tokens; independently check the complete file.",
+      "Expected prepared-source mapping is [52,53,54,54,56,56,59,59]. The strict-greater-than boundary rule chooses source 54 at the exact 0.75 midpoint for target local Z 3.",
+      "Every numeric cell array follows the same whole-plane copy with unchanged dtype and component shape. Quaternions, feature IDs and phases are copied without interpolation. SourceGlobalZIndex records duplicates.",
+      "Mask remains all true because retained valid measurements are copied; it is not a measured-versus-filled indicator. Use target/source Z provenance to identify filled positions.",
+      "FeatureIds remain sparse source labels. Nearest-section copying cannot recover missing grains, boundaries or orientation changes. Recompute later feature measurements on the selected final geometry and state the fill assumption.",
+      "The output origin and XY geometry match the reference. Current Regularize output defaults to Micrometer, matching this input; this example does not prove generic source-unit preservation.",
+      "Do not claim Python, OOC, GUI, installation or physical missing-section recovery from native in-core execution. Full checkpoint loading occurs before the bounded crop."
+    ],
+    "related_pipelines": [
+      "(01) Small IN100 Archive.d3dpipeline",
+      "../Small_IN100_Examples/(01) Small IN100 Feature Preparation.d3dpipeline",
+      "(04) Small IN100 Nearest Section Fill.d3dpipeline"
+    ]
+  },
+  "citations": [
+    {
+      "title": "DREAM.3D: A Digital Representation Environment for the Analysis of Microstructure in 3D",
+      "authors": [
+        "Michael Groeber",
+        "Michael Jackson"
+      ],
+      "year": 2014,
+      "journal": "Integrating Materials and Manufacturing Innovation",
+      "doi": "10.1186/2193-9772-3-5",
+      "url": "https://doi.org/10.1186/2193-9772-3-5",
+      "scope": "pipeline_workflow",
+      "role": "Serial-section EBSD and modular microstructure-processing context for an illustrative missing-section comparison using a processed public-data crop.",
+      "dataset": {
+        "availability": "The public Small_IN100 archive contains 117 measured ANG sections. The publisher supplements contain processed outputs; raw-source identity with the archive is not proven.",
+        "url": "https://www.dream3d.io/Data_Archive/Small_IN100.tar.gz",
+        "doi": "",
+        "license": "The article is CC BY 2.0; separate archive redistribution terms were not established. This bundle includes no raw or processed volume files; its preview PNG is derived from the checked output.",
+        "included": false,
+        "reproduction_status": "illustrative",
+        "reproduction_notes": "Controlled omission from an already aligned and cleaned public measured-data checkpoint. There is no actual acquisition gap, measured removed thickness, real irregular physical-spacing calibration or recovery of missing 3D morphology. Interior input values are nearest-observation midpoint decisions, not physical cell faces. Whole planes are copied without quaternion, feature-ID, phase or color interpolation. All-true masks do not identify the repeated sections. No paper figure or numerical result is reproduced."
+      }
+    },
+    {
+      "title": "Regularize Z Spacing",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/Filters/Algorithms/RegularizeZSpacing.cpp",
+      "scope": "filter_algorithm",
+      "role": "Pinned implementation defines output size, strict-greater-than section decisions and whole-plane array copying. This bundle derives nearest-observation midpoints explicitly instead of interpreting the file as measured cell faces."
+    },
+    {
+      "title": "Append Image Geometry (Z-Slice)",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/Filters/Algorithms/AppendImageGeometry.cpp",
+      "scope": "filter_algorithm",
+      "role": "Append retained cell slabs in destination-first order to a new image; copy ensemble metadata separately."
+    },
+    {
+      "title": "Write ASCII Data",
+      "authors": [
+        "BlueQuartz Software"
+      ],
+      "year": 2026,
+      "journal": "simplnx filter implementation",
+      "doi": "",
+      "url": "https://github.com/BlueQuartzSoftware/simplnx/blob/fe6c4a15e5a5bffef2523f52cec01be33b1e62a9/src/Plugins/SimplnxCore/src/SimplnxCore/Filters/Algorithms/WriteASCIIData.cpp",
+      "scope": "filter_algorithm",
+      "role": "Headerless, unindexed, space-delimited single-row export retains all six metadata components."
+    }
+  ],
+  "last_verified": "2026-10-15",
+  "verification": {
+    "source_revision": "fe6c4a15e5a5bffef2523f52cec01be33b1e62a9",
+    "source_schema": "PASS: all filter UUIDs, argument keys and parameters_version values match the pinned source; canonical pipeline wrappers retained.",
+    "native_pipeline": "PASS: 4/4 unique native Release CTest preflight/execute checks on 2026-10-15: unchanged 21-step preparation passed 2/2 from a clean output directory, and final 6-step fill passed 2/2 against its generated files, with matching SimplnxCore and OrientationAnalysis runtime.",
+    "independent_output": "PASS: 75 independent output checks. Actual retained observation centers determine nearest sources independently of the native decision-loop implementation; all five measured fields match their selected source. Native boolean FeatureIdMismatch exactly equals independent reference-versus-fill label inequality, has the expected shape, and temporary FeatureIdDifference is absent. Geometry, units, metadata, exact six-token text file, provenance, source masks, phases and quaternion norms also pass.",
+    "static_content": "PASS: canonical bundle validator for both new triplets through a private nested-layout adapter and 153 focused authoring checks covering pinned source schemas, exact YAML arguments, wrappers, all 52 suite coverage entries, local links, UTF-8 and unchanged (01)/(02) triplets.",
+    "preview": "PASS: 1950 x 750 native-output comparison at local Z 3, with fill copied from local Z 2 and native boolean FeatureIdMismatch for 2,145 cells. Common axes, readable titles and legend, no clipping or overlap; visually inspected. The binary panel reads the saved native boolean array.",
+    "python_generation": "NOT VERIFIED",
+    "ooc": "NOT VERIFIED",
+    "gui": "NOT VERIFIED",
+    "install_bookmarks": "NOT VERIFIED",
+    "scientific_status": "Illustrative controlled missing-section experiment on processed measured data. Exact nearest-retained copying is distinct from recovering withheld morphology or calibrating real irregular physical section spacing.",
+    "implementation_cautions": [
+      "Current Regularize output geometry defaults to Micrometer rather than explicitly forwarding source units; this source already uses Micrometer.",
+      "The reader consumes five-plus-one float values and ignores trailing tokens; check exact token count independently.",
+      "The selected ROI has all Mask values true and Phases equal one. This is not a mixed-validity or missing-mask detection example.",
+      "Full checkpoint loading precedes cropping, so small retained geometry does not establish bounded peak memory or OOC execution."
+    ],
+    "artifacts": {
+      "input_sha256": "a3da8f8ccb9f2df3334ecfbaa659070f6f81a37cc027cf3259070f3fa7ecd8be",
+      "prepared_sha256": "d376c04550ac73dfce1ed592e517948965b8736e3cbd7e4408bb0d88c5f88a9b",
+      "output_sha256": "6ca3f244a96ca2e9b42fdc5ecdd117da50b98cafbef92dc0351be6a475608225",
+      "bounds_sha256": "a8eafdc87e71feb36c32b19388ab021caa5d560abdd470c4f464ecac49a513fb",
+      "figure_sha256": "8a5af84b790c5059819e2617cc31ab73de5a29336cae93a23e980bed23b9b46c",
+      "figure_size_pixels": [
+        1950,
+        750
+      ]
+    },
+    "expected_output_statistics": {
+      "dimensions_xyz": [
+        128,
+        128,
+        8
+      ],
+      "spacing_um": [
+        0.25,
+        0.25,
+        0.25
+      ],
+      "retained_local_z": [
+        0,
+        1,
+        2,
+        4,
+        7
+      ],
+      "omitted_local_z": [
+        3,
+        5,
+        6
+      ],
+      "retained_global_z": [
+        52,
+        53,
+        54,
+        56,
+        59
+      ],
+      "output_source_global_z": [
+        52,
+        53,
+        54,
+        54,
+        56,
+        56,
+        59,
+        59
+      ],
+      "input_decision_values_um": [
+        0,
+        0.125,
+        0.375,
+        0.75,
+        1.375,
+        2
+      ]
+    },
+    "output_statistics": {
+      "reference_shape_xyz": [
+        128,
+        128,
+        8
+      ],
+      "ordinal_shape_xyz": [
+        128,
+        128,
+        5
+      ],
+      "filled_shape_xyz": [
+        128,
+        128,
+        8
+      ],
+      "retained_local_z": [
+        0,
+        1,
+        2,
+        4,
+        7
+      ],
+      "omitted_local_z": [
+        3,
+        5,
+        6
+      ],
+      "retained_global_z": [
+        52,
+        53,
+        54,
+        56,
+        59
+      ],
+      "bounds_um": [
+        0.0,
+        0.125,
+        0.375,
+        0.75,
+        1.375,
+        2.0
+      ],
+      "source_local_z_by_target": [
+        0,
+        1,
+        2,
+        2,
+        4,
+        4,
+        7,
+        7
+      ],
+      "source_global_z_by_target": [
+        52,
+        53,
+        54,
+        54,
+        56,
+        56,
+        59,
+        59
+      ],
+      "mismatch_cells": 5454,
+      "mismatch_percent_all_cells": 4.16107177734375,
+      "mismatch_cells_per_z": [
+        0,
+        0,
+        0,
+        2145,
+        0,
+        1904,
+        1405,
+        0
+      ],
+      "mismatch_percent_omitted_cells": 11.09619140625,
+      "reference_unique_labels": 231,
+      "fill_unique_labels": 230,
+      "labels_absent_after_fill": [
+        2055
+      ],
+      "cells_per_plane": 16384,
+      "reference_cells": 131072,
+      "origin_um": [
+        7.500003814697266,
+        9.0,
+        12.999996185302734
+      ],
+      "physical_size_um": [
+        32,
+        32,
+        2
+      ],
+      "label_absence_scope": "Label 2055 is absent from this cropped ROI after filling. This does not establish disappearance of a whole physical grain from the specimen."
+    }
+  },
+  "steps": [
+    {
+      "index": 0,
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "role": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup.",
+      "paths": [
+        {
+          "parameter": "import_data_object",
+          "value": {
+            "data_paths": [],
+            "file_path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+            "path_import_policy": 0
+          }
+        }
+      ],
+      "key_parameters": {
+        "import_data_object": {
+          "data_paths": [],
+          "file_path": "Data/Output/Small_IN100_Examples/Preparation/SmallIN100_Features.dream3d",
+          "path_import_policy": 0
+        }
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 1,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping.",
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "DataContainer/Cell Feature Data",
+            "DataContainer/NewGrain Data",
+            "MergeTwins SeedValue",
+            "DataContainer/Cell Data/Confidence Index",
+            "DataContainer/Cell Data/EulerAngles",
+            "DataContainer/Cell Data/Fit",
+            "DataContainer/Cell Data/Image Quality",
+            "DataContainer/Cell Data/ParentIds",
+            "DataContainer/Cell Data/SEM Signal",
+            "DataContainer/Cell Data/X Position",
+            "DataContainer/Cell Data/Y Position",
+            "DataContainer/Cell Ensemble Data/LatticeConstants",
+            "DataContainer/Cell Ensemble Data/MaterialName"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "DataContainer/Cell Feature Data",
+          "DataContainer/NewGrain Data",
+          "MergeTwins SeedValue",
+          "DataContainer/Cell Data/Confidence Index",
+          "DataContainer/Cell Data/EulerAngles",
+          "DataContainer/Cell Data/Fit",
+          "DataContainer/Cell Data/Image Quality",
+          "DataContainer/Cell Data/ParentIds",
+          "DataContainer/Cell Data/SEM Signal",
+          "DataContainer/Cell Data/X Position",
+          "DataContainer/Cell Data/Y Position",
+          "DataContainer/Cell Ensemble Data/LatticeConstants",
+          "DataContainer/Cell Ensemble Data/MaterialName"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 2,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Preserve the full eight-section measured-derived reference crop, inclusive global voxel bounds [30,36,52] to [157,163,59].",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          30,
+          36,
+          52
+        ],
+        "max_voxel": [
+          157,
+          163,
+          59
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": true,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 3,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Retain an exact measured-derived section from the full reference crop; no feature renumbering.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "KeptZ00"
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          0,
+          0,
+          0
+        ],
+        "max_voxel": [
+          127,
+          127,
+          0
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": "KeptZ00"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 4,
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "role": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "KeptZ00/Cell Data/SourceGlobalZIndex"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "KeptZ00/Cell Data/SourceGlobalZIndex",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_count": 1,
+        "initialization_value_str": "52"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 5,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Retain an exact measured-derived section from the full reference crop; no feature renumbering.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "KeptZ01"
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          0,
+          0,
+          1
+        ],
+        "max_voxel": [
+          127,
+          127,
+          1
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": "KeptZ01"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 6,
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "role": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "KeptZ01/Cell Data/SourceGlobalZIndex"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "KeptZ01/Cell Data/SourceGlobalZIndex",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_count": 1,
+        "initialization_value_str": "53"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 7,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Retain an exact measured-derived section from the full reference crop; no feature renumbering.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "KeptZ02"
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          0,
+          0,
+          2
+        ],
+        "max_voxel": [
+          127,
+          127,
+          2
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": "KeptZ02"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 8,
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "role": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "KeptZ02/Cell Data/SourceGlobalZIndex"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "KeptZ02/Cell Data/SourceGlobalZIndex",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_count": 1,
+        "initialization_value_str": "54"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 9,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Retain an exact measured-derived section from the full reference crop; no feature renumbering.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "KeptZ04"
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          0,
+          0,
+          4
+        ],
+        "max_voxel": [
+          127,
+          127,
+          4
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": "KeptZ04"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 10,
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "role": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "KeptZ04/Cell Data/SourceGlobalZIndex"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "KeptZ04/Cell Data/SourceGlobalZIndex",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_count": 1,
+        "initialization_value_str": "56"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 11,
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "role": "Retain an exact measured-derived section from the full reference crop; no feature renumbering.",
+      "paths": [
+        {
+          "parameter": "input_image_geometry_path",
+          "value": "DataContainer"
+        },
+        {
+          "parameter": "feature_ids_path",
+          "value": "DataContainer/Cell Data/FeatureIds"
+        },
+        {
+          "parameter": "cell_feature_attribute_matrix_path",
+          "value": "DataContainer/Cell Feature Data"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "KeptZ07"
+        }
+      ],
+      "key_parameters": {
+        "use_physical_bounds": false,
+        "crop_x_dim": true,
+        "crop_y_dim": true,
+        "crop_z_dim": true,
+        "min_voxel": [
+          0,
+          0,
+          7
+        ],
+        "max_voxel": [
+          127,
+          127,
+          7
+        ],
+        "min_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_coord": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "remove_original_geometry": false,
+        "input_image_geometry_path": "DataContainer",
+        "renumber_features": false,
+        "feature_ids_path": "DataContainer/Cell Data/FeatureIds",
+        "cell_feature_attribute_matrix_path": "DataContainer/Cell Feature Data",
+        "output_image_geometry_path": "KeptZ07"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 12,
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "role": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "KeptZ07/Cell Data/SourceGlobalZIndex"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "KeptZ07/Cell Data/SourceGlobalZIndex",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": false,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_count": 1,
+        "initialization_value_str": "59"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 13,
+      "filter": "AppendImageGeometryFilter",
+      "uuid": "c62c5c89-5ea8-4948-99ca-51cbc5b54b05",
+      "role": "Concatenate retained sections in ascending original Z order. Its stored Z grid represents ordinal packing only; use retained plane offsets, not packed geometry Z, for physical interpretation.",
+      "paths": [
+        {
+          "parameter": "input_image_geometries_paths",
+          "value": [
+            "KeptZ01",
+            "KeptZ02",
+            "KeptZ04",
+            "KeptZ07"
+          ]
+        },
+        {
+          "parameter": "destination_image_geometry_path",
+          "value": "KeptZ00"
+        },
+        {
+          "parameter": "output_image_geometry_path",
+          "value": "MissingSections_OrdinalStack"
+        }
+      ],
+      "key_parameters": {
+        "input_image_geometries_paths": [
+          "KeptZ01",
+          "KeptZ02",
+          "KeptZ04",
+          "KeptZ07"
+        ],
+        "destination_image_geometry_path": "KeptZ00",
+        "direction_index": 2,
+        "mirror_geometry": false,
+        "check_resolution": true,
+        "default_value": "0",
+        "save_as_new_geometry": true,
+        "output_image_geometry_path": "MissingSections_OrdinalStack"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 14,
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "role": "Append copies cell arrays only; explicitly copy CrystalStructures for the retained orientation data.",
+      "paths": [
+        {
+          "parameter": "existing_data_path",
+          "value": [
+            "DataContainer/Cell Ensemble Data"
+          ]
+        },
+        {
+          "parameter": "new_data_path",
+          "value": "MissingSections_OrdinalStack"
+        },
+        {
+          "parameter": "new_path_suffix",
+          "value": ""
+        }
+      ],
+      "key_parameters": {
+        "existing_data_path": [
+          "DataContainer/Cell Ensemble Data"
+        ],
+        "use_new_parent": true,
+        "new_data_path": "MissingSections_OrdinalStack",
+        "new_path_suffix": ""
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 15,
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "role": "Remove temporary one-section geometries after assembly.",
+      "paths": [
+        {
+          "parameter": "removed_data_path",
+          "value": [
+            "KeptZ00",
+            "KeptZ01",
+            "KeptZ02",
+            "KeptZ04",
+            "KeptZ07"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "removed_data_path": [
+          "KeptZ00",
+          "KeptZ01",
+          "KeptZ02",
+          "KeptZ04",
+          "KeptZ07"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 16,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "One tuple with explicitly specified component values; metadata only, not fabricated measurements.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "RetainedSourceGlobalZIndices"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "RetainedSourceGlobalZIndices",
+        "numeric_type_index": 4,
+        "data_format": "",
+        "set_tuple_dimensions": true,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_dimensions": [
+          [
+            5
+          ]
+        ],
+        "init_type_index": 0,
+        "init_value": "52;53;54;56;59",
+        "starting_fill_value": "0",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "UnusedInitializationSeed",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 17,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "One tuple with explicitly specified component values; metadata only, not fabricated measurements.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "RetainedPlaneOffsetsFromFirstUm"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "RetainedPlaneOffsetsFromFirstUm",
+        "numeric_type_index": 8,
+        "data_format": "",
+        "set_tuple_dimensions": true,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_dimensions": [
+          [
+            5
+          ]
+        ],
+        "init_type_index": 0,
+        "init_value": "0.0;0.25;0.5;1.0;1.75",
+        "starting_fill_value": "0",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "UnusedInitializationSeed",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 18,
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "role": "One tuple with explicitly specified component values; metadata only, not fabricated measurements.",
+      "paths": [
+        {
+          "parameter": "output_array_path",
+          "value": "ZDecisionBounds"
+        }
+      ],
+      "key_parameters": {
+        "output_array_path": "ZDecisionBounds",
+        "numeric_type_index": 8,
+        "data_format": "",
+        "set_tuple_dimensions": true,
+        "tuple_dimensions": [
+          [
+            1
+          ]
+        ],
+        "component_dimensions": [
+          [
+            6
+          ]
+        ],
+        "init_type_index": 0,
+        "init_value": "0;0.125;0.375;0.75;1.375;2",
+        "starting_fill_value": "0",
+        "step_operation_index": 0,
+        "step_value": "1",
+        "use_seed": false,
+        "seed_value": 5489,
+        "seed_array_name": "UnusedInitializationSeed",
+        "standardize_seed": false,
+        "init_start_range": "0",
+        "init_end_range": "1"
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 19,
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "role": "Write six whitespace-delimited values without a header or index; this file must exist before the Regularize stage preflight.",
+      "paths": [
+        {
+          "parameter": "output_path",
+          "value": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_ZDecisionBounds.txt"
+        },
+        {
+          "parameter": "input_data_array_paths",
+          "value": [
+            "ZDecisionBounds"
+          ]
+        }
+      ],
+      "key_parameters": {
+        "output_style_index": 1,
+        "output_path": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_ZDecisionBounds.txt",
+        "output_dir": "",
+        "file_extension": ".txt",
+        "max_val_per_line": 1,
+        "delimiter_index": 0,
+        "header_option_index": 0,
+        "input_data_array_paths": [
+          "ZDecisionBounds"
+        ]
+      },
+      "parameters_version": 1
+    },
+    {
+      "index": 20,
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "role": "Save full reference, explicitly packed missing-section input, and provenance metadata.",
+      "paths": [
+        {
+          "parameter": "export_file_path",
+          "value": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_MissingSections.dream3d"
+        }
+      ],
+      "key_parameters": {
+        "compression_level": 5,
+        "export_file_path": "Data/Output/Small_IN100_Processing/ZSpacing/SmallIN100_MissingSections.dream3d",
+        "use_compression": true,
+        "write_xdmf_file": false
+      },
+      "parameters_version": 2
+    }
+  ]
+}
