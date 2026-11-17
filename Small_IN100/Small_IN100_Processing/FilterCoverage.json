@@ -1,0 +1,370 @@
+{
+  "version": 1,
+  "scope": "Every step of the four companion-backed processing pipelines: (01) archive and scan inspection, (02) section alignment and replay, (03) controlled missing-section preparation and (04) nearest-section fill with native boolean reference-label comparison. Legacy processing examples 02-09 remain in simplnx and are outside this collection; their numbers do not identify these new workflows. Step indices are zero-based.",
+  "filters": [
+    {
+      "filter": "ReadAngDataFilter",
+      "uuid": "5b062816-79ac-47ce-93cb-e7966896bcbd",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 0,
+      "purpose": "Inspect measured Slice_1.ang directly before archiving all 117 raw sections. The imported 189 by 201 grid has 0.25 micrometer XY spacing; the reader gives its single Z layer a 1 micrometer placeholder spacing."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 1,
+      "purpose": "Preserve acquisition-frame Euler radians before the in-place frame rotation. The subsequent sample rotation reorders this copy with every other cell array; values retain their acquisition-frame meaning."
+    },
+    {
+      "filter": "RotateEulerRefFrameFilter",
+      "uuid": "0458edcd-3655-4465-adc8-b036d76138b5",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 2,
+      "purpose": "Apply the established SmallIN100 EDAX/TSL Euler reference-frame correction: 90 degrees about Z. EulerAngles are radians and are modified in place; this does not rearrange image cells."
+    },
+    {
+      "filter": "RotateSampleRefFrameFilter",
+      "uuid": "d2451dc1-a5a1-4ac2-a64d-7991669dcffc",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 3,
+      "purpose": "Apply the established 180 degree Y sample reference-frame correction slice by slice. Corrected orientation values and cell ordering agree with Read H5EBSD using recommended transforms, but geometry origins differ. Retain this inspection's transform-derived origin; do not overlay it on archive readback without checking alignment. Imported X/Y Position remain acquisition-coordinate attributes."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 4,
+      "purpose": "Use the existing SmallIN100 admission rule: Image Quality > 120 AND Confidence Index > 0.1. Read ANG remaps phase zero to one, so Phases > 0 would wrongly accept failed indexing. Keep rejected cells but exclude them from colors."
+    },
+    {
+      "filter": "ComputeIPFColorsFilter",
+      "uuid": "64cb4f27-6e5e-4dd2-8a03-0c448cb8f5e6",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 5,
+      "purpose": "Color accepted measurements by crystal direction parallel to corrected sample Z using the native IPF color key. Black marks rejected cells, not a second phase; color differences are not a scalar misorientation measure."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 6,
+      "purpose": "Save the single-scan inspection checkpoint separately from the raw stack archive. This is a 2D map with placeholder Z thickness, not a reconstructed 3D volume."
+    },
+    {
+      "filter": "EbsdToH5EbsdFilter",
+      "uuid": "2d05ca72-0a1b-4aec-b9b0-bc470845c448",
+      "pipeline": "(01) Small IN100 Archive.d3dpipeline",
+      "step": 7,
+      "purpose": "Archive all 117 original ANG sections using the unchanged EDAX preset, high-to-low stack order and 0.25 micrometer section pitch; raw data and frame metadata are written independently of the inspection arrays."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 1,
+      "purpose": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 2,
+      "purpose": "Crop inclusive XYZ voxel bounds to 128 x 128 x 8 consecutive measured sections. Preserve source feature labels without renumbering; retain Quats, Phases, Mask, FeatureIds and IPFColors."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 3,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 4,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 5,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 6,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 7,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 8,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "CreateGeometryFilter",
+      "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 9,
+      "purpose": "Create an independent cropped image geometry with matching dimensions, origin, spacing and Micrometer units for before/alignment-replay comparison."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 10,
+      "purpose": "Copy the five selected measured cell arrays before MI changes the input."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 11,
+      "purpose": "Copy the ensemble matrix containing only CrystalStructures."
+    },
+    {
+      "filter": "AlignSectionsMutualInformationFilter",
+      "uuid": "3cf33ad9-8322-4d40-96de-14bbe40969cc",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 12,
+      "purpose": "Estimate adjacent-section translations using measured orientation patterns. The top local slice z=7 is fixed. These estimates are not independently measured physical ground truth."
+    },
+    {
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 13,
+      "purpose": "Replay the stored relative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders."
+    },
+    {
+      "filter": "AlignSectionsListFilter",
+      "uuid": "6c0e9fcf-bea2-4939-999e-e26379ed7aad",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 14,
+      "purpose": "Replay the stored cumulative shifts on an untouched copy; shifts use reverse-Z row order and cell units, with zero-filled borders."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 15,
+      "purpose": "Save the original crop, MI result, both independent replay copies, and alignment arrays for verification."
+    },
+    {
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "pipeline": "(02) Small IN100 Section Alignment and Replay.d3dpipeline",
+      "step": 16,
+      "purpose": "Export all eight shift rows, including the zero-initialized anchor row, with a zero-based row index and headers. Shifts are integer image cells in reverse-Z row order."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the public SmallIN100 measured-data preparation checkpoint; the serial stack has already undergone the documented alignment and cleanup."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 1,
+      "purpose": "Keep only Quats, Phases, Mask, FeatureIds and IPFColors plus ensemble CrystalStructures. Remove whole-volume feature/parent metadata and other channels before cropping."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 2,
+      "purpose": "Preserve the full eight-section measured-derived reference crop, inclusive global voxel bounds [30,36,52] to [157,163,59]."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 3,
+      "purpose": "Retain an exact measured-derived section from the full reference crop; no feature renumbering."
+    },
+    {
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 4,
+      "purpose": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 5,
+      "purpose": "Retain an exact measured-derived section from the full reference crop; no feature renumbering."
+    },
+    {
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 6,
+      "purpose": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 7,
+      "purpose": "Retain an exact measured-derived section from the full reference crop; no feature renumbering."
+    },
+    {
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 8,
+      "purpose": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 9,
+      "purpose": "Retain an exact measured-derived section from the full reference crop; no feature renumbering."
+    },
+    {
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 10,
+      "purpose": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier."
+    },
+    {
+      "filter": "CropImageGeometryFilter",
+      "uuid": "e6476737-4aa7-48ba-a702-3dfab82c96e2",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 11,
+      "purpose": "Retain an exact measured-derived section from the full reference crop; no feature renumbering."
+    },
+    {
+      "filter": "CreateDataArrayFilter",
+      "uuid": "67041f9b-bdc6-4122-acc6-c9fe9280e90d",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 12,
+      "purpose": "Provenance only: zero-based Z index in the prepared full-volume checkpoint, not a raw ANG filename identifier."
+    },
+    {
+      "filter": "AppendImageGeometryFilter",
+      "uuid": "c62c5c89-5ea8-4948-99ca-51cbc5b54b05",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 13,
+      "purpose": "Concatenate retained sections in ascending original Z order. Its stored Z grid represents ordinal packing only; use retained plane offsets, not packed geometry Z, for physical interpretation."
+    },
+    {
+      "filter": "CopyDataObjectFilter",
+      "uuid": "ac8d51d8-9167-5628-a060-95a8863a76b1",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 14,
+      "purpose": "Append copies cell arrays only; explicitly copy CrystalStructures for the retained orientation data."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 15,
+      "purpose": "Remove temporary one-section geometries after assembly."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 16,
+      "purpose": "One tuple with explicitly specified component values; metadata only, not fabricated measurements."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 17,
+      "purpose": "One tuple with explicitly specified component values; metadata only, not fabricated measurements."
+    },
+    {
+      "filter": "CreateDataArrayAdvancedFilter",
+      "uuid": "f23464df-abcc-40cf-bf99-f71463df633c",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 18,
+      "purpose": "One tuple with explicitly specified component values; metadata only, not fabricated measurements."
+    },
+    {
+      "filter": "WriteASCIIDataFilter",
+      "uuid": "06c8bfe8-2b42-4956-aca3-580bc0620716",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 19,
+      "purpose": "Write six whitespace-delimited values without a header or index; this file must exist before the Regularize stage preflight."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(03) Small IN100 Missing Sections Preparation.d3dpipeline",
+      "step": 20,
+      "purpose": "Save full reference, explicitly packed missing-section input, and provenance metadata."
+    },
+    {
+      "filter": "ReadDREAM3DFilter",
+      "uuid": "0dbd31c7-19e0-4077-83ef-f4a6459a0e2d",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 0,
+      "purpose": "Read the completed Missing Sections Preparation checkpoint, including the full eight-section reference, five retained sections and provenance metadata. The generated decision text file must also exist before preflight."
+    },
+    {
+      "filter": "RegularizeZSpacingFilter",
+      "uuid": "d6599986-1932-4bfc-993d-71eafefe6db0",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 1,
+      "purpose": "Copy the nearest retained observation using derived first-section-relative midpoint decision thresholds. Boundary ties select the lower retained Z. No averaging or physical Z recalibration is performed."
+    },
+    {
+      "filter": "ComputeDifferencesMapFilter",
+      "uuid": "5a0ee5b5-c135-4535-85d0-9c2058943099",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 2,
+      "purpose": "Compare copied feature labels with the complete withheld reference. The temporary int32 absolute label difference is used only to detect inequality; its magnitude has no physical meaning."
+    },
+    {
+      "filter": "MultiThresholdObjectsFilter",
+      "uuid": "4246245e-1011-4add-8436-0af6bed19228",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 3,
+      "purpose": "Create boolean FeatureIdMismatch where the copied feature label differs from the withheld reference (absolute difference > 0). This controlled-reference comparison is not a mask that detects real acquisition gaps."
+    },
+    {
+      "filter": "DeleteDataFilter",
+      "uuid": "bf286740-e987-49fe-a7c8-6e566e3a0606",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 4,
+      "purpose": "Remove the ordinal input and temporary numerical label difference. Retain only the boolean mismatch comparison, full reference, uniform fill and provenance; label-difference magnitude is not a physical metric."
+    },
+    {
+      "filter": "WriteDREAM3DFilter",
+      "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003",
+      "pipeline": "(04) Small IN100 Nearest Section Fill.d3dpipeline",
+      "step": 5,
+      "purpose": "Save the comparable 128 x 128 x 8 images, boolean FeatureIdMismatch, source-Z provenance and decision metadata. The mismatch mask requires the complete withheld reference."
+    }
+  ]
+}
